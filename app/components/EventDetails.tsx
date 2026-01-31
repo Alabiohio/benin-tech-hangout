@@ -12,12 +12,12 @@ export default function EventDetails() {
                         <div>
                             <p className="text-blue-300 text-xs font-black uppercase tracking-[0.2em] mb-1">Location</p>
                             <p className="font-bold text-xl text-white">Benin City, Edo State</p>
-                      </div>
+                        </div>
                     </div>
 
                     <div className="h-16 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent hidden md:block"></div>
 
-{/** 
+                    {/** 
                     <div className="flex items-center gap-5 group">
                         <div className="w-14 h-14 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center text-3xl group-hover:scale-110 group-hover:bg-biro-blue/20 transition-all shadow-inner">📅</div>
                         <div>

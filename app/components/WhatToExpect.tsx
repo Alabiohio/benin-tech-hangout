@@ -19,7 +19,7 @@ export default function WhatToExpect() {
     ];
 
     return (
-        <section className="py-24 bg-white/30 backdrop-blur-sm">
+        <section className="py-24 bg-white/30 backdrop-blur-sm overflow-hidden">
             <div className="container mx-auto px-6">
                 <div className="flex flex-col lg:flex-row gap-16 items-center">
                     <div className="lg:w-1/2">
