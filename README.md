@@ -1,36 +1,144 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Benin Tech Hangout 2.0
 
-## Getting Started
+**Building Benin’s Unified Tech Ecosystem**
 
-First, run the development server:
+Benin Tech Hangout 2.0 is a free tech community event focused on bringing together tech talents, founders, students, brands, companies, and organizations to strengthen and grow Benin City’s tech ecosystem.
+
+This repository contains the official landing page for the event.
+
+---
+
+## 🌍 About Benin Tech Hangout
+
+Benin Tech Hangout is more than just an event — it is a meeting point for people who believe in collaboration, learning, and community-driven growth.
+
+The second edition builds on the success of Hangout 1.0, expanding conversations, connections, and opportunities across the ecosystem.
+
+**This is where Benin tech meets Benin tech.**
+
+---
+
+## 🎯 Event Details
+
+- **Event:** Benin Tech Hangout 2.0
+- **Theme:** Building Benin’s Unified Tech Ecosystem
+- **Location:** Benin City
+- **Entry:** Free (Registration required)
+
+> Full event details will be shared with registered participants.
+
+---
+
+## 🚀 Project Goals
+
+- Communicate the vision and mission of Benin Tech Hangout
+- Provide clear information about the event
+- Enable easy attendee registration
+- Showcase credibility through Hangout 1.0 highlights
+- Serve as a central information hub for the event
+
+---
+
+## 🧑‍💻 Target Audience
+
+- Tech students
+- Developers (frontend, backend, mobile)
+- Designers & creatives
+- Startup founders
+- Tech communities and organizations
+- Brands and companies within the tech space
+
+---
+
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js (App Router)
+- **Styling:** Tailwind CSS
+- **Animations:** AOS (Animate on Scroll)
+- **Forms:** Formspree / Google Forms
+- **Hosting:** Vercel
+
+---
+
+## 📄 Site Structure
+
+The landing page is built as a single-page website with the following sections:
+
+1. Hero section
+2. About the program
+3. Vision & mission
+4. Why you should attend
+5. What to expect
+6. A look back (Hangout 1.0)
+7. Organizer information
+8. Event details
+9. Registration form
+10. Footer
+
+---
+
+## ⚙️ Getting Started
+
+### Prerequisites
+
+- Node.js (v18 or later)
+- npm or yarn
+
+### Installation
 
 ```bash
+npx create-next-app@latest benin-tech-hangout
+cd benin-tech-hangout
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000` in your browser to view the project.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📦 Deployment
 
-## Learn More
+The project is deployed using **Vercel**.
 
-To learn more about Next.js, take a look at the following resources:
+To deploy:
+- Push the repository to GitHub
+- Import the project into Vercel
+- Deploy using default settings
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📈 Future Enhancements
 
-## Deploy on Vercel
+- Speaker profiles
+- Partner and sponsor section
+- Countdown timer
+- Media coverage section
+- Post-event highlights
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🤝 Organizer
+
+**Proline Groups**
+
+Proline Groups is committed to building spaces that support learning, collaboration, and growth within the tech community, especially in Benin City.
+
+---
+
+## 📬 Contact
+
+For partnerships, sponsorships, or inquiries:
+
+- Email: _To be added_
+- Socials: _To be added_
+
+---
+
+## 📄 License
+
+This project is for community and informational purposes.
+
+---
+
+**Status:** In Progress
+

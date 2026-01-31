@@ -3,13 +3,53 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --biro-blue: #1c39bb;
+  --biro-blue-dark: #12247a;
+  --highlight-yellow: #ffd700;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-biro-blue: var(--biro-blue);
+  --color-biro-blue-dark: var(--biro-blue-dark);
+  --color-highlight-yellow: var(--highlight-yellow);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-delayed: float 6s ease-in-out 3s infinite;
+  --animate-spin-slow: spin 12s linear infinite;
+  --animate-drift: drift 20s ease-in-out infinite;
+  --animate-drift-slow: drift 30s ease-in-out infinite reverse;
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes drift {
+
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+      transform: translate(100px, 50px) scale(1.1);
+    }
+
+    66% {
+      transform: translate(-50px, 100px) scale(0.9);
+    }
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +62,5 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
