@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function About() {
     return (
         <section id="about" className="py-24 relative">
@@ -5,14 +7,20 @@ export default function About() {
                 <div className="flex flex-col md:flex-row items-center gap-16">
                     <div className="w-full md:w-1/2">
                         <div className="relative">
-                            {/* Placeholder for an image - using a colored block for now or we can use a generated image later */}
-                            <div className="w-full h-[400px] bg-biro-blue/5 rounded-2xl border border-biro-blue/10 flex items-center justify-center relative overflow-hidden">
-                                <div className="absolute inset-0 bg-gradient-to-br from-biro-blue/10 to-transparent"></div>
-                                <span className="text-biro-blue/20 font-bold text-4xl">Image Placeholder</span>
+                            <div className="w-full h-[400px] rounded-2xl border border-biro-blue/10 relative overflow-hidden shadow-2xl group">
+                                <Image
+                                    src="/BTH-9-1.JPG.jpeg"
+                                    alt="Benin Tech Hangout Community"
+                                    fill
+                                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-biro-blue/40 to-transparent"></div>
+
                                 {/* Decorative elements */}
-                                <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-highlight-yellow rounded-full blur-2xl opacity-40"></div>
+                                <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-highlight-yellow rounded-full blur-2xl opacity-40 animate-pulse"></div>
                                 <div className="absolute -top-6 -left-6 w-32 h-32 bg-biro-blue rounded-full blur-3xl opacity-20"></div>
                             </div>
+
 
                             {/* Floating card */}
                             <div className="absolute -bottom-10 -left-10 md:left-10 bg-white p-6 rounded-xl shadow-xl border border-gray-100 max-w-xs hidden md:block">

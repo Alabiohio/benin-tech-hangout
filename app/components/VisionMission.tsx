@@ -1,10 +1,10 @@
 export default function VisionMission() {
     return (
-        <section className="py-24 bg-biro-blue relative overflow-hidden text-white">
+        <section className="py-24 bg-biro-blue relative overflow-hidden text-white mission-bg">
             {/* Mesh Gradient / Background Effects */}
             <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 bg-gradient-to-br from-biro-blue via-biro-blue-dark to-black opacity-90"></div>
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-400 opacity-20 blur-[120px] rounded-full animate-drift"></div>
+
                 <div className="absolute -bottom-24 -left-24 w-[400px] h-[400px] bg-highlight-yellow opacity-10 blur-[100px] rounded-full animate-drift-slow"></div>
             </div>
 
@@ -27,7 +27,7 @@ export default function VisionMission() {
                     {/* Mission */}
                     <div
                         data-aos="fade-left"
-                        className="bg-white/10 backdrop-blur-xl rounded-3xl p-10 border border-white/20 shadow-2xl relative"
+                        className="bg-white/10 backdrop-blur-xl rounded-3xl p-10 border border-white/20 shadow-2xl relative overflow-hidden"
                     >
                         {/* Glass reflection effect */}
                         <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/10 to-transparent pointer-events-none rounded-t-3xl"></div>
@@ -36,7 +36,7 @@ export default function VisionMission() {
                             Our Mission
                         </div>
 
-                        <ul className="space-y-8">
+                        <ul className="space-y-8 relative z-10">
                             {[
                                 { id: 1, title: "Inform", desc: "Providing access to the latest industry trends, tools, and knowledge." },
                                 { id: 2, title: "Inspire", desc: "Showcasing success stories to motivate the next generation of builders." },
@@ -59,3 +59,5 @@ export default function VisionMission() {
         </section>
     );
 }
+
+

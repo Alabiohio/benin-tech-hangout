@@ -64,3 +64,11 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
 }
+
+.mission-bg {
+  background-image: linear-gradient(to bottom right, rgba(28, 57, 187, 0.2), rgba(18, 36, 122, 0.2), rgba(0, 0, 0, 0.3)), url('/mission.jpeg') !important;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: normal;
+}
