@@ -9,7 +9,7 @@ export default function About() {
                         <div className="relative">
                             <div className="w-full h-[400px] rounded-2xl border border-biro-blue/10 relative overflow-hidden shadow-2xl group">
                                 <Image
-                                    src="/BTH-9-1.JPG.jpeg"
+                                    src="/BTH-9-1.jpg"
                                     alt="Benin Tech Hangout Community"
                                     fill
                                     className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -24,8 +24,8 @@ export default function About() {
 
                             {/* Floating card */}
                             <div className="absolute -bottom-10 -left-10 md:left-10 bg-white p-6 rounded-xl shadow-xl border border-gray-100 max-w-xs hidden md:block">
-                                <p className="text-biro-blue font-bold text-4xl mb-1">500+</p>
-                                <p className="text-gray-600 font-medium">Expected Attendees</p>
+                                <p className="text-biro-blue font-bold text-4xl mb-1">3000+</p>
+                                <p className="text-gray-600 font-medium">Attendees</p>
                             </div>
                         </div>
                     </div>
@@ -34,7 +34,7 @@ export default function About() {
                         <div className="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-wider text-biro-blue uppercase bg-blue-50 rounded-full">
                             About The Event
                         </div>
-                        <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
+                        <h2 className="text-4xl md:text-6xl font-black font-righteous text-gray-900 mb-6 leading-tight">
                             Uniting Benin's <span className="text-biro-blue">Tech Community</span>
                         </h2>
                         <p className="text-lg text-gray-600 mb-6 leading-relaxed">

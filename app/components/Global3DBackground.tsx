@@ -15,45 +15,43 @@ export default function Global3DBackground() {
 
     // Generate static random positions for "glowing things"
     const staticGlows = useMemo(() => {
-        return Array.from({ length: 120 }).map((_, i) => ({
+        return Array.from({ length: 80 }).map((_, i) => ({
             id: i,
-            top: (Math.random() * 800 - 50).toFixed(2) + "%", // Spread over 8 page heights
+            top: (Math.random() * 1200 - 100).toFixed(2) + "%", // Increased range for full site coverage
             left: (Math.random() * 100).toFixed(2) + "%",
-            size: (Math.random() * 3 + 2).toFixed(1) + "px",
-            duration: (Math.random() * 3 + 2).toFixed(1) + "s",
+            size: (Math.random() * 3 + 1.5).toFixed(1) + "px",
+            duration: (Math.random() * 4 + 2).toFixed(1) + "s",
             delay: (Math.random() * 5).toFixed(1) + "s",
-            color: i % 3 === 0 ? "#ffd700" : "#1c39bb", // Yellow and Blue glows
-            speed: Math.random() * 0.6 + 0.4, // Faster Parallax speed
+            color: i % 2 === 0 ? "#ffd700" : "#ffffff",
+            speed: Math.random() * 0.5 + 0.2, // Faster Parallax speed
         }));
     }, []);
 
     // Large soft background atmosphere
     const atmosphere = useMemo(() => {
-        return Array.from({ length: 20 }).map((_, i) => ({
+        return Array.from({ length: 12 }).map((_, i) => ({
             id: i,
-            top: (Math.random() * 800 - 50).toFixed(2) + "%",
+            top: (Math.random() * 1200 - 100).toFixed(2) + "%",
             left: (Math.random() * 100).toFixed(2) + "%",
-            size: (Math.random() * 500 + 400).toFixed(0) + "px",
-            color: i % 2 === 0 ? "rgba(28, 57, 187, 0.05)" : "rgba(255, 215, 0, 0.03)",
-            speed: Math.random() * 0.2 + 0.1, // Slow parallax
+            size: (Math.random() * 600 + 400).toFixed(0) + "px",
+            color: i % 2 === 0 ? "rgba(28, 57, 187, 0.04)" : "rgba(255, 215, 0, 0.02)",
+            speed: Math.random() * 0.15 + 0.05, // Slow parallax
         }));
     }, []);
 
     // New: Bigger Blurred Glows (Star-like but soft)
     const largerBlurredGlows = useMemo(() => {
-        return Array.from({ length: 40 }).map((_, i) => ({
+        return Array.from({ length: 25 }).map((_, i) => ({
             id: i,
-            top: (Math.random() * 800 - 50).toFixed(2) + "%",
+            top: (Math.random() * 1200 - 100).toFixed(2) + "%",
             left: (Math.random() * 100).toFixed(2) + "%",
-            size: (Math.random() * 60 + 50).toFixed(0) + "px",
+            size: (Math.random() * 80 + 40).toFixed(0) + "px",
             blur: (Math.random() * 15 + 10).toFixed(1) + "px",
-            duration: (Math.random() * 6 + 4).toFixed(1) + "s",
+            duration: (Math.random() * 5 + 3).toFixed(1) + "s",
             delay: (Math.random() * 5).toFixed(1) + "s",
             color: i % 2 === 0 ? "#ffd700" : "#1c39bb",
-            // Create irregular shapes using individual border radius values
-            borderRadius: `${Math.random() * 40 + 60}% ${Math.random() * 40 + 30}% ${Math.random() * 40 + 50}% ${Math.random() * 40 + 40}%`,
-            rotation: (Math.random() * 360).toFixed(0) + "deg",
-            speed: Math.random() * 0.5 + 0.3, // Moderate parallax
+            opacity: (Math.random() * 0.15 + 0.05).toFixed(2),
+            speed: Math.random() * 0.4 + 0.2, // Moderate parallax
         }));
     }, []);
 
@@ -63,7 +61,7 @@ export default function Global3DBackground() {
             {atmosphere.map((blob) => (
                 <div
                     key={`atmos-${blob.id}`}
-                    className="absolute rounded-full blur-[140px]"
+                    className="absolute rounded-full blur-[120px]"
                     style={{
                         top: blob.top,
                         left: blob.left,
@@ -76,7 +74,7 @@ export default function Global3DBackground() {
                 />
             ))}
 
-            {/* Larger Blurred Glows (Star-like soft orbs) */}
+            {/* Larger Blurred Glows */}
             {largerBlurredGlows.map((glow) => (
                 <div
                     key={`large-glow-${glow.id}`}
@@ -88,22 +86,21 @@ export default function Global3DBackground() {
                         height: glow.size,
                         backgroundColor: glow.color,
                         filter: `blur(${glow.blur})`,
-                        borderRadius: glow.borderRadius,
-                        transform: `translate3d(0, ${-scrollOffset * glow.speed}px, 0) rotate(${glow.rotation})`,
+                        borderRadius: "50%",
+                        transform: `translate3d(0, ${-scrollOffset * glow.speed}px, 0)`,
+                        opacity: glow.opacity,
                         animationDuration: glow.duration,
                         animationDelay: glow.delay,
-                        opacity: 0.4,
-                        boxShadow: `0 0 50px 15px ${glow.color}`,
                         willChange: "transform",
                     }}
                 />
             ))}
 
-            {/* "Glowing things" - Twinkling orbs all over the body */}
+            {/* "Glowing things" - Twinkling orbs */}
             {staticGlows.map((glow) => (
                 <div
                     key={`glow-${glow.id}`}
-                    className="absolute rounded-full animate-pulse shadow-[0_0_12px_rgba(255,255,255,0.9)]"
+                    className="absolute rounded-full animate-pulse shadow-[0_0_8px_rgba(255,255,255,0.5)]"
                     style={{
                         top: glow.top,
                         left: glow.left,
@@ -113,7 +110,7 @@ export default function Global3DBackground() {
                         transform: `translate3d(0, ${-scrollOffset * glow.speed}px, 0)`,
                         animationDuration: glow.duration,
                         animationDelay: glow.delay,
-                        opacity: 0.7,
+                        opacity: 0.5,
                         willChange: "transform",
                     }}
                 />

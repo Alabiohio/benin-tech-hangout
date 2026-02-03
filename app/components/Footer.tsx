@@ -6,7 +6,7 @@ export default function Footer() {
             <div className="container mx-auto px-6">
                 <div className="grid md:grid-cols-4 gap-12 mb-12">
                     <div className="col-span-1 md:col-span-2">
-                        <h2 className="text-2xl font-bold mb-6 text-biro-blue-dark">Benin Tech Hangout 2.0</h2>
+                        <h2 className="text-2xl font-black font-righteous mb-6 text-biro-blue">Benin Tech Hangout 2.0</h2>
                         <p className="text-gray-400 max-w-sm mb-6">
                             Strengthening and growing Benin City's tech ecosystem. Join us as we bring together talents, founders, and organizations.
                         </p>

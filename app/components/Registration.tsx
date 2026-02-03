@@ -10,14 +10,13 @@ export default function Registration() {
 
             <div className="container mx-auto px-6 relative z-10">
                 <div
-                    data-aos="zoom-in"
                     className="max-w-4xl mx-auto bg-white/5 backdrop-blur-2xl rounded-[2.5rem] overflow-hidden shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] border border-white/10 flex flex-col md:flex-row"
                 >
                     <div className="md:w-1/2 p-12 bg-white/5 flex flex-col justify-center text-white relative">
                         {/* Decorative side accent */}
                         <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-transparent via-highlight-yellow to-transparent opacity-50"></div>
 
-                        <h2 className="text-4xl font-bold mb-6">Secure Your Spot</h2>
+                        <h2 className="text-5xl md:text-6xl font-black font-righteous mb-6">Secure Your Spot</h2>
                         <p className="text-blue-100/80 text-lg mb-8 leading-relaxed">
                             Don't miss out on the biggest tech event in the city. Seats are limited and filling up fast!
                         </p>

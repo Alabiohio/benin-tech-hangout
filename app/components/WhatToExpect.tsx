@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function WhatToExpect() {
     const expectations = [
         {
@@ -24,21 +26,16 @@ export default function WhatToExpect() {
                 <div className="flex flex-col lg:flex-row gap-16 items-center">
                     <div className="lg:w-1/2">
                         <div
-                            data-aos="fade-up"
                             className="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-wider text-biro-blue uppercase bg-blue-50 rounded-full"
                         >
                             The Experience
                         </div>
                         <h2
-                            data-aos="fade-up"
-                            data-aos-delay="200"
-                            className="text-3xl md:text-5xl font-bold text-gray-900 mb-6"
+                            className="text-4xl md:text-6xl font-black font-righteous text-gray-900 mb-6"
                         >
                             What to <span className="text-biro-blue">Expect</span>
                         </h2>
                         <p
-                            data-aos="fade-up"
-                            data-aos-delay="300"
                             className="text-lg text-gray-600 mb-10"
                         >
                             Prepare for an immersive experience designed to challenge your thinking and spark creativity.
@@ -49,8 +46,6 @@ export default function WhatToExpect() {
                                 <div
                                     key={idx}
                                     className="flex group"
-                                    data-aos="fade-left"
-                                    data-aos-delay={400 + (idx * 100)}
                                 >
                                     <div className="mr-6 flex flex-col items-center">
                                         <div className="w-8 h-8 rounded-full border-2 border-biro-blue flex items-center justify-center relative bg-white">
@@ -59,7 +54,7 @@ export default function WhatToExpect() {
                                         {idx !== expectations.length - 1 && <div className="h-full w-0.5 bg-gray-200 my-2 group-hover:bg-biro-blue/50 transition-colors"></div>}
                                     </div>
                                     <div className="pb-8">
-                                        <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-biro-blue transition-colors">{item.title}</h3>
+                                        <h3 className="text-xl font-black font-righteous text-gray-900 mb-2 group-hover:text-biro-blue transition-colors">{item.title}</h3>
                                         <p className="text-gray-600 font-medium leading-relaxed">{item.desc}</p>
                                     </div>
                                 </div>
@@ -67,8 +62,6 @@ export default function WhatToExpect() {
                         </div>
 
                         <div
-                            data-aos="fade-up"
-                            data-aos-delay="900"
                             className="mt-6 p-6 bg-biro-blue/5 rounded-2xl border-l-4 border-biro-blue"
                         >
                             <p className="text-xl font-bold text-biro-blue-dark italic">
@@ -81,14 +74,16 @@ export default function WhatToExpect() {
                         {/* Decorative Image area */}
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-4 pt-12">
+                                <div className="relative h-48 w-full rounded-2xl overflow-hidden border border-blue-100 group">
+                                    <Image
+                                        src="/BTH-40-1.JPG.jpeg"
+                                        alt="Tech event exhibition"
+                                        fill
+                                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                    />
+                                    <div className="absolute inset-0 bg-blue-900/10 group-hover:bg-transparent transition-colors"></div>
+                                </div>
                                 <div
-                                    data-aos="fade-down"
-                                    data-aos-delay="200"
-                                    className="h-48 bg-blue-50/80 rounded-2xl w-full border border-blue-100"
-                                ></div>
-                                <div
-                                    data-aos="fade-up"
-                                    data-aos-delay="400"
                                     className="h-64 bg-biro-blue rounded-2xl w-full shadow-lg flex items-center justify-center text-white/10"
                                 >
                                     <span className="text-4xl font-bold rotate-90">EXHIBIT</span>
@@ -96,17 +91,19 @@ export default function WhatToExpect() {
                             </div>
                             <div className="space-y-4">
                                 <div
-                                    data-aos="fade-down"
-                                    data-aos-delay="600"
                                     className="h-64 bg-highlight-yellow rounded-2xl w-full opacity-80 shadow-lg flex items-center justify-center text-biro-blue/20"
                                 >
                                     <span className="text-4xl font-bold -rotate-12">SHARE</span>
                                 </div>
-                                <div
-                                    data-aos="fade-up"
-                                    data-aos-delay="800"
-                                    className="h-48 bg-blue-100/50 rounded-2xl w-full border border-blue-200"
-                                ></div>
+                                <div className="relative h-48 w-full rounded-2xl overflow-hidden border border-blue-200 group">
+                                    <Image
+                                        src="/BTH-45.jpg"
+                                        alt="Tech community connection"
+                                        fill
+                                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                    />
+                                    <div className="absolute inset-0 bg-blue-900/10 group-hover:bg-transparent transition-colors"></div>
+                                </div>
                             </div>
                         </div>
 
