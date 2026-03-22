@@ -1,5 +1,22 @@
 import type { Metadata } from "next";
+import { Andika, Righteous } from "next/font/google"; // Import next/font/google
 import "./globals.css";
+import "aos/dist/aos.css";
+
+// Configure fonts
+const andika = Andika({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-andika-google",
+  display: "swap",
+});
+
+const righteous = Righteous({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-righteous-google",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Benin Tech Hangout 2.0 | Strengthening Benin City's Tech Ecosystem",
@@ -9,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Benin Tech Hangout 2.0 | Experience the Future",
     description: "The flagship tech event of Benin City returns. Join the most impactful gathering of tech talents, founders, and organizations.",
-    url: "https://benintechhangoutpreview.vercel.app", // Assuming this is the URL
+    url: "https://benintechhangoutpreview.vercel.app", 
     siteName: "Benin Tech Hangout",
     images: [
       {
@@ -42,13 +59,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Andika:ital,wght@0,400;0,700;1,400;1,700&family=Righteous&display=swap" rel="stylesheet" />
-      </head>
-      <body className="antialiased">
+    <html lang="en" className={`${andika.variable} ${righteous.variable}`}>
+      <body className="antialiased font-sans">
         <AOSInit />
         {children}
       </body>

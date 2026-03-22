@@ -14,8 +14,8 @@
   --color-biro-blue: var(--biro-blue);
   --color-biro-blue-dark: var(--biro-blue-dark);
   --color-highlight-yellow: var(--highlight-yellow);
-  --font-righteous: "Righteous", cursive;
-  --font-andika: "Andika", sans-serif;
+  --font-righteous: var(--font-righteous-google), cursive;
+  --font-andika: var(--font-andika-google), sans-serif;
   --font-sans: var(--font-andika);
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
@@ -64,17 +64,12 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "Andika", sans-serif !important;
 }
 
 .font-righteous {
-  font-family: "Righteous", cursive !important;
+  font-family: var(--font-righteous) !important;
 }
 
-.mission-bg {
-  background-image: linear-gradient(to bottom right, rgba(28, 57, 187, 0.2), rgba(18, 36, 122, 0.2), rgba(0, 0, 0, 0.3)), url('/mission1.jpg') !important;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-blend-mode: normal;
+.mission-bg-overlay {
+  background-image: linear-gradient(to bottom right, rgba(28, 57, 187, 0.7), rgba(18, 36, 122, 0.7), rgba(0, 0, 0, 0.5));
 }

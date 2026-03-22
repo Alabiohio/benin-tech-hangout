@@ -2,16 +2,29 @@ import Image from "next/image";
 
 export default function VisionMission() {
     return (
-        <section id="vision" className="py-24 bg-biro-blue relative overflow-hidden text-white mission-bg">
-            {/* Mesh Gradient / Background Effects */}
+        <section id="vision" className="py-24 bg-biro-blue relative overflow-hidden text-white">
+            {/* Background Image Optimized with next/image */}
             <div className="absolute inset-0 z-0">
+                <Image 
+                    src="/mission1.jpg"
+                    alt="Community Mission"
+                    fill
+                    className="object-cover opacity-20"
+                    loading="lazy"
+                />
+                <div className="absolute inset-0 mission-bg-overlay"></div>
+            </div>
+
+            {/* Mesh Gradient / Background Effects */}
+            <div className="absolute inset-0 z-10 pointer-events-none">
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-400 opacity-20 blur-[120px] rounded-full animate-drift"></div>
 
                 <div className="absolute -bottom-24 -left-24 w-[400px] h-[400px] bg-highlight-yellow opacity-10 blur-[100px] rounded-full animate-drift-slow"></div>
             </div>
 
-            <div className="container mx-auto px-6 relative z-10">
+            <div className="container mx-auto px-6 relative z-20">
                 <div className="grid lg:grid-cols-2 gap-12 items-stretch">
+
                     {/* Vision Section */}
                     <div
                         data-aos="fade-right"
