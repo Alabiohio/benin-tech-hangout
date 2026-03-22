@@ -25,7 +25,7 @@ const reasons = [
 
 export default function WhyAttend() {
     return (
-        <section className="py-24 bg-white/30 backdrop-blur-sm">
+        <section id="benefits" className="py-24 bg-white/30 backdrop-blur-sm">
             <div className="container mx-auto px-6">
                 <div className="flex flex-col lg:flex-row items-center gap-16 mb-16">
                     <div className="lg:w-1/2">

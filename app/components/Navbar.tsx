@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -19,32 +20,186 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, [scrolled]);
 
+    // Close menu when a link is clicked
+    const handleLinkClick = () => setIsMenuOpen(false);
+
     return (
-        <header className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${scrolled ? 'bg-white backdrop-blur-md shadow-sm' : 'bg-transparent'}`}>
-            <div className="container mx-auto px-2 h-16 flex items-center justify-between">
-                <Link href="/" className="text-xl font-bold flex items-center gap-1 group">
+        <header 
+            className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-in-out ${
+                scrolled 
+                    ? 'bg-white/80 backdrop-blur-xl shadow-lg border-b border-gray-100 py-1' 
+                    : 'bg-transparent py-2'
+            }`}
+        >
+            <div className="container mx-auto px-4 md:px-8 h-12 md:h-14 flex items-center justify-between relative z-[101]">
+                {/* Logo Section */}
+                <Link 
+                    href="/" 
+                    className="flex items-center gap-2 group relative"
+                    onClick={handleLinkClick}
+                >
                     <Image
                         src="/logo.png"
                         alt="Logo"
                         width={64}
                         height={64}
-                        className="w-auto h-12 object-contain"
+                        className={`w-auto h-12 md:h-14 object-contain transition-transform duration-300 group-hover:scale-105 ${
+                            !scrolled && !isMenuOpen ? 'brightness-100' : ''
+                        }`}
+                        priority
                     />
                 </Link>
 
-                <nav className={`hidden md:flex gap-8 text-sm font-medium transition-colors duration-300 ${scrolled ? 'text-gray-600' : 'text-white'}`}>
-                    <Link href="#about" className="hover:opacity-80 transition-opacity whitespace-nowrap">About</Link>
-                    <Link href="#schedule" className="hover:opacity-80 transition-opacity whitespace-nowrap">Schedule</Link>
-                    <Link href="#speakers" className="hover:opacity-80 transition-opacity whitespace-nowrap">Speakers</Link>
-                    <Link href="#contact" className="hover:opacity-80 transition-opacity whitespace-nowrap">Contact</Link>
+                {/* Desktop Navigation */}
+                <nav className={`hidden lg:flex items-center gap-8 text-[15px] font-semibold transition-colors duration-300 ${
+                    scrolled ? 'text-slate-800' : 'text-white'
+                }`}>
+                    <Link href="#about" className="hover:text-biro-blue-dark transition-colors relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-biro-blue after:transition-all hover:after:w-full">About</Link>
+                    <Link href="#vision" className="hover:text-biro-blue-dark transition-colors relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-biro-blue after:transition-all hover:after:w-full">Vision</Link>
+                    <Link href="#benefits" className="hover:text-biro-blue-dark transition-colors relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-biro-blue after:transition-all hover:after:w-full">Benefits</Link>
+                    <Link href="#gallery" className="hover:text-biro-blue-dark transition-colors relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-biro-blue after:transition-all hover:after:w-full">Gallery</Link>
+                    <Link href="#contact" className="hover:text-biro-blue-dark transition-colors relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-biro-blue after:transition-all hover:after:w-full">Contact</Link>
                 </nav>
 
-                <Link
-                    href="#register"
-                    className="px-5 py-2.5 bg-highlight-yellow text-biro-blue font-bold rounded-full hover:bg-yellow-400 transition-all active:scale-95 shadow-sm text-sm"
+                {/* Right Side Actions */}
+                <div className="flex items-center gap-4">
+                    <Link
+                        href="#register"
+                        className={`hidden sm:flex px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-300 active:scale-95 shadow-md hover:shadow-lg ${
+                            scrolled || isMenuOpen
+                                ? 'bg-biro-blue text-white hover:bg-biro-blue-dark'
+                                : 'bg-highlight-yellow text-biro-blue-dark hover:bg-white hover:text-biro-blue'
+                        }`}
+                        onClick={handleLinkClick}
+                    >
+                        Register Now
+                    </Link>
+
+                    {/* Mobile Menu Toggle */}
+                    <button 
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        className={`lg:hidden p-2 rounded-full transition-colors duration-300 ${
+                            isMenuOpen || scrolled ? 'bg-slate-100 text-biro-blue' : 'bg-white/10 text-white backdrop-blur-sm'
+                        }`}
+                        aria-label="Toggle Menu"
+                    >
+                        <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            width="24" 
+                            height="24" 
+                            viewBox="0 0 24 24" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            strokeWidth="2.5" 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round"
+                        >
+                            {isMenuOpen ? (
+                                <>
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </>
+                            ) : (
+                                <>
+                                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                                </>
+                            )}
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            {/* Mobile Menu Overlay */}
+            <div 
+                className={`fixed inset-0 bg-slate-900/60 backdrop-blur-sm lg:hidden transition-all duration-500 ease-in-out z-[200] ${
+                    isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+                }`}
+                onClick={() => setIsMenuOpen(false)}
+            >
+                <div 
+                    className={`absolute top-0 right-0 h-screen w-full max-w-sm bg-white shadow-2xl transition-transform duration-500 cubic-bezier(0.4, 0, 0.2, 1) flex flex-col ${
+                        isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+                    }`}
+                    onClick={(e) => e.stopPropagation()}
                 >
-                    Register Now
-                </Link>
+                    {/* Header in Mobile Menu */}
+                    <div className="flex items-center justify-between p-6 border-b border-slate-50">
+                        <Image
+                            src="/logo.png"
+                            alt="Logo"
+                            width={48}
+                            height={48}
+                            className="w-auto h-10 object-contain"
+                        />
+                        <button 
+                            onClick={() => setIsMenuOpen(false)}
+                            className="p-2 rounded-full bg-slate-100 text-slate-500 hover:text-biro-blue transition-colors"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                        </button>
+                    </div>
+
+                    <div className="flex flex-col p-8 gap-5 overflow-y-auto">
+                        <Link 
+                            href="#about" 
+                            className={`text-2xl font-bold text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} 
+                            style={{ transitionDelay: '100ms' }}
+                            onClick={handleLinkClick}
+                        >
+                            About
+                        </Link>
+                        <Link 
+                            href="#vision" 
+                            className={`text-2xl font-bold text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`}
+                            style={{ transitionDelay: '150ms' }}
+                            onClick={handleLinkClick}
+                        >
+                            Vision
+                        </Link>
+                        <Link 
+                            href="#benefits" 
+                            className={`text-2xl font-bold text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`}
+                            style={{ transitionDelay: '200ms' }}
+                            onClick={handleLinkClick}
+                        >
+                            Benefits
+                        </Link>
+                        <Link 
+                            href="#gallery" 
+                            className={`text-2xl font-bold text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`}
+                            style={{ transitionDelay: '250ms' }}
+                            onClick={handleLinkClick}
+                        >
+                            Gallery
+                        </Link>
+                        <Link 
+                            href="#contact" 
+                            className={`text-2xl font-bold text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`}
+                            style={{ transitionDelay: '300ms' }}
+                            onClick={handleLinkClick}
+                        >
+                            Contact
+                        </Link>
+                        
+                        <div className={`mt-4 pt-8 border-t border-slate-100 transition-all duration-500 transform ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`} style={{ transitionDelay: '400ms' }}>
+                            <Link
+                                href="#register"
+                                className="w-full flex items-center justify-center py-4 bg-biro-blue text-white text-center font-bold text-lg rounded-xl shadow-lg shadow-biro-blue/20 hover:bg-biro-blue-dark transition-all active:scale-95"
+                                onClick={handleLinkClick}
+                            >
+                                Register Now
+                            </Link>
+                        </div>
+                    </div>
+                    
+                    <div className="mt-auto p-8 bg-slate-50 border-t border-slate-100">
+                        <p className="text-slate-400 text-xs text-center font-medium">
+                            © 2026 BENIN TECH HANGOUT. ALL RIGHTS RESERVED.
+                        </p>
+                    </div>
+                </div>
             </div>
         </header>
     );

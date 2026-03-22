@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function VisionMission() {
     return (
-        <section className="py-24 bg-biro-blue relative overflow-hidden text-white mission-bg">
+        <section id="vision" className="py-24 bg-biro-blue relative overflow-hidden text-white mission-bg">
             {/* Mesh Gradient / Background Effects */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-400 opacity-20 blur-[120px] rounded-full animate-drift"></div>

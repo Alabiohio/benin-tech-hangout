@@ -94,16 +94,6 @@ export default function Hero() {
                                     <svg className="w-6 h-6 transform group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                                 </span>
                             </Link>
-
-                            <Link
-                                href="#about"
-                                className="flex items-center gap-4 px-8 group"
-                            >
-                                <div className="w-14 h-14 rounded-full border-2 border-white/10 flex items-center justify-center transition-all group-hover:bg-white/10 group-hover:border-white">
-                                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
-                                </div>
-                                <span className="text-white font-bold tracking-wider uppercase text-sm">Watch Vision</span>
-                            </Link>
                         </div>
                     </div>
 
@@ -132,12 +122,6 @@ export default function Hero() {
                         <div className="absolute -z-10 top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-biro-blue/30 blur-[120px] rounded-full animate-pulse"></div>
                     </div>
                 </div>
-            </div>
-
-            {/* Scroll Indicator */}
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 opacity-30">
-                <span className="text-[10px] uppercase tracking-[0.3em] font-bold">Scroll</span>
-                <div className="w-px h-12 bg-gradient-to-b from-white to-transparent"></div>
             </div>
         </section>
     );
