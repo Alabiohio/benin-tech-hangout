@@ -62,7 +62,7 @@ export default function WhyAttend() {
                     </div>
                     <div className="lg:w-1/2 relative h-[400px] w-full rounded-2xl overflow-hidden shadow-2xl rotate-3 hover:rotate-0 transition-all duration-500 group border-4 border-white">
                         <Image
-                            src="/BTH-30-1.jpg"
+                            src="/whyAttend.png"
                             alt="Attendees at Benin Tech Hangout"
                             fill
                             className="object-cover transition-transform duration-700 group-hover:scale-110"

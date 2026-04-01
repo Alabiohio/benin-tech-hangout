@@ -1,115 +1,81 @@
-import Image from "next/image";
+import React from 'react';
 
 export default function WhatToExpect() {
     const expectations = [
         {
             title: "Insightful Conversations",
-            desc: "Tech conversations and panel sessions providing deep industry insights."
+            desc: "Tech conversations and panel sessions providing deep industry insights.",
+            bgColor: "bg-[#A855F7]",
+            textColor: "text-white"
         },
         {
             title: "Networking 2.0",
-            desc: "Connect with tech professionals, brands, and companies driving the ecosystem."
+            desc: "Connect with tech professionals, brands, and companies driving the ecosystem.",
+            bgColor: "bg-[#EC4899]",
+            textColor: "text-white"
         },
         {
             title: "Community & Ecosystem",
-            desc: "Engage in vital ecosystem discussions and shared community growth."
+            desc: "Engage in vital ecosystem discussions and shared community growth.",
+            bgColor: "bg-[#F97316]",
+            textColor: "text-white"
         },
         {
             title: "Exhibition Series",
-            desc: "Explore a welcoming space to learn, share, and connect with builders."
+            desc: "Explore a welcoming space to learn, share, and connect with builders.",
+            bgColor: "bg-[#84CC16]",
+            textColor: "text-gray-900"
+        },
+        {
+            title: "Live Performance & Fun",
+            desc: "Tech events don't always have to be boring. Experience the vibe.",
+            bgColor: "bg-[#0EA5E9]",
+            textColor: "text-white"
         }
     ];
 
     return (
-        <section className="py-24 bg-white/30 backdrop-blur-sm overflow-hidden">
-            <div className="container mx-auto px-6">
-                <div className="flex flex-col lg:flex-row gap-16 items-center">
-                    <div className="lg:w-1/2">
-                        <div className="inline-block px-3 py-2 mb-4 text-sm font-semibold tracking-wider text-biro-blue uppercase bg-blue-50 rounded-sm">
-                            The Experience
-                        </div>
-                        <h2
-                            className="text-4xl md:text-6xl font-black font-righteous text-gray-900 mb-6"
-                        >
-                            What to <span className="text-biro-blue">Expect</span>
-                        </h2>
-                        <p
-                            className="text-lg text-gray-600 mb-10"
-                        >
-                            Prepare for an immersive experience designed to challenge your thinking and spark creativity.
-                        </p>
+        <section className="py-24 bg-[#0B0A11] overflow-hidden" id="what-to-expect">
+            <div className="container mx-auto px-6 max-w-7xl">
+                <div className="text-center mb-16" data-aos="fade-down">
+                    <h2
+                        className="text-3xl md:text-5xl font-black font-righteous text-white tracking-tight"
+                    >
+                        What to <span className="text-white/70">expect at BTH 2.0</span>
+                    </h2>
+                </div>
 
-                        <div className="space-y-8">
-                            {expectations.map((item, idx) => (
-                                <div
-                                    key={idx}
-                                    className="flex group"
-                                >
-                                    <div className="mr-6 flex flex-col items-center">
-                                        <div className="w-8 h-8 rounded-full border-2 border-biro-blue flex items-center justify-center relative bg-white">
-                                            <div className="w-3 h-3 bg-biro-blue rounded-full group-hover:scale-125 transition-transform"></div>
-                                        </div>
-                                        {idx !== expectations.length - 1 && <div className="h-full w-0.5 bg-gray-200 my-2 group-hover:bg-biro-blue/50 transition-colors"></div>}
-                                    </div>
-                                    <div className="pb-8">
-                                        <h3 className="text-xl font-black font-righteous text-gray-900 mb-2 group-hover:text-biro-blue transition-colors">{item.title}</h3>
-                                        <p className="text-gray-600 font-medium leading-relaxed">{item.desc}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
+                    {expectations.map((item, idx) => (
                         <div
-                            className="mt-6 p-6 bg-biro-blue/5 rounded-2xl border-l-4 border-biro-blue"
+                            key={idx}
+                            data-aos="fade-up"
+                            data-aos-delay={idx * 100}
+                            className={`relative px-8 py-3 md:p-10 lg:p-12 rounded-[2rem] md:rounded-[2.5rem] ${item.bgColor} ${item.textColor} transition-all duration-500 hover:scale-[1.02] cursor-default flex flex-col justify-center items-center text-center group border border-white/5 shadow-xl overflow-hidden ${idx === 4 ? 'md:col-span-2 lg:col-span-2' : ''}`}
                         >
-                            <p className="text-xl font-bold text-biro-blue-dark italic">
-                                "No pressure. No gatekeeping. Just tech people building together."
+                            {/* Subtle Glow Overlay */}
+                            <div className="absolute -inset-24 bg-white/10 opacity-0 group-hover:opacity-20 blur-[60px] transition-opacity duration-700 rounded-full"></div>
+                            
+                            <h3 className="relative z-10 text-xl md:text-3xl lg:text-4xl font-black font-righteous mb-3 leading-tight uppercase tracking-tight">
+                                {item.title}
+                            </h3>
+                            <p className="relative z-10 text-sm md:text-lg lg:text-xl font-medium opacity-90 max-w-lg leading-relaxed">
+                                {item.desc}
                             </p>
-                        </div>
-                    </div>
 
-                    <div className="lg:w-1/2 relative mt-12 lg:mt-0">
-                        {/* Decorative Image area */}
-                        <div className="grid grid-cols-2 gap-4">
-                            <div className="space-y-4 pt-12">
-                                <div className="relative h-48 w-full rounded-2xl overflow-hidden border border-blue-100 group">
-                                    <Image
-                                        src="/BTH-40-1.JPG.jpeg"
-                                        alt="Tech event exhibition"
-                                        fill
-                                        className="object-cover transition-transform duration-500 group-hover:scale-110"
-                                    />
-                                    <div className="absolute inset-0 bg-blue-900/10 group-hover:bg-transparent transition-colors"></div>
-                                </div>
-                                <div
-                                    className="h-64 bg-biro-blue rounded-2xl w-full shadow-lg flex items-center justify-center text-white/10"
-                                >
-                                    <span className="text-4xl font-bold rotate-90">EXHIBIT</span>
-                                </div>
-                            </div>
-                            <div className="space-y-4">
-                                <div
-                                    className="h-64 bg-highlight-yellow rounded-2xl w-full opacity-80 shadow-lg flex items-center justify-center text-biro-blue/20"
-                                >
-                                    <span className="text-4xl font-bold -rotate-12">SHARE</span>
-                                </div>
-                                <div className="relative h-48 w-full rounded-2xl overflow-hidden border border-blue-200 group">
-                                    <Image
-                                        src="/BTH-45.jpg"
-                                        alt="Tech community connection"
-                                        fill
-                                        className="object-cover transition-transform duration-500 group-hover:scale-110"
-                                    />
-                                    <div className="absolute inset-0 bg-blue-900/10 group-hover:bg-transparent transition-colors"></div>
-                                </div>
+                            {/* Floating Decorative Element (Smaller) */}
+                            <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                                <div className="text-4xl md:text-5xl lg:text-6xl font-bold font-righteous">0{idx + 1}</div>
                             </div>
                         </div>
-
-                        {/* Background decoration */}
-                        <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-highlight-yellow/20 rounded-full blur-3xl"></div>
-                    </div>
+                    ))}
                 </div>
             </div>
         </section>
     );
 }
+
+
+
+
+

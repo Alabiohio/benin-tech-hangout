@@ -132,7 +132,7 @@ export default function Hero() {
                                             </Link>
 
                                             <Link
-                                                href="#register-volunteer"
+                                                href="/volunteer"
                                                 onClick={() => setIsDropdownOpen(false)}
                                                 className="group flex items-center gap-4 px-4 py-4 text-white/90 hover:text-white hover:bg-white/5 rounded-2xl transition-all duration-300"
                                             >
@@ -146,7 +146,7 @@ export default function Hero() {
                                             </Link>
 
                                             <Link
-                                                href="#register-exhibitor"
+                                                href="/exhibitor"
                                                 onClick={() => setIsDropdownOpen(false)}
                                                 className="group flex items-center gap-4 px-4 py-4 text-white/90 hover:text-white hover:bg-white/5 rounded-2xl transition-all duration-300"
                                             >
