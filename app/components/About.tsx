@@ -31,7 +31,7 @@ export default function About() {
                     </div>
 
                     <div className="w-full md:w-1/2">
-                        <div className="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-wider text-biro-blue uppercase bg-blue-50 rounded-full">
+                        <div className="inline-block px-3 py-2 mb-4 text-sm font-semibold tracking-wider text-biro-blue uppercase bg-blue-50 rounded-sm">
                             About The Event
                         </div>
                         <h2 className="text-4xl md:text-6xl font-black font-righteous text-gray-900 mb-6 leading-tight">

@@ -57,6 +57,8 @@ export default function Registration() {
                                     <option>Developer</option>
                                     <option>Designer</option>
                                     <option>Founder / Student</option>
+                                    <option>Volunteer</option>
+                                    <option>Sponsor</option>
                                     <option>Brand / Organization</option>
                                     <option>Other</option>
                                 </select>

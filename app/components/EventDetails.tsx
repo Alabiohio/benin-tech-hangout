@@ -4,7 +4,7 @@ export default function EventDetails() {
             <div className="absolute inset-0 bg-gradient-to-r from-biro-blue-dark via-black to-biro-blue-dark opacity-100"></div>
             <div className="container mx-auto px-6 py-12 relative z-10">
                 <div
-                    className="bg-white/5 backdrop-blur-xl rounded-[2.5rem] border border-white/10 p-8 md:px-16 md:py-12 shadow-2xl flex flex-col md:flex-row justify-center items-center gap-12 md:gap-24"
+                    className="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8 md:px-16 md:py-12 shadow-2xl flex flex-col md:flex-row justify-center items-center gap-12 md:gap-24"
                 >
                     {/* Location Block */}
                     <div className="flex items-center gap-6 group">

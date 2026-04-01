@@ -27,7 +27,7 @@ export default function Navbar() {
         <header 
             className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-in-out ${
                 scrolled 
-                    ? 'bg-white/80 backdrop-blur-xl shadow-lg border-b border-gray-100 py-1' 
+                    ? 'bg-white/80 backdrop-blur-xl py-1' 
                     : 'bg-transparent py-2'
             }`}
         >
@@ -78,8 +78,8 @@ export default function Navbar() {
                     {/* Mobile Menu Toggle */}
                     <button 
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        className={`lg:hidden p-2 rounded-full transition-colors duration-300 ${
-                            isMenuOpen || scrolled ? 'bg-slate-100 text-biro-blue' : 'bg-white/10 text-white backdrop-blur-sm'
+                        className={`lg:hidden p-2 cursor-pointer transition-colors duration-300 ${
+                            isMenuOpen || scrolled ? 'text-biro-blue' : 'text-white'
                         }`}
                         aria-label="Toggle Menu"
                     >
@@ -93,18 +93,12 @@ export default function Navbar() {
                             strokeWidth="2.5" 
                             strokeLinecap="round" 
                             strokeLinejoin="round"
+                            className="transition-transform duration-300"
                         >
                             {isMenuOpen ? (
-                                <>
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </>
+                                <path d="M18 6L6 18M6 6l12 12" />
                             ) : (
-                                <>
-                                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                                </>
+                                <path d="M3 7h18M3 12h14M3 17h18" />
                             )}
                         </svg>
                     </button>
@@ -137,7 +131,7 @@ export default function Navbar() {
                             onClick={() => setIsMenuOpen(false)}
                             className="p-2 rounded-full bg-slate-100 text-slate-500 hover:text-biro-blue transition-colors"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
                         </button>
                     </div>
 

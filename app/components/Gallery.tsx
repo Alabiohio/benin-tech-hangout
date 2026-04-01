@@ -14,9 +14,7 @@ export default function Gallery() {
                 <div className="flex flex-col lg:flex-row items-center gap-16">
                     {/* Content Section */}
                     <div className="lg:w-1/2">
-                        <div
-                            className="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-wider text-biro-blue uppercase bg-blue-50 rounded-full"
-                        >
+                        <div className="inline-block px-3 py-2 mb-4 text-sm font-semibold tracking-wider text-biro-blue uppercase bg-blue-50 rounded-sm">
                             A Look Back
                         </div>
                         <h2

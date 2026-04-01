@@ -54,7 +54,7 @@ export default function VisionMission() {
                     <div
                         data-aos="fade-left"
                         data-aos-delay="200"
-                        className="group relative bg-white/10 backdrop-blur-xl rounded-[2.5rem] p-10 md:p-14 border border-white/20 shadow-2xl overflow-hidden transition-all duration-500 hover:border-white/40"
+                        className="group relative bg-white/10 backdrop-blur-xl rounded-[1.5rem] p-10 md:p-14 border border-white/20 shadow-2xl overflow-hidden transition-all duration-500 hover:border-white/40"
                     >
                         {/* Glass reflection effect */}
                         <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/10 to-transparent pointer-events-none rounded-t-[2.5rem]"></div>

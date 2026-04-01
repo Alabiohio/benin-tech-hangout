@@ -25,9 +25,7 @@ export default function WhatToExpect() {
             <div className="container mx-auto px-6">
                 <div className="flex flex-col lg:flex-row gap-16 items-center">
                     <div className="lg:w-1/2">
-                        <div
-                            className="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-wider text-biro-blue uppercase bg-blue-50 rounded-full"
-                        >
+                        <div className="inline-block px-3 py-2 mb-4 text-sm font-semibold tracking-wider text-biro-blue uppercase bg-blue-50 rounded-sm">
                             The Experience
                         </div>
                         <h2
