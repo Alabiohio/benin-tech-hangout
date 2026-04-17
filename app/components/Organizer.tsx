@@ -12,7 +12,7 @@ export default function Organizer() {
                             src="/Proline logo_035534.png"
                             alt="Proline Groups Logo"
                             fill
-                            className="object-contain opacity-80"
+                            className="object-contain"
                         />
                     </div>
                     <h3 className="text-xl font-black font-righteous text-white mb-2 uppercase tracking-wider">Proline Groups</h3>
