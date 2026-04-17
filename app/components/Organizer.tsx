@@ -15,10 +15,6 @@ export default function Organizer() {
                             className="object-contain"
                         />
                     </div>
-                    <h3 className="text-xl font-black font-righteous text-white mb-2 uppercase tracking-wider">Proline Groups</h3>
-                    <p className="text-blue-100/60 font-medium">
-                        Driving tech excellence and community growth in Benin City.
-                    </p>
                 </div>
             </div>
         </section>

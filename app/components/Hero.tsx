@@ -85,7 +85,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                             <span className="block whitespace-nowrap" data-aos="fade-left" data-aos-delay="300">
                                 HANGOUT <span
                                     className="text-transparent"
-                                    style={{ WebkitTextStroke: '2px rgba(251,191,36,0.6)' }}
+                                    style={{ WebkitTextStroke: '3px rgba(251,191,36,1)' }}
                                 >2.0</span>
                             </span>
                         </h1>
@@ -102,6 +102,9 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                             </div>
                             <div className="flex items-center gap-1.5 px-3 md:px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] md:text-sm font-bold text-white/70 whitespace-nowrap">
                                 <span>📅</span> Oct 2, 2026
+                            </div>
+                            <div className="flex items-center gap-1.5 px-3 md:px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] md:text-sm font-bold text-white/70 whitespace-nowrap">
+                                <span>🎟</span> Free & Paid Passes Available
                             </div>
                         </div>
 
@@ -121,7 +124,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                             </button>
 
                             <Link
-                                href="#sponsors"
+                                href="/sponsor"
                                 className="w-full sm:w-auto relative px-10 py-4 bg-white/5 backdrop-blur-xl text-white border border-white/20 text-base font-black rounded-2xl group transition-all hover:bg-white/10 hover:-translate-y-1 active:translate-y-0 text-center flex items-center justify-center"
                             >
                                 <span className="flex items-center gap-3 uppercase tracking-widest">
@@ -156,7 +159,9 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                             <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/30 via-transparent to-[#020617]/30"></div>
                         </div>
 
-                        {/* Floating Stat: Attendees */}
+                        {/* FLOATING PILLS FLOATING PILLS FLOATING PILLS
+
+                        Floating Stat: Attendees 
                         <div className="absolute top-40 left-30 z-20 animate-[float_5s_ease-in-out_infinite]">
                             <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 shadow-2xl min-w-[160px]">
                                 <div className="flex items-center gap-3 mb-2">
@@ -165,8 +170,9 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                                 <p className="text-white/50 text-xs font-bold uppercase tracking-wider mt-1">Expected Attendees</p>
                             </div>
                         </div>
+                         */}
 
-                        {/* Floating Stat: Communities */}
+                        {/* Floating Stat: Communities 
                         <div className="absolute top-65 left-8 z-20 animate-[float_7s_ease-in-out_1s_infinite]">
                             <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 shadow-2xl min-w-[150px]">
                                 <div className="flex items-center gap-3 mb-2">
@@ -176,8 +182,9 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                                 <p className="text-white/50 text-xs font-bold uppercase tracking-wider mt-1">Communities</p>
                             </div>
                         </div>
+                         */}
 
-                        {/* Floating Stat: Free Passes */}
+                        {/* Floating Stat: Free Passes 
                         <div className="absolute bottom-[220px] left-[-10px] z-20 animate-[float_6s_ease-in-out_0.5s_infinite]">
                             <div className="bg-highlight-yellow/10 backdrop-blur-md border border-highlight-yellow/30 rounded-2xl p-4 shadow-2xl">
                                 <div className="flex items-center gap-3 mb-1">
@@ -187,8 +194,9 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                                 <p className="text-white/50 text-xs font-bold uppercase tracking-wider mt-1">Available Now</p>
                             </div>
                         </div>
+                         */}
 
-                        {/* Floating Stat: Startup Pitch */}
+                        {/* Floating Stat: Startup Pitch 
                         <div className="absolute bottom-32 left-16 z-20 animate-[float_5.5s_ease-in-out_2s_infinite]">
                             <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 shadow-2xl min-w-[140px]">
                                 <div className="text-xl mb-1">💡</div>
@@ -196,15 +204,15 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                                 <p className="text-white/40 text-[10px] font-bold uppercase tracking-wider mt-0.5">Apply Now</p>
                             </div>
                         </div>
+                         */}
 
-                        {/* Date card floating top-right of image */}
-                        <div className="absolute top-8 right-0 z-20 animate-[float_8s_ease-in-out_3s_infinite]">
+                        {/* Date card floating top-right of image 
+                        <div className="absolute top-8 right-[-9] z-20 animate-[float_8s_ease-in-out_3s_infinite]">
                             <div className="bg-biro-blue/80 backdrop-blur-md border border-white/20 rounded-2xl p-5 shadow-2xl text-center min-w-[130px]">
-                                <p className="text-white/60 text-[10px] font-black uppercase tracking-widest mb-1">Event Date</p>
-                                <p className="text-white text-3xl font-black font-righteous leading-none">02</p>
-                                <p className="text-highlight-yellow text-sm font-black uppercase tracking-widest">Oct 2026</p>
+                                <p className="text-white text-3xl font-black font-righteous leading-none">02  <span className="text-highlight-yellow text-sm font-black uppercase tracking-widest">Oct 2026</span></p>                              
                             </div>
                         </div>
+                         */}
 
                         {/* Decorative glow blob */}
                         <div className="absolute -z-10 top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-biro-blue/20 blur-[100px] rounded-full animate-pulse"></div>
@@ -213,7 +221,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
             </div>
 
             {/* ─── MARQUEE TICKER ─── */}
-            <div className="absolute bottom-0 left-0 w-full overflow-hidden bg-highlight-yellow text-biro-blue-dark py-3 z-30">
+            <div className="absolute bottom-20 left-0 w-full overflow-hidden bg-highlight-yellow text-biro-blue-dark py-3 z-30">
                 <div className="flex whitespace-nowrap animate-[scroll_25s_linear_infinite]">
                     {[1, 2, 3, 4].map((v) => (
                         <div key={v} className="flex items-center space-x-10 px-8 font-black font-righteous tracking-wider uppercase text-sm">

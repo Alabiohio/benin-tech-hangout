@@ -23,6 +23,7 @@ import Footer from "./components/Footer";
 import BackgroundWrapper from "./components/BackgroundWrapper";
 import GuessSpeakers from "./components/GuessSpeakers";
 import Link from 'next/link';
+import PartnerCTA from "./components/PartnerCTA";
 
 export default function Home() {
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
@@ -37,16 +38,15 @@ export default function Home() {
                 <Tickets onRegisterClick={() => setIsRegisterModalOpen(true)} />
                 <EventDetails />
                 <Countdown />
-                <Partners />
                 <About />
+                <Partners />
                 <WhyAttend onRegisterClick={() => setIsRegisterModalOpen(true)} />
                 <WhatToExpect isModalOpen={isRegisterModalOpen} setIsModalOpen={setIsRegisterModalOpen} />
                 <Legacy />
                 <GuessSpeakers />
                 <Roadmap onRegisterClick={() => setIsRegisterModalOpen(true)} />
+                <PartnerCTA />
                 <StartupPitch />
-                <FAQ />
-
                 {/* Final CTA Section */}
                 <section className="py-32 bg-gradient-to-br from-[#050A1F] to-[#01030A] relative text-center overflow-hidden isolate border-t border-white/[0.02]">
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-highlight-yellow/10 rounded-full blur-[100px] pointer-events-none -z-10"></div>
@@ -66,6 +66,7 @@ export default function Home() {
                     {/* Decorative grid */}
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4px_4px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none -z-20"></div>
                 </section>
+                <FAQ />
 
                 <Organizer />
             </main>

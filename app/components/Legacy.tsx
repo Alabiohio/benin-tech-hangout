@@ -62,7 +62,7 @@ export default function Legacy() {
 
                         <div className="space-y-6 text-lg text-white/60 leading-relaxed mb-10">
                             <p>
-                                Benin Tech Hangout 1.0 was a landmark moment for our city, bringing together a diverse community of innovators and builders. It sparked real connections across the ecosystem.
+                                Benin Tech Hangout 1.0 brought together a diverse community of innovators and builders. It sparked real connections across the ecosystem.
                             </p>
                             <p className="font-bold text-white italic border-l-4 border-highlight-yellow pl-4">
                                 It proved one thing: Benin is ready for the future.
@@ -141,7 +141,9 @@ export default function Legacy() {
                         {[
                             { name: "Uche Eze", role: "CEO, Eki Technologies", image: "/past/speaker1.jpeg" },
                             { name: "Teddy Eragbai", role: "TVET Communication Advisor, ForbesBLK Member", image: "/past/speaker2.jpeg" },
-                            { name: "Omokaro Osayi", role: "Founder, Treskaro & Father Startups", image: "/past/speaker3.jpg" }
+                            { name: "Omokaro Osayi", role: "Founder, Treskaro & Father Startups", image: "/past/speaker3.jpg" },
+                            { name: "Nwachukwu Justin Jr", role: "Lead, SuperteamNG Edo State, Founder, Breeeve & Ravolo", image: "/past/speaker5.jpeg" },
+                            { name: "Past Speaker", role: "Tech Leader", image: "/past/speaker4.jpeg" }
                         ].map((speaker, idx) => (
                             <div
                                 key={idx}
@@ -168,10 +170,10 @@ export default function Legacy() {
 
                     {/* Segmented Dot Indicator */}
                     <div className="flex justify-center gap-3 mt-4" data-aos="fade-up">
-                        {[0, 1, 2].map((i) => (
+                        {[0, 1, 2, 3, 4].map((i) => (
                             <div
                                 key={i}
-                                className={`h-1.5 rounded-full transition-all duration-500 ${Math.round((scrollProgress / 100) * 2) === i
+                                className={`h-1.5 rounded-full transition-all duration-500 ${Math.round((scrollProgress / 100) * 4) === i
                                     ? "w-8 bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]"
                                     : "w-2 bg-white/10"
                                     }`}

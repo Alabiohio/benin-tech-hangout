@@ -14,21 +14,12 @@ const ticketTiers = [
     },
     {
         name: "Builders Pass",
-        price: "₦10,000",
-        features: [
-            "Priority access",
-            "Exclusive sessions",
-            "Premium networking"
-        ],
-        highlight: false,
-    },
-    {
-        name: "VIP Ticket",
         price: "₦15,000",
         features: [
             "Priority seating",
             "VIP access",
             "Exclusive sessions",
+            "Branded Merch",
             "Refreshments",
             "Exclusive networking opportunities"
         ],
@@ -42,6 +33,7 @@ const ticketTiers = [
             "Connect with investors",
             "Access high-level sessions",
             "Access to Speakers",
+            "Branded Merch",
             "Investors and Mentorship Program",
             "Refreshment with your PA"
         ],
@@ -65,11 +57,11 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
                     </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+                <div className="flex flex-wrap justify-center gap-10 max-w-7xl mx-auto">
                     {ticketTiers.map((tier, idx) => (
                         <div
                             key={idx}
-                            className={`relative p-10 rounded-[2.5rem] border backdrop-blur-xl flex flex-col group hover:-translate-y-2 transition-transform duration-500 ${tier.highlight ? 'border-blue-500/50 bg-gradient-to-b from-blue-600/10 to-[#0A0F24]/80 shadow-[0_0_30px_rgba(59,130,246,0.15)] z-10 scale-100 hover:scale-105' : 'border-white/10 bg-[#0A0F24]/60 hover:border-white/20 hover:bg-[#0A0F24] shadow-2xl'}`}
+                            className={`w-full md:w-[380px] relative p-10 rounded-[2.5rem] border backdrop-blur-xl flex flex-col group hover:-translate-y-2 transition-transform duration-500 ${tier.highlight ? 'border-blue-500/50 bg-gradient-to-b from-blue-600/10 to-[#0A0F24]/80 shadow-[0_0_30px_rgba(59,130,246,0.15)] z-10 scale-100 hover:scale-105' : 'border-white/10 bg-[#0A0F24]/60 hover:border-white/20 hover:bg-[#0A0F24] shadow-2xl'}`}
                         >
                             {/* Accent Glow on Hover */}
                             <div className="absolute inset-0 bg-white/0 group-hover:bg-white/[0.02] transition-colors rounded-[2.5rem] pointer-events-none"></div>
