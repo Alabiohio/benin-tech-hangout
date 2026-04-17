@@ -221,7 +221,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
             </div>
 
             {/* ─── MARQUEE TICKER ─── */}
-            <div className="absolute bottom-20 left-0 w-full overflow-hidden bg-highlight-yellow text-biro-blue-dark py-3 z-30">
+            <div className="absolute bottom-10 left-0 w-full overflow-hidden bg-highlight-yellow text-biro-blue-dark py-3 z-30">
                 <div className="flex whitespace-nowrap animate-[scroll_25s_linear_infinite]">
                     {[1, 2, 3, 4].map((v) => (
                         <div key={v} className="flex items-center space-x-10 px-8 font-black font-righteous tracking-wider uppercase text-sm">
