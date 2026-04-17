@@ -97,15 +97,12 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
 
                         {/* Info pills */}
                         <div className="flex flex-row items-center justify-center lg:justify-start gap-2 md:gap-3 mb-8" data-aos="fade-up" data-aos-delay="500">
-                            <div className="flex items-center gap-1.5 px-3 md:px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] md:text-sm font-bold text-white/70 whitespace-nowrap">
+                            <div className="flex items-center px-3 md:px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] md:text-sm font-bold text-white/70 whitespace-nowrap">
                                 <span>📍</span> Benin City, Edo State
                             </div>
-                            <div className="flex items-center gap-1.5 px-3 md:px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] md:text-sm font-bold text-white/70 whitespace-nowrap">
+                            <div className="flex items-center px-3 md:px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] md:text-sm font-bold text-white/70 whitespace-nowrap">
                                 <span>📅</span> Oct 2, 2026
-                            </div>
-                            <div className="flex items-center gap-1.5 px-3 md:px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] md:text-sm font-bold text-white/70 whitespace-nowrap">
-                                <span>🎟</span> Free & Paid Passes Available
-                            </div>
+                            </div>                         
                         </div>
 
                         {/* CTA Buttons */}
