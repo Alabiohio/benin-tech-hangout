@@ -35,11 +35,11 @@ export default function Home() {
             <main className="flex-grow relative z-10">
                 <Hero onRegisterClick={() => setIsRegisterModalOpen(true)} />
                 <Highlights />
-                <Tickets onRegisterClick={() => setIsRegisterModalOpen(true)} />
                 <EventDetails />
                 <Countdown />
-                <About />
                 <Partners />
+                <About />
+                <Tickets onRegisterClick={() => setIsRegisterModalOpen(true)} />
                 <WhyAttend onRegisterClick={() => setIsRegisterModalOpen(true)} />
                 <WhatToExpect isModalOpen={isRegisterModalOpen} setIsModalOpen={setIsRegisterModalOpen} />
                 <Legacy />
