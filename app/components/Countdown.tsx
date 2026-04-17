@@ -77,7 +77,7 @@ export default function Countdown() {
                     <div className="w-24 h-1 bg-highlight-yellow mx-auto rounded-full"></div>
                 </div>
 
-                <div className="flex items-center justify-center gap-3 md:gap-10" data-aos="zoom-in">
+                <div className="flex items-center justify-center gap-3 md:gap-10">
                     <TimeUnit value={timeLeft.days} label="Days" />
                     <TimeUnit value={timeLeft.hours} label="Hours" />
                     <TimeUnit value={timeLeft.minutes} label="Minutes" />
