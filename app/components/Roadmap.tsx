@@ -53,16 +53,16 @@ const roadmapData = [
         month: "September",
         title: "Campus Tech Tour",
         description: "Inspiring the next generation of tech talent across universities.",
-        gradient: "from-orange-500 to-yellow-500",
-        borderColor: "border-orange-500",
-        shadowColor: "shadow-orange-500/20",
+        gradient: "from-blue-600 to-red-700",
+        borderColor: "border-blue-500",
+        shadowColor: "shadow-blue-500/20",
         icon: "🎓"
     },
     {
         month: "October 2nd",
         title: "Main Event — The Ecosystem Convergence",
         description: "The definitive gathering where innovation meets opportunity.",
-        gradient: "from-highlight-yellow to-yellow-300",
+        gradient: "from-highlight-yellow to-red-400",
         borderColor: "border-highlight-yellow",
         shadowColor: "shadow-highlight-yellow/40",
         icon: "✨",
@@ -77,8 +77,8 @@ const gradientMap: Record<string, [string, string]> = {
     'from-purple-600 to-pink-600': ['#9333ea', '#db2777'],
     'from-pink-600 to-rose-600': ['#db2777', '#e11d48'],
     'from-rose-600 to-orange-500': ['#e11d48', '#f97316'],
-    'from-orange-500 to-yellow-500': ['#f97316', '#eab308'],
-    'from-highlight-yellow to-yellow-300': ['#FBBF24', '#fde047'],
+    'from-blue-600 to-red-700': ['#2563eb', '#b91c1c'],
+    'from-highlight-yellow to-red-400': ['#b91c1c', '#f87171'],
 };
 
 interface RoadmapItem {

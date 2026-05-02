@@ -1,51 +1,43 @@
 export default function EventDetails() {
     return (
-        <section className="relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-biro-blue-dark via-black to-biro-blue-dark opacity-100"></div>
+        <section className="relative overflow-hidden bg-white">
             <div className="container mx-auto px-6 py-12 relative z-10">
-                <div
-                    className="bg-white/5 backdrop-blur-md rounded-3xl border border-white/10 p-8 md:px-16 md:py-12 shadow-2xl flex flex-col md:flex-row justify-center items-center gap-12 md:gap-24"
-                >
-                    {/* Location Block */}
+                <div className="bg-[#f8fbff] rounded-3xl border border-blue-100 p-8 md:px-16 md:py-12 flex flex-col md:flex-row justify-center items-center gap-12 md:gap-24">
                     <div className="flex items-center gap-6 group">
-                        <div className="w-16 h-16 rounded-[1.25rem] bg-white/5 border border-white/10 flex items-center justify-center text-3xl group-hover:scale-110 group-hover:bg-biro-blue/20 transition-all duration-300 shadow-inner">
+                        <div className="w-16 h-16 rounded-[1.25rem] bg-white border border-blue-100 flex items-center justify-center text-3xl transition-all duration-300">
                             📍
                         </div>
                         <div>
-                            <p className="text-blue-400 text-xs font-black font-righteous uppercase tracking-[0.2em] mb-1.5">Location</p>
-                            <p className="font-bold text-2xl text-white tracking-tight">Benin City, Edo State</p>
-                            <div className="mt-2 h-0.5 w-8 bg-highlight-yellow/40 rounded-full group-hover:w-full transition-all duration-500"></div>
+                            <p className="text-biro-blue text-xs font-black font-righteous uppercase tracking-[0.2em] mb-1.5">Location</p>
+                            <p className="font-bold text-2xl text-biro-blue-dark tracking-tight">Benin City, Edo State</p>
+                            <div className="mt-2 h-0.5 w-8 bg-highlight-yellow/60 rounded-full"></div>
                         </div>
                     </div>
 
-                    {/* Designer Divider */}
-                    <div className="h-20 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent hidden md:block"></div>
-                    <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent md:hidden"></div>
+                    <div className="h-20 w-px bg-blue-100 hidden md:block"></div>
+                    <div className="w-full h-px bg-blue-100 md:hidden"></div>
 
-                    {/* Date Block */}
                     <div className="flex items-center gap-6 group">
-                        <div className="w-16 h-16 rounded-[1.25rem] bg-white/5 border border-white/10 flex items-center justify-center text-3xl group-hover:scale-110 group-hover:bg-biro-blue/20 transition-all duration-300 shadow-inner">
+                        <div className="w-16 h-16 rounded-[1.25rem] bg-white border border-blue-100 flex items-center justify-center text-3xl transition-all duration-300">
                             📅
                         </div>
                         <div>
-                            <p className="text-blue-400 text-xs font-black font-righteous uppercase tracking-[0.2em] mb-1.5">Date</p>
-                            <p className="font-bold text-2xl text-white tracking-tight">October 2, 2026</p>
+                            <p className="text-biro-blue text-xs font-black font-righteous uppercase tracking-[0.2em] mb-1.5">Date</p>
+                            <p className="font-bold text-2xl text-biro-blue-dark tracking-tight">October 2, 2026</p>
                         </div>
                     </div>
 
-                    {/* Designer Divider */}
-                    <div className="h-20 w-px bg-gradient-to-b from-transparent via-white/20 to-transparent hidden md:block"></div>
-                    <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent md:hidden"></div>
+                    <div className="h-20 w-px bg-blue-100 hidden md:block"></div>
+                    <div className="w-full h-px bg-blue-100 md:hidden"></div>
 
-                    {/* Access Block */}
                     <div className="flex items-center gap-6 group">
-                        <div className="w-16 h-16 rounded-[1.25rem] bg-white/5 border border-white/10 flex items-center justify-center text-3xl group-hover:scale-110 group-hover:bg-biro-blue/20 transition-all duration-300 shadow-inner">
+                        <div className="w-16 h-16 rounded-[1.25rem] bg-white border border-blue-100 flex items-center justify-center text-3xl transition-all duration-300">
                             🎟️
                         </div>
                         <div>
-                            <p className="text-blue-400 text-xs font-black font-righteous uppercase tracking-[0.2em] mb-1.5">Access</p>
-                            <p className="font-bold text-2xl text-white tracking-tight">Free & Paid Passes</p>
-                            <p className="text-sm text-blue-200/50 mt-1 font-medium italic">Available now</p>
+                            <p className="text-biro-blue text-xs font-black font-righteous uppercase tracking-[0.2em] mb-1.5">Access</p>
+                            <p className="font-bold text-2xl text-biro-blue-dark tracking-tight">Free & Paid Passes</p>
+                            <p className="text-sm text-slate-500 mt-1 font-medium italic">Available now</p>
                         </div>
                     </div>
                 </div>

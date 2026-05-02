@@ -1,6 +1,25 @@
 "use client";
 
-import { useMemo, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
+
+const STATIC_GLOWS = [
+    { top: "8%", left: "12%", size: "4px", duration: "5s", delay: "0s", color: "#1d4ed8", speed: "0.11" },
+    { top: "18%", left: "72%", size: "5px", duration: "6s", delay: "0.6s", color: "#b91c1c", speed: "0.14" },
+    { top: "32%", left: "28%", size: "3px", duration: "4s", delay: "1.2s", color: "#1d4ed8", speed: "0.09" },
+    { top: "46%", left: "84%", size: "4px", duration: "5s", delay: "0.8s", color: "#1d4ed8", speed: "0.1" },
+    { top: "58%", left: "14%", size: "5px", duration: "7s", delay: "0.3s", color: "#b91c1c", speed: "0.12" },
+    { top: "70%", left: "56%", size: "3px", duration: "4.5s", delay: "1.4s", color: "#1d4ed8", speed: "0.08" },
+    { top: "88%", left: "34%", size: "4px", duration: "6.5s", delay: "0.2s", color: "#1d4ed8", speed: "0.1" },
+    { top: "96%", left: "78%", size: "5px", duration: "5.2s", delay: "1s", color: "#b91c1c", speed: "0.13" },
+];
+
+const ATMOSPHERE = [
+    { top: "5%", left: "-8%", size: "260px", color: "rgba(29, 78, 216, 0.05)", speed: "0.03" },
+    { top: "18%", left: "74%", size: "300px", color: "rgba(185, 28, 28, 0.04)", speed: "0.04" },
+    { top: "42%", left: "24%", size: "220px", color: "rgba(29, 78, 216, 0.04)", speed: "0.02" },
+    { top: "68%", left: "82%", size: "280px", color: "rgba(29, 78, 216, 0.05)", speed: "0.03" },
+    { top: "92%", left: "10%", size: "240px", color: "rgba(185, 28, 28, 0.03)", speed: "0.02" },
+];
 
 export default function Global3DBackground() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -24,59 +43,16 @@ export default function Global3DBackground() {
         return () => cancelAnimationFrame(rafId);
     }, []);
 
-    // Generate static random positions for "glowing things"
-    const staticGlows = useMemo(() => {
-        return Array.from({ length: 60 }).map((_, i) => ({ // Reduced from 80
-            id: i,
-            top: (Math.random() * 1200 - 100).toFixed(2) + "%",
-            left: (Math.random() * 100).toFixed(2) + "%",
-            size: (Math.random() * 3 + 1.5).toFixed(1) + "px",
-            duration: (Math.random() * 4 + 2).toFixed(1) + "s",
-            delay: (Math.random() * 5).toFixed(1) + "s",
-            color: i % 2 === 0 ? "#ffd700" : "#ffffff",
-            speed: (Math.random() * 0.4 + 0.1).toFixed(3), // Parallax speed
-        }));
-    }, []);
-
-    // Large soft background atmosphere
-    const atmosphere = useMemo(() => {
-        return Array.from({ length: 10 }).map((_, i) => ({ // Reduced from 12
-            id: i,
-            top: (Math.random() * 1200 - 100).toFixed(2) + "%",
-            left: (Math.random() * 100).toFixed(2) + "%",
-            size: (Math.random() * 600 + 400).toFixed(0) + "px",
-            color: i % 2 === 0 ? "rgba(28, 57, 187, 0.04)" : "rgba(255, 215, 0, 0.02)",
-            speed: (Math.random() * 0.12 + 0.03).toFixed(3), // Slow parallax
-        }));
-    }, []);
-
-    // New: Bigger Blurred Glows (Star-like but soft)
-    const largerBlurredGlows = useMemo(() => {
-        return Array.from({ length: 20 }).map((_, i) => ({ // Reduced from 25
-            id: i,
-            top: (Math.random() * 1200 - 100).toFixed(2) + "%",
-            left: (Math.random() * 100).toFixed(2) + "%",
-            size: (Math.random() * 80 + 40).toFixed(0) + "px",
-            blur: (Math.random() * 15 + 10).toFixed(1) + "px",
-            duration: (Math.random() * 5 + 3).toFixed(1) + "s",
-            delay: (Math.random() * 5).toFixed(1) + "s",
-            color: i % 2 === 0 ? "#ffd700" : "#1c39bb",
-            opacity: (Math.random() * 0.15 + 0.05).toFixed(2),
-            speed: (Math.random() * 0.3 + 0.1).toFixed(3), // Moderate parallax
-        }));
-    }, []);
-
     return (
         <div
             ref={containerRef}
             className="fixed inset-0 z-0 pointer-events-none bg-white overflow-hidden"
             style={{ '--scroll-y': '0px' } as React.CSSProperties}
         >
-            {/* Soft Ambient Atmosphere */}
-            {atmosphere.map((blob) => (
+            {ATMOSPHERE.map((blob, index) => (
                 <div
-                    key={`atmos-${blob.id}`}
-                    className="absolute rounded-full blur-[120px]"
+                    key={`atmos-${index}`}
+                    className="absolute rounded-full"
                     style={{
                         top: blob.top,
                         left: blob.left,
@@ -89,33 +65,10 @@ export default function Global3DBackground() {
                 />
             ))}
 
-            {/* Larger Blurred Glows */}
-            {largerBlurredGlows.map((glow) => (
+            {STATIC_GLOWS.map((glow, index) => (
                 <div
-                    key={`large-glow-${glow.id}`}
-                    className="absolute animate-pulse"
-                    style={{
-                        top: glow.top,
-                        left: glow.left,
-                        width: glow.size,
-                        height: glow.size,
-                        backgroundColor: glow.color,
-                        filter: `blur(${glow.blur})`,
-                        borderRadius: "50%",
-                        transform: `translate3d(0, calc(var(--scroll-y) * -${glow.speed}), 0)`,
-                        opacity: glow.opacity,
-                        animationDuration: glow.duration,
-                        animationDelay: glow.delay,
-                        willChange: "transform",
-                    }}
-                />
-            ))}
-
-            {/* "Glowing things" - Twinkling orbs */}
-            {staticGlows.map((glow) => (
-                <div
-                    key={`glow-${glow.id}`}
-                    className="absolute rounded-full animate-pulse shadow-[0_0_8px_rgba(255,255,255,0.5)]"
+                    key={`glow-${index}`}
+                    className="absolute rounded-full animate-pulse"
                     style={{
                         top: glow.top,
                         left: glow.left,
@@ -125,7 +78,7 @@ export default function Global3DBackground() {
                         transform: `translate3d(0, calc(var(--scroll-y) * -${glow.speed}), 0)`,
                         animationDuration: glow.duration,
                         animationDelay: glow.delay,
-                        opacity: 0.5,
+                        opacity: 0.2,
                         willChange: "transform",
                     }}
                 />

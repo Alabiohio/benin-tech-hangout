@@ -2,10 +2,10 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
-  --biro-blue: #1c39bb;
-  --biro-blue-dark: #12247a;
-  --highlight-yellow: #ffd700;
+  --foreground: #14213d;
+  --biro-blue: #1d4ed8;
+  --biro-blue-dark: #0f2f6b;
+  --signal-red: #b91c1c;
 }
 
 @theme inline {
@@ -13,7 +13,7 @@
   --color-foreground: var(--foreground);
   --color-biro-blue: var(--biro-blue);
   --color-biro-blue-dark: var(--biro-blue-dark);
-  --color-highlight-yellow: var(--highlight-yellow);
+  --color-highlight-yellow: var(--signal-red);
   --font-righteous: var(--font-righteous-google), cursive;
   --font-andika: var(--font-andika-google), sans-serif;
   --font-sans: var(--font-andika);
@@ -56,8 +56,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #14213d;
   }
 }
 
@@ -71,7 +71,29 @@ body {
 }
 
 .mission-bg-overlay {
-  background-image: linear-gradient(to bottom right, rgba(28, 57, 187, 0.7), rgba(18, 36, 122, 0.7), rgba(0, 0, 0, 0.5));
+  background: rgba(15, 47, 107, 0.82);
+}
+
+[class*="shadow"] {
+  box-shadow: none !important;
+}
+
+[class*="drop-shadow"] {
+  filter: none !important;
+}
+
+[class*="bg-gradient"],
+[class*="gradient-to"] {
+  background-image: none !important;
+}
+
+[class*="bg-clip-text"] {
+  -webkit-text-fill-color: currentColor !important;
+  background-image: none !important;
+}
+
+[class*="text-transparent"] {
+  color: var(--biro-blue) !important;
 }
 
 @utility no-scrollbar {

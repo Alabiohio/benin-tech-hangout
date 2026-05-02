@@ -5,27 +5,15 @@ import Link from "next/link";
 
 export default function SpeakerRegistrationPage() {
     return (
-        <div className="flex min-h-screen flex-col font-sans relative bg-[#020617]">
+        <div className="flex min-h-screen flex-col font-sans relative bg-[#f8fbff]">
             <BackgroundWrapper />
             <Navbar />
             <main className="flex-grow relative z-10 pt-24 md:pt-32 pb-16">
-                
                 <section className="relative overflow-hidden py-12">
-                    {/* Background Decorative Glows */}
-                    <div className="absolute inset-0 z-0 pointer-events-none">
-                        <div className="absolute top-[-10%] right-[-5%] w-[50%] h-[50%] bg-blue-500/10 rounded-full blur-[120px] opacity-60 animate-pulse"></div>
-                        <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-500/10 rounded-full blur-[100px] opacity-50 animate-pulse"></div>
-                    </div>
-
                     <div className="container mx-auto px-6 relative z-10">
                         <div className="max-w-6xl mx-auto">
-                            
-                            {/* Back Button */}
                             <div className="mb-10" data-aos="fade-right">
-                                <Link 
-                                    href="/" 
-                                    className="inline-flex items-center gap-2 text-blue-400 font-bold hover:text-white transition-colors group"
-                                >
+                                <Link href="/" className="inline-flex items-center gap-2 text-biro-blue font-bold hover:text-highlight-yellow transition-colors group">
                                     <svg className="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                                     </svg>
@@ -33,26 +21,19 @@ export default function SpeakerRegistrationPage() {
                                 </Link>
                             </div>
 
-                            {/* Page Header */}
                             <div className="text-center mb-16" data-aos="fade-up">
-                                <h1 className="text-5xl md:text-7xl font-black font-righteous text-black mb-6 leading-tight italic">
-                                    Take The <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500">Stage</span>
+                                <h1 className="text-5xl md:text-7xl font-black font-righteous text-biro-blue-dark mb-6 leading-tight">
+                                    Take The <span className="text-biro-blue">Stage</span>
                                 </h1>
-                                <p className="text-lg md:text-xl text-black/70 max-w-2xl mx-auto font-medium leading-relaxed">
-                                    Whether you want to share your expertise or recommend a visionary leader, help us shape the conversations at <span className="text-black font-bold italic">BTH 2.0</span>.
+                                <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto font-medium leading-relaxed">
+                                    Whether you want to share your expertise or recommend a visionary leader, help us shape the conversations at <span className="text-biro-blue-dark font-bold">BTH 2.0</span>.
                                 </p>
                             </div>
 
-                            {/* Main Card */}
-                            <div className="rounded-[2.5rem] overflow-hidden shadow-[0_32px_64px_-16px_rgba(0,0,0,0.7)] border border-white/10 flex flex-col lg:flex-row" data-aos="zoom-in" data-aos-delay="200">
-                                
-                                {/* Left — Benefits Panel (Dark) */}
-                                <div className="lg:w-2/5 p-10 md:p-14 bg-[#0d1526] flex flex-col justify-center text-white relative overflow-hidden">
-                                    <div className="absolute top-0 right-0 w-1 h-full bg-gradient-to-b from-transparent via-blue-500 to-transparent opacity-60"></div>
-                                    <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-blue-600/20 rounded-full blur-[80px]"></div>
-                                    
-                                    <h2 className="text-3xl md:text-4xl font-black mb-6 relative z-10 font-righteous text-white italic">Why Speak at BTH?</h2>
-                                    <p className="text-gray-300 mb-10 leading-relaxed text-lg relative z-10">
+                            <div className="rounded-[2.5rem] overflow-hidden border border-blue-100 flex flex-col lg:flex-row" data-aos="zoom-in" data-aos-delay="200">
+                                <div className="lg:w-2/5 p-10 md:p-14 bg-[#0f2f6b] flex flex-col justify-center text-white relative overflow-hidden">
+                                    <h2 className="text-3xl md:text-4xl font-black mb-6 relative z-10 font-righteous text-white">Why Speak at BTH?</h2>
+                                    <p className="text-blue-100/80 mb-10 leading-relaxed text-lg relative z-10">
                                         Sharing your story at Benin Tech Hangout connects you with thousands of developers, founders, and investors.
                                     </p>
 
@@ -65,34 +46,33 @@ export default function SpeakerRegistrationPage() {
                                             "Professional photography & recordings"
                                         ].map((item, i) => (
                                             <div key={i} className="flex items-start gap-4 group">
-                                                <div className="w-8 h-8 shrink-0 rounded-lg bg-blue-500/20 border border-blue-500/40 text-blue-300 flex items-center justify-center font-bold group-hover:bg-blue-500 group-hover:text-white group-hover:border-blue-500 transition-all">
+                                                <div className="w-8 h-8 shrink-0 rounded-lg bg-white/10 border border-white/15 text-white flex items-center justify-center font-bold transition-all">
                                                     ✓
                                                 </div>
-                                                <span className="text-base font-semibold text-gray-200 leading-tight pt-1">{item}</span>
+                                                <span className="text-base font-semibold text-blue-50 leading-tight pt-1">{item}</span>
                                             </div>
                                         ))}
                                     </div>
-                                    
-                                    <div className="mt-12 p-6 rounded-2xl bg-white/5 border border-white/10 relative z-10">
-                                        <p className="text-sm text-blue-400 font-black uppercase tracking-widest mb-2">Selection Process</p>
-                                        <p className="text-xs text-white/50 leading-relaxed font-bold">
+
+                                    <div className="mt-12 p-6 rounded-2xl bg-white/10 border border-white/10 relative z-10">
+                                        <p className="text-sm text-[#fecaca] font-black uppercase tracking-widest mb-2">Selection Process</p>
+                                        <p className="text-xs text-white/70 leading-relaxed font-bold">
                                             Our editorial team reviews all suggestions and applications. Selected speakers will be contacted via email.
                                         </p>
                                     </div>
                                 </div>
 
-                                {/* Right — Form Panel (White) */}
                                 <div className="lg:w-3/5 p-10 md:p-16 bg-white">
-                                    <h3 className="text-3xl font-black text-gray-900 mb-8 font-righteous italic">Speaker Nomination</h3>
+                                    <h3 className="text-3xl font-black text-biro-blue-dark mb-8 font-righteous">Speaker Nomination</h3>
                                     <form className="space-y-6">
                                         <div className="space-y-2">
-                                            <label className="block text-sm font-bold text-gray-800 uppercase tracking-wider">I am...</label>
+                                            <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">I am...</label>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <label className="flex items-center gap-3 p-4 border-2 border-gray-100 rounded-xl cursor-pointer hover:border-blue-500/50 transition-all has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50/50">
+                                                <label className="flex items-center gap-3 p-4 border border-blue-100 rounded-xl cursor-pointer hover:border-biro-blue transition-all has-[:checked]:border-biro-blue has-[:checked]:bg-blue-50/50">
                                                     <input type="radio" name="application_type" value="self" className="w-5 h-5 accent-blue-600" defaultChecked />
                                                     <span className="font-bold text-gray-900">Applying to speak</span>
                                                 </label>
-                                                <label className="flex items-center gap-3 p-4 border-2 border-gray-100 rounded-xl cursor-pointer hover:border-blue-500/50 transition-all has-[:checked]:border-blue-600 has-[:checked]:bg-blue-50/50">
+                                                <label className="flex items-center gap-3 p-4 border border-blue-100 rounded-xl cursor-pointer hover:border-biro-blue transition-all has-[:checked]:border-biro-blue has-[:checked]:bg-blue-50/50">
                                                     <input type="radio" name="application_type" value="suggest" className="w-5 h-5 accent-blue-600" />
                                                     <span className="font-bold text-gray-900">Suggesting a speaker</span>
                                                 </label>
@@ -101,31 +81,31 @@ export default function SpeakerRegistrationPage() {
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <div className="space-y-2">
-                                                <label className="block text-sm font-bold text-gray-800 uppercase tracking-wider">Your Name</label>
-                                                <input type="text" className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-600 outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" placeholder="John Doe" required />
+                                                <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Your Name</label>
+                                                <input type="text" className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" placeholder="John Doe" required />
                                             </div>
                                             <div className="space-y-2">
-                                                <label className="block text-sm font-bold text-gray-800 uppercase tracking-wider">Your Email</label>
-                                                <input type="email" className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-600 outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" placeholder="john@example.com" required />
+                                                <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Your Email</label>
+                                                <input type="email" className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" placeholder="john@example.com" required />
                                             </div>
                                         </div>
 
                                         <div className="space-y-2">
-                                            <label className="block text-sm font-bold text-gray-800 uppercase tracking-wider">Speaker Name (if suggesting)</label>
-                                            <input type="text" className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-600 outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" placeholder="Name of the person you're suggesting" />
+                                            <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Speaker Name (if suggesting)</label>
+                                            <input type="text" className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" placeholder="Name of the person you're suggesting" />
                                         </div>
 
                                         <div className="space-y-2">
-                                            <label className="block text-sm font-bold text-gray-800 uppercase tracking-wider">Talk Topic / Areas of Expertise</label>
-                                            <input type="text" className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-600 outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" placeholder="e.g. AI, FinTech, Creative Economy, Scaling Tech Roles" required />
+                                            <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Talk Topic / Areas of Expertise</label>
+                                            <input type="text" className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" placeholder="e.g. AI, FinTech, Creative Economy, Scaling Tech Roles" required />
                                         </div>
 
                                         <div className="space-y-2">
-                                            <label className="block text-sm font-bold text-gray-800 uppercase tracking-wider">Why should they/you speak?</label>
-                                            <textarea rows={4} className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 bg-gray-50 focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-600 outline-none transition-all text-gray-900 resize-none font-medium placeholder:text-gray-400" placeholder="Tell us briefly about the impact and relevance..."></textarea>
+                                            <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Why should they/you speak?</label>
+                                            <textarea rows={4} className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 resize-none font-medium placeholder:text-gray-400" placeholder="Tell us briefly about the impact and relevance..."></textarea>
                                         </div>
 
-                                        <button type="submit" className="w-full py-5 bg-blue-600 hover:bg-blue-700 text-white font-black text-xl rounded-2xl hover:shadow-[0_20px_50px_-10px_rgba(37,99,235,0.5)] hover:-translate-y-1 transition-all active:scale-95 shadow-xl font-righteous italic">
+                                        <button type="submit" className="w-full py-5 bg-biro-blue hover:bg-biro-blue-dark text-white font-black text-xl rounded-2xl transition-all active:scale-95 font-righteous">
                                             Submit Nomination
                                         </button>
                                     </form>
