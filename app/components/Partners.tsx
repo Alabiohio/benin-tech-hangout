@@ -20,26 +20,36 @@ const partners = [
 
 export default function Partners() {
     return (
-        <section id="sponsors" className="py-24 bg-white border-y border-gray-100 overflow-hidden">
-            {/* Marquee Ticker */}
-            <div className="relative py-4 bg-gray-50/50">
-                <div className="flex w-max whitespace-nowrap animate-marquee">
-                    {[1, 2, 3, 4].map((set) => (
-                        <div key={set} className="flex gap-10 items-center px-10">
-                            {partners.map((partner, idx) => (
-                                <div key={idx} className="flex items-center transition-all duration-500 cursor-pointer group">
-                                    <div className="relative w-32 h-24 md:w-24 md:h-24 flex items-center justify-center group-hover:scale-110 transition-transform">
-                                        <Image
-                                            src={partner.logo}
-                                            alt={partner.name}
-                                            fill
-                                            className="object-contain"
-                                        />
+        <section id="sponsors" className="py-24 bg-[#f8f9fa] overflow-hidden">
+            <div className="container mx-auto px-2 md:px-4 mb-8">
+                <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight mb-3">Our partners</h2>
+               </div>
+
+            <div className="container mx-auto px-2 md:px-4">
+                <div className="relative py-6 px-2 bg-biro-blue/2 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-r-3 border-biro-blue overflow-hidden">
+                    <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none rounded-l-[2rem]"></div>
+                    <div className="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none rounded-r-[2rem]"></div>
+                    
+                    <div className="flex w-max whitespace-nowrap animate-marquee">
+                        {[1, 2, 3, 4].map((set) => (
+                            <div key={set} className="flex gap-4 items-center px-2">
+                                {partners.map((partner, idx) => (
+                                    <div key={idx} className="flex items-center transition-all duration-300">
+                                        <div className="relative w-30 h-20 md:w-48 md:h-24 flex items-center justify-center bg-white border border-slate-100 rounded-xl p-1 mx-2 shadow-sm hover:shadow-md transition-shadow hover:-translate-y-1">
+                                            <div className="relative w-full h-full">
+                                                <Image
+                                                    src={partner.logo}
+                                                    alt={partner.name}
+                                                    fill
+                                                    className="object-contain"
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
-                    ))}
+                                ))}
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
 

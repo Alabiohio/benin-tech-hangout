@@ -4,13 +4,13 @@ import Link from 'next/link';
 
 export default function WhatToExpect({ setIsModalOpen }: { isModalOpen: boolean, setIsModalOpen: (open: boolean) => void }) {
     const expectations = [
-        { title: "Panels", desc: "Listen to practical conversations from industry experts and ecosystem leaders.", tone: "bg-white border-blue-100 text-biro-blue-dark" },
-        { title: "Exhibition", desc: "Discover what is being built in Benin's tech ecosystem through live demos.", tone: "bg-[#f8fbff] border-blue-100 text-biro-blue-dark" },
-        { title: "Networking", desc: "Forge strategic collaborations and partnerships with builders, founders, and leaders.", tone: "bg-white border-blue-100 text-biro-blue-dark" },
-        { title: "Startup Pitch", desc: "Watch local startups showcase their ideas for visibility and investor connections.", tone: "bg-[#f8fbff] border-blue-100 text-biro-blue-dark" },
-        { title: "Opportunities", desc: "Explore job fairs, connect with investors, and discover various pools of opportunity.", tone: "bg-white border-blue-100 text-biro-blue-dark" },
-        { title: "Tech Money", desc: "Learn about financing, venture capital, and building profitable tech businesses.", tone: "bg-[#f8fbff] border-blue-100 text-biro-blue-dark" },
-        { title: "Mentorship", desc: "Connect with mentors who can guide your journey in the tech space.", tone: "bg-white border-blue-100 text-biro-blue-dark" }
+        { title: "Panels", desc: "Listen to practical conversations from industry experts and ecosystem leaders.", image: "/BTH-10-1.jpg", overlay: "bg-blue-900/85" },
+        { title: "Exhibition", desc: "Discover what is being built in Benin's tech ecosystem through live demos.", image: "/BTH-3-1.jpg", overlay: "bg-orange-600/85" },
+        { title: "Networking", desc: "Forge strategic collaborations and partnerships with builders, founders, and leaders.", image: "/BTH-30-1.jpg", overlay: "bg-purple-900/85" },
+        { title: "Startup Pitch", desc: "Watch local startups showcase their ideas for visibility and investor connections.", image: "/BTH-35.png", overlay: "bg-emerald-900/85" },
+        { title: "Opportunities", desc: "Explore job fairs, connect with investors, and discover various pools of opportunity.", image: "/BTH-45.jpg", overlay: "bg-red-900/85" },
+        { title: "Tech Money", desc: "Learn about financing, venture capital, and building profitable tech businesses.", image: "/BTH-7.jpg", overlay: "bg-teal-900/85" },
+        { title: "Mentorship", desc: "Connect with mentors who can guide your journey in the tech space.", image: "/BTH-9-1.jpg", overlay: "bg-indigo-900/85" }
     ];
 
     return (
@@ -23,30 +23,40 @@ export default function WhatToExpect({ setIsModalOpen }: { isModalOpen: boolean,
                     <p className="max-w-2xl mx-auto text-xl text-slate-600 font-medium">BTH 2.0 is more than just a tech meetup. It&apos;s where innovation meets opportunity in Benin City.</p>
                 </div>
 
-                <div className="flex flex-col gap-8 md:gap-10">
-                    {expectations.map((item, idx) => (
-                        <div
-                            key={idx}
-                            style={{ transitionDelay: `${idx * 50}ms` }}
-                            className={`group relative ${item.tone} px-10 py-10 md:p-16 rounded-[2.5rem] md:rounded-[4rem] overflow-hidden transition-all duration-700 hover:scale-[1.01] border`}
-                            data-aos="fade-up"
-                        >
-                            <div className="relative z-10">
-                                <div className="max-w-3xl text-center md:text-left">
-                                    <h3 className="text-4xl md:text-6xl font-black font-righteous mb-4 md:mb-6 tracking-tighter leading-none group-hover:translate-x-2 transition-transform duration-500">
-                                        {item.title}
-                                    </h3>
-                                    <p className="text-lg md:text-2xl font-medium opacity-80 group-hover:opacity-100 transition-opacity leading-snug md:leading-tight">
-                                        {item.desc}
-                                    </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 auto-rows-[150px] md:auto-rows-[400px]">
+                    {expectations.map((item, idx) => {
+                        const getGridSpan = (i: number) => {
+                            if (i === 0) return 'md:col-span-2 lg:col-span-2';
+                            if (i === 3) return 'md:col-span-2 lg:col-span-2';
+                            if (i === 6) return 'md:col-span-2 lg:col-span-1';
+                            return 'col-span-1';
+                        };
+
+                        return (
+                            <div
+                                key={idx}
+                                style={{ transitionDelay: `${idx * 50}ms` }}
+                                className={`group relative rounded-[32px] md:rounded-[2.5rem] overflow-hidden transition-all duration-700 hover:scale-[1.02] ${getGridSpan(idx)}`}
+                                data-aos="fade-up"
+                            >
+                                <div className="absolute inset-0 z-0">
+                                    <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
+                                </div>
+                                <div className={`absolute inset-0 z-0 ${item.overlay}`}></div>
+
+                                <div className="relative z-10 flex flex-col items-center justify-center text-white h-full p-6 md:p-12 text-center">
+                                    <div className="max-w-2xl">
+                                        <h3 className="text-2xl md:text-5xl font-black font-righteous mb-2 md:mb-4 tracking-tighter leading-none group-hover:scale-105 transition-transform duration-500 drop-shadow-md">
+                                            {item.title}
+                                        </h3>
+                                        <p className="text-sm md:text-xl font-medium opacity-90 group-hover:opacity-100 transition-opacity leading-snug drop-shadow-sm">
+                                            {item.desc}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div className="absolute top-1/2 -right-4 -translate-y-1/2 text-[10rem] md:text-[15rem] font-black font-righteous text-blue-100/60 transition-all duration-700 rotate-[15deg] select-none pointer-events-none">
-                                {idx + 1}
-                            </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
 
                 <div className="mt-32 px-4 py-10 md:p-20 bg-[#f8fbff] rounded-[2rem] border border-blue-100 relative overflow-hidden group">

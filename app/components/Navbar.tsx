@@ -91,7 +91,7 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
             <div className={`fixed inset-0 bg-slate-900/60 lg:hidden transition-all duration-500 ease-in-out z-[200] ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsMenuOpen(false)}>
                 <div className={`absolute top-0 right-0 h-screen w-full max-w-sm bg-white transition-transform duration-500 flex flex-col ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`} onClick={(e) => e.stopPropagation()}>
                     <div className="flex items-center justify-between p-6 border-b border-slate-100">
-                        <Image src="/logo.png" alt="Logo" width={48} height={48} className="w-auto h-10 object-contain" />
+                        <Image src="/logo/logo.png" alt="Logo" width={48} height={48} className="w-auto h-10 object-contain" />
                         <button onClick={() => setIsMenuOpen(false)} className="p-2 rounded-full bg-slate-100 text-slate-500 hover:text-biro-blue transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18M6 6l12 12" /></svg>
                         </button>

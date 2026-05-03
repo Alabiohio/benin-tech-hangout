@@ -25,9 +25,6 @@ export default function About() {
                     </div>
 
                     <div className="w-full md:w-1/2">
-                        <div className="inline-block px-4 py-1.5 mb-6 text-xs font-black tracking-[0.3em] text-biro-blue uppercase bg-blue-50 border border-blue-100 rounded-lg">
-                            More Than an Event. A Movement.
-                        </div>
                         <h2 className="text-4xl md:text-6xl font-black font-righteous text-biro-blue-dark mb-6 leading-tight">
                             Uniting Benin&apos;s <span className="text-biro-blue">Tech Future</span>
                         </h2>

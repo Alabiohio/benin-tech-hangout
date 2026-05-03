@@ -1,37 +1,34 @@
 'use client';
 
 const highlightItems = [
-    { label: "3000+ Attendees", icon: "🚀", text: "text-biro-blue" },
-    { label: "100+ Communities", icon: "🤖", text: "text-biro-blue-dark" },
-    { label: "Tech Exhibition", icon: "💼", text: "text-biro-blue" },
-    { label: "Networking", icon: "🤝", text: "text-biro-blue-dark" },
-    { label: "Startup Pitch", icon: "💡", text: "text-highlight-yellow" },
-    { label: "Tech Money Sessions", icon: "💰", text: "text-biro-blue" },
-    { label: "Creative Economy", icon: "✅", text: "text-biro-blue-dark" },
-    { label: "Policy & Regulations", icon: "📜", text: "text-highlight-yellow" },
+    "3000+ Attendees",
+    "100+ Communities",
+    "Tech Exhibition",
+    "Networking",
+    "Startup Pitch",
+    "Tech Money Sessions",
+    "Creative Economy",
+    "Policy & Regulations",
 ];
 
 export default function Highlights() {
     return (
-        <section id="highlights" className="py-20 bg-[#f8fbff] relative z-20 -mt-12 overflow-hidden border-t border-blue-100">
+        <section id="highlights" className="py-10 bg-slate-50 relative z-20 -mt-4 overflow-hidden border-t border-slate-200">
             <div className="container mx-auto relative z-10 mt-8">
                 <div className="flex items-center gap-4 justify-center mb-10">
-                    <div className="h-px w-16 bg-blue-200"></div>
-                    <p className="text-slate-500 font-black uppercase tracking-[0.4em] text-[10px]">Event Highlights</p>
-                    <div className="h-px w-16 bg-blue-200"></div>
+                    <div className="h-px w-16 bg-biro-blue"></div>
+                    <p className="text-slate-500 font-black uppercase tracking-[0.4em] text-[14px]">Event Highlights</p>
+                    <div className="h-px w-16 bg-biro-blue"></div>
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto px-4 relative">
                     {highlightItems.map((item, idx) => (
                         <div
                             key={idx}
-                            className="group relative overflow-hidden flex items-center justify-between px-5 py-4 rounded-xl bg-white border border-blue-100 transition-colors duration-300 cursor-default hover:border-blue-200"
+                            className="group relative overflow-hidden flex items-center justify-center px-5 py-5 rounded-xl bg-white border border-l-4 border-biro-blue transition-all duration-300 cursor-default hover:border-slate-300 hover:shadow-sm"
                         >
-                            <span className={`relative text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] ${item.text} opacity-90 leading-tight pr-2 z-10`}>
-                                {item.label}
-                            </span>
-                            <span className="relative text-2xl transition-transform duration-300 z-10 group-hover:scale-110">
-                                {item.icon}
+                            <span className="relative text-[10px] sm:text-[11px] font-black uppercase tracking-[0.2em] text-slate-700 group-hover:text-slate-900 transition-colors opacity-90 leading-tight z-10 text-center">
+                                {item}
                             </span>
                         </div>
                     ))}

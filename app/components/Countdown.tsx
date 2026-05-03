@@ -43,24 +43,30 @@ export default function Countdown() {
     const values = [timeLeft.days, timeLeft.hours, timeLeft.minutes, timeLeft.seconds];
 
     return (
-        <section className="py-20 relative overflow-hidden bg-white">
+        <section className="py-20 relative overflow-hidden bg-black">
             <div className="container mx-auto px-6 relative z-10 text-center">
                 <div className="mb-12" data-aos="fade-up">
-                    <h2 className="text-3xl md:text-4xl font-black font-righteous text-biro-blue-dark mb-4">
-                        Countdown to <span className="text-biro-blue">BTH 2.0</span>
+                    <h2 className="text-3xl md:text-4xl font-black font-righteous text-white mb-4">
+                        Countdown to <span className="text-red-500">BTH 2.0</span>
                     </h2>
-                    <div className="w-24 h-1 bg-highlight-yellow mx-auto rounded-full"></div>
+                    <div className="w-24 h-1 bg-red-500 mx-auto rounded-full shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div>
                 </div>
 
-                <div className="flex items-center justify-center gap-3 md:gap-10">
+                <div className="flex items-center justify-center gap-2 md:gap-6">
                     {values.map((value, index) => (
-                        <div key={timeLabels[index]} className="flex flex-col items-center">
-                            <div className="relative w-16 h-20 md:w-28 md:h-32 bg-[#f8fbff] border border-blue-100 rounded-2xl flex items-center justify-center">
-                                <span className="text-2xl md:text-6xl font-black font-righteous text-biro-blue-dark tabular-nums">
+                        <div key={timeLabels[index]} className="flex items-center">
+                            <div className="flex flex-col items-center min-w-[70px] md:min-w-[140px]">
+                                <span 
+                                    className="text-5xl md:text-[6rem] font-black font-righteous text-white tabular-nums tracking-tighter leading-none" 
+                                    style={{ textShadow: '0 0 15px rgba(239,68,68,0.6), 0 0 30px rgba(239,68,68,0.3)' }}
+                                >
                                     {value.toString().padStart(2, '0')}
                                 </span>
+                                <span className="mt-4 text-red-400 text-[10px] md:text-sm font-black uppercase tracking-[0.3em]">{timeLabels[index]}</span>
                             </div>
-                            <span className="mt-4 text-biro-blue text-[10px] md:text-sm font-black uppercase tracking-[0.2em]">{timeLabels[index]}</span>
+                            {index < values.length - 1 && (
+                                <div className="text-red-500/80 text-4xl md:text-7xl font-black mx-1 md:mx-2 -mt-8 animate-pulse">:</div>
+                            )}
                         </div>
                     ))}
                 </div>

@@ -46,8 +46,8 @@ export const metadata: Metadata = {
     images: ["/BTH-10-1.jpg"],
   },
   icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
+    icon: "/logo/logo.png",
+    apple: "/logo/logo.png",
   }
 };
 

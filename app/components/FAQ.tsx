@@ -25,15 +25,15 @@ export default function FAQ() {
     const [openIdx, setOpenIdx] = useState<number | null>(0);
 
     return (
-        <section className="py-32 bg-[#f8fbff] relative" id="faq">
+        <section className="py-8 bg-[#f8fbff] relative" id="faq">
             <div className="container mx-auto px-6 max-w-4xl relative z-10">
-                <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-black font-righteous text-biro-blue-dark tracking-tight">
+                <div className="text-center mb-6">
+                    <h2 className="text-2xl md:text-3xl font-black font-righteous text-biro-blue-dark tracking-tight">
                         Got <span className="text-biro-blue">Questions?</span>
                     </h2>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-1">
                     {questions.map((faq, idx) => (
                         <div
                             key={idx}
@@ -43,7 +43,7 @@ export default function FAQ() {
                                 onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
                                 className="w-full flex items-center justify-between py-8 text-left focus:outline-none"
                             >
-                                <span className="text-xl md:text-2xl font-black font-righteous text-biro-blue-dark tracking-tight leading-relaxed">
+                                <span className="text-xl md:text-xl font-black text-biro-blue-dark tracking-tight leading-relaxed">
                                     {faq.q}
                                 </span>
                                 <div className={`w-10 h-10 rounded-full border border-blue-100 flex items-center justify-center transition-all duration-500 ${openIdx === idx ? 'bg-highlight-yellow text-white rotate-45' : 'bg-white text-biro-blue-dark'}`}>
@@ -52,7 +52,7 @@ export default function FAQ() {
                             </button>
                             <div className={`overflow-hidden transition-[max-height,opacity] duration-500 ease-in-out ${openIdx === idx ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
                                 <div className="pb-8">
-                                    <p className="text-slate-600 text-lg md:text-xl font-medium leading-relaxed pl-2 md:pl-0 border-l-4 border-highlight-yellow/50">
+                                    <p className="text-slate-600 font-medium leading-relaxed pl-2 md:pl-0 border-l-4 border-highlight-yellow/50">
                                         {faq.a}
                                     </p>
                                 </div>

@@ -44,9 +44,6 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
         <section id="tickets" className="py-24 bg-[#f8fbff] relative overflow-hidden isolate z-20">
             <div className="container mx-auto px-6 relative z-10">
                 <div className="text-center mb-16">
-                    <span className="inline-block px-4 py-1.5 mb-6 text-xs font-black tracking-[0.3em] uppercase bg-white text-biro-blue border border-blue-100 rounded-lg">
-                        Tickets
-                    </span>
                     <h2 className="text-4xl md:text-6xl font-black font-righteous text-biro-blue-dark mb-6">
                         Choose Your <span className="text-biro-blue">Experience</span>
                     </h2>
@@ -56,7 +53,7 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
                     {ticketTiers.map((tier, idx) => (
                         <div
                             key={idx}
-                            className={`w-full md:w-[380px] relative p-10 rounded-[2.5rem] border flex flex-col group hover:-translate-y-2 transition-transform duration-500 ${tier.highlight ? 'border-biro-blue bg-white' : 'border-blue-100 bg-white'}`}
+                            className={`w-full md:w-[380px] relative p-10 rounded-xl border flex flex-col group hover:-translate-y-2 transition-transform duration-500 ${tier.highlight ? 'border-biro-blue bg-white' : 'border-blue-100 bg-white'}`}
                         >
                             <h3 className="text-2xl font-black font-righteous text-biro-blue-dark mb-2 uppercase">{tier.name}</h3>
                             <div className="mb-8">
