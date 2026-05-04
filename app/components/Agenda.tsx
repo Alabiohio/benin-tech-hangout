@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function Agenda() {
     const schedule = [
@@ -44,22 +45,30 @@ export default function Agenda() {
             </div>
 
             <div className="container mx-auto px-6 max-w-5xl relative z-10">
-                <div className="text-center mb-20" data-aos="fade-up">
+                <motion.div 
+                    className="text-center mb-20"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                >
                     <span className="inline-block px-4 py-1.5 mb-6 text-xs font-black tracking-[0.3em] uppercase bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400">
                         Event Schedule
                     </span>
                     <h2 className="text-4xl md:text-6xl font-black font-righteous text-white tracking-tight">
                         The <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Program</span> Flow
                     </h2>
-                </div>
+                </motion.div>
 
                 <div className="space-y-6">
                     {schedule.map((item, idx) => (
-                        <div 
+                        <motion.div 
                             key={idx} 
                             className="group relative flex flex-col md:flex-row items-center gap-6 md:gap-12 p-8 md:p-10 bg-white/[0.02] border border-white/5 rounded-[2.5rem] hover:bg-white/[0.04] transition-all duration-500"
-                            data-aos="fade-up"
-                            data-aos-delay={idx * 100}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: idx * 0.1 }}
                         >
                             {/* Time */}
                             <div className="flex-shrink-0 min-w-[120px] text-center md:text-left">
@@ -92,16 +101,22 @@ export default function Agenda() {
                                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
 
-                <div className="mt-20 text-center" data-aos="fade-up">
+                <motion.div 
+                    className="mt-20 text-center"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                >
                     <p className="text-white/40 font-medium mb-8">Schedule is subject to minor adjustments for the best experience.</p>
                     <button className="relative px-12 py-4 bg-highlight-yellow text-biro-blue-dark font-black font-righteous rounded-2xl shadow-[0_20px_50px_rgba(251,191,36,0.2)] hover:scale-105 active:scale-95 transition-all">
                         DOWNLOAD FULL SCHEDULE
                     </button>
-                </div>
+                </motion.div>
             </div>
         </section>
     );

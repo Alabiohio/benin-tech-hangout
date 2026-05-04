@@ -24,7 +24,7 @@ export default function WhyAttend({ onRegisterClick }: WhyAttendProps) {
                     </p>
 
                     {/* Heading */}
-                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-black font-righteous text-white leading-[1.1] mb-5">
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-black font-righteous text-white leading-[1.1] mb-5">
                         Be a Part of <br className="hidden sm:block" />
                         <span className="text-[#7eb8f0]">Benin Tech Ecosystem</span>
                     </h2>
@@ -45,13 +45,13 @@ export default function WhyAttend({ onRegisterClick }: WhyAttendProps) {
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
                         <button
                             onClick={onRegisterClick}
-                            className="w-full sm:w-auto px-10 lg:px-12 py-4 bg-highlight-yellow text-white font-black font-righteous text-lg lg:text-xl rounded-xl hover:opacity-90 hover:-translate-y-0.5 transition-all duration-300 uppercase tracking-[0.15em]"
+                            className="w-full sm:w-auto px-10 lg:px-12 py-3 bg-highlight-yellow text-white font-black font-righteous text-md lg:text-xl rounded-xl hover:bg-white hover:text-highlight-yellow hover:-translate-y-0.5 transition-all duration-300 uppercase tracking-[0.15em]"
                         >
                             Register Now
                         </button>
                         <Link
                             href="/volunteer"
-                            className="w-full sm:w-auto px-10 lg:px-12 py-4 bg-transparent border border-white/15 text-white font-black font-righteous text-lg lg:text-xl rounded-xl hover:border-white/30 hover:bg-white/[0.04] hover:-translate-y-0.5 transition-all duration-300 uppercase tracking-[0.15em] text-center"
+                            className="w-full sm:w-auto px-10 lg:px-12 py-3 bg-white border border-white/15 text-[#0a1e3d] font-black font-righteous text-md lg:text-xl rounded-xl hover:bg-white/20 hover:text-white hover:-translate-y-0.5 transition-all duration-300 uppercase tracking-[0.15em] text-center"
                         >
                             Volunteer
                         </Link>

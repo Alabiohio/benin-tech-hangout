@@ -80,7 +80,7 @@ export default function Home() {
                         </button>
 
                         <div className="mb-8 pr-8 text-center md:text-left">
-                            <h2 className="text-3xl md:text-4xl font-black font-righteous text-white mb-2 leading-tight">Join <span className="text-blue-300">BTH 2.0</span></h2>
+                            <h2 className="text-3xl md:text-4xl font-black font-righteous text-white mb-2 leading-tight">Join <span className="text-blue-300">BTF 2.0</span></h2>
                             <p className="text-white/50 text-sm font-medium">Select your registration path</p>
                         </div>
 

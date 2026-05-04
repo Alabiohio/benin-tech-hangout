@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Andika, Righteous } from "next/font/google"; // Import next/font/google
 import "./globals.css";
-import "aos/dist/aos.css";
 
 // Configure fonts
 const andika = Andika({
@@ -51,7 +50,7 @@ export const metadata: Metadata = {
   }
 };
 
-import AOSInit from "./components/AOSInit";
+
 import ScrollToTop from "./components/ScrollToTop";
 
 export default function RootLayout({
@@ -62,7 +61,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${andika.variable} ${righteous.variable}`}>
       <body className="antialiased font-sans">
-        <AOSInit />
         <ScrollToTop />
         {children}
       </body>

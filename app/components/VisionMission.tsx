@@ -1,4 +1,7 @@
+'use client';
+
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function VisionMission() {
     return (
@@ -16,8 +19,11 @@ export default function VisionMission() {
 
             <div className="container mx-auto px-6 relative z-20">
                 <div className="grid lg:grid-cols-2 gap-12 items-stretch">
-                    <div
-                        data-aos="fade-right"
+                    <motion.div
+                        initial={{ opacity: 0, x: -50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
                         className="group relative flex flex-col justify-center bg-white/10 rounded-[2.5rem] p-10 md:p-14 border border-white/15 overflow-hidden transition-all duration-500"
                     >
                         <div className="inline-block px-4 py-1.5 mb-10 text-xs font-black font-righteous tracking-[0.2em] text-[#fecaca] uppercase bg-white/10 rounded-xl border border-white/15 w-fit">
@@ -32,11 +38,13 @@ export default function VisionMission() {
                         <p className="text-blue-50/90 text-xl font-medium leading-relaxed max-w-xl">
                             To see Benin City grow into a connected, supportive, and thriving tech ecosystem where everyone has a place, a voice, and an opportunity to grow.
                         </p>
-                    </div>
+                    </motion.div>
 
-                    <div
-                        data-aos="fade-left"
-                        data-aos-delay="200"
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                         className="group relative bg-white rounded-[1.5rem] p-10 md:p-14 border border-blue-100 overflow-hidden transition-all duration-500"
                     >
                         <div className="inline-block px-4 py-1.5 mb-10 text-xs font-black font-righteous tracking-[0.2em] text-biro-blue uppercase bg-blue-50 rounded-xl border border-blue-100 w-fit">
@@ -56,7 +64,7 @@ export default function VisionMission() {
                                 </li>
                             ))}
                         </ul>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>

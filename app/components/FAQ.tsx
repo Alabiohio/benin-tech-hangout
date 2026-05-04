@@ -28,12 +28,12 @@ export default function FAQ() {
         <section className="py-8 bg-[#f8fbff] relative" id="faq">
             <div className="container mx-auto px-6 max-w-4xl relative z-10">
                 <div className="text-center mb-6">
-                    <h2 className="text-2xl md:text-3xl font-black font-righteous text-biro-blue-dark tracking-tight">
+                    <h2 className="text-3xl md:text-4xl font-black font-righteous text-biro-blue-dark tracking-tight">
                         Got <span className="text-biro-blue">Questions?</span>
                     </h2>
                 </div>
 
-                <div className="space-y-1">
+                <div>
                     {questions.map((faq, idx) => (
                         <div
                             key={idx}
@@ -41,9 +41,9 @@ export default function FAQ() {
                         >
                             <button
                                 onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
-                                className="w-full flex items-center justify-between py-8 text-left focus:outline-none"
+                                className="w-full flex items-center justify-between py-4 text-left focus:outline-none"
                             >
-                                <span className="text-xl md:text-xl font-black text-biro-blue-dark tracking-tight leading-relaxed">
+                                <span className="text-[18px] md:text-xl font-black text-biro-blue-dark tracking-tight leading-relaxed">
                                     {faq.q}
                                 </span>
                                 <div className={`w-10 h-10 rounded-full border border-blue-100 flex items-center justify-center transition-all duration-500 ${openIdx === idx ? 'bg-highlight-yellow text-white rotate-45' : 'bg-white text-biro-blue-dark'}`}>

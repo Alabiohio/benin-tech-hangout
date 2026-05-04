@@ -1,7 +1,10 @@
+'use client';
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import BackgroundWrapper from "../components/BackgroundWrapper";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function ExhibitorPage() {
     return (
@@ -12,23 +15,33 @@ export default function ExhibitorPage() {
                 <section className="relative overflow-hidden py-12">
                     <div className="container mx-auto px-6 relative z-10">
                         <div className="max-w-6xl mx-auto">
-                            <div className="mb-10" data-aos="fade-right">
+                            <motion.div 
+                                className="mb-10"
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.5 }}
+                            >
                                 <Link href="/" className="inline-flex items-center gap-2 text-biro-blue font-bold hover:text-highlight-yellow transition-colors group">
                                     <svg className="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                                     </svg>
                                     Back to Home
                                 </Link>
-                            </div>
+                            </motion.div>
 
-                            <div className="text-center mb-16" data-aos="fade-up">
+                            <motion.div 
+                                className="text-center mb-16"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6 }}
+                            >
                                 <h1 className="text-5xl md:text-7xl font-black font-righteous text-biro-blue-dark mb-4">
                                     Showcase Your <span className="text-biro-blue">Brand</span>
                                 </h1>
                                 <p className="text-xl text-slate-600 max-w-2xl mx-auto font-medium">
                                     Expose your products, services, and innovations to over 1000+ tech enthusiasts, founders, and leaders at Benin Tech Hangout 2.0.
                                 </p>
-                            </div>
+                            </motion.div>
 
                             <div className="bg-white rounded-[2.5rem] overflow-hidden border border-blue-100 flex flex-col lg:flex-row-reverse">
                                 <div className="lg:w-2/5 p-10 md:p-14 bg-[#0f2f6b] flex flex-col justify-center text-white relative">

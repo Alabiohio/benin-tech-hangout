@@ -1,7 +1,10 @@
+'use client';
+
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import BackgroundWrapper from "../components/BackgroundWrapper";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function SpeakerRegistrationPage() {
     return (
@@ -12,25 +15,40 @@ export default function SpeakerRegistrationPage() {
                 <section className="relative overflow-hidden py-12">
                     <div className="container mx-auto px-6 relative z-10">
                         <div className="max-w-6xl mx-auto">
-                            <div className="mb-10" data-aos="fade-right">
+                            <motion.div
+                                className="mb-10"
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.5 }}
+                            >
                                 <Link href="/" className="inline-flex items-center gap-2 text-biro-blue font-bold hover:text-highlight-yellow transition-colors group">
                                     <svg className="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                                     </svg>
                                     Back to Home
                                 </Link>
-                            </div>
+                            </motion.div>
 
-                            <div className="text-center mb-16" data-aos="fade-up">
+                            <motion.div
+                                className="text-center mb-16"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6 }}
+                            >
                                 <h1 className="text-5xl md:text-7xl font-black font-righteous text-biro-blue-dark mb-6 leading-tight">
                                     Take The <span className="text-biro-blue">Stage</span>
                                 </h1>
                                 <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto font-medium leading-relaxed">
-                                    Whether you want to share your expertise or recommend a visionary leader, help us shape the conversations at <span className="text-biro-blue-dark font-bold">BTH 2.0</span>.
+                                    Whether you want to share your expertise or recommend a visionary leader, help us shape the conversations at <span className="text-biro-blue-dark font-bold">BTF 2.0</span>.
                                 </p>
-                            </div>
+                            </motion.div>
 
-                            <div className="rounded-[2.5rem] overflow-hidden border border-blue-100 flex flex-col lg:flex-row" data-aos="zoom-in" data-aos-delay="200">
+                            <motion.div
+                                className="rounded-[2.5rem] overflow-hidden border border-blue-100 flex flex-col lg:flex-row"
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.8, delay: 0.2 }}
+                            >
                                 <div className="lg:w-2/5 p-10 md:p-14 bg-[#0f2f6b] flex flex-col justify-center text-white relative overflow-hidden">
                                     <h2 className="text-3xl md:text-4xl font-black mb-6 relative z-10 font-righteous text-white">Why Speak at BTH?</h2>
                                     <p className="text-blue-100/80 mb-10 leading-relaxed text-lg relative z-10">
@@ -110,7 +128,7 @@ export default function SpeakerRegistrationPage() {
                                         </button>
                                     </form>
                                 </div>
-                            </div>
+                            </motion.div>
                         </div>
                     </div>
                 </section>

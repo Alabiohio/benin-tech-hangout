@@ -33,7 +33,7 @@ export default function Footer({ onRegisterClick }: { onRegisterClick?: () => vo
 
                     <div className="order-1 lg:order-2 flex flex-col items-center text-center">
                         <Link href="/" className="inline-block mb-10 group transition-transform hover:scale-105 active:scale-95">
-                            <Image src="/logo/logo.png" alt="BTH 2.0 Logo" width={320} height={200} className="h-24 w-auto object-contain" />
+                            <Image src="/logo/logo.png" alt="BTF 2.0 Logo" width={320} height={200} className="h-24 w-auto object-contain" />
                         </Link>
                         <p className="text-slate-500 leading-relaxed mb-10 max-w-sm font-medium text-base">
                             The definitive tech experience in Benin City. Empowering builders, founders, and the next generation of African tech talent.

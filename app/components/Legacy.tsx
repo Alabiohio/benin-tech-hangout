@@ -1,5 +1,8 @@
+'use client';
+
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 
 const images = [
     { src: "/BTH-38.jpg", alt: "Tech enthusiasts at Benin Tech Hangout 1.0", className: "w-full aspect-[4/3] rounded-2xl shadow-2xl relative z-10 scale-105" },
@@ -55,7 +58,13 @@ export default function Legacy() {
             <div className="container mx-auto px-6 relative z-10">
                 <div className="flex flex-col lg:flex-row items-center gap-16 mb-24">
                     {/* Content Section */}
-                    <div className="lg:w-1/2" data-aos="fade-right">                     
+                    <motion.div 
+                        className="lg:w-1/2"
+                        initial={{ opacity: 0, x: -50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                    >                     
                         <h2 className="text-4xl md:text-7xl font-black font-righteous text-white mb-8 leading-tight italic">
                             BTH 1.0 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Impact</span>
                         </h2>
@@ -80,17 +89,19 @@ export default function Legacy() {
                                 <p className="text-white/40 font-black uppercase tracking-widest text-[10px]">Communities</p>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Overlapping Image Grid from Gallery */}
                     <div className="lg:w-1/2 relative">
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-4 pt-12">
                                 {images.filter((_, i) => i % 2 === 0).map((img, i) => (
-                                    <div
+                                    <motion.div
                                         key={i}
-                                        data-aos="zoom-in-up"
-                                        data-aos-delay={i * 200}
+                                        initial={{ opacity: 0, scale: 0.8, y: 30 }}
+                                        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.6, delay: i * 0.2 }}
                                         className="relative group transition-all duration-500 hover:z-40"
                                     >
                                         <Image
@@ -100,15 +111,17 @@ export default function Legacy() {
                                             height={300}
                                             className={img.className + " object-cover transition-all duration-500 group-hover:scale-105"}
                                         />
-                                    </div>
+                                    </motion.div>
                                 ))}
                             </div>
                             <div className="space-y-4">
                                 {images.filter((_, i) => i % 2 !== 0).map((img, i) => (
-                                    <div
+                                    <motion.div
                                         key={i}
-                                        data-aos="zoom-in-down"
-                                        data-aos-delay={i * 200 + 100}
+                                        initial={{ opacity: 0, scale: 0.8, y: -30 }}
+                                        whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.6, delay: i * 0.2 + 0.1 }}
                                         className="relative group transition-all duration-500 hover:z-40"
                                     >
                                         <Image
@@ -118,7 +131,7 @@ export default function Legacy() {
                                             height={300}
                                             className={img.className + " object-cover transition-all duration-500 group-hover:scale-105"}
                                         />
-                                    </div>
+                                    </motion.div>
                                 ))}
                             </div>
                         </div>
@@ -127,16 +140,22 @@ export default function Legacy() {
 
                 {/* Past Speakers Slider integrated from Speakers */}
                 <div className="pt-16 border-t border-white/5">
-                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10" data-aos="fade-up">
+                    <motion.div 
+                        className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5 }}
+                    >
                         <div className="space-y-2">
                             <span className="text-highlight-yellow font-black uppercase tracking-[0.3em] text-[10px]">Previous Editions</span>
                             <h3 className="text-3xl md:text-5xl font-black font-righteous text-white">Past Speakers</h3>
                         </div>
-                    </div>
+                    </motion.div>
 
                     <div
                         ref={scrollRef}
-                        className="flex gap-6 overflow-x-auto pb-12 no-scrollbar snap-x snap-mandatory group"
+                        className="flex gap-2 overflow-x-auto no-scrollbar snap-x snap-mandatory group"
                     >
                         {[
                             { name: "Uche Eze", role: "CEO, Eki Technologies", image: "/past/speaker1.jpeg" },
@@ -145,13 +164,15 @@ export default function Legacy() {
                             { name: "Nwachukwu Justin Jr", role: "Lead, SuperteamNG Edo State, Founder, Breeeve & Ravolo", image: "/past/speaker5.jpeg" },
                             { name: "Past Speaker", role: "Tech Leader", image: "/past/speaker4.jpeg" }
                         ].map((speaker, idx) => (
-                            <div
+                            <motion.div
                                 key={idx}
                                 className="flex-shrink-0 w-[280px] md:w-[350px] snap-start"
-                                data-aos="fade-up"
-                                data-aos-delay={idx * 100}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: idx * 0.1 }}
                             >
-                                <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden mb-6 border border-white/10 bg-white/5 backdrop-blur-md group-hover:border-blue-500/30 transition-all duration-700 hover:scale-[1.02] shadow-2xl">
+                                <div className="relative aspect-[4/5] rounded-xl overflow-hidden mb-6 border border-white/10 bg-white/5 backdrop-blur-md group-hover:border-blue-500/30 transition-all duration-700 hover:scale-[1.02]">
                                     <Image
                                         src={speaker.image}
                                         alt={speaker.name}
@@ -164,12 +185,18 @@ export default function Legacy() {
                                         <h3 className="text-xl md:text-2xl font-black font-righteous text-white">{speaker.name}</h3>
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
 
                     {/* Segmented Dot Indicator */}
-                    <div className="flex justify-center gap-3 mt-4" data-aos="fade-up">
+                    <motion.div 
+                        className="flex justify-center gap-3 mt-4"
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5 }}
+                    >
                         {[0, 1, 2, 3, 4].map((i) => (
                             <div
                                 key={i}
@@ -179,7 +206,7 @@ export default function Legacy() {
                                     }`}
                             />
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>

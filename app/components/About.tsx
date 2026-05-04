@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function About() {
     return (
-        <section id="about" className="py-24 relative bg-white border-y border-blue-100">
+        <section id="about" className="py-18 relative bg-white border-y border-blue-100">
             <div className="container mx-auto px-6 relative z-10">
                 <div className="flex flex-col md:flex-row items-center gap-16">
                     <div className="w-full md:w-1/2">
@@ -25,7 +25,7 @@ export default function About() {
                     </div>
 
                     <div className="w-full md:w-1/2">
-                        <h2 className="text-4xl md:text-6xl font-black font-righteous text-biro-blue-dark mb-6 leading-tight">
+                        <h2 className="text-3xl md:text-4xl font-black font-righteous text-biro-blue-dark mb-6">
                             Uniting Benin&apos;s <span className="text-biro-blue">Tech Future</span>
                         </h2>
                         <p className="text-lg text-slate-700 mb-6 leading-relaxed">

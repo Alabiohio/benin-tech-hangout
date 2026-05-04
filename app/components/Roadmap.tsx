@@ -2,12 +2,13 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const roadmapData = [
     {
         month: "April",
         title: "Kickoff Publicity & Webinars",
-        description: "Launching the journey of BTH 2.0 with strategic announcements and digital engagement across all platforms.",
+        description: "Launching the journey of BTF 2.0 with strategic announcements and digital engagement across all platforms.",
         phase: "01"
     },
     {
@@ -82,8 +83,14 @@ function MobileRoadmapNavigator({ roadmapData, onRegisterClick }: { roadmapData:
     }, [activeIdx]);
 
     return (
-        <div className="md:hidden space-y-8" data-aos="fade-up">
-            <div 
+        <motion.div
+            className="md:hidden space-y-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+        >
+            <div
                 ref={scrollRef}
                 className="flex overflow-x-auto gap-2 px-4 pb-2 no-scrollbar border-b border-black/5"
             >
@@ -92,11 +99,10 @@ function MobileRoadmapNavigator({ roadmapData, onRegisterClick }: { roadmapData:
                         key={`tab-${idx}`}
                         id={`mobile-tab-${idx}`}
                         onClick={() => setActiveIdx(idx)}
-                        className={`px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] whitespace-nowrap transition-all border-b-2 ${
-                            idx === activeIdx 
-                                ? 'text-biro-blue-dark border-biro-blue-dark' 
+                        className={`px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] whitespace-nowrap transition-all border-b-2 ${idx === activeIdx
+                                ? 'text-biro-blue-dark border-biro-blue-dark'
                                 : 'text-gray-400 border-transparent'
-                        }`}
+                            }`}
                     >
                         {item.month}
                     </button>
@@ -122,8 +128,8 @@ function MobileRoadmapNavigator({ roadmapData, onRegisterClick }: { roadmapData:
                     ) : (
                         <div className="flex gap-2">
                             {roadmapData.map((_, i) => (
-                                <div 
-                                    key={i} 
+                                <div
+                                    key={i}
                                     className={`h-1 rounded-full transition-all duration-500 ${i === activeIdx ? 'w-8 bg-biro-blue-dark' : 'w-2 bg-gray-200'}`}
                                 />
                             ))}
@@ -131,7 +137,7 @@ function MobileRoadmapNavigator({ roadmapData, onRegisterClick }: { roadmapData:
                     )}
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
 
@@ -143,23 +149,32 @@ export default function Roadmap({ onRegisterClick }: { onRegisterClick: () => vo
 
             <div className="container mx-auto px-4 md:px-6 max-w-7xl relative z-10">
                 {/* Header */}
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-6 md:mb-12" data-aos="fade-up">
+                <motion.div
+                    className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-6 md:mb-12"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                >
                     <div className="max-w-2xl">
                         <h2 className="text-3xl md:text-4xl font-black font-righteous text-biro-blue-dark tracking-tighter leading-none mb-0">
                             Roadmap
                         </h2>
                     </div>
-                </div>
+                </motion.div>
 
                 <div className="relative">
                     {/* New Mature Desktop Layout: Segmented Grid Flow */}
                     <div className="hidden md:block">
                         <div className="grid grid-cols-12 gap-y-8">
                             {roadmapData.map((item, idx) => (
-                                <div 
-                                    key={idx} 
+                                <motion.div
+                                    key={idx}
                                     className="col-span-12 grid grid-cols-12 items-start group"
-                                    data-aos="fade-up"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.5, delay: idx * 0.1 }}
                                 >
                                     {/* Month & Phase Label (Left) */}
                                     <div className="col-span-3 pt-2">
@@ -203,7 +218,7 @@ export default function Roadmap({ onRegisterClick }: { onRegisterClick: () => vo
                                             )}
                                         </div>
                                     </div>
-                                </div>
+                                </motion.div>
                             ))}
                         </div>
                     </div>

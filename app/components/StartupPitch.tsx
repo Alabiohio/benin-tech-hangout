@@ -13,11 +13,11 @@ export default function StartupPitch() {
 
             <div className="container mx-auto px-4 relative z-10">
                 <div className="max-w-4xl mx-auto text-center">
-                    
-                    <h2 className="text-2xl md:text-4xl lg:text-5xl font-black font-righteous text-white mb-8 leading-[0.95] tracking-tighter">
+
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-black font-righteous text-white mb-8 leading-[0.95] tracking-tighter">
                         The Stage is <span className="text-transparent bg-clip-text bg-gradient-to-r from-highlight-yellow to-yellow-200">Yours.</span>
                     </h2>
-                    
+
                     <p className="text-md text-white/70 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
                         Are you building the future of the Benin tech ecosystem? Showcase your innovation, gain unparalleled visibility, and connect with strategic investors.
                     </p>

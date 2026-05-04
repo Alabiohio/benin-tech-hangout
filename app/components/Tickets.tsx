@@ -44,7 +44,7 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
         <section id="tickets" className="py-24 bg-[#f8fbff] relative overflow-hidden isolate z-20">
             <div className="container mx-auto px-6 relative z-10">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-6xl font-black font-righteous text-biro-blue-dark mb-6">
+                    <h2 className="text-3xl md:text-4xl font-black font-righteous text-biro-blue-dark mb-6">
                         Choose Your <span className="text-biro-blue">Experience</span>
                     </h2>
                 </div>

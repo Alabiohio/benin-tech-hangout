@@ -20,10 +20,12 @@ const partners = [
 
 export default function Partners() {
     return (
-        <section id="sponsors" className="py-24 bg-[#f8f9fa] overflow-hidden">
+        <section id="sponsors" className="py-14 bg-[#f8f9fa] overflow-hidden">
             <div className="container mx-auto px-2 md:px-4 mb-8">
-                <h2 className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight mb-3">Our partners</h2>
-               </div>
+              <h2 className="text-3xl md:text-4xl font-black font-righteous text-biro-blue-dark mb-6">
+                        Our <span className="text-biro-blue">Partners</span>
+              </h2>
+            </div>
 
             <div className="container mx-auto px-2 md:px-4">
                 <div className="relative py-6 px-2 bg-biro-blue/2 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-r-3 border-biro-blue overflow-hidden">

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { motion } from 'framer-motion';
 
 interface TimeLeft {
     days: number;
@@ -45,12 +46,18 @@ export default function Countdown() {
     return (
         <section className="py-20 relative overflow-hidden bg-black">
             <div className="container mx-auto px-6 relative z-10 text-center">
-                <div className="mb-12" data-aos="fade-up">
+                <motion.div 
+                    className="mb-12"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                >
                     <h2 className="text-3xl md:text-4xl font-black font-righteous text-white mb-4">
-                        Countdown to <span className="text-red-500">BTH 2.0</span>
+                        Countdown to <span className="text-red-500">BTF 2.0</span>
                     </h2>
                     <div className="w-24 h-1 bg-red-500 mx-auto rounded-full shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div>
-                </div>
+                </motion.div>
 
                 <div className="flex items-center justify-center gap-2 md:gap-6">
                     {values.map((value, index) => (

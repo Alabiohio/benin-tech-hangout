@@ -49,19 +49,19 @@ export default function Registration() {
                             <div className="grid grid-cols-1 gap-6">
                                 <div>
                                     <label className="block text-[10px] font-black text-gray-400 mb-2 uppercase tracking-[0.2em]">Full Name</label>
-                                    <input 
-                                        type="text" 
-                                        className="w-full px-5 py-4 rounded-xl border border-gray-100 bg-gray-50 focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium" 
-                                        placeholder="John Doe" 
+                                    <input
+                                        type="text"
+                                        className="w-full px-5 py-4 rounded-xl border border-gray-100 bg-gray-50 focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium"
+                                        placeholder="John Doe"
                                     />
                                 </div>
 
                                 <div>
                                     <label className="block text-[10px] font-black text-gray-400 mb-2 uppercase tracking-[0.2em]">Email Address</label>
-                                    <input 
-                                        type="email" 
-                                        className="w-full px-5 py-4 rounded-xl border border-gray-100 bg-gray-50 focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium" 
-                                        placeholder="john@example.com" 
+                                    <input
+                                        type="email"
+                                        className="w-full px-5 py-4 rounded-xl border border-gray-100 bg-gray-50 focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium"
+                                        placeholder="john@example.com"
                                     />
                                 </div>
 
@@ -83,7 +83,7 @@ export default function Registration() {
                             </button>
 
                             <p className="text-center text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-4">
-                                Limited seats available for BTH 2.0
+                                Limited seats available for BTF 2.0
                             </p>
                         </form>
                     </div>
