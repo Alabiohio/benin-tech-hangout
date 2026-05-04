@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { motion, useMotionValue, useTransform, animate, useInView } from 'framer-motion';
 
 interface TimeLeft {
     days: number;
@@ -12,7 +12,45 @@ interface TimeLeft {
 
 const timeLabels = ["Days", "Hours", "Minutes", "Seconds"] as const;
 
+function Counter({ value, isInView }: { value: number, isInView: boolean }) {
+    const [displayValue, setDisplayValue] = useState(0);
+    const hasAnimated = useRef(false);
+
+    useEffect(() => {
+        if (!isInView) return;
+        
+        if (!hasAnimated.current && value > 0) {
+            hasAnimated.current = true;
+            const startValue = 0;
+            const endValue = value;
+            const duration = 2000;
+            const startTime = performance.now();
+
+            const animateCount = (currentTime: number) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                const easedProgress = 1 - Math.pow(1 - progress, 4);
+                const currentCount = Math.floor(startValue + (endValue - startValue) * easedProgress);
+                
+                setDisplayValue(currentCount);
+
+                if (progress < 1) {
+                    requestAnimationFrame(animateCount);
+                }
+            };
+
+            requestAnimationFrame(animateCount);
+        } else if (hasAnimated.current) {
+            setDisplayValue(value);
+        }
+    }, [value, isInView]);
+
+    return <>{displayValue.toString().padStart(2, '0')}</>;
+}
+
 export default function Countdown() {
+    const [shouldAnimate, setShouldAnimate] = useState(false);
     const targetDate = new Date('2026-10-02T10:00:00').getTime();
 
     const calculateTimeLeft = useCallback((): TimeLeft => {
@@ -31,9 +69,13 @@ export default function Countdown() {
         };
     }, [targetDate]);
 
-    const [timeLeft, setTimeLeft] = useState<TimeLeft>(() => calculateTimeLeft());
+    const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
+        setIsMounted(true);
+        setTimeLeft(calculateTimeLeft());
+        
         const timer = setInterval(() => {
             setTimeLeft(calculateTimeLeft());
         }, 1000);
@@ -43,8 +85,14 @@ export default function Countdown() {
 
     const values = [timeLeft.days, timeLeft.hours, timeLeft.minutes, timeLeft.seconds];
 
+    if (!isMounted) return null;
+
     return (
-        <section className="py-20 relative overflow-hidden bg-black">
+        <motion.section 
+            onViewportEnter={() => setShouldAnimate(true)}
+            viewport={{ once: true }}
+            className="py-20 relative overflow-hidden bg-black"
+        >
             <div className="container mx-auto px-6 relative z-10 text-center">
                 <motion.div 
                     className="mb-12"
@@ -67,17 +115,17 @@ export default function Countdown() {
                                     className="text-5xl md:text-[6rem] font-black font-righteous text-white tabular-nums tracking-tighter leading-none" 
                                     style={{ textShadow: '0 0 15px rgba(239,68,68,0.6), 0 0 30px rgba(239,68,68,0.3)' }}
                                 >
-                                    {value.toString().padStart(2, '0')}
+                                    <Counter value={value} isInView={shouldAnimate} />
                                 </span>
                                 <span className="mt-4 text-red-400 text-[10px] md:text-sm font-black uppercase tracking-[0.3em]">{timeLabels[index]}</span>
                             </div>
                             {index < values.length - 1 && (
-                                <div className="text-red-500/80 text-4xl md:text-7xl font-black mx-1 md:mx-2 -mt-8 animate-pulse">:</div>
+                                <div className="text-red-500/80 text-3xl md:text-5xl font-black mx-1 md:mx-2 -mt-8 animate-pulse">:</div>
                             )}
                         </div>
                     ))}
                 </div>
             </div>
-        </section>
+        </motion.section>
     );
 }

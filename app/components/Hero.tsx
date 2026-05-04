@@ -2,7 +2,43 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+
+function VersionCounter() {
+    const [displayValue, setDisplayValue] = useState(1.0);
+    const hasAnimated = useRef(false);
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true });
+
+    useEffect(() => {
+        if (!isInView || hasAnimated.current) return;
+        
+        hasAnimated.current = true;
+        const startValue = 1.0;
+        const endValue = 2.0;
+        const duration = 2000;
+        const startTime = performance.now();
+
+        const animateCount = (currentTime: number) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            
+            const easedProgress = 1 - Math.pow(1 - progress, 4);
+            const currentCount = startValue + (endValue - startValue) * easedProgress;
+            
+            setDisplayValue(currentCount);
+
+            if (progress < 1) {
+                requestAnimationFrame(animateCount);
+            }
+        };
+
+        requestAnimationFrame(animateCount);
+    }, [isInView]);
+
+    return <span ref={ref}>{displayValue.toFixed(1)}</span>;
+}
 
 export default function Hero({ onRegisterClick }: { onRegisterClick: () => void }) {
     return (
@@ -43,7 +79,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
                             >
-                                FEST <span className="text-[#fecaca]">2.0</span>
+                                FEST <span className="text-[#fecaca]"><VersionCounter /></span>
                             </motion.span>
                         </h1>
                         <div className="flex items-center gap-3 mb-5">
