@@ -74,9 +74,7 @@ body {
   background: rgba(15, 47, 107, 0.82);
 }
 
-[class*="shadow"] {
-  box-shadow: none !important;
-}
+
 
 [class*="drop-shadow"] {
   filter: none !important;

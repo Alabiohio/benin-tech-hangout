@@ -30,7 +30,7 @@ export default function ScrollToTop() {
             {isVisible && (
                 <button
                     onClick={scrollToTop}
-                    className="fixed bottom-8 right-8 z-[100] p-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white shadow-2xl hover:bg-biro-blue hover:scale-110 transition-all duration-300 group ring-1 ring-white/10 animate-in fade-in zoom-in slide-in-from-bottom-5"
+                    className="fixed bottom-8 right-8 z-[100] p-3 rounded-full bg-white text-biro-blue-dark shadow-[0_0_20px_rgba(0,0,0,0.15)] hover:bg-biro-blue-dark hover:text-white hover:scale-110 transition-all duration-300 group border border-slate-100 animate-in fade-in zoom-in slide-in-from-bottom-5"
                     aria-label="Scroll to top"
                 >
                     <svg
@@ -48,8 +48,9 @@ export default function ScrollToTop() {
                     </svg>
 
                     {/* Glowing pulse effect */}
-                    <div className="absolute inset-0 rounded-2xl bg-biro-blue/20 blur opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="absolute inset-0 rounded-full bg-biro-blue/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity -z-10"></div>
                 </button>
+
             )}
         </>
     );
