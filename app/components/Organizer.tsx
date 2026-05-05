@@ -9,7 +9,7 @@ export default function Organizer() {
                 <div className="w-full h-1/2 bg-slate-950"></div>
             </div>
 
-            <div className="container mx-auto px-6 relative z-10">
+            <div className="container mx-auto px-4 relative z-10">
                 <div className="bg-[#0A0F24] rounded-[3rem] p-8 md:p-12 text-center max-w-4xl mx-auto shadow-2xl border border-white/10">
                     <h2 className="text-3xl md:text-4xl font-black font-righteous text-white mb-4">Organized By</h2>
 
