@@ -119,7 +119,7 @@ const itemVariants: Variants = {
 
 export default function Hero({ onRegisterClick }: { onRegisterClick: () => void }) {
     return (
-        <section className="relative text-white min-h-[750px] lg:min-h-screen pt-24 lg:pt-32 z-20 overflow-hidden">
+        <section className="relative text-white min-h-[750px] lg:min-h-screen pt-44 sm:pt-44 lg:pt-32 z-20 overflow-hidden">
             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
 
                 <div className="absolute inset-0 z-0 user-select-none pointer-events-none">
@@ -134,7 +134,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                 </div>
             </div>
 
-            <div className="container mx-auto px-4 md:px-6 relative z-10 lg:pt-8 pb-10">
+            <div className="container mx-auto px-4 md:px-6 relative z-10 lg:pt-8 pb-4">
                 <div className="flex flex-col items-center w-full gap-6">
                     <div className="w-full max-w-4xl flex flex-col items-center text-center pt-4 md:pt-8">
 
@@ -159,7 +159,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                                 FEST <span className="text-[#fecaca]"><VersionCounter /></span>
                             </motion.span>
                         </h1>
-                        <div className="flex items-center gap-3 mb-5">
+                        <div className="flex items-center gap-3 mb-1">
                             <motion.div 
                                 initial={{ scaleX: 0 }}
                                 whileInView={{ scaleX: 1 }}
@@ -185,7 +185,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                             ></motion.div>
                         </div>
                         <motion.div
-                            className="flex flex-row items-center justify-center gap-4 md:gap-8 mb-10 text-white/80 font-bold tracking-[0.2em] uppercase text-[10px] md:text-xs"
+                            className="flex flex-row items-center justify-center gap-2 md:gap-8 mb-4 text-white/80 font-bold tracking-[0.2em] uppercase text-[10px] md:text-xs"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -200,7 +200,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                         </motion.div>
 
                         <motion.div
-                            className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-4"
+                            className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -271,7 +271,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                                     y: -10,
                                     transition: { type: "spring", stiffness: 400, damping: 10 }
                                 }}
-                                className="bg-white/5 backdrop-blur-md group relative px-5 py-4 md:p-6 border border-white/10 rounded-2xl transition-all duration-500 hover:border-highlight-yellow/40 hover:bg-white/10 shadow-xl"
+                                className="bg-white/5 backdrop-blur-md group relative px-3 py-3 md:p-6 border border-white/10 rounded-2xl transition-all duration-500 hover:border-highlight-yellow/40 hover:bg-white/10 shadow-xl"
                             >
                                 {/* Animated accent corner */}
                                 <motion.div
