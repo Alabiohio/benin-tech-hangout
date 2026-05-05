@@ -66,7 +66,7 @@ export default function Home() {
                                     className="w-full max-w-sm lg:mt-0 group relative py-3 px-4 text-white font-black font-geologica text-[14px] md:text-[16px] rounded-xl overflow-hidden transition-all hover:scale-[1.05] active:scale-[0.95] shadow-2xl cursor-pointer"
                                 >
                                     <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
-                                    <h2 className="relative text-3xl lg:text-4xl z-10 flex items-center justify-center gap-2 md:gap-6 uppercase tracking-[0.2em]">
+                                    <h2 className="relative text-2xl lg:text-4xl z-10 flex items-center justify-center md:gap-6 uppercase tracking-[0.2em]">
                                         Register Now
                                         <svg className="w-8 h-8 md:w-14 md:h-14 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>

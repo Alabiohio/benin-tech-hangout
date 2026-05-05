@@ -119,7 +119,7 @@ const itemVariants: Variants = {
 
 export default function Hero({ onRegisterClick }: { onRegisterClick: () => void }) {
     return (
-        <section className="relative text-white min-h-[750px] lg:min-h-screen pt-44 sm:pt-44 lg:pt-32 z-20 overflow-hidden">
+        <section className="relative text-white min-h-[750px] lg:min-h-screen pt-48 sm:pt-44 lg:pt-32 z-20 overflow-hidden">
             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
 
                 <div className="absolute inset-0 z-0 user-select-none pointer-events-none">

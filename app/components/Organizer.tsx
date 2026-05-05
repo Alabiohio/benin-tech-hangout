@@ -10,7 +10,7 @@ export default function Organizer() {
             </div>
 
             <div className="container mx-auto px-4 relative z-10">
-                <div className="bg-[#0A0F24] rounded-[3rem] p-8 md:p-12 text-center max-w-4xl mx-auto shadow-2xl border border-white/10">
+                <div className="bg-[#0A0F24] rounded-[3rem] p-8 md:p-12 text-center max-w-4xl mx-auto">
                     <h2 className="text-3xl md:text-4xl font-black font-righteous text-white mb-4">Organized By</h2>
 
                     <div className="max-w-md mx-auto p-2 flex flex-col items-center hover:-translate-y-2 transition-transform duration-500">
