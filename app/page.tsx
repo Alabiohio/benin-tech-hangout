@@ -4,7 +4,6 @@ import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import EventDetails from "./components/EventDetails";
-import Highlights from "./components/Highlights";
 import Partners from "./components/Partners";
 import About from "./components/About";
 import WhyAttend from "./components/WhyAttend";
@@ -31,8 +30,6 @@ export default function Home() {
             <Navbar onRegisterClick={() => setIsRegisterModalOpen(true)} />
             <main className="flex-grow relative z-10">
                 <Hero onRegisterClick={() => setIsRegisterModalOpen(true)} />
-                <Highlights />
-                <EventDetails />
                 <Countdown />
                 <Partners />
                 <About />
@@ -44,20 +41,41 @@ export default function Home() {
                 <Roadmap onRegisterClick={() => setIsRegisterModalOpen(true)} />
                 <PartnerCTA />
                 <StartupPitch />
-                <section className="py-32 bg-[#0f2f6b] relative text-center overflow-hidden isolate border-t border-white/10">
-                    <h2 className="text-5xl md:text-7xl font-black font-righteous text-white mb-6 tracking-tight">
-                        Don&apos;t Miss <span className="text-[#fecaca] italic">Out</span>
-                    </h2>
-                    <p className="text-xl md:text-2xl text-blue-100/80 mb-12 font-medium">Be part of Benin&apos;s biggest tech gathering.</p>
+                <section className="flex items-center bg-slate-950 relative overflow-hidden isolate">
+                    {/* Background Split */}
+                    <div className="absolute inset-0 flex">
+                        <div className="w-1/3 h-full bg-highlight-yellow"></div>
+                        <div className="w-2/3 h-full bg-slate-950"></div>
+                    </div>
 
-                    <button
-                        onClick={() => setIsRegisterModalOpen(true)}
-                        className="px-16 py-6 bg-highlight-yellow text-white font-black font-righteous text-2xl rounded-2xl hover:scale-105 transition-all uppercase tracking-widest relative z-10"
-                    >
-                        Register Now
-                    </button>
+                    <div className="container mx-auto px-2 md:px-38 py-8 relative z-10">
+                        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+                            {/* Heading */}
+                            <div className="w-full lg:w-1/2">
+                                <h2 className="text-6xl md:text-9xl font-oswald font-bold text-slate-950 leading-[0.8] tracking-tighter uppercase">
+                                    Don't <br />
+                                    MISS <br />
+                                    <span className="text-slate-950">OUT.</span>
+                                </h2>
+                            </div>
 
-                    <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none -z-20"></div>
+                            {/* Register Button */}
+                            <div className="w-full flex justify-end lg:justify-start">
+                                <button
+                                    onClick={() => setIsRegisterModalOpen(true)}
+                                    className="w-full lg:w-full max-w-sm group relative py-3 px-4 text-white font-black font-geologica text-[16px] rounded-xl overflow-hidden transition-all hover:scale-[1.05] active:scale-[0.95] shadow-2xl"
+                                >
+                                    <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                                    <span className="relative lg:text-4xl z-10 flex items-center justify-center gap-6 uppercase tracking-[0.2em]">
+                                        Register Now
+                                        <svg className="w-12 h-12 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                        </svg>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </section>
                 <FAQ />
                 <Organizer />

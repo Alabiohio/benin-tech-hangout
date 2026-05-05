@@ -52,7 +52,7 @@ export default function SpeakerRegistrationPage() {
                                 <div className="lg:w-2/5 p-10 md:p-14 bg-[#0f2f6b] flex flex-col justify-center text-white relative overflow-hidden">
                                     <h2 className="text-3xl md:text-4xl font-black mb-6 relative z-10 font-righteous text-white">Why Speak at BTH?</h2>
                                     <p className="text-blue-100/80 mb-10 leading-relaxed text-lg relative z-10">
-                                        Sharing your story at Benin Tech Hangout connects you with thousands of developers, founders, and investors.
+                                        Sharing your story at Benin Tech Fest connects you with thousands of developers, founders, and investors.
                                     </p>
 
                                     <div className="space-y-5 relative z-10">

@@ -126,7 +126,7 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
 
                     <div className="mt-auto p-8 bg-slate-50 border-t border-slate-100">
                         <p className="text-slate-400 text-xs text-center font-black uppercase tracking-widest">
-                            © 2026 BENIN TECH HANGOUT
+                            © 2026 BENIN TECH Fest
                         </p>
                     </div>
                 </div>

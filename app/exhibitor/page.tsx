@@ -15,7 +15,7 @@ export default function ExhibitorPage() {
                 <section className="relative overflow-hidden py-12">
                     <div className="container mx-auto px-6 relative z-10">
                         <div className="max-w-6xl mx-auto">
-                            <motion.div 
+                            <motion.div
                                 className="mb-10"
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
@@ -29,7 +29,7 @@ export default function ExhibitorPage() {
                                 </Link>
                             </motion.div>
 
-                            <motion.div 
+                            <motion.div
                                 className="text-center mb-16"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -39,7 +39,7 @@ export default function ExhibitorPage() {
                                     Showcase Your <span className="text-biro-blue">Brand</span>
                                 </h1>
                                 <p className="text-xl text-slate-600 max-w-2xl mx-auto font-medium">
-                                    Expose your products, services, and innovations to over 1000+ tech enthusiasts, founders, and leaders at Benin Tech Hangout 2.0.
+                                    Expose your products, services, and innovations to over 1000+ tech enthusiasts, founders, and leaders at Benin Tech Fest 2.0.
                                 </p>
                             </motion.div>
 

@@ -1,18 +1,18 @@
-# Benin Tech Hangout 2.0
+# Benin Tech Fest 2.0
 
 **Building Benin’s Unified Tech Ecosystem**
 
-Benin Tech Hangout 2.0 is a free tech community event focused on bringing together tech talents, founders, students, brands, companies, and organizations to strengthen and grow Benin City’s tech ecosystem.
+Benin Tech Fest 2.0 is a free tech community event focused on bringing together tech talents, founders, students, brands, companies, and organizations to strengthen and grow Benin City’s tech ecosystem.
 
 This repository contains the official landing page for the event.
 
 ---
 
-## 🌍 About Benin Tech Hangout
+## 🌍 About Benin Tech Fest
 
-Benin Tech Hangout is more than just an event — it is a meeting point for people who believe in collaboration, learning, and community-driven growth.
+Benin Tech Fest is more than just an event — it is a meeting point for people who believe in collaboration, learning, and community-driven growth.
 
-The second edition builds on the success of Hangout 1.0, expanding conversations, connections, and opportunities across the ecosystem.
+The second edition builds on the success of Fest 1.0, expanding conversations, connections, and opportunities across the ecosystem.
 
 **This is where Benin tech meets Benin tech.**
 
@@ -20,7 +20,7 @@ The second edition builds on the success of Hangout 1.0, expanding conversations
 
 ## 🎯 Event Details
 
-- **Event:** Benin Tech Hangout 2.0
+- **Event:** Benin Tech Fest 2.0
 - **Theme:** Building Benin’s Unified Tech Ecosystem
 - **Location:** Benin City
 - **Entry:** Free (Registration required)
@@ -31,10 +31,10 @@ The second edition builds on the success of Hangout 1.0, expanding conversations
 
 ## 🚀 Project Goals
 
-- Communicate the vision and mission of Benin Tech Hangout
+- Communicate the vision and mission of Benin Tech Fest
 - Provide clear information about the event
 - Enable easy attendee registration
-- Showcase credibility through Hangout 1.0 highlights
+- Showcase credibility through Fest 1.0 highlights
 - Serve as a central information hub for the event
 
 ---
@@ -69,7 +69,7 @@ The landing page is built as a single-page website with the following sections:
 3. Vision & mission
 4. Why you should attend
 5. What to expect
-6. A look back (Hangout 1.0)
+6. A look back (Fest 1.0)
 7. Organizer information
 8. Event details
 9. Registration form
@@ -87,8 +87,8 @@ The landing page is built as a single-page website with the following sections:
 ### Installation
 
 ```bash
-npx create-next-app@latest benin-tech-hangout
-cd benin-tech-hangout
+npx create-next-app@latest benin-tech-Fest
+cd benin-tech-Fest
 npm run dev
 ```
 

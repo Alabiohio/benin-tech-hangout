@@ -16,6 +16,8 @@
   --color-highlight-yellow: var(--signal-red);
   --font-righteous: var(--font-righteous-google), cursive;
   --font-andika: var(--font-andika-google), sans-serif;
+  --font-oswald: var(--font-oswald-google), sans-serif;
+  --font-geologica: var(--font-geologica-google), sans-serif;
   --font-sans: var(--font-andika);
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
@@ -70,6 +72,14 @@ body {
   font-family: var(--font-righteous) !important;
 }
 
+.font-oswald {
+  font-family: var(--font-oswald) !important;
+}
+
+.font-geologica {
+  font-family: var(--font-geologica) !important;
+}
+
 .mission-bg-overlay {
   background: rgba(15, 47, 107, 0.82);
 }
@@ -78,20 +88,6 @@ body {
 
 [class*="drop-shadow"] {
   filter: none !important;
-}
-
-[class*="bg-gradient"],
-[class*="gradient-to"] {
-  background-image: none !important;
-}
-
-[class*="bg-clip-text"] {
-  -webkit-text-fill-color: currentColor !important;
-  background-image: none !important;
-}
-
-[class*="text-transparent"] {
-  color: var(--biro-blue) !important;
 }
 
 @utility no-scrollbar {

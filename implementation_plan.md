@@ -1,7 +1,7 @@
-# Benin Tech Hangout 2.0 — Implementation Plan
+# Benin Tech Fest 2.0 — Implementation Plan
 
 ## Project Overview
-**Project Name:** Benin Tech Hangout 2.0  
+**Project Name:** Benin Tech Fest 2.0  
 **Theme:** Building Benin’s Unified Tech Ecosystem  
 **Type:** Free Tech Community Event Landing Page  
 **Goal:** Inform, inspire, and convert visitors into registered attendees
@@ -9,10 +9,10 @@
 ---
 
 ## Objectives
-- Create a clear, professional landing page for Benin Tech Hangout 2.0
+- Create a clear, professional landing page for Benin Tech Fest 2.0
 - Communicate the vision, mission, and value of the event
 - Enable easy and reliable attendee registration
-- Build credibility using past event highlights (Hangout 1.0)
+- Build credibility using past event highlights (Fest 1.0)
 - Support future updates (speakers, partners, schedule)
 
 ---
@@ -53,7 +53,7 @@
 3. Vision & Mission
 4. Why You Should Attend
 5. What to Expect
-6. A Look Back (Hangout 1.0)
+6. A Look Back (Fest 1.0)
 7. Organizer (Proline Groups)
 8. Event Details
 9. Registration Form
@@ -69,7 +69,7 @@
 - Primary CTA: Register Now
 
 ### 2. About the Program
-- Overview of Benin Tech Hangout
+- Overview of Benin Tech Fest
 - Purpose and importance of the event
 
 ### 3. Vision & Mission
@@ -86,7 +86,7 @@
 - Exhibitions
 - Community engagement
 
-### 6. A Look Back (Hangout 1.0)
+### 6. A Look Back (Fest 1.0)
 - Short recap text
 - Image gallery from previous edition
 
@@ -134,7 +134,7 @@
 - Add Why Attend & What to Expect sections
 
 ### Phase 3 — Media & Credibility
-- Add Hangout 1.0 gallery
+- Add Fest 1.0 gallery
 - Add Organizer section
 
 ### Phase 4 — Registration & CTA

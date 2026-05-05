@@ -1,5 +1,5 @@
 ‎HERO
-‎Benin Tech Hangout 2.0
+‎Benin Tech Fest 2.0
 ‎
 ‎Theme:
 ‎Where Builders Converge
@@ -32,7 +32,7 @@
 ‎
 ‎More Than an Event. A Movement.
 ‎
-‎Benin Tech Hangout 2.0 is a community-driven gathering designed to bring together builders, thinkers, and doers across the tech ecosystem.
+‎Benin Tech Fest 2.0 is a community-driven gathering designed to bring together builders, thinkers, and doers across the tech ecosystem.
 ‎From developers and designers to founders and ecosystem leaders, Policy Makers and Government bodies, this is where Benin’s tech future is being shaped through real conversations, collaboration, and shared vision.
 ‎
 ‎We’re not just hosting an event.
@@ -118,7 +118,7 @@ Past Speakers: Scroll Side Ways
 ‎Yes. Entry is strictly via registration.
 ‎
 ‎FOOTER
-‎Benin Tech Hangout 2.0
+‎Benin Tech Fest 2.0
 ‎Benin City, Edo State
 ‎Organized by Proline Group
 ‎

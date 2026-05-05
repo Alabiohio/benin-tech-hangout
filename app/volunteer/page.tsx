@@ -15,7 +15,7 @@ export default function VolunteerPage() {
                 <section className="relative overflow-hidden py-12">
                     <div className="container mx-auto px-6 relative z-10">
                         <div className="max-w-6xl mx-auto">
-                            <motion.div 
+                            <motion.div
                                 className="mb-10"
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
@@ -29,7 +29,7 @@ export default function VolunteerPage() {
                                 </Link>
                             </motion.div>
 
-                            <motion.div 
+                            <motion.div
                                 className="text-center mb-16"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -39,11 +39,11 @@ export default function VolunteerPage() {
                                     Join The <span className="text-biro-blue">Team</span>
                                 </h1>
                                 <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto font-medium leading-relaxed">
-                                    Become a vital part of <span className="text-biro-blue-dark font-bold">Benin Tech Hangout 2.0</span>. Help us create an unforgettable experience for thousands of innovators.
+                                    Become a vital part of <span className="text-biro-blue-dark font-bold">Benin Tech Fest 2.0</span>. Help us create an unforgettable experience for thousands of innovators.
                                 </p>
                             </motion.div>
 
-                            <motion.div 
+                            <motion.div
                                 className="rounded-[2.5rem] overflow-hidden border border-blue-100 flex flex-col lg:flex-row"
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}

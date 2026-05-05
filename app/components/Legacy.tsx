@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
 const images = [
-    { src: "/BTH-38.jpg", alt: "Tech enthusiasts at Benin Tech Hangout 1.0", className: "w-full aspect-[4/3] rounded-2xl shadow-2xl relative z-10 scale-105" },
+    { src: "/BTH-38.jpg", alt: "Tech enthusiasts at Benin Tech Fest 1.0", className: "w-full aspect-[4/3] rounded-2xl shadow-2xl relative z-10 scale-105" },
     { src: "/BTH-3-1.jpg", alt: "Networking session", className: "w-full aspect-[3/4] rounded-2xl shadow-xl relative z-20 -mt-12 md:-mt-24 ml-6 md:ml-12 border-4 border-[#020617]" },
     { src: "/BTH-40-1.JPG.jpeg", alt: "Industry leaders speaking", className: "w-full aspect-square rounded-2xl shadow-lg relative z-0 -ml-8 md:-ml-16 mt-4" },
     { src: "/BTH-30-1.jpg", alt: "Community engagement", className: "w-full aspect-video rounded-2xl shadow-2xl relative z-30 -mt-16 md:-mt-32 -mr-4 md:-mr-8 border-4 border-[#020617]" },
@@ -58,20 +58,20 @@ export default function Legacy() {
             <div className="container mx-auto px-6 relative z-10">
                 <div className="flex flex-col lg:flex-row items-center gap-16 mb-24">
                     {/* Content Section */}
-                    <motion.div 
+                    <motion.div
                         className="lg:w-1/2"
                         initial={{ opacity: 0, x: -50 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                    >                     
+                    >
                         <h2 className="text-4xl md:text-7xl font-black font-righteous text-white mb-8 leading-tight italic">
                             BTH 1.0 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Impact</span>
                         </h2>
 
                         <div className="space-y-6 text-lg text-white/60 leading-relaxed mb-10">
                             <p>
-                                Benin Tech Hangout 1.0 brought together a diverse community of innovators and builders. It sparked real connections across the ecosystem.
+                                Benin Tech Fest 1.0 brought together a diverse community of innovators and builders. It sparked real connections across the ecosystem.
                             </p>
                             <p className="font-bold text-white italic border-l-4 border-highlight-yellow pl-4">
                                 It proved one thing: Benin is ready for the future.
@@ -140,7 +140,7 @@ export default function Legacy() {
 
                 {/* Past Speakers Slider integrated from Speakers */}
                 <div className="pt-16 border-t border-white/5">
-                    <motion.div 
+                    <motion.div
                         className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -190,7 +190,7 @@ export default function Legacy() {
                     </div>
 
                     {/* Segmented Dot Indicator */}
-                    <motion.div 
+                    <motion.div
                         className="flex justify-center gap-3 mt-4"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}

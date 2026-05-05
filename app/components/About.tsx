@@ -5,8 +5,8 @@ import { motion, Variants } from "framer-motion";
 
 const fadeUp: Variants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-        opacity: 1, 
+    visible: {
+        opacity: 1,
         y: 0,
         transition: { duration: 0.6, ease: "easeOut" }
     }
@@ -14,8 +14,8 @@ const fadeUp: Variants = {
 
 const slideRight: Variants = {
     hidden: { opacity: 0, x: -30 },
-    visible: { 
-        opacity: 1, 
+    visible: {
+        opacity: 1,
         x: 0,
         transition: { duration: 0.8, ease: "easeOut" }
     }
@@ -23,8 +23,8 @@ const slideRight: Variants = {
 
 const slideLeft: Variants = {
     hidden: { opacity: 0, x: 30 },
-    visible: { 
-        opacity: 1, 
+    visible: {
+        opacity: 1,
         x: 0,
         transition: { duration: 0.8, ease: "easeOut" }
     }
@@ -35,7 +35,7 @@ export default function About() {
         <section id="about" className="py-24 relative bg-white border-y border-slate-100">
             <div className="container mx-auto px-6 relative z-10">
                 <div className="flex flex-col md:flex-row items-center gap-16">
-                    <motion.div 
+                    <motion.div
                         variants={slideRight}
                         initial="hidden"
                         whileInView="visible"
@@ -46,14 +46,14 @@ export default function About() {
                             <div className="w-full h-[450px] rounded-sm border border-slate-100 relative overflow-hidden group">
                                 <Image
                                     src="/BTH-9-1.jpg"
-                                    alt="Benin Tech Hangout Community"
+                                    alt="Benin Tech Fest Community"
                                     fill
                                     className="object-cover transition-transform duration-1000 group-hover:scale-105"
                                 />
                                 <div className="absolute inset-0 bg-[#0f2f6b]/20 group-hover:bg-[#0f2f6b]/10 transition-colors"></div>
                             </div>
 
-                            <motion.div 
+                            <motion.div
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: 0.5, duration: 0.5 }}
@@ -66,7 +66,7 @@ export default function About() {
                         </div>
                     </motion.div>
 
-                    <motion.div 
+                    <motion.div
                         variants={slideLeft}
                         initial="hidden"
                         whileInView="visible"
@@ -77,21 +77,21 @@ export default function About() {
                             <div className="h-px w-8 bg-biro-blue"></div>
                             <span className="text-biro-blue text-xs font-bold uppercase tracking-widest">Our Mission</span>
                         </div>
-                        
+
                         <h2 className="text-3xl md:text-5xl font-bold text-biro-blue-dark mb-8 leading-tight tracking-tight">
                             Uniting Benin&apos;s <br />
                             <span className="text-biro-blue">Tech Future</span>
                         </h2>
-                        
+
                         <motion.p variants={fadeUp} className="text-lg text-slate-700 mb-6 leading-relaxed">
-                            <span className="font-bold text-biro-blue-dark">Benin Tech Hangout 2.0</span> is a community-driven gathering designed to bring together builders, thinkers, and doers across the tech ecosystem.
+                            <span className="font-bold text-biro-blue-dark">Benin Tech Fest 2.0</span> is Edo State Tech Festival, a high impact, community powered gathering dedicated to connecting talented young professionals with opportunities and helping ambitious founders build successful Startups right here in  Edo State.
                         </motion.p>
-                        
+
                         <motion.p variants={fadeUp} className="text-lg text-slate-700 mb-8 leading-relaxed">
                             From developers and designers to founders and ecosystem leaders, policy makers and government bodies, this is where Benin&apos;s tech future is shaped through real conversations, collaboration, and shared vision.
                         </motion.p>
-                        
-                        <motion.div 
+
+                        <motion.div
                             variants={fadeUp}
                             className="bg-slate-50 border-l-4 border-biro-blue p-6 rounded-sm"
                         >
