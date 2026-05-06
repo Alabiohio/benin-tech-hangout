@@ -88,6 +88,8 @@ const highlightItems = [
     { label: "Tech Money Sessions", title: "Tech Money Sessions" },
     { label: "Creative Economy", title: "Creative Economy" },
     { label: "Policy & Regulations", title: "Policy & Regulations" },
+    { label: "Job Fair", title: "Job Fair" },
+    { label: "Womwen in Tech", title: "Womwen in Tech" },
 ];
 
 
@@ -134,7 +136,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                 </div>
             </div>
 
-            <div className="container mx-auto px-4 md:px-6 relative z-10 lg:pt-8 pb-4">
+            <div className="container mx-auto px-2 md:px-6 relative z-10 lg:pt-8 pb-4">
                 <div className="flex flex-col items-center w-full gap-6">
                     <div className="w-full max-w-4xl flex flex-col items-center text-center pt-4 md:pt-8">
 
@@ -185,7 +187,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                             ></motion.div>
                         </div>
                         <motion.div
-                            className="flex flex-row items-center justify-center gap-2 md:gap-8 mb-4 text-white/80 font-bold tracking-[0.2em] uppercase text-[10px] md:text-xs"
+                            className="flex flex-row items-center justify-center gap-2 md:gap-8 mb-4 text-white/80 font-bold tracking-[0.2em] uppercase text-[12px] md:text-[15.5px]"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -194,8 +196,9 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                             <span className="flex items-center gap-2">
                                 <span className="text-highlight-yellow"></span> Benin City, Edo State
                             </span>
+                            <span className="h-4 w-px bg-white/30"></span>
                             <span className="flex items-center gap-2">
-                                <span className="text-highlight-yellow"></span> Oct 2, 2026
+                                <span className="text-highlight-yellow"></span> October 30th-31st
                             </span>
                         </motion.div>
 
@@ -233,7 +236,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                 </div>
 
                 {/* Event Highlights Grid */}
-                <div id="highlights" className="w-full mt-12 md:mt-16 backdrop-blur-lg rounded-2xl p-2 py-3">
+                <div id="highlights" className="w-full mt-12 md:mt-16 backdrop-blur-lg rounded-2xl py-3">
                     <div className="flex flex-col md:flex-row items-end justify-between mb-2 gap-4 px-4">
                         <motion.div
                             initial={{ opacity: 0, x: -50 }}
@@ -243,7 +246,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                             className="max-w-2xl"
                         >
                             <h2 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tighter leading-[0.85]">
-                                Event <br /> <span className="text-highlight-yellow italic">Highlights.</span>
+                                Event <span className="text-highlight-yellow italic">Highlights.</span>
                             </h2>
                         </motion.div>
                         <motion.div
@@ -260,7 +263,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true }}
-                        className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-6"
+                        className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-6"
                     >
                         {highlightItems.map((item, idx) => (
                             <motion.div
@@ -271,7 +274,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                                     y: -10,
                                     transition: { type: "spring", stiffness: 400, damping: 10 }
                                 }}
-                                className="bg-white/5 backdrop-blur-md group relative px-3 py-3 md:p-6 border border-white/10 rounded-2xl transition-all duration-500 hover:border-highlight-yellow/40 hover:bg-white/10 shadow-xl"
+                                className="bg-white/5 backdrop-blur-md group relative px-2 py-2 md:p-6 border border-white/10 rounded-xl transition-all duration-500 hover:border-highlight-yellow/40 hover:bg-white/10 shadow-xl"
                             >
                                 {/* Animated accent corner */}
                                 <motion.div
@@ -284,13 +287,13 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
 
                                 <div className="flex flex-col h-full justify-center gap-2">
                                     <div className="space-y-1">
-                                        <div className="text-xl md:text-2xl font-black text-white leading-none group-hover:text-highlight-yellow transition-colors duration-300">
+                                        <div className="text-xs md:text-xl font-semibold text-white leading-none group-hover:text-highlight-yellow transition-colors duration-300">
                                             {'value' in item ? (
                                                 <CountUp value={item.value!} suffix={item.suffix} />
                                             ) : (
-                                                <span className="text-lg md:text-xl uppercase tracking-tight leading-tight block">{item.title}</span>
+                                                <span className="text-xs md:text-xl uppercase tracking-tight leading-tight block">{item.title}</span>
                                             )}
-                                            {'value' in item && <span className="block text-xs font-bold text-white/40 mt-2 uppercase tracking-widest">{item.title}</span>}
+                                            {'value' in item && <span className="block text-xs font-semibold text-white/40 mt-2 uppercase tracking-widest">{item.title}</span>}
                                         </div>
                                     </div>
                                 </div>

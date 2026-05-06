@@ -75,7 +75,7 @@ export default function About() {
                     >
                         <div className="flex items-center gap-4 mb-6">
                             <div className="h-px w-8 bg-biro-blue"></div>
-                            <span className="text-biro-blue text-xs font-bold uppercase tracking-widest">Our Mission</span>
+                            <span className="text-biro-blue text-xs font-bold uppercase tracking-widest">About</span>
                         </div>
 
                         <h2 className="text-3xl md:text-5xl font-bold text-biro-blue-dark mb-8 leading-tight tracking-tight">

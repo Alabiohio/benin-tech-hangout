@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 interface WhyAttendProps {
     onRegisterClick?: () => void;
@@ -6,61 +7,80 @@ interface WhyAttendProps {
 
 export default function WhyAttend({ onRegisterClick }: WhyAttendProps) {
     return (
-        <section id="ecosystem-cta" className="relative py-28 md:py-36 bg-[#0a1e3d] overflow-hidden isolate">
-            {/* Decorative geometric accents */}
-            <div className="absolute top-0 left-0 w-48 h-48 border border-white/[0.04] rounded-full -translate-x-1/2 -translate-y-1/2" />
-            <div className="absolute bottom-0 right-0 w-72 h-72 border border-white/[0.04] rounded-full translate-x-1/3 translate-y-1/3" />
-            <div className="absolute top-1/2 right-[15%] w-32 h-32 border border-white/[0.03] rotate-45 -translate-y-1/2 hidden lg:block" />
-            <div className="absolute top-[20%] left-[10%] w-16 h-16 border border-white/[0.05] rotate-12 hidden md:block" />
+        <section id="ecosystem-cta" className="relative py-24 md:py-32 bg-[#f8fbff] overflow-hidden isolate">
+            {/* Background Marquee Text */}
+            <div className="absolute inset-0 flex flex-col justify-center opacity-3 pointer-events-none -z-10 overflow-hidden">
+                <motion.div 
+                    animate={{ x: [0, -1000] }} 
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="whitespace-nowrap"
+                >
+                    <span className="text-[10rem] md:text-[15rem] font-black font-righteous text-slate-900 leading-none">
+                        ECOSYSTEM ECOSYSTEM ECOSYSTEM ECOSYSTEM 
+                    </span>
+                </motion.div>
+                <motion.div 
+                    animate={{ x: [-1000, 0] }} 
+                    transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                    className="whitespace-nowrap"
+                >
+                    <span className="text-[10rem] md:text-[15rem] font-black font-righteous text-transparent stroke-text leading-none" style={{ WebkitTextStroke: '4px #0f172a' }}>
+                        BUILDERS BUILDERS BUILDERS BUILDERS
+                    </span>
+                </motion.div>
+            </div>
 
-            {/* Top accent line */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-white/[0.06]" />
-
-            <div className="container mx-auto px-6 relative z-10">
+            <div className="container mx-auto px-4 relative z-10">
                 <div className="max-w-4xl mx-auto text-center">
-                    {/* Tagline */}
-                    <p className="text-sm md:text-base font-bold uppercase tracking-[0.25em] text-[#6b93d4] mb-6">
-                        Join the Movement
-                    </p>
+                    <motion.h2 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2, duration: 0.6 }}
+                        className="text-3xl md:text-4xl lg:text-5xl font-black font-righteous text-slate-900 leading-[0.9] mb-8 uppercase"
+                    >
+                        Be a Part <br />
+                        Of The <span className="text-highlight-yellow relative inline-block">
+                            Ecosystem
+                            <svg className="absolute w-full h-4 -bottom-2 left-0 text-slate-900" viewBox="0 0 100 20" preserveAspectRatio="none">
+                                <path d="M0,10 Q50,20 100,10" fill="none" stroke="currentColor" strokeWidth="4"/>
+                            </svg>
+                        </span>
+                    </motion.h2>
 
-                    {/* Heading */}
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-black font-righteous text-white leading-[1.1] mb-5">
-                        Be a Part of <br className="hidden sm:block" />
-                        <span className="text-[#7eb8f0]">Benin Tech Ecosystem</span>
-                    </h2>
-
-                    {/* Subtitle */}
-                    <p className="text-lg md:text-xl text-[#8aa3c8] max-w-2xl mx-auto mb-10 leading-relaxed">
+                    <motion.p 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.3, duration: 0.6 }}
+                        className="text-xl md:text-xl text-slate-700 max-w-2xl mx-auto mb-8 font-medium leading-relaxed"
+                    >
                         Connect with builders, innovators, and leaders shaping the future of technology in Edo State.
-                    </p>
+                    </motion.p>
 
-                    {/* Divider */}
-                    <div className="flex items-center justify-center gap-3 mb-12">
-                        <span className="w-12 h-px bg-white/10" />
-                        <span className="w-2 h-2 border border-[#7eb8f0]/40 rotate-45" />
-                        <span className="w-12 h-px bg-white/10" />
-                    </div>
-
-                    {/* CTA Buttons */}
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
+                    <motion.div 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.4, duration: 0.6 }}
+                        className="flex flex-col sm:flex-row items-center justify-center gap-6"
+                    >
                         <button
                             onClick={onRegisterClick}
-                            className="w-full sm:w-auto px-10 lg:px-12 py-3 bg-highlight-yellow text-white font-black font-righteous text-md lg:text-xl rounded-xl hover:bg-white hover:text-highlight-yellow hover:-translate-y-0.5 transition-all duration-300 uppercase tracking-[0.15em]"
+                            className="group relative w-full sm:w-auto px-8 py-3 bg-highlight-yellow text-white font-black font-oswald uppercase tracking-widest border-4 border-highlight-yellow hover:bg-transparent hover:text-highlight-yellow transition-colors duration-300 shadow-[10px_10px_0px_rgba(15,23,42,1)] hover:shadow-[4px_4px_0px_rgba(15,23,42,1)] hover:translate-y-1 hover:translate-x-1"
                         >
                             Register Now
                         </button>
+                        
                         <Link
                             href="/volunteer"
-                            className="w-full sm:w-auto px-10 lg:px-12 py-3 bg-white border border-white/15 text-[#0a1e3d] font-black font-righteous text-md lg:text-xl rounded-xl hover:bg-white/20 hover:text-white hover:-translate-y-0.5 transition-all duration-300 uppercase tracking-[0.15em] text-center"
+                            className="w-full sm:w-auto px-8 py-3 bg-transparent border-4 border-slate-900 text-slate-900 font-black font-oswald uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-colors duration-300 shadow-[10px_10px_0px_rgba(15,23,42,0.2)] hover:shadow-[4px_4px_0px_rgba(15,23,42,0.2)] hover:translate-y-1 hover:translate-x-1 text-center"
                         >
                             Volunteer
                         </Link>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
-
-            {/* Bottom accent bar */}
-            <div className="absolute bottom-0 left-0 right-0 h-px bg-white/[0.06]" />
         </section>
     );
 }
