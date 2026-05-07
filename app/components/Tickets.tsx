@@ -1,5 +1,7 @@
 'use client';
 
+import Button from './Button';
+
 const ticketTiers = [
     {
         name: "Regular Pass",
@@ -73,12 +75,13 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
                                 ))}
                             </div>
 
-                            <button
+                            <Button
                                 onClick={onRegisterClick}
-                                className={`w-full py-4 rounded-2xl font-black font-righteous uppercase tracking-widest transition-all relative z-10 ${tier.highlight ? 'bg-highlight-yellow text-white hover:scale-105' : 'bg-[#f8fbff] border border-blue-100 text-biro-blue-dark hover:bg-blue-50 hover:scale-105'}`}
+                                variant={tier.highlight ? 'primary' : 'outline'}
+                                className="w-full rounded-md relative z-10"
                             >
                                 Get Your Pass
-                            </button>
+                            </Button>
                         </div>
                     ))}
                 </div>

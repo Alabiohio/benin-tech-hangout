@@ -5,7 +5,7 @@ interface ButtonProps {
     href?: string;
     onClick?: () => void;
     children: React.ReactNode;
-    variant?: 'primary' | 'outline';
+    variant?: 'primary' | 'outline' | 'biro';
     className?: string;
 }
 
@@ -20,7 +20,8 @@ const Button: React.FC<ButtonProps> = ({
     
     const variants = {
         primary: "bg-highlight-yellow text-white border-highlight-yellow hover:bg-transparent hover:text-highlight-yellow shadow-[10px_10px_0px_rgba(15,23,42,1)] hover:shadow-[4px_4px_0px_rgba(15,23,42,1)]",
-        outline: "bg-transparent border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white shadow-[10px_10px_0px_rgba(15,23,42,0.2)] hover:shadow-[4px_4px_0px_rgba(15,23,42,0.2)]"
+        outline: "bg-transparent border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white shadow-[10px_10px_0px_rgba(15,23,42,0.2)] hover:shadow-[4px_4px_0px_rgba(15,23,42,0.2)]",
+        biro: "bg-biro-blue text-white border-biro-blue hover:bg-transparent hover:text-biro-blue shadow-[10px_10px_0px_rgba(15,23,42,1)] hover:shadow-[4px_4px_0px_rgba(15,23,42,1)]"
     };
 
     const combinedClasses = `${baseStyles} ${variants[variant]} ${className}`;

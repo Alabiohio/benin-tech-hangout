@@ -1,7 +1,7 @@
 'use client';
 
-import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Button from './Button';
 
 export default function WhatToExpect({ setIsModalOpen }: { isModalOpen: boolean, setIsModalOpen: (open: boolean) => void }) {
     const expectations = [
@@ -72,12 +72,13 @@ export default function WhatToExpect({ setIsModalOpen }: { isModalOpen: boolean,
                         </p>
 
                         <div className="flex flex-col md:flex-row gap-6">
-                            <Link
+                            <Button
                                 href="/exhibitor"
-                                className="px-12 py-3 bg-biro-blue text-white font-black font-righteous rounded-2xl hover:scale-105 transition-all text-xl"
+                                variant="biro"
+                                className="px-4 py-3 rounded-md hover:scale-105 transition-all"
                             >
                                 Get an Exhibition Slot
-                            </Link>
+                            </Button>
                         </div>
                     </div>
                 </div>
@@ -89,15 +90,16 @@ export default function WhatToExpect({ setIsModalOpen }: { isModalOpen: boolean,
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
                 >
-                    <button
+                    <Button
                         onClick={() => setIsModalOpen(true)}
-                        className="group relative px-14 py-5 bg-highlight-yellow text-white font-black font-righteous rounded-[2.5rem] transition-all hover:scale-105 active:scale-95 text-xl overflow-hidden"
+                        variant='primary'
+                        className="group relative px-14 py-3 text-white font-black font-righteous transition-all hover:scale-105 active:scale-95 text-xl overflow-hidden"
                     >
                         <span className="relative z-10 flex items-center justify-center gap-4">
                             REGISTER NOW
                             <svg className="w-6 h-6 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                         </span>
-                    </button>
+                    </Button>
                 </motion.div>
             </div>
         </section>
