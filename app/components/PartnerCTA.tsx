@@ -1,5 +1,4 @@
-import React from 'react';
-import Link from 'next/link';
+import Button from './Button';
 
 export default function PartnerCTA() {
     return (
@@ -11,12 +10,9 @@ export default function PartnerCTA() {
                 Partner with us to reach a fast-growing tech audience and position your brand at the center of innovation in Benin City.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                <Link
-                    href="/sponsor"
-                    className="px-10 py-3 bg-biro-blue text-white font-black font-righteous rounded-2xl hover:scale-105 transition-all uppercase tracking-widest text-center"
-                >
-                    Become a Sponsor
-                </Link>
+              <Button href="/sponsor" variant="outline">
+                            Become a Sponsor
+                        </Button>
             </div>
         </div>
     );

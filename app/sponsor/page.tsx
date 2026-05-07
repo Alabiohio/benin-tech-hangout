@@ -11,40 +11,26 @@ export default function SponsorPage() {
         <div className="flex min-h-screen flex-col font-sans relative bg-[#f8fbff]">
             <BackgroundWrapper />
             <Navbar />
-            <main className="flex-grow relative z-10 pt-24 md:pt-32 pb-16">
+            <main className="flex-grow relative z-10 pt-14 md:pt-32 pb-16">
                 <section className="relative overflow-hidden py-12">
-                    <div className="container mx-auto px-6 relative z-10">
+                    <div className="container mx-auto px-2 relative z-10">
                         <div className="max-w-6xl mx-auto">
-                            <motion.div 
-                                className="mb-10"
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.5 }}
-                            >
-                                <Link href="/" className="inline-flex items-center gap-2 text-biro-blue font-bold hover:text-highlight-yellow transition-colors group">
-                                    <svg className="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                                    </svg>
-                                    Back to Home
-                                </Link>
-                            </motion.div>
-
-                            <motion.div 
-                                className="text-center mb-16"
+                            <motion.div
+                                className="text-center mb-8"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6 }}
                             >
-                                <h1 className="text-5xl md:text-7xl font-black font-righteous text-biro-blue-dark mb-6 leading-tight">
+                                <h1 className="text-4xl md:text-6xl font-black font-righteous text-biro-blue-dark mb- leading-tight">
                                     Partner With <span className="text-biro-blue">Innovation</span>
                                 </h1>
-                                <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto font-medium leading-relaxed">
+                                <p className="md:text-xl text-slate-600 max-w-2xl mx-auto font-medium leading-relaxed">
                                     Position your brand at the center of Benin City&apos;s fastest-growing tech community. Let&apos;s build the future together.
                                 </p>
                             </motion.div>
 
                             <motion.div 
-                                className="rounded-[2.5rem] overflow-hidden border border-blue-100 flex flex-col lg:flex-row"
+                                className="rounded-[1.5rem] overflow-hidden border border-blue-100 flex flex-col lg:flex-row"
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.8, delay: 0.2 }}
@@ -76,7 +62,7 @@ export default function SponsorPage() {
                                                 <input type="text" className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" placeholder="John Doe" required />
                                             </div>
                                             <div className="space-y-2">
-                                                <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Work Email</label>
+                                                <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Email</label>
                                                 <input type="email" className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" placeholder="john@brand.com" required />
                                             </div>
                                         </div>

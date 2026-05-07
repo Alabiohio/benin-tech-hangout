@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Button from './Button';
 import { motion } from 'framer-motion';
 
 interface WhyAttendProps {
@@ -49,12 +49,12 @@ export default function WhyAttend({ onRegisterClick }: WhyAttendProps) {
                     </motion.h2>
 
                     <motion.p 
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
                         transition={{ delay: 0.3, duration: 0.6 }}
                         className="text-xl md:text-xl text-slate-700 max-w-2xl mx-auto mb-8 font-medium leading-relaxed"
-                    >
+                            >
                         Connect with builders, innovators, and leaders shaping the future of technology in Edo State.
                     </motion.p>
 
@@ -72,12 +72,9 @@ export default function WhyAttend({ onRegisterClick }: WhyAttendProps) {
                             Register Now
                         </button>
                         
-                        <Link
-                            href="/volunteer"
-                            className="w-full sm:w-auto px-8 py-3 bg-transparent border-4 border-slate-900 text-slate-900 font-black font-oswald uppercase tracking-widest hover:bg-slate-900 hover:text-white transition-colors duration-300 shadow-[10px_10px_0px_rgba(15,23,42,0.2)] hover:shadow-[4px_4px_0px_rgba(15,23,42,0.2)] hover:translate-y-1 hover:translate-x-1 text-center"
-                        >
+                        <Button href="/volunteer" variant="outline">
                             Volunteer
-                        </Link>
+                        </Button>
                     </motion.div>
                 </div>
             </div>

@@ -3,7 +3,6 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import BackgroundWrapper from "../components/BackgroundWrapper";
-import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function ExhibitorPage() {
@@ -11,41 +10,28 @@ export default function ExhibitorPage() {
         <div className="flex min-h-screen flex-col font-sans relative bg-[#f8fbff]">
             <BackgroundWrapper />
             <Navbar />
-            <main className="flex-grow relative z-10 pt-24 md:pt-32 pb-16">
+            <main className="flex-grow relative z-10 pt-14 md:pt-32 pb-16">
                 <section className="relative overflow-hidden py-12">
-                    <div className="container mx-auto px-6 relative z-10">
+                    <div className="container mx-auto px-2 relative z-10">
                         <div className="max-w-6xl mx-auto">
-                            <motion.div
-                                className="mb-10"
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.5 }}
-                            >
-                                <Link href="/" className="inline-flex items-center gap-2 text-biro-blue font-bold hover:text-highlight-yellow transition-colors group">
-                                    <svg className="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                                    </svg>
-                                    Back to Home
-                                </Link>
-                            </motion.div>
 
                             <motion.div
-                                className="text-center mb-16"
+                                className="text-center mb-8"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6 }}
                             >
-                                <h1 className="text-5xl md:text-7xl font-black font-righteous text-biro-blue-dark mb-4">
+                                <h1 className="text-4xl md:text-6xl font-black font-righteous text-biro-blue-dark mb-4">
                                     Showcase Your <span className="text-biro-blue">Brand</span>
                                 </h1>
-                                <p className="text-xl text-slate-600 max-w-2xl mx-auto font-medium">
+                                <p className="text-md text-slate-600 max-w-2xl mx-auto font-medium">
                                     Expose your products, services, and innovations to over 1000+ tech enthusiasts, founders, and leaders at Benin Tech Fest 2.0.
                                 </p>
                             </motion.div>
 
-                            <div className="bg-white rounded-[2.5rem] overflow-hidden border border-blue-100 flex flex-col lg:flex-row-reverse">
+                            <div className="bg-white rounded-[1.5rem] overflow-hidden border border-blue-100 flex flex-col lg:flex-row-reverse">
                                 <div className="lg:w-2/5 p-10 md:p-14 bg-[#0f2f6b] flex flex-col justify-center text-white relative">
-                                    <h2 className="text-3xl md:text-4xl font-black mb-6 text-white font-righteous">Exhibitor Perks</h2>
+                                    <h2 className="text-2xl md:text-3xl font-black mb-6 text-white font-righteous">Exhibitor Perks</h2>
                                     <p className="text-blue-100/80 mb-8 leading-relaxed font-medium">
                                         Position your brand at the epicenter of innovation. Connect with your target audience where they learn, network, and grow.
                                     </p>
@@ -97,18 +83,6 @@ export default function ExhibitorPage() {
                                                 <input type="text" className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900" placeholder="e.g. Fintech, Edtech..." required />
                                             </div>
                                         </div>
-
-                                        <div>
-                                            <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Preferred Booth Size</label>
-                                            <select className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 appearance-none" required>
-                                                <option value="">Select a package</option>
-                                                <option>Standard Booth (3x3m)</option>
-                                                <option>Premium Booth (6x3m)</option>
-                                                <option>Custom Island / Large Setup</option>
-                                                <option>Startup Desk (Mini)</option>
-                                            </select>
-                                        </div>
-
                                         <div>
                                             <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Additional Requirements or Details</label>
                                             <textarea rows={3} className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 resize-none" placeholder="Any specific power requirements, display arrangements, etc."></textarea>

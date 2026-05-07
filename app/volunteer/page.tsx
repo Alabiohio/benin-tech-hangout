@@ -11,26 +11,13 @@ export default function VolunteerPage() {
         <div className="flex min-h-screen flex-col font-sans relative bg-[#f8fbff]">
             <BackgroundWrapper />
             <Navbar />
-            <main className="flex-grow relative z-10 pt-24 md:pt-32 pb-16">
+            <main className="flex-grow relative z-10 pt-14 md:pt-32 pb-16">
                 <section className="relative overflow-hidden py-12">
-                    <div className="container mx-auto px-6 relative z-10">
+                    <div className="container mx-auto px-2 relative z-10">
                         <div className="max-w-6xl mx-auto">
-                            <motion.div
-                                className="mb-10"
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.5 }}
-                            >
-                                <Link href="/" className="inline-flex items-center gap-2 text-biro-blue font-bold hover:text-highlight-yellow transition-colors group">
-                                    <svg className="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                                    </svg>
-                                    Back to Home
-                                </Link>
-                            </motion.div>
 
                             <motion.div
-                                className="text-center mb-16"
+                                className="text-center mb-8"
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6 }}
@@ -44,14 +31,14 @@ export default function VolunteerPage() {
                             </motion.div>
 
                             <motion.div
-                                className="rounded-[2.5rem] overflow-hidden border border-blue-100 flex flex-col lg:flex-row"
+                                className="rounded-[1.5rem] overflow-hidden border border-blue-100 flex flex-col lg:flex-row"
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.8, delay: 0.2 }}
                             >
                                 <div className="lg:w-2/5 p-10 md:p-14 bg-[#0f2f6b] flex flex-col justify-center text-white relative overflow-hidden">
-                                    <h2 className="text-3xl md:text-4xl font-black mb-6 relative z-10 font-righteous text-white">Why Volunteer?</h2>
-                                    <p className="text-blue-100/80 mb-10 leading-relaxed text-lg relative z-10">
+                                    <h2 className="text-2xl md:text-3xl font-black mb-4 relative z-10 font-righteous text-white">Why Volunteer?</h2>
+                                    <p className="text-blue-100/80 mb-4 leading-relaxed relative z-10">
                                         Volunteering at BTH is more than just lending a hand. It&apos;s an opportunity to grow, network, and lead the change.
                                     </p>
 
@@ -59,9 +46,6 @@ export default function VolunteerPage() {
                                         {[
                                             "Exclusive backstage access",
                                             "Network with industry leaders",
-                                            "Official Certificate of Contribution",
-                                            "Limited edition team merch",
-                                            "Team meals & after-party"
                                         ].map((item, i) => (
                                             <div key={i} className="flex items-start gap-4 group">
                                                 <div className="w-8 h-8 shrink-0 rounded-lg bg-white/10 border border-white/15 text-white flex items-center justify-center font-bold transition-all">
