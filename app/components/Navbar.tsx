@@ -34,7 +34,7 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                         alt="Logo"
                         width={60}
                         height={60}
-                        className="w-auto h-10 md:h-12 object-contain transition-transform duration-300 group-hover:scale-105"
+                        className="w-auto h-10 md:h-12 object-contain"
                         priority
                     />
                 </Link>
