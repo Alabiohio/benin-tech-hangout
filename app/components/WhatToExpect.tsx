@@ -16,7 +16,7 @@ export default function WhatToExpect({ setIsModalOpen }: { isModalOpen: boolean,
 
     return (
         <section className="py-24 md:py-32 bg-white relative overflow-hidden" id="what-to-expect">
-            <div className="container mx-auto px-6 max-w-4xl relative z-10">
+            <div className="container mx-auto px-6 relative z-10">
                 <div className="text-center mb-16 md:mb-24">
                     <h2 className="text-3xl md:text-4xl font-black font-righteous text-biro-blue-dark mb-5">
                         What to expect <span className="text-biro-blue">at BTF 2.0</span>
@@ -62,22 +62,35 @@ export default function WhatToExpect({ setIsModalOpen }: { isModalOpen: boolean,
                     })}
                 </div>
 
-                <div className="mt-32 px-4 py-10 md:p-20 bg-[#f8fbff] rounded-[1rem] border border-blue-100 relative overflow-hidden group">
-                    <div className="relative z-10 flex flex-col items-center text-center">
-                        <h3 className="text-2xl md:text-4xl font-black font-righteous text-biro-blue-dark mb-6">Discover. Showcase. Connect.</h3>
-                        <p className="text-slate-600 max-w-3xl mb-12 font-medium leading-relaxed">
-                            The exhibition brings together startups, creators, and tech brands to showcase what they&apos;re building and solving.
-                            Walk through live demos, interact with products, and meet the teams behind them.
-                            <span className="block mt-4 text-biro-blue-dark">It&apos;s where ideas become visible and opportunities begin.</span>
-                        </p>
+                <div className="mt-32 relative overflow-hidden group">
+                    <div className="relative z-10 p-4 md:p-16">
+                        <div className="flex flex-col md:flex-row gap-0 md:h-72 items-stretch">
+                            <div className="flex-1 bg-white border-2 border-biro-blue/30 rounded-2xl p-8 flex flex-col justify-center text-center hover:border-biro-blue/60 transition-colors group">
+                                <h3 className="text-3xl md:text-4xl font-black font-righteous text-biro-blue-dark group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-biro-blue group-hover:to-blue-600 transition-all">Discover</h3>
+                            </div>
 
-                        <div className="flex flex-col md:flex-row gap-6">
+                            <div className="flex-1 bg-gradient-to-br from-biro-blue to-blue-600 rounded-2xl p-8 flex flex-col justify-center text-center text-white -my-6 z-20 md:-mx-6 md:z-10 scale-[1.05] md:scale-110">
+                                <h3 className="text-4xl md:text-5xl font-black font-righteous">Showcase</h3>
+                            </div>
+
+                            <div className="flex-1 bg-white border-2 border-biro-blue/30 rounded-2xl p-8 flex flex-col justify-center text-center hover:border-biro-blue/60 transition-colors group">
+                                <h3 className="text-3xl md:text-4xl font-black font-righteous text-biro-blue-dark group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-biro-blue group-hover:to-blue-600 transition-all">Connect</h3>
+                            </div>
+                        </div>
+
+                        <div className="max-w-2xl mx-auto text-center mt-12 mb-10">
+                            <p className="text-slate-600 font-medium leading-relaxed text-base md:text-lg">
+                                The exhibition brings together startups, creators, and tech brands to showcase what they&apos;re building and solving. Walk through live demos, interact with products, and meet the teams behind them. It&apos;s where ideas become visible and opportunities begin.
+                            </p>
+                        </div>
+
+                        <div className="flex justify-center">
                             <Button
                                 href="/exhibitor"
                                 variant="biro"
-                                className="px-4 py-3 rounded-md hover:scale-105 transition-all"
+                                className="px-8 py-4 rounded-lg hover:scale-105 transition-all font-bold"
                             >
-                                Get an Exhibition Slot
+                                Get an Exhibition Slot →
                             </Button>
                         </div>
                     </div>

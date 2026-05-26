@@ -1,0 +1,86 @@
+import { Pool } from 'pg';
+import { NextRequest, NextResponse } from 'next/server';
+import { getClientIp, checkRateLimit } from '@/app/lib/rateLimit';
+
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+});
+
+export async function POST(request: NextRequest) {
+    // Check rate limit first
+    const clientIp = getClientIp(request);
+    const rateLimit = checkRateLimit(clientIp);
+    
+    if (!rateLimit.allowed) {
+        return NextResponse.json(
+            { error: 'Too many requests. Please try again later.' },
+            { status: 429, headers: { 'Retry-After': String(rateLimit.retryAfter) } }
+        );
+    }
+
+    const client = await pool.connect();
+    
+    try {
+        const data = await request.json();
+        
+        const {
+            application_type,
+            name,
+            email,
+            phone,
+            speaker_name,
+            topic,
+            why_speak
+        } = data;
+
+        // Validate required fields
+        if (!name || !email || !phone || !topic) {
+            return NextResponse.json(
+                { error: 'Missing required fields' },
+                { status: 400 }
+            );
+        }
+
+        // Create table if it doesn't exist
+        await client.query(`
+            CREATE TABLE IF NOT EXISTS speaker_registrations (
+                id SERIAL PRIMARY KEY,
+                application_type VARCHAR(50) NOT NULL,
+                name VARCHAR(255) NOT NULL,
+                email VARCHAR(255) NOT NULL,
+                phone VARCHAR(20) NOT NULL,
+                speaker_name VARCHAR(255),
+                topic VARCHAR(255) NOT NULL,
+                why_speak TEXT,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        `);
+
+        // Insert the submission
+        const result = await client.query(
+            `INSERT INTO speaker_registrations 
+            (application_type, name, email, phone, speaker_name, topic, why_speak)
+            VALUES 
+            ($1, $2, $3, $4, $5, $6, $7)
+            RETURNING id, created_at;`,
+            [application_type, name, email, phone, speaker_name || null, topic, why_speak || null]
+        );
+
+        return NextResponse.json(
+            {
+                success: true,
+                message: 'Speaker nomination submitted successfully',
+                id: result.rows[0].id
+            },
+            { status: 201 }
+        );
+    } catch (error) {
+        console.error('Error submitting speaker registration:', error);
+        return NextResponse.json(
+            { error: 'Failed to submit nomination' },
+            { status: 500 }
+        );
+    } finally {
+        client.release();
+    }
+}

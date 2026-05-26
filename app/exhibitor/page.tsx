@@ -3,9 +3,72 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import BackgroundWrapper from "../components/BackgroundWrapper";
+import Button from "../components/Button";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import React from "react";
 
 export default function ExhibitorPage() {
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
+    const [cooldown, setCooldown] = useState(0);
+    const [formData, setFormData] = useState({
+        company: '',
+        name: '',
+        phone: '',
+        email: '',
+        website: '',
+        description: ''
+    });
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true);
+        setMessage('');
+
+        try {
+            const response = await fetch('/api/submissions/exhibitor', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setMessage('✓ Exhibitor registration submitted successfully!');
+                setCooldown(30);
+                setFormData({
+                    company: '',
+                    name: '',
+                    phone: '',
+                    email: '',
+                    website: '',
+                    description: ''
+                });
+            } else {
+                setMessage(`✗ Error: ${data.error || 'Failed to submit'}`);
+            }
+        } catch (error) {
+            setMessage('✗ Error submitting registration. Please try again.');
+            console.error('Submission error:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        if (cooldown > 0) {
+            const timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
+            return () => clearTimeout(timer);
+        }
+    }, [cooldown]);
+
     return (
         <div className="flex min-h-screen flex-col font-sans relative bg-[#f8fbff]">
             <BackgroundWrapper />
@@ -56,42 +119,114 @@ export default function ExhibitorPage() {
 
                                 <div className="lg:w-3/5 p-10 md:p-14 bg-white">
                                     <h3 className="text-2xl font-black text-biro-blue-dark mb-6 font-righteous">Exhibitor Registration</h3>
-                                    <form className="space-y-6">
+                                    
+                                    {cooldown > 0 ? (
+                                        <div className="space-y-6">
+                                            {message && (
+                                                <div className={`p-5 rounded-2xl border-2 shadow-lg transform transition-all duration-300 bg-gradient-to-r from-blue-50 to-blue-100 border-biro-blue text-biro-blue-dark`}>
+                                                    <div className="flex items-center justify-center gap-3">
+                                                        <span className="text-4xl font-bold text-biro-blue">✓</span>
+                                                        <div className="text-center">
+                                                            <p className="font-semibold leading-snug text-lg">{message.replace(/^[✓⚠] /, '')}</p>
+                                                            <p className="text-sm mt-2 text-biro-blue-dark/70">You can submit another form in {cooldown} seconds</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ) : (
+                                    <form className="space-y-6" onSubmit={handleSubmit}>
                                         <div>
                                             <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Company / Brand Name</label>
-                                            <input type="text" className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900" placeholder="Acme Corp" required />
+                                            <input 
+                                                type="text" 
+                                                name="company"
+                                                value={formData.company}
+                                                onChange={handleInputChange}
+                                                className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900" 
+                                                placeholder="Acme Corp" 
+                                                required 
+                                            />
                                         </div>
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <div>
                                                 <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Contact Person</label>
-                                                <input type="text" className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900" placeholder="Jane Doe" required />
+                                                <input 
+                                                    type="text" 
+                                                    name="name"
+                                                    value={formData.name}
+                                                    onChange={handleInputChange}
+                                                    className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900" 
+                                                    placeholder="Jane Doe" 
+                                                    required 
+                                                />
                                             </div>
                                             <div>
                                                 <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Phone Number</label>
-                                                <input type="tel" className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900" placeholder="+234 XXX XXXX" required />
+                                                <input 
+                                                    type="tel" 
+                                                    name="phone"
+                                                    value={formData.phone}
+                                                    onChange={handleInputChange}
+                                                    className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900" 
+                                                    placeholder="+234 XXX XXXX" 
+                                                    required 
+                                                />
                                             </div>
                                         </div>
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <div>
                                                 <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Email Address</label>
-                                                <input type="email" className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900" placeholder="jane@acmecorp.com" required />
+                                                <input 
+                                                    type="email" 
+                                                    name="email"
+                                                    value={formData.email}
+                                                    onChange={handleInputChange}
+                                                    className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900" 
+                                                    placeholder="jane@acmecorp.com" 
+                                                    required 
+                                                />
                                             </div>
                                             <div>
-                                                <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Industry Sector</label>
-                                                <input type="text" className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900" placeholder="e.g. Fintech, Edtech..." required />
+                                                <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Website (Optional)</label>
+                                                <input 
+                                                    type="url" 
+                                                    name="website"
+                                                    value={formData.website}
+                                                    onChange={handleInputChange}
+                                                    className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900" 
+                                                    placeholder="www.acmecorp.com" 
+                                                />
                                             </div>
                                         </div>
                                         <div>
                                             <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Additional Requirements or Details</label>
-                                            <textarea rows={3} className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 resize-none" placeholder="Any specific power requirements, display arrangements, etc."></textarea>
+                                            <textarea 
+                                                rows={3} 
+                                                name="description"
+                                                value={formData.description}
+                                                onChange={handleInputChange}
+                                                className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 resize-none" 
+                                                placeholder="Any specific power requirements, display arrangements, etc."
+                                            />
                                         </div>
 
-                                        <button type="submit" className="w-full py-4 bg-biro-blue hover:bg-biro-blue-dark text-white font-black text-lg rounded-xl transition-all active:scale-95 border border-blue-700">
-                                            Request Exhibitor Package
-                                        </button>
+                                        <Button type="submit" disabled={loading} variant="biro" className="w-full py-4 text-lg rounded-xl border-0">
+                                            {loading ? 'Submitting...' : 'Request Exhibitor Package'}
+                                        </Button>
                                     </form>
+                                    )}
+                                    
+                                    {message && cooldown === 0 && (
+                                        <div className="p-5 rounded-2xl border-2 shadow-lg bg-gradient-to-r from-blue-50 to-blue-100 border-biro-blue text-biro-blue-dark">
+                                            <div className="flex items-center justify-center gap-3">
+                                                <span className="text-2xl font-bold text-biro-blue">✓</span>
+                                                <span className="font-semibold text-center leading-snug">{message.replace(/^[✓⚠] /, '')}</span>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

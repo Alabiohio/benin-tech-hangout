@@ -5,8 +5,72 @@ import Footer from "../components/Footer";
 import BackgroundWrapper from "../components/BackgroundWrapper";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import Button from "../components/Button";
 
 export default function SpeakerRegistrationPage() {
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
+    const [cooldown, setCooldown] = useState(0);
+    const [formData, setFormData] = useState({
+        application_type: 'self',
+        name: '',
+        email: '',
+        phone: '',
+        speaker_name: '',
+        topic: '',
+        why_speak: ''
+    });
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true);
+        setMessage('');
+
+        try {
+            const response = await fetch('/api/submissions/speaker', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setMessage('✓ Nomination submitted successfully!');
+                setCooldown(30);
+                setFormData({
+                    application_type: 'self',
+                    name: '',
+                    email: '',
+                    phone: '',
+                    speaker_name: '',
+                    topic: '',
+                    why_speak: ''
+                });
+            } else {
+                setMessage(`✗ Error: ${data.error || 'Failed to submit'}`);
+            }
+        } catch (error) {
+            setMessage('✗ Error submitting nomination. Please try again.');
+            console.error('Submission error:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        if (cooldown > 0) {
+            const timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
+            return () => clearTimeout(timer);
+        }
+    }, [cooldown]);
+
     return (
         <div className="flex min-h-screen flex-col font-sans relative bg-[#f8fbff]">
             <BackgroundWrapper />
@@ -68,16 +132,46 @@ export default function SpeakerRegistrationPage() {
 
                                 <div className="lg:w-3/5 p-10 md:p-16 bg-white">
                                     <h3 className="text-3xl font-black text-biro-blue-dark mb-8 font-righteous">Speaker Nomination</h3>
-                                    <form className="space-y-6">
+                                    
+                                    {cooldown > 0 ? (
+                                        <div className="space-y-6">
+                                            {message && (
+                                                <div className={`p-5 rounded-2xl border-2 shadow-lg transform transition-all duration-300 bg-gradient-to-r from-blue-50 to-blue-100 border-biro-blue text-biro-blue-dark`}>
+                                                    <div className="flex items-center justify-center gap-3">
+                                                        <span className="text-4xl font-bold text-biro-blue">✓</span>
+                                                        <div className="text-center">
+                                                            <p className="font-semibold leading-snug text-lg">{message.replace(/^[✓⚠] /, '')}</p>
+                                                            <p className="text-sm mt-2 text-biro-blue-dark/70">You can submit another form in {cooldown} seconds</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ) : (
+                                    <form className="space-y-6" onSubmit={handleSubmit}>
                                         <div className="space-y-2">
                                             <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">I am...</label>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                 <label className="flex items-center gap-3 p-4 border border-blue-100 rounded-xl cursor-pointer hover:border-biro-blue transition-all has-[:checked]:border-biro-blue has-[:checked]:bg-blue-50/50">
-                                                    <input type="radio" name="application_type" value="self" className="w-5 h-5 accent-blue-600" defaultChecked />
+                                                    <input 
+                                                        type="radio" 
+                                                        name="application_type" 
+                                                        value="self" 
+                                                        className="w-5 h-5 accent-blue-600"
+                                                        checked={formData.application_type === 'self'}
+                                                        onChange={handleInputChange}
+                                                    />
                                                     <span className="font-bold text-gray-900">Applying to speak</span>
                                                 </label>
                                                 <label className="flex items-center gap-3 p-4 border border-blue-100 rounded-xl cursor-pointer hover:border-biro-blue transition-all has-[:checked]:border-biro-blue has-[:checked]:bg-blue-50/50">
-                                                    <input type="radio" name="application_type" value="suggest" className="w-5 h-5 accent-blue-600" />
+                                                    <input 
+                                                        type="radio" 
+                                                        name="application_type" 
+                                                        value="suggest"
+                                                        className="w-5 h-5 accent-blue-600"
+                                                        checked={formData.application_type === 'suggest'}
+                                                        onChange={handleInputChange}
+                                                    />
                                                     <span className="font-bold text-gray-900">Suggesting a speaker</span>
                                                 </label>
                                             </div>
@@ -85,39 +179,86 @@ export default function SpeakerRegistrationPage() {
 
                                         <div className="space-y-2">
                                             <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Your Name</label>
-                                            <input type="text" className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" placeholder="John Doe" required />
+                                            <input 
+                                                type="text" 
+                                                name="name"
+                                                value={formData.name}
+                                                onChange={handleInputChange}
+                                                className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" 
+                                                placeholder="John Doe" 
+                                                required 
+                                            />
                                         </div>
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <div className="space-y-2">
                                                 <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Your Email</label>
-                                                <input type="email" className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" placeholder="john@example.com" required />
+                                                <input 
+                                                    type="email" 
+                                                    name="email"
+                                                    value={formData.email}
+                                                    onChange={handleInputChange}
+                                                    className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" 
+                                                    placeholder="john@example.com" 
+                                                    required 
+                                                />
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Phone Number</label>
-                                                <input type="tel" className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" placeholder="+234 XXX XXXX" required />
+                                                <input 
+                                                    type="tel" 
+                                                    name="phone"
+                                                    value={formData.phone}
+                                                    onChange={handleInputChange}
+                                                    className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" 
+                                                    placeholder="+234 XXX XXXX" 
+                                                    required 
+                                                />
                                             </div>
                                         </div>
 
                                         <div className="space-y-2">
                                             <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Speaker Name (if suggesting)</label>
-                                            <input type="text" className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" placeholder="Name of the person you're suggesting" />
+                                            <input 
+                                                type="text" 
+                                                name="speaker_name"
+                                                value={formData.speaker_name}
+                                                onChange={handleInputChange}
+                                                className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" 
+                                                placeholder="Name of the person you're suggesting" 
+                                            />
                                         </div>
 
                                         <div className="space-y-2">
                                             <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Talk Topic / Areas of Expertise</label>
-                                            <input type="text" className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" placeholder="e.g. AI, FinTech, Creative Economy, Scaling Tech Roles" required />
+                                            <input 
+                                                type="text" 
+                                                name="topic"
+                                                value={formData.topic}
+                                                onChange={handleInputChange}
+                                                className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" 
+                                                placeholder="e.g. AI, FinTech, Creative Economy, Scaling Tech Roles" 
+                                                required 
+                                            />
                                         </div>
 
                                         <div className="space-y-2">
                                             <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Why should they/you speak?</label>
-                                            <textarea rows={4} className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 resize-none font-medium placeholder:text-gray-400" placeholder="Tell us briefly about the impact and relevance..."></textarea>
+                                            <textarea 
+                                                rows={4} 
+                                                name="why_speak"
+                                                value={formData.why_speak}
+                                                onChange={handleInputChange}
+                                                className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 resize-none font-medium placeholder:text-gray-400" 
+                                                placeholder="Tell us briefly about the impact and relevance..."
+                                            />
                                         </div>
 
-                                        <button type="submit" className="w-full py-5 bg-biro-blue hover:bg-biro-blue-dark text-white font-black text-xl rounded-2xl transition-all active:scale-95 font-righteous">
-                                            Submit Nomination
-                                        </button>
+                                        <Button type="submit" disabled={loading} variant="biro" className="w-full py-5 text-xl rounded-2xl border-0">
+                                            {loading ? 'Submitting...' : 'Submit Nomination'}
+                                        </Button>
                                     </form>
+                                    )}
                                 </div>
                             </motion.div>
                         </div>

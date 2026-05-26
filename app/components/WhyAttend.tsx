@@ -37,7 +37,7 @@ export default function WhyAttend({ onRegisterClick }: WhyAttendProps) {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2, duration: 0.6 }}
-                        className="text-3xl md:text-4xl lg:text-5xl font-black font-righteous text-slate-900 leading-[0.9] mb-8 uppercase"
+                        className="text-3xl md:text-5xl lg:text-7xl font-black font-righteous text-slate-900 leading-[0.9] mb-8 uppercase"
                     >
                         Be a Part <br />
                         Of The <span className="text-highlight-yellow relative inline-block">
