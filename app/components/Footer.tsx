@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 
 export default function Footer({ onRegisterClick }: { onRegisterClick?: () => void }) {
     return (
@@ -43,19 +42,19 @@ export default function Footer({ onRegisterClick }: { onRegisterClick?: () => vo
                 </div>
 
                 {/* Bottom Row */}
-                <div className="border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-4 text-center">
-                    <div className="flex items-center gap-6">
-                        <p className="text-slate-400 text-[12px] font-black uppercase tracking-widest">&copy; {new Date().getFullYear()} Benin Tech Fest</p>
+                <div className="border-t border-slate-900 flex flex-col gap-3 md:flex-row md:justify-between md:items-center md:gap-4 py-4 md:py-0">
+                    <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6 text-center md:text-left">
+                        <p className="text-slate-400 text-[11px] md:text-[12px] font-black uppercase tracking-widest">&copy; {new Date().getFullYear()} Benin Tech Fest</p>
                         <div className="hidden md:block w-px h-3 bg-slate-800"></div>
-                        <div className="flex items-center gap-2">
-                            <span className="text-[12px] font-black uppercase tracking-widest text-slate-600">By</span>
-                            <span className="text-[14px] font-black tracking-widest text-slate-400">PROLINE GROUP</span>
+                        <div className="flex items-center gap-2 justify-center md:justify-start">
+                            <span className="text-[11px] md:text-[12px] font-black uppercase tracking-widest text-slate-600">By</span>
+                            <span className="text-[12px] md:text-[14px] font-black tracking-widest text-slate-400">PROLINE GROUP</span>
                         </div>
                     </div>
                     
-                    <div className="flex items-center gap-2">
-                        <span className="text-[12px] font-black uppercase tracking-widest text-slate-600">Site by</span>
-                        <Link href="https://ohiocodespace.vercel.app" className="text-[14px] font-black tracking-widest text-slate-400 hover:text-highlight-yellow transition-colors border-b border-slate-800">OHEO</Link>
+                    <div className="flex items-center gap-2 justify-center md:justify-end">
+                        <span className="text-[11px] md:text-[12px] font-black uppercase tracking-widest text-slate-600">Site by</span>
+                        <Link href="https://ohiocodespace.vercel.app" className="text-[12px] md:text-[14px] font-black tracking-widest text-slate-400 hover:text-highlight-yellow transition-colors border-b border-slate-800">OHEO</Link>
                     </div>
                 </div>
             </div>
