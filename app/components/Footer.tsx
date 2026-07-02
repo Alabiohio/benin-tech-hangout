@@ -54,7 +54,7 @@ export default function Footer({ onRegisterClick }: { onRegisterClick?: () => vo
                     
                     <div className="flex items-center gap-2 justify-center md:justify-end">
                         <span className="text-[11px] md:text-[12px] font-black uppercase tracking-widest text-slate-600">Site by</span>
-                        <Link href="https://ohiocodespace.vercel.app" className="text-[12px] md:text-[14px] font-black tracking-widest text-slate-400 hover:text-highlight-yellow transition-colors border-b border-slate-800">OHEO</Link>
+                        <Link href="https://oheo.site" target="_blank" className="text-[12px] md:text-[14px] font-black tracking-widest text-slate-400 hover:text-highlight-yellow transition-colors border-b border-slate-800">OHEO</Link>
                     </div>
                 </div>
             </div>

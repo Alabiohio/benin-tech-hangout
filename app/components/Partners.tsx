@@ -9,7 +9,6 @@ const partners = [
     { name: "Edo Community", logo: "/partners/Edo Community.png" },
     { name: "Edo Innovates", logo: "/partners/Edo Innovates Logo  PNG.png" },
     { name: "GDSC Benin", logo: "/partners/GDSC logo Leftsided.png" },
-    { name: "Movarsity", logo: "/partners/Movarsity Logo.png" },
     { name: "She Code Africa", logo: "/partners/She Code Africa.png" },
     { name: "Superteam Edo", logo: "/partners/Superteam edo.png" },
     { name: "Google", logo: "/partners/images (3).png" },
