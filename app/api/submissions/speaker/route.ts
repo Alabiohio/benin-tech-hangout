@@ -30,6 +30,7 @@ export async function POST(request: NextRequest) {
             phone,
             speaker_name,
             topic,
+            speaker_category,
             why_speak
         } = data;
 
@@ -41,7 +42,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Create table if it doesn't exist
+        // Create table if it doesn't exist and add missing columns
         await client.query(`
             CREATE TABLE IF NOT EXISTS speaker_registrations (
                 id SERIAL PRIMARY KEY,
@@ -51,19 +52,26 @@ export async function POST(request: NextRequest) {
                 phone VARCHAR(20) NOT NULL,
                 speaker_name VARCHAR(255),
                 topic VARCHAR(255) NOT NULL,
+                speaker_category VARCHAR(50),
                 why_speak TEXT,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         `);
 
+        // Add speaker_category column if it doesn't exist
+        await client.query(`
+            ALTER TABLE speaker_registrations
+            ADD COLUMN IF NOT EXISTS speaker_category VARCHAR(50);
+        `);
+
         // Insert the submission
         const result = await client.query(
             `INSERT INTO speaker_registrations 
-            (application_type, name, email, phone, speaker_name, topic, why_speak)
+            (application_type, name, email, phone, speaker_name, topic, speaker_category, why_speak)
             VALUES 
-            ($1, $2, $3, $4, $5, $6, $7)
+            ($1, $2, $3, $4, $5, $6, $7, $8)
             RETURNING id, created_at;`,
-            [application_type, name, email, phone, speaker_name || null, topic, why_speak || null]
+            [application_type, name, email, phone, speaker_name || null, topic, speaker_category || null, why_speak || null]
         );
 
         return NextResponse.json(

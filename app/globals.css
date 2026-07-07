@@ -1,8 +1,11 @@
+@import "../fonts/cabinet-grotesk.css";
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #14213d;
+  --brand-blue: #007cf9;
+  --brand-red: #ff0000;
   --biro-blue: #317EFE;
   --biro-blue-dark: #0f2f6b;
   --signal-red: #b91c1c;
@@ -13,10 +16,10 @@
   --color-foreground: var(--foreground);
   --color-biro-blue: var(--biro-blue);
   --color-biro-blue-dark: var(--biro-blue-dark);
-  --color-highlight-yellow: var(--signal-red);
-  --font-righteous: var(--font-righteous-google), cursive;
-  --font-andika: var(--font-andika-google), sans-serif;
-  --font-oswald: var(--font-oswald-google), sans-serif;
+  --color-highlight-yellow: var(--brand-blue);
+  --color-brand-red: var(--brand-red);
+  --font-cabinet-grotesk: 'Cabinet Grotesk Variable', 'Cabinet Grotesk', sans-serif;
+    --font-oswald: var(--font-oswald-google), sans-serif;
   --font-geologica: var(--font-geologica-google), sans-serif;
   --font-sans: var(--font-andika);
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -68,16 +71,12 @@ body {
   color: var(--foreground);
 }
 
-.font-righteous {
-  font-family: var(--font-righteous) !important;
+.font-cabinet-grotesk {
+  font-family: var(--font-cabinet-grotesk) !important;
 }
 
 .font-oswald {
   font-family: var(--font-oswald) !important;
-}
-
-.font-geologica {
-  font-family: var(--font-geologica) !important;
 }
 
 .mission-bg-overlay {

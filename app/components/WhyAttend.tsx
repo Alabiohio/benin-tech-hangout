@@ -39,9 +39,9 @@ export default function WhyAttend({ onRegisterClick }: WhyAttendProps) {
                         transition={{ delay: 0.2, duration: 0.6 }}
                         className="text-3xl md:text-5xl lg:text-7xl font-black font-righteous text-slate-900 leading-[0.9] mb-8 uppercase"
                     >
-                        Be a Part <br />
-                        Of The <span className="text-highlight-yellow relative inline-block">
-                            Ecosystem
+                        Join the <br />
+                        Tech <span className="text-highlight-yellow relative inline-block">
+                            Movement
                             <svg className="absolute w-full h-4 -bottom-2 left-0 text-slate-900" viewBox="0 0 100 20" preserveAspectRatio="none">
                                 <path d="M0,10 Q50,20 100,10" fill="none" stroke="currentColor" strokeWidth="4"/>
                             </svg>
@@ -49,13 +49,13 @@ export default function WhyAttend({ onRegisterClick }: WhyAttendProps) {
                     </motion.h2>
 
                     <motion.p 
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
                         transition={{ delay: 0.3, duration: 0.6 }}
                         className="text-xl md:text-xl text-slate-700 max-w-2xl mx-auto mb-8 font-medium leading-relaxed"
-                            >
-                        Connect with builders, innovators, and leaders shaping the future of technology in Edo State.
+                    >
+                        Connect with developers, founders, and leaders at the largest tech gathering in Edo State. Experience the fusion of Benin Tech Fest and Edo Startup Week.
                     </motion.p>
 
                     <motion.div 

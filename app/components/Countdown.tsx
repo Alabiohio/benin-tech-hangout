@@ -102,9 +102,9 @@ export default function Countdown() {
                     transition={{ duration: 0.8 }}
                 >
                     <h2 className="text-3xl md:text-4xl font-black font-righteous text-white mb-4">
-                        Countdown to <span className="text-red-500">BTF 2.0</span>
+                        Countdown to <span className="text-highlight-yellow">BTF 2.0</span>
                     </h2>
-                    <div className="w-24 h-1 bg-red-500 mx-auto rounded-full shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div>
+                    <div className="w-24 h-1 bg-highlight-yellow mx-auto rounded-full shadow-[0_0_10px_rgba(0,124,249,0.5)]"></div>
                 </motion.div>
 
                 <div className="flex items-center justify-center gap-2 md:gap-6">
@@ -113,14 +113,14 @@ export default function Countdown() {
                             <div className="flex flex-col items-center min-w-[70px] md:min-w-[140px]">
                                 <span 
                                     className="text-5xl md:text-[6rem] font-black font-righteous text-white tabular-nums tracking-tighter leading-none" 
-                                    style={{ textShadow: '0 0 15px rgba(239,68,68,0.6), 0 0 30px rgba(239,68,68,0.3)' }}
+                                    style={{ textShadow: '0 0 15px rgba(0,124,249,0.6), 0 0 30px rgba(0,124,249,0.3)' }}
                                 >
                                     <Counter value={value} isInView={shouldAnimate} />
                                 </span>
-                                <span className="mt-4 text-red-400 text-[10px] md:text-sm font-black uppercase tracking-[0.3em]">{timeLabels[index]}</span>
+                                <span className="mt-4 text-blue-400 text-[10px] md:text-sm font-black uppercase tracking-[0.3em]">{timeLabels[index]}</span>
                             </div>
                             {index < values.length - 1 && (
-                                <div className="text-red-500/80 text-3xl md:text-5xl font-black mx-1 md:mx-2 -mt-8 animate-pulse">:</div>
+                                <div className="text-blue-500/80 text-3xl md:text-5xl font-black mx-1 md:mx-2 -mt-8 animate-pulse">:</div>
                             )}
                         </div>
                     ))}

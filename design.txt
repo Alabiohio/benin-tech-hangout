@@ -1,0 +1,55 @@
+1. Color
+
+#ffffff
+
+#000000
+
+#ff0000
+
+#007cf9
+
+DN: #ff0000 is a recessive color, avoid using it as a dominant color
+for designs and use more of #007cf9
+
+2. Typography
+
+Our main typeface is Cabinet Grotesk for visuals
+and our sub is Oswald.
+
+3.
+
+The designs must completely break away from the traditional,
+boring, purely corporate event style.
+The visuals need to say: "This is not a regular seminar; this is a
+-high octane tech movement."
+
+When a viewer looks at a flyer, a billboard, or a social media post,
+the instant subconscious message should be:
+
+Premium & Elite: Edo State is now a tech adopting state, and the visuals must
+look expensive, sleek, and highly polished to match that standard.
+
+Hyper-Modern but Culturally Rooted: It shouldn't look like a copy & paste
+tech template. The graphics must carry a subtle weight of
+authority and pride that feels uniquely native to Benin City's legacy of elite
+craftsmanship, translated into modern digital architecture.
+
+4. The Feeling of "Convergence & Scale"
+Because Benin Tech Fest has merged with Edo Startup Week
+and expanded to 4 days, the visuals must feel massive and interconnected.
+
+The Design Signal: Use layout structures where different design
+elements (like sharp geometric grids, glowing network lines,
+or typography) seamlessly lock together or overlap.
+
+The Message Passed:"The entire ecosystem is uniting under one
+roof. If you are not here, you are missing out on the biggest tech link-up of the year."
+
+The designs should never feel static, flat, or quiet.
+They need to feel alive, active, and moving forward.
+
+DN: Respect the color hierarchy, reservethe vibrant brand colors strictly for
+focal points and key information.
+
+Prioritize readability over aesthetics by ensuring all dates, speaker titles, and
+schedules are presented in clean, high-contrast, perfectly legible text.

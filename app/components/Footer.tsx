@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer({ onRegisterClick }: { onRegisterClick?: () => void }) {
     return (
-        <footer id="contact" className="relative z-10 bg-slate-950 text-white py-4 overflow-hidden">
+        <footer id="contact" className="relative z-10 bg-white text-white py-4 overflow-hidden">
             <div className="container mx-auto px-6 relative z-10">
                 <div className="flex flex-col lg:flex-row justify-between items-center gap-8 mb-8">
                     {/* Brand & Socials */}
@@ -42,7 +42,7 @@ export default function Footer({ onRegisterClick }: { onRegisterClick?: () => vo
                 </div>
 
                 {/* Bottom Row */}
-                <div className="border-t border-slate-900 flex flex-col gap-3 md:flex-row md:justify-between md:items-center md:gap-4 py-4 md:py-0">
+                <div className="flex flex-col gap-3 md:flex-row md:justify-between md:items-center md:gap-4 py-4 md:py-0">
                     <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6 text-center md:text-left">
                         <p className="text-slate-400 text-[11px] md:text-[12px] font-black uppercase tracking-widest">&copy; {new Date().getFullYear()} Benin Tech Fest</p>
                         <div className="hidden md:block w-px h-3 bg-slate-800"></div>

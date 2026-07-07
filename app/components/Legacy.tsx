@@ -158,11 +158,10 @@ export default function Legacy() {
                         className="flex gap-2 overflow-x-auto no-scrollbar snap-x snap-mandatory group"
                     >
                         {[
+                            { name: "Omokaro Osayi", role: "Founder, Treskaro & Father Startups", image: "/past/speaker3.jpg" },
                             { name: "Uche Eze", role: "CEO, Eki Technologies", image: "/past/speaker1.jpeg" },
                             { name: "Teddy Eragbai", role: "TVET Communication Advisor, ForbesBLK Member", image: "/past/speaker2.jpeg" },
-                            { name: "Omokaro Osayi", role: "Founder, Treskaro & Father Startups", image: "/past/speaker3.jpg" },
                             { name: "Nwachukwu Justin Jr", role: "Lead, SuperteamNG Edo State, Founder, Breeeve & Ravolo", image: "/past/speaker5.jpeg" },
-                            { name: "Past Speaker", role: "Tech Leader", image: "/past/speaker4.jpeg" }
                         ].map((speaker, idx) => (
                             <motion.div
                                 key={idx}

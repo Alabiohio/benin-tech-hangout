@@ -6,20 +6,32 @@ export default function FAQ() {
     const questions = [
         {
             q: "Is the event really free?",
-            a: "Yes. The Regular Pass is completely free, but registration is required for capacity management and communication."
+            a: "Yes. The General Pass is completely free, but registration is required for capacity management. Builders and VIP passes have pricing that covers additional perks and exclusive access."
         },
         {
-            q: "Who can attend?",
-            a: "Anyone interested in tech, including developers, designers, founders, students, and creatives. We welcome everyone building or curious about the ecosystem."
+            q: "Who can attend BTF 2.0?",
+            a: "Anyone interested in tech — developers, designers, founders, students, creatives, policy makers, and ecosystem leaders. We welcome everyone building or curious about the Edo State tech ecosystem."
+        },
+        {
+            q: "How do I apply to pitch my startup?",
+            a: "Click the 'Apply to Pitch' button on this page or visit the Pitch section. Shortlisted startups will receive intensive training before the main event and will compete for the ₦5M prize pool."
         },
         {
             q: "How can I become a speaker or exhibitor?",
-            a: "You can apply through the website or contact the team directly. Use the exhibition button or the relevant registration pages."
+            a: "Apply through the 'Apply to Speak' link on the Speakers section or use the 'Be an Exhibitor' button in the Pitch section. You can also email us at benintechfest@gmail.com."
+        },
+         {
+            q: "Where exactly is the event taking place?",
+            a: "BTF 2.0 will be held in Benin City, Edo State. The confirmed venue address will be communicated to all registered attendees via email as the event date approaches."
         },
         {
-            q: "Do I need to register?",
-            a: "Yes. Entry is strictly via registration. Please ensure you have your pass ready for check-in."
-        }
+            q: "How can my company become a sponsor?",
+            a: "Visit the Sponsors section, click 'ecome a Sponsor,' or contact us directly at benintechfest@gmail.com. We have multiple sponsorship tiers to suit your brand goals and budget."
+        },
+        {
+            q: "How do I volunteer at BTF 2.0?",
+            a: "Fill out the volunteer application form via the 'Apply to Volunteer' button. Volunteers get special access to the event, branded merchandise, and recognition as part of the BTF organizing team."
+        },
     ];
 
     const [openIdx, setOpenIdx] = useState<number | null>(0);

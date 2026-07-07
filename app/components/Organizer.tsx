@@ -6,7 +6,7 @@ export default function Organizer() {
             {/* Background split for overlapping effect */}
             <div className="absolute inset-0 flex flex-col">
                 <div className="w-full h-1/2 bg-[#f8fbff]"></div>
-                <div className="w-full h-1/2 bg-slate-950"></div>
+                <div className="w-full h-1/2 bg-white"></div>
             </div>
 
             <div className="container mx-auto px-4 relative z-10">

@@ -1,103 +1,123 @@
 'use client';
 
-import Link from 'next/link';
+import React, { useState } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
+import Button from './Button';
 
 const GuessSpeakers = () => {
-    const placeholders = [1];
+    const filters = ['All Speakers', 'Keynote', 'Panelists', 'Facilitators'];
+    const [selectedFilter, setSelectedFilter] = useState<string>('All');
+
+    const speakers = [
+        { id: 1, name: 'Aisha Okoro', role: 'Founder, Kora Labs', category: 'Keynote', image: '/past/speaker3.jpg' },
+        { id: 2, name: 'David Igbinedion', role: 'CTO, EdoWorks', category: 'Panelists', image: '/past/speaker1.jpeg' },
+        { id: 3, name: 'Ngozi Eze', role: 'Community Lead, DevHub', category: 'Facilitators', image: '/past/speaker2.jpeg' },
+        { id: 4, name: 'Tunde Balogun', role: 'Product Lead, StartX', category: 'Panelists', image: '/past/speaker5.jpeg' },
+        { id: 5, name: 'Chioma Umeh', role: 'CEO, BuildHer', category: 'Keynote', image: '/BTH-9-1.jpg' },
+        { id: 6, name: 'Emeka Nwosu', role: 'CTO, QuickPay', category: 'Facilitators', image: '/BTH-30-1.jpg' },
+    ];
+
+    const filteredSpeakers =
+        selectedFilter === 'All' ? speakers : speakers.filter(s => s.category === selectedFilter);
 
     return (
-        <section className="py-8 bg-[#020617] relative overflow-hidden">
+        <section className="py-20 px-2 bg-white relative overflow-hidden">
             {/* Ambient Background Effects */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none" />
 
-            <div className="container mx-auto px-6 relative z-10">
+            <div className="container mx-auto px-2 relative z-10">
+                {/* Heading */}
                 <motion.div
-                    className="text-center mb-16"
+                    className="text-left mb-12"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
                 >
-                    <h2 className="text-4xl md:text-7xl font-black font-righteous text-white mb-6 italic">
-                        Guess the <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Speakers</span>
-                    </h2>
-                    <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-                        The stage is being set for Benin's brightest minds. Can you guess who will be sharing their vision at BTF 2.0?
+                    <h2 className="text-4xl md:text-7xl font-black font-cabinet-grotesk text-gray-900 mb-6">
+                        Guess the{' '} <br/>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
+                            Speakers
+                        </span>
+                    </h2>       
+                    <p className="text-gray-700 text-lg md:text-xl mx-auto leading-relaxed">
+                        The stage is being set for Benin&apos;s brightest minds. Can you guess who will be sharing their vision at BTF 2.0?
                     </p>
                 </motion.div>
 
-                {/*<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">*/}
-                <div className="mb-20 lg:px-44">
-                    {placeholders.map((_, idx) => (
-                        <motion.div
-                            key={idx}
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: idx * 0.15 }}
-                            className="group relative h-[400px] rounded-[2.0rem] flex items-center justify-center overflow-hidden bg-white/5 backdrop-blur-sm transition-all duration-500 hover:border-blue-500/50 hover:shadow-[0_0_30px_rgba(59,130,246,0.2)]"
-                        >
-                            {/* Question Mark Placeholder */}
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <span className="text-9xl font-black font-righteous text-white/45 group-hover:text-blue-500/20 transition-all duration-700 select-none animate-float">
-                                    ?
-                                </span>
-                            </div>
-
-                            {/* Decorative Overlay */}
-                            <div className="absolute inset-x-0 bottom-0 p-8 bg-gradient-to-t from-[#020617] via-[#020617]/40 to-transparent">
-                                <div className="h-2 w-12 bg-blue-500/30 rounded-full mb-4 group-hover:w-20 group-hover:bg-blue-500 transition-all duration-500"></div>
-                                <h3 className="text-2xl font-black font-righteous text-white/50 group-hover:text-white/40 transition-all duration-500 uppercase tracking-tighter">
-                                    Unknown Icons
-                                </h3>
-                                <p className="text-white/90 text-xs font-bold uppercase tracking-widest group-hover:text-blue-400/40 transition-all duration-500">
-                                    Revealing Soon
-                                </p>
-                            </div>
-
-                            <style>{`
-                                @keyframes float-question {
-                                    0%, 100% { transform: translateY(0); }
-                                    50% { transform: translateY(-20px); }
-                                }
-                                .animate-float {
-                                    animation: float-question 4s ease-in-out infinite;
-                                }
-                            `}</style>
-
-                            {/* Shimmer Effect */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                        </motion.div>
+                {/* Filter controls */}
+                <div className="flex flex-wrap items-start justify-start gap-2 mb-10">
+                    {filters.map((f, i) => (
+                        <div key={f} className="relative" style={{ zIndex: selectedFilter === f ? 10 : filters.length - i }}>
+                            <Button
+                                onClick={() => setSelectedFilter(f)}
+                                variant={selectedFilter === f ? 'biro' : 'outline'}
+                                className="!w-auto !px-4 sm:!px-5 !py-2 !text-xs sm:!text-sm hover:!translate-y-0 hover:!translate-x-0 !border-4 -ml-[4px] first:ml-0"
+                            >
+                                {f}
+                            </Button>
+                        </div>
                     ))}
                 </div>
 
+                {/* Speaker Grid */}
+                {filteredSpeakers.length === 0 ? (
+                    <p className="text-center text-gray-500 py-12">No speakers match this filter yet.</p>
+                ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 mb-16">
+                        {filteredSpeakers.map((speaker, idx) => (
+                            <motion.div
+                                key={speaker.id}
+                                initial={{ opacity: 0, y: 24 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: idx * 0.08 }}
+                                className="group rounded-md overflow-hidden border border-2 border-[#DEDEDE] bg-[#F4F4F4] shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-400"
+                            >
+                                {/* Speaker Image */}
+                                <div className="relative w-full h-[300px] sm:h-[380px] md:h-[480px]">
+                                    <Image
+                                        src={speaker.image}
+                                        alt={speaker.name}
+                                        fill
+                                        className="object-cover object-top"
+                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                                    />
+                                </div>
+
+                                {/* Speaker Info */}
+                                <div className="p-5">
+                                    {/* Category badge */}
+                                    <span className="text-amber-700 text-[12px] font-bold uppercase font-oswald tracking-widest py-1">
+                                        {speaker.category}
+                                    </span>
+                                    <h3 className="text-xl font-black font-righteous text-gray-900 mb-1">
+                                        {speaker.name}
+                                    </h3>
+                                    <p className="text-sm text-blue-500 font-semibold">{speaker.role}</p>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                )}
+
+                {/* CTA */}
                 <motion.div
-                    className="flex flex-col items-center gap-8"
+                    className="flex flex-col items-center gap-6 text-center"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
                 >
-                    <div className="text-center">
-                        <h3 className="text-2xl font-black font-righteous text-white mb-2">Have someone in mind?</h3>
-                        <p className="text-white/40 font-medium">Suggest a visionary leader or apply to take the stage yourself.</p>
+                    <div>
+                        <h3 className="text-2xl font-black font-righteous text-gray-900 mb-2">Want to Speak at BTF 2.0?</h3>
+                        <p className="text-gray-500 font-medium">Share your expertise with 1,000+ attendees.</p>
                     </div>
 
-                    <Link
-                        href="/speaker-registration"
-                        className="group relative inline-flex items-center gap-3 px-10 py-5 bg-white text-biro-blue-dark font-black font-righteous text-xl rounded-2xl transition-all hover:scale-105 hover:bg-blue-500 hover:text-white shadow-xl shadow-white/5"
-                    >
+                    <Button href="/speaker-registration" variant="biro">
                         Apply to Speak / Suggest a Speaker
-                        <svg
-                            className="w-6 h-6 transform transition-transform group-hover:translate-x-1"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                        </svg>
-                    </Link>
+                    </Button>
                 </motion.div>
             </div>
         </section>

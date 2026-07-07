@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Button from "../components/Button";
 
 export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => void }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,9 +33,9 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                     <Image
                         src="/logo/logo.png"
                         alt="Logo"
-                        width={60}
-                        height={60}
-                        className="w-auto h-10 md:h-12 object-contain"
+                        width={100}
+                        height={100}
+                        className="w-auto h-16 md:h-16 object-contain"
                         priority
                     />
                 </Link>
@@ -69,12 +70,12 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                 </nav>
 
                 <div className="flex items-center gap-4">
-                    <button
+                    <Button
                         onClick={onRegisterClick}
-                        className="hidden sm:flex px-6 py-2.5 rounded-xl font-black uppercase tracking-widest text-[11px] transition-all duration-300 active:scale-95 bg-biro-blue text-white hover:bg-biro-blue-dark"
+                        className="!hidden sm:flex px-6 py-2.5 text-lg font-black uppercase tracking-widest text-[11px] transition-all duration-300 active:scale-95 bg-biro-blue text-white hover:bg-biro-blue-dark"
                     >
                         Register Now
-                    </button>
+                    </Button>
 
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -118,9 +119,9 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                         <Link href="#contact" className={`text-2xl font-black font-righteous uppercase tracking-tight text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '350ms' }} onClick={handleLinkClick}>Contact</Link>
 
                         <div className={`mt-4 pt-8 border-t border-slate-100 transition-all duration-500 transform ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`} style={{ transitionDelay: '450ms' }}>
-                            <button onClick={() => { onRegisterClick?.(); handleLinkClick(); }} className="w-full flex items-center justify-center py-4 bg-biro-blue text-white text-center font-black font-righteous uppercase tracking-widest text-lg rounded-xl hover:bg-biro-blue-dark transition-all active:scale-95">
+                            <Button onClick={() => { onRegisterClick?.(); handleLinkClick(); }} className="w-full flex items-center justify-center py-4 bg-biro-blue text-white text-center font-black font-righteous uppercase tracking-widest text-lg rounded-xl hover:bg-biro-blue-dark transition-all active:scale-95">
                                 Register Now
-                            </button>
+                            </Button>
                         </div>
                     </div>
 

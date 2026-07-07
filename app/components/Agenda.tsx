@@ -1,44 +1,121 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Agenda() {
-    const schedule = [
-        {
-            time: "10:00 AM",
-            title: "Opening Ceremony",
-            speaker: "Event Host",
-            type: "Main Stage"
-        },
-        {
-            time: "11:00 AM",
-            title: "Keynote: The Future of Benin Tech",
-            speaker: "Industry Leader",
-            type: "Keynote"
-        },
-        {
-            time: "12:30 PM",
-            title: "Panel Session: Building for Scaling",
-            speaker: "Selected Founders",
-            type: "Panel"
-        },
-        {
-            time: "02:00 PM",
-            title: "Networking & Exhibition Tour",
-            speaker: "Everyone",
-            type: "Networking"
-        },
-        {
-            time: "03:30 PM",
-            title: "Startup Pitch Deck Battle",
-            speaker: "Finalists",
-            type: "Competition"
-        }
+    const days = [
+        { id: "day1", label: "Day 1", date: "Oct 2nd", title: "Ecosystem Kickoff" },
+        { id: "day2", label: "Day 2", date: "Oct 3rd", title: "Startup & Innovation" },
+        { id: "day3", label: "Day 3", date: "Oct 4th", title: "Tech Money Arena" },
+        { id: "day4", label: "Day 4", date: "Oct 5th", title: "Summit & Finale" }
     ];
 
+    const [activeDay, setActiveDay] = useState("day1");
+
+    const schedule: Record<string, Array<{ time: string, title: string, speaker: string, type: string }>> = {
+        day1: [
+            {
+                time: "09:00 AM",
+                title: "Delegate Check-in & Registration",
+                speaker: "Operations Team",
+                type: "Entry"
+            },
+            {
+                time: "10:00 AM",
+                title: "Opening Ceremony: Builders Convene",
+                speaker: "Ecosystem Hosts",
+                type: "Main Stage"
+            },
+            {
+                time: "11:30 AM",
+                title: "Technical Deep Dives: Devs & Designers Workshops",
+                speaker: "Lead Instructors",
+                type: "Workshops"
+            },
+            {
+                time: "02:30 PM",
+                title: "Community Spotlight: Strengthening Edo Tech Hubs",
+                speaker: "Local Guild Leaders",
+                type: "Panels"
+            }
+        ],
+        day2: [
+            {
+                time: "10:00 AM",
+                title: "Keynote: Edo State Digital Roadmap",
+                speaker: "Government Leaders",
+                type: "Policy"
+            },
+            {
+                time: "11:30 AM",
+                title: "Panel Session: Scaling From Benin to the World",
+                speaker: "Ecosystem Founders",
+                type: "Panels"
+            },
+            {
+                time: "02:00 PM",
+                title: "Web3, AI, and Future Technologies Showcase",
+                speaker: "Emerging Builders",
+                type: "Tech Stage"
+            },
+            {
+                time: "03:30 PM",
+                title: "Exhibition Tour & Product Demos",
+                speaker: "Startup Exhibitors",
+                type: "Exhibition"
+            }
+        ],
+        day3: [
+            {
+                time: "10:00 AM",
+                title: "Startup Pitch Battle - Semifinals",
+                speaker: "Top 10 Finalists",
+                type: "Pitch Arena"
+            },
+            {
+                time: "12:30 PM",
+                title: "Tech Money Keynote: Venture Capital Trends",
+                speaker: "Global Investors",
+                type: "Keynote"
+            },
+            {
+                time: "02:30 PM",
+                title: "Founders & Investors Speed Matchmaking",
+                speaker: "Startups & VCs",
+                type: "Networking"
+            }
+        ],
+        day4: [
+            {
+                time: "10:00 AM",
+                title: "Creative Economy & Modern Craftsmanship Summit",
+                speaker: "Special Guest Panel",
+                type: "Summit"
+            },
+            {
+                time: "12:00 PM",
+                title: "Startup Pitch Deck Battle - Grand Finale",
+                speaker: "Top 3 Finalists",
+                type: "Pitch Arena"
+            },
+            {
+                time: "02:30 PM",
+                title: "Awards & Closing Ceremony",
+                speaker: "Ecosystem Committee",
+                type: "Main Stage"
+            },
+            {
+                time: "04:30 PM",
+                title: "Edo Startup Week Afterparty",
+                speaker: "DJ & Builders Network",
+                type: "Afterparty"
+            }
+        ]
+    };
+
     return (
-        <section className="py-24 bg-[#0B0A11] relative z-10" id="agenda">
+        <section className="py-24 bg-[#0B0A11] relative z-10 overflow-hidden" id="agenda">
              {/* Subtle background text */}
              <div className="absolute top-0 right-0 text-[15rem] font-black font-righteous text-white/[0.02] select-none pointer-events-none translate-x-1/2 -translate-y-1/4">
                 AGENDA
@@ -46,76 +123,93 @@ export default function Agenda() {
 
             <div className="container mx-auto px-6 max-w-5xl relative z-10">
                 <motion.div 
-                    className="text-center mb-20"
+                    className="text-center mb-16"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
                 >
                     <span className="inline-block px-4 py-1.5 mb-6 text-xs font-black tracking-[0.3em] uppercase bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400">
-                        Event Schedule
+                        Ecosystem Convergence
                     </span>
-                    <h2 className="text-4xl md:text-6xl font-black font-righteous text-white tracking-tight">
-                        The <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Program</span> Flow
+                    <h2 className="text-4xl md:text-6xl font-black font-righteous text-white tracking-tight uppercase">
+                        The <span className="text-highlight-yellow">4-Day</span> Program
                     </h2>
                 </motion.div>
 
-                <div className="space-y-6">
-                    {schedule.map((item, idx) => (
-                        <motion.div 
-                            key={idx} 
-                            className="group relative flex flex-col md:flex-row items-center gap-6 md:gap-12 p-8 md:p-10 bg-white/[0.02] border border-white/5 rounded-[2.5rem] hover:bg-white/[0.04] transition-all duration-500"
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: idx * 0.1 }}
+                {/* Day Navigation Tabs */}
+                <div className="flex flex-wrap md:flex-nowrap justify-center gap-3 mb-12 border-b border-white/5 pb-6">
+                    {days.map((day) => (
+                        <button
+                            key={day.id}
+                            onClick={() => setActiveDay(day.id)}
+                            className={`flex flex-col items-center md:items-start flex-1 min-w-[120px] p-4 rounded-2xl border transition-all duration-300 ${
+                                activeDay === day.id
+                                    ? 'bg-highlight-yellow/10 border-highlight-yellow text-white shadow-[0_0_15px_rgba(0,124,249,0.15)]'
+                                    : 'bg-white/[0.01] border-white/5 text-white/50 hover:bg-white/[0.03] hover:border-white/10'
+                            }`}
                         >
-                            {/* Time */}
-                            <div className="flex-shrink-0 min-w-[120px] text-center md:text-left">
-                                <span className="text-2xl font-black font-righteous text-blue-400 tabular-nums">
-                                    {item.time}
-                                </span>
-                            </div>
-
-                            {/* Divider Line on Desktop */}
-                            <div className="hidden md:block w-px h-12 bg-white/10 group-hover:bg-blue-500/30 transition-colors"></div>
-
-                            {/* Content */}
-                            <div className="flex-grow text-center md:text-left">
-                                <div className="flex flex-col md:flex-row md:items-center gap-3 mb-2 justify-center md:justify-start">
-                                    <h3 className="text-xl md:text-2xl font-black font-righteous text-white group-hover:text-blue-400 transition-colors">
-                                        {item.title}
-                                    </h3>
-                                    <span className="inline-block px-3 py-1 text-[10px] font-black uppercase tracking-widest bg-white/5 border border-white/10 rounded-full text-white/50 group-hover:border-blue-500/20 group-hover:text-blue-400/70 transition-all">
-                                        {item.type}
-                                    </span>
-                                </div>
-                                <p className="text-white/40 font-bold uppercase tracking-wider text-xs">
-                                    WITH <span className="text-white/60">{item.speaker}</span>
-                                </p>
-                            </div>
-
-                            {/* Arrow Indicator */}
-                            <div className="flex-shrink-0 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-[-10px] group-hover:translate-x-0">
-                                <div className="w-12 h-12 rounded-full border border-blue-500/30 flex items-center justify-center text-blue-400">
-                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                                </div>
-                            </div>
-                        </motion.div>
+                            <span className="text-xs font-black font-oswald uppercase tracking-widest text-highlight-yellow">{day.label}</span>
+                            <span className="text-lg font-black font-righteous leading-tight my-0.5">{day.date}</span>
+                            <span className="text-[10px] font-bold opacity-60 uppercase truncate w-full">{day.title}</span>
+                        </button>
                     ))}
                 </div>
 
+                {/* Tab Content */}
+                <div className="min-h-[350px]">
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={activeDay}
+                            initial={{ opacity: 0, y: 15 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -15 }}
+                            transition={{ duration: 0.3 }}
+                            className="space-y-4"
+                        >
+                            {schedule[activeDay].map((item, idx) => (
+                                <div 
+                                    key={idx} 
+                                    className="group relative flex flex-col md:flex-row items-center gap-6 md:gap-10 p-6 md:p-8 bg-white/[0.02] border border-white/5 rounded-[2rem] hover:bg-white/[0.04] transition-all duration-500 hover:border-highlight-yellow/30"
+                                >
+                                    {/* Time */}
+                                    <div className="flex-shrink-0 min-w-[120px] text-center md:text-left">
+                                        <span className="text-xl md:text-2xl font-black font-righteous text-highlight-yellow tabular-nums">
+                                            {item.time}
+                                        </span>
+                                    </div>
+
+                                    {/* Divider Line on Desktop */}
+                                    <div className="hidden md:block w-px h-10 bg-white/10 group-hover:bg-highlight-yellow/30 transition-colors"></div>
+
+                                    {/* Content */}
+                                    <div className="flex-grow text-center md:text-left">
+                                        <div className="flex flex-col md:flex-row md:items-center gap-3 mb-2 justify-center md:justify-start">
+                                            <h3 className="text-lg md:text-xl font-black font-righteous text-white group-hover:text-highlight-yellow transition-colors">
+                                                {item.title}
+                                            </h3>
+                                            <span className="inline-block px-3 py-1 text-[9px] font-black uppercase tracking-widest bg-white/5 border border-white/10 rounded-full text-white/50 group-hover:border-highlight-yellow/20 group-hover:text-highlight-yellow transition-all">
+                                                {item.type}
+                                            </span>
+                                        </div>
+                                        <p className="text-white/40 font-bold uppercase tracking-wider text-[10px]">
+                                            WITH <span className="text-white/60">{item.speaker}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
+
                 <motion.div 
-                    className="mt-20 text-center"
+                    className="mt-16 text-center"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
                 >
                     <p className="text-white/40 font-medium mb-8">Schedule is subject to minor adjustments for the best experience.</p>
-                    <button className="relative px-12 py-4 bg-highlight-yellow text-biro-blue-dark font-black font-righteous rounded-2xl shadow-[0_20px_50px_rgba(251,191,36,0.2)] hover:scale-105 active:scale-95 transition-all">
-                        DOWNLOAD FULL SCHEDULE
-                    </button>
                 </motion.div>
             </div>
         </section>

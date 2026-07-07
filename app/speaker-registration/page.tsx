@@ -19,10 +19,11 @@ export default function SpeakerRegistrationPage() {
         phone: '',
         speaker_name: '',
         topic: '',
+        speaker_category: 'Keynote',
         why_speak: ''
     });
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
@@ -51,6 +52,7 @@ export default function SpeakerRegistrationPage() {
                     phone: '',
                     speaker_name: '',
                     topic: '',
+                    speaker_category: 'Keynote',
                     why_speak: ''
                 });
             } else {
@@ -240,6 +242,21 @@ export default function SpeakerRegistrationPage() {
                                                 placeholder="e.g. AI, FinTech, Creative Economy, Scaling Tech Roles" 
                                                 required 
                                             />
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Speaker Category</label>
+                                            <select 
+                                                name="speaker_category"
+                                                value={formData.speaker_category}
+                                                onChange={handleInputChange}
+                                                className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium" 
+                                                required 
+                                            >
+                                                <option value="Keynote">Keynote</option>
+                                                <option value="Panelists">Panelists</option>
+                                                <option value="Facilitators">Facilitators</option>
+                                            </select>
                                         </div>
 
                                         <div className="space-y-2">

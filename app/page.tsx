@@ -3,12 +3,14 @@
 import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import Highlights from "./components/Highlights";
 import EventDetails from "./components/EventDetails";
 import Partners from "./components/Partners";
 import About from "./components/About";
 import WhyAttend from "./components/WhyAttend";
 import WhatToExpect from "./components/WhatToExpect";
 import Tickets from "./components/Tickets";
+import Shocase from "./components/Shocase";
 import Countdown from "./components/Countdown";
 import FAQ from "./components/FAQ";
 import Legacy from "./components/Legacy";
@@ -20,6 +22,7 @@ import BackgroundWrapper from "./components/BackgroundWrapper";
 import GuessSpeakers from "./components/GuessSpeakers";
 import Link from 'next/link';
 import PartnerCTA from "./components/PartnerCTA";
+import Agenda from "./components/Agenda";
 
 export default function Home() {
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
@@ -30,53 +33,19 @@ export default function Home() {
             <Navbar onRegisterClick={() => setIsRegisterModalOpen(true)} />
             <main className="flex-grow relative z-10">
                 <Hero onRegisterClick={() => setIsRegisterModalOpen(true)} />
-                <Countdown />
-                <Partners />
+                <Highlights />
                 <About />
-                <Tickets onRegisterClick={() => setIsRegisterModalOpen(true)} />
-                <WhyAttend onRegisterClick={() => setIsRegisterModalOpen(true)} />
+                <Countdown />
                 <WhatToExpect isModalOpen={isRegisterModalOpen} setIsModalOpen={setIsRegisterModalOpen} />
-                <Legacy />
+
+                <Tickets onRegisterClick={() => setIsRegisterModalOpen(true)} />
+                <Shocase setIsModalOpen={setIsRegisterModalOpen} />
+                <WhyAttend onRegisterClick={() => setIsRegisterModalOpen(true)} />
+                               <Legacy />
                 <GuessSpeakers />
-                <Roadmap onRegisterClick={() => setIsRegisterModalOpen(true)} />
+                <Partners />
                 <PartnerCTA />
                 <StartupPitch />
-                <section className="flex items-center bg-slate-950 relative overflow-hidden isolate">
-                    {/* Background Split */}
-                    <div className="absolute inset-0 flex">
-                        <div className="w-1/3 h-full bg-highlight-yellow"></div>
-                        <div className="w-2/3 h-full bg-slate-950"></div>
-                    </div>
-
-                    <div className="container mx-auto px-2 md:px-38 py-8 relative z-10">
-                        <div className="flex flex-row items-center justify-between gap-4 md:gap-12">
-                            {/* Heading */}
-                            <div className="w-1/2">
-                                <h2 className="text-6xl md:text-9xl font-oswald font-bold text-slate-950 leading-[0.8] tracking-tighter uppercase">
-                                    Don't <br />
-                                    MISS <br />
-                                    <span className="text-slate-950">OUT.</span>
-                                </h2>
-                            </div>
-
-                            {/* Register Button */}
-                            <div className="w-full flex justify-end">
-                                <div
-                                    onClick={() => setIsRegisterModalOpen(true)}
-                                    className="w-full max-w-sm lg:mt-0 group relative py-3 px-4 text-white font-black font-geologica text-[14px] md:text-[16px] rounded-xl overflow-hidden transition-all hover:scale-[1.05] active:scale-[0.95] shadow-2xl cursor-pointer"
-                                >
-                                    <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
-                                    <h2 className="relative text-2xl lg:text-4xl z-10 flex items-center justify-center md:gap-6 uppercase tracking-[0.2em]">
-                                        Register Now
-                                        <svg className="w-8 h-8 md:w-14 md:h-14 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                        </svg>
-                                    </h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
                 <FAQ />
                 <Organizer />
             </main>
