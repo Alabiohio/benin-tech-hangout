@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Button from './Button';
@@ -37,7 +37,7 @@ const GuessSpeakers = () => {
                 >
                     <h2 className="text-4xl md:text-7xl font-black font-cabinet-grotesk text-gray-900 mb-6">
                         Guess the{' '} <br/>
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
+                        <span className="text-biro-blue">
                             Speakers
                         </span>
                     </h2>       

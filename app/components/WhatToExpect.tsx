@@ -33,9 +33,8 @@ export default function WhatToExpect({ isModalOpen, setIsModalOpen }: { isModalO
         <section id="what-to-expect" className="py-20 bg-white">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-10">
-                    <h2 className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-slate-900 mb-3">What to expect <span className="text-biro-blue">at BTF 2.0</span></h2>
-                    <p className="max-w-2xl mx-auto text-lg text-slate-600">A premium, polished festival that balances scale with cultural authenticity. Expect meaningful connections, rigorous demos, and elevated conversations.</p>
-                </div>
+                    <h2 className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-slate-900 mb-3">WHAT TO EXPECT <span className="text-biro-blue underline">AT BTF 2.0</span></h2>
+                     </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0 sm:gap-6 md:gap-0 lg:auto-rows-fr">
                     {tiles.map((t, i) => {
