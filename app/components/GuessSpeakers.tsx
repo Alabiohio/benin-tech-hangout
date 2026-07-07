@@ -7,7 +7,7 @@ import Button from './Button';
 
 const GuessSpeakers = () => {
     const filters = ['All Speakers', 'Keynote', 'Panelists', 'Facilitators'];
-    const [selectedFilter, setSelectedFilter] = useState<string>('All');
+    const [selectedFilter, setSelectedFilter] = useState<string>('All Speakers');
 
     const speakers = [
         { id: 1, name: 'Aisha Okoro', role: 'Founder, Kora Labs', category: 'Keynote', image: '/past/speaker3.jpg' },
@@ -19,7 +19,7 @@ const GuessSpeakers = () => {
     ];
 
     const filteredSpeakers =
-        selectedFilter === 'All' ? speakers : speakers.filter(s => s.category === selectedFilter);
+        selectedFilter === 'All Speakers' ? speakers : speakers.filter(s => s.category === selectedFilter);
 
     return (
         <section className="py-20 px-2 bg-white relative overflow-hidden">
