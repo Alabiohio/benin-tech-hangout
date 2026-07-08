@@ -1,6 +1,7 @@
 'use client';
 
 import { motion, Variants } from 'framer-motion';
+import { FaUsers, FaLaptopCode, FaBriefcase, FaHandshake, FaBook, FaTrophy } from 'react-icons/fa';
 import Button from './Button';
 
 const fade: Variants = {
@@ -21,19 +22,19 @@ const fade: Variants = {
 
 export default function WhatToExpect({ isModalOpen, setIsModalOpen }: { isModalOpen?: boolean; setIsModalOpen: (open: boolean) => void }) {
     const tiles = [
-        { title: 'Interactive Sessions', desc: 'Panel discussions and focused workshops led by industry experts.', bg1: 'bg-blue-200', bg2: 'bg-blue-300', bar: 'bg-blue-800' },
-        { title: 'Live Demo & Exhibition', desc: 'Curated showcases and product demos from leading builders.', bg1: 'bg-orange-200', bg2: 'bg-orange-300', bar: 'bg-orange-800' },
-        { title: 'Job Fair & Recruitment', desc: 'Connect with hiring teams and discover career opportunities.', bg1: 'bg-amber-200', bg2: 'bg-amber-300', bar: 'bg-amber-800' },
-        { title: 'Investor Matchmaking', desc: 'One-on-one meetings and curated pitch rounds.', bg1: 'bg-emerald-200', bg2: 'bg-emerald-300', bar: 'bg-emerald-800' },
-        { title: 'Mentorship & Workshops', desc: 'Practical sessions and mentor office hours to upskill.', bg1: 'bg-violet-200', bg2: 'bg-violet-300', bar: 'bg-violet-800' },
-        { title: 'Awards & Recognition', desc: 'Celebrating outstanding contributions to the ecosystem.', bg1: 'bg-rose-200', bg2: 'bg-rose-300', bar: 'bg-rose-800' }
+        { title: 'Interactive Sessions', desc: 'Panel discussions and focused workshops led by industry experts.', bg1: 'bg-blue-200', bg2: 'bg-blue-300', icon: FaUsers },
+        { title: 'Live Demo & Exhibition', desc: 'Curated showcases and product demos from leading builders.', bg1: 'bg-orange-200', bg2: 'bg-orange-300', icon: FaLaptopCode },
+        { title: 'Job Fair & Recruitment', desc: 'Connect with hiring teams and discover career opportunities.', bg1: 'bg-amber-200', bg2: 'bg-amber-300', icon: FaBriefcase },
+        { title: 'Investor Matchmaking', desc: 'One-on-one meetings and curated pitch rounds.', bg1: 'bg-emerald-200', bg2: 'bg-emerald-300', icon: FaHandshake },
+        { title: 'Mentorship & Workshops', desc: 'Practical sessions and mentor office hours to upskill.', bg1: 'bg-violet-200', bg2: 'bg-violet-300', icon: FaBook },
+        { title: 'Awards & Recognition', desc: 'Celebrating outstanding contributions to the ecosystem.', bg1: 'bg-rose-200', bg2: 'bg-rose-300', icon: FaTrophy }
     ];
 
     return (
         <section id="what-to-expect" className="py-20 bg-white">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-10">
-                    <h2 className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-slate-900 mb-3">WHAT TO EXPECT <span className="text-biro-blue underline">AT BTF 2.0</span></h2>
+                    <h2 className="text-4xl md:text-6xl font-black text-biro-blue-dark font-cabinet-grotesk mb-4">WHAT TO EXPECT <span className="text-biro-blue underline">AT BTF 2.0</span></h2>
                      </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0 sm:gap-6 md:gap-0 lg:auto-rows-fr">
@@ -71,7 +72,7 @@ export default function WhatToExpect({ isModalOpen, setIsModalOpen }: { isModalO
                                         <div className="flex items-start gap-4">
                                             <div className="flex-shrink-0">
                                                 <div className="w-12 h-12 rounded-full flex items-center justify-center bg-white border border-slate-100 shadow-sm group-hover:scale-110 transition-transform duration-300">
-                                                    <svg className={`w-5 h-5 ${t.bar}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3" /></svg>
+                                                    <t.icon className="w-5 h-5 text-slate-700" />
                                                 </div>
                                             </div>
 

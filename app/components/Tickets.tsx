@@ -106,7 +106,7 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
             />
             <div className="container mx-auto px-6 relative z-10">
                 <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-7xl font-black font-cabinet-grotesk text-biro-blue-dark mb-6">
+                    <h2 className="text-4xl md:text-7xl font-black font-cabinet-grotesk text-biro-blue-dark mb-6">
                         Get Your <span className="text-biro-blue">Event Pass</span>
                     </h2>
                 </div>
