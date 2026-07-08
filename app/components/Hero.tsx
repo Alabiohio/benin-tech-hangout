@@ -158,7 +158,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                                                 <HiCalendar className="w-7 h-7" />
                                             </div>
                                             <div className="flex flex-col">
-                                                <span className="text-3xl font-black font-cabinet-grotesk leading-none mb-1">2–5</span>
+                                                <span className="text-4xl font-black font-cabinet-grotesk leading-none mb-1">5-7</span>
                                                 <span className="text-sm font-bold uppercase tracking-widest opacity-80">Nov 2026</span>
                                             </div>
                                         </div>
