@@ -186,7 +186,7 @@ export default function About() {
                                 </div>
                                 <div className="flex flex-col justify-center">
                                     <span className="text-[10px] font-bold text-blue-300/80 uppercase tracking-widest leading-none mb-1">Time</span>
-                                    <span className="text-sm font-medium text-slate-300 tracking-wide leading-none">9:30 AM Daily</span>
+                                    <span className="text-sm font-medium text-slate-300 tracking-wide leading-none">9:00 PM Daily</span>
                                 </div>
                             </div>
                         </div>
