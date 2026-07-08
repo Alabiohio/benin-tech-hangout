@@ -19,7 +19,7 @@ export default function Shocase({ setIsModalOpen }: { setIsModalOpen: (open: boo
     ];
 
     return (
-        <section id="shocase" className="py-20" style={{ background: '#000000' }}>
+        <section id="shocase" className="py-32" style={{ background: '#000000' }}>
             <div className="container mx-auto px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                     {/* First tile - regular div on the left */}
@@ -31,7 +31,7 @@ export default function Shocase({ setIsModalOpen }: { setIsModalOpen: (open: boo
                         variants={fade}
                         className="p-1 max-w-md mx-auto w-full"
                     >
-                        <h3 className="font-black font-cabinet-grotesk leading-none text-white mb-4 flex flex-col gap-1">
+                        <h3 className="font-black font-cabinet-grotesk leading-none text-white mb-4 flex flex-col gap-1" data-aos="fade-down" data-aos-duration="1000" data-aos-easing="ease-out-cubic" data-aos-once="true">
                             <span className="text-6xl md:text-[5.2rem]">SHOWCASE.</span>
                             <span className="text-6xl md:text-[5.2rem]">PITCH.</span>
                             <span className="text-6xl md:text-[5.2rem]" style={{ color: '#007cf9' }}>GROW.</span>
@@ -72,7 +72,8 @@ export default function Shocase({ setIsModalOpen }: { setIsModalOpen: (open: boo
                                     variants={fade}
                                     className={`relative rounded-xl p-4 transition-shadow duration-300 border-none hover:shadow-2xl`}
                                     style={{ background: t.bg, border: t.border }}
-                                >
+                                                                
+                               >
                                     <div className="flex gap-6 h-full">
                                         <div className="flex-shrink-0">
                                             <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}>
@@ -85,7 +86,7 @@ export default function Shocase({ setIsModalOpen }: { setIsModalOpen: (open: boo
                                                 )}
                                             </div>
                                         </div>
-                                        <div className="flex-1">
+                                        <div className="flex-1" data-aos="fade-up" data-aos-duration="1000">
                                             <h3 className="text-xl md:text-2xl font-black font-cabinet-grotesk leading-tight text-white">
                                                 {t.title}
                                             </h3>

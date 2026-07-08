@@ -15,7 +15,7 @@ export default function ExhibitionCTA() {
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#007cf9] rounded-full blur-3xl opacity-10 -translate-y-1/2"></div>
             <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#007cf9] rounded-full blur-3xl opacity-10 translate-y-1/2"></div>
 
-            <div className="container mx-auto px-6 relative -mt-32 md:-mt-40">
+            <div className="container mx-auto px-6 relative -mt-52 md:-mt-60">
                 <div className="mx-auto max-w-4xl" data-aos="flip-left" data-aos-duration="3000" data-aos-easing="ease-out-cubic" data-aos-once="true">
                     {/* Top accent bar */}
                   
@@ -39,11 +39,6 @@ export default function ExhibitionCTA() {
                                         Booth Slot or Vendors Slot
                                     </span>
                                 </h3>
-
-                                <p className="mx-auto max-w-2xl text-base md:text-lg leading-relaxed text-gray-300 mb-8 font-medium">
-                                    Showcase your brand, products, and services to attendees and partners at Benin Tech Fest 2.0. Be part of the biggest tech ecosystem uniting in Edo State.
-                                </p>
-
                                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                                     <Button 
                                         href="/exhibitor" 

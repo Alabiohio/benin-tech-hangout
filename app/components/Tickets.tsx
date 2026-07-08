@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import AOS from 'aos';
 import ticketBg from '../../assets/images/1696.jpg';
 import Button from './Button';
 
@@ -13,6 +14,7 @@ const ticketTiers = [
             "Networking sessions",
             "Limited Seats",
         ],
+        aosAnime: "fade-right",
         highlight: false,
     },
     {
@@ -27,6 +29,7 @@ const ticketTiers = [
             "Refreshments",
             "Exclusive networking opportunities"
         ],
+        aosAnime: "fade-up",
         highlight: true,
     },
     {
@@ -40,9 +43,9 @@ const ticketTiers = [
             "Access high-level sessions & Recordings",
             "Branded Merch",
             "Investors and Mentorship Program",
-            "Assigned PA at the Event",
             "Refreshment with your PA"
         ],
+        aosAnime: "fade-up",
         highlight: false,
     },
     {
@@ -53,35 +56,16 @@ const ticketTiers = [
             "Access to Deal Room",
             "Access to VIP Lounge",
             "Access to all Startups",
+            "Assigned PA at the Event",
             "Access to Investors Guide Deck"
         ],
+        aosAnime: "fade-left",
         highlight: false,
     }
 ];
 
 export default function Tickets({ onRegisterClick }: { onRegisterClick: () => void }) {
-    const [visibleCards, setVisibleCards] = useState<number[]>([]);
     const [isLargeScreen, setIsLargeScreen] = useState(true);
-
-    useEffect(() => {
-        const cards = document.querySelectorAll<HTMLElement>('[data-ticket-card]');
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    const index = Number(entry.target.getAttribute('data-ticket-index'));
-                    if (entry.isIntersecting) {
-                        setVisibleCards((prev) => (prev.includes(index) ? prev : [...prev, index]));
-                    }
-                });
-            },
-            { threshold: 0.2 }
-        );
-
-        cards.forEach((card) => observer.observe(card));
-
-        return () => observer.disconnect();
-    }, []);
 
     useEffect(() => {
         const handleResize = () => {
@@ -90,7 +74,15 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
 
         handleResize();
         window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+
+        const refreshTimer = window.setTimeout(() => {
+            AOS.refresh();
+        }, 200);
+
+        return () => {
+            window.clearTimeout(refreshTimer);
+            window.removeEventListener('resize', handleResize);
+        };
     }, []);
 
     return (
@@ -106,61 +98,75 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
             />
             <div className="container mx-auto px-6 relative z-10">
                 <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-7xl font-black font-cabinet-grotesk text-biro-blue-dark mb-6">
+                    <h2 className="text-5xl md:text-7xl font-black font-cabinet-grotesk text-biro-blue-dark mb-6">
                         Get Your <span className="text-biro-blue">Event Pass</span>
                     </h2>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mx-auto" style={{ perspective: '1200px' }}>
                     {ticketTiers.map((tier, idx) => {
-                        const isVisible = visibleCards.includes(idx);
-                        const direction = idx === 0 ? '-translate-x-8' : idx === 2 ? 'translate-x-8' : 'translate-y-4';
-                        const tiltRotation = isLargeScreen ? (idx === 0 ? '8deg' : idx === 3 ? '-8deg' : '0deg') : '0deg';
+                        const tiltRotation = isLargeScreen ? (idx === 0 ? '5deg' : idx === 3 ? '-5deg' : '0deg') : '0deg';
+                        const sideShift = idx === 0 ? '-0.45rem' : idx === 3 ? '0.45rem' : '0';
+                        const cardStyle = idx === 0 || idx === 3
+                            ? {
+                                transform: `perspective(1200px) rotateY(${tiltRotation}) translateX(${sideShift})`,
+                                transformOrigin: 'center center',
+                            }
+                            : undefined;
 
                         return (
                             <div
                                 key={idx}
                                 data-ticket-card
                                 data-ticket-index={idx}
-                                style={{ transform: `rotateY(${tiltRotation})` }}
-                                className={`relative p-10 rounded-3xl border overflow-hidden flex flex-col group hover:-translate-y-2 transition-all duration-700 ease-out ${tier.highlight ? 'border-biro-blue bg-biro-blue-dark' : 'border-blue-100 bg-white'} ${isVisible ? 'opacity-100 translate-x-0 translate-y-0' : 'opacity-0 ' + direction}`}
+                                className="h-full"
+                                data-aos={tier.aosAnime}
+                                data-aos-duration="1000"
+                                data-aos-easing="ease-out-cubic"
+                                data-aos-once="true"
+                                data-aos-delay={idx * 120}
                             >
-                                <div className="relative z-10 flex flex-col">
-                                    <div className="mb-1">
-                                        <span className={`text-4xl md:text-5xl font-cabinet-grotesk font-black flex items-start ${tier.highlight ? 'text-white' : 'text-biro-blue'}`}>
-                                            {tier.price.startsWith('₦') ? (
-                                                <>
-                                                    <sup className="text-xl md:text-2xl mt-2 mr-1">₦</sup>
-                                                    {tier.price.substring(1)}
-                                                </>
-                                            ) : (
-                                                tier.price
-                                            )}
-                                        </span>
-                                    </div>
-                                    <h3 className={`text-2xl mb-8 font-black opacity-75 font-cabinet-grotesk ${tier.highlight ? 'text-white' : 'text-biro-blue-dark'} mb-2 uppercase`}>{tier.name}</h3>
+                                <div
+                                    style={cardStyle}
+                                    className={`relative h-full p-10 md:px-2 rounded-3xl border overflow-hidden flex flex-col group hover:-translate-y-2 transition-all duration-700 ease-out ${tier.highlight ? 'border-biro-blue bg-biro-blue-dark' : 'border-blue-100 bg-white'}`}
+                                >
+                                    <div className="relative z-10 flex flex-col h-full">
+                                        <div className="mb-1">
+                                            <span className={`text-4xl md:text-5xl font-cabinet-grotesk font-black flex items-start ${tier.highlight ? 'text-white' : 'text-biro-blue'}`}>
+                                                {tier.price.startsWith('₦') ? (
+                                                    <>
+                                                        <sup className="text-xl md:text-2xl mt-2 mr-1">₦</sup>
+                                                        {tier.price.substring(1)}
+                                                    </>
+                                                ) : (
+                                                    tier.price
+                                                )}
+                                            </span>
+                                        </div>
+                                        <h3 className={`text-2xl mb-8 font-black opacity-75 font-oswald ${tier.highlight ? 'text-white' : 'text-biro-blue-dark'} mb-2 uppercase`}>{tier.name}</h3>
 
 
-                                    <div className="space-y-4 mb-10 flex-grow relative z-10">
-                                        {tier.features.map((feature, fIdx) => (
-                                            <div key={fIdx} className="flex gap-3">
-                                                <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] mt-0.5 shrink-0 ${tier.highlight ? 'bg-blue-50 text-highlight-yellow border border-blue-100' : 'bg-blue-50/50 text-biro-blue border border-blue-100/50'}`}>
-                                                    ✓
+                                        <div className="space-y-4 mb-10 flex-grow relative z-10">
+                                            {tier.features.map((feature, fIdx) => (
+                                                <div key={fIdx} className="flex gap-3">
+                                                    <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] mt-0.5 shrink-0 ${tier.highlight ? 'bg-blue-50 text-highlight-yellow border border-blue-100' : 'bg-blue-50/50 text-biro-blue border border-blue-100/50'}`}>
+                                                        ✓
+                                                    </div>
+                                                    <p className={`text-slate-700 font-bold text-sm leading-relaxed ${tier.highlight ? 'text-white' : 'text-slate-700'}`}>
+                                                        {feature}
+                                                    </p>
                                                 </div>
-                                                <p className={`text-slate-700 font-bold text-sm leading-relaxed ${tier.highlight ? 'text-white' : 'text-slate-700'}`}>
-                                                    {feature}
-                                                </p>
-                                            </div>
-                                        ))}
-                                    </div>
+                                            ))}
+                                        </div>
 
-                                    <Button
-                                        onClick={onRegisterClick}
-                                        variant={tier.highlight ? 'primary' : 'outline'}
-                                        className="w-full relative z-10 hover:!text-white hover:!border-white !px-4 !py-3 text-sm whitespace-nowrap"
-                                    >
-                                        Get Your Pass
-                                    </Button>
+                                        <Button
+                                            onClick={onRegisterClick}
+                                            variant={tier.highlight ? 'primary' : 'outline'}
+                                            className="w-full relative z-10 hover:!text-white hover:!border-white !px-4 !py-3 text-sm whitespace-nowrap"
+                                        >
+                                            Get Your Pass
+                                        </Button>
+                                    </div>
                                 </div>
                             </div>
                         );

@@ -44,12 +44,12 @@ const marqueeGroups = [0, 1];
 
 export default function Highlights() {
     return (
-        <section id="highlights" className="relative z-30 -mt-5 md:-mt-28 mx-auto">
-            <div className="w-full bg-[#0A0A0A] border border-white/10 p-6 md:p-8 shadow-2xl shadow-black/40">
+        <section id="highlights" className="relative z-30 -mt-5 md:-mt-5 mx-auto">
+            <div className="w-full bg-white border border-white/10 p-2 md:p-2 shadow-2xl shadow-black/40">
 
                 <div className="relative overflow-hidden rounded-2xl">
-                    <div className="pointer-events-none absolute inset-y-0 left-0 w-16 md:w-24 bg-gradient-to-r from-[#0A0A0A] to-transparent z-10" />
-                    <div className="pointer-events-none absolute inset-y-0 right-0 w-16 md:w-24 bg-gradient-to-l from-[#0A0A0A] to-transparent z-10" />
+                    <div className="pointer-events-none absolute inset-y-0 left-0 w-16 md:w-24 bg-gradient-to-r from-white to-transparent z-10" />
+                    <div className="pointer-events-none absolute inset-y-0 right-0 w-16 md:w-24 bg-gradient-to-l from-white to-transparent z-10" />
 
                     <div className="flex w-max flex-nowrap gap-3 md:gap-6 animate-highlights-marquee">
                         {marqueeGroups.map((group) => (
@@ -63,7 +63,7 @@ export default function Highlights() {
                                             y: -10,
                                             transition: { type: "spring", stiffness: 400, damping: 10 }
                                         }}
-                                        className="relative min-w-[180px] md:min-w-[220px] group px-3 py-4 md:p-6 transition-all duration-500 hover:border-highlight-yellow/40 hover:bg-white/10 shadow-xl"
+                                        className="relative min-w-[180px] md:min-w-[220px] group px-3 py-4 md:p-6 transition-all duration-500"
                                     >
                                         <motion.div
                                             initial={{ scale: 0 }}
@@ -75,7 +75,7 @@ export default function Highlights() {
 
                                         <div className="flex flex-col h-full justify-center gap-2">
                                             <div className="space-y-1">
-                                                <div className="text-sm md:text-xl font-semibold text-white leading-none group-hover:text-highlight-yellow transition-colors duration-300">
+                                                <div className="text-sm md:text-xl font-semibold text-black leading-none group-hover:text-highlight-yellow transition-colors duration-300">
                                                     <span className="text-xl md:text-xl uppercase tracking-tight font-cabinet-grotesk font-black leading-tight block">{item.title}</span>
                                                 </div>
                                             </div>

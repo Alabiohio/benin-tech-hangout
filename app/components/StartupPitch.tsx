@@ -5,7 +5,7 @@ import Button from './Button';
 
 export default function StartupPitch() {
     return (
-        <section id="pitch" className="py-24 md:py-40 bg-slate-950 relative overflow-hidden isolate">
+        <section id="pitch" className="py-24 md:py-40 bg-slate-950 relative z-0 overflow-hidden isolate">
             {/* Fine dot grid pattern */}
             <div
                 className="absolute inset-0 z-0 pointer-events-none opacity-[0.05]"

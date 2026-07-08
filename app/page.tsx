@@ -38,12 +38,13 @@ export default function Home() {
                 <About />
                 <Countdown />
                 <WhatToExpect isModalOpen={isRegisterModalOpen} setIsModalOpen={setIsRegisterModalOpen} />
+                <ExhibitionCTA/>
                 <Partners />
                 <Tickets onRegisterClick={() => setIsRegisterModalOpen(true)} />                
                 <Shocase setIsModalOpen={setIsRegisterModalOpen} />
-                <WhyAttend onRegisterClick={() => setIsRegisterModalOpen(true)} />
-                <Legacy />
                 <GuessSpeakers />
+                <WhyAttend onRegisterClick={() => setIsRegisterModalOpen(true)} />
+                <Legacy />               
                 <PartnerCTA />
                 <StartupPitch />
                 <FAQ />

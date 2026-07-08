@@ -15,7 +15,7 @@ const GuessSpeakers = () => {
         selectedFilter === 'All Speakers' ? speakers : speakers.filter(s => s.category === selectedFilter);
 
     return (
-        <section className="py-20 px-2 bg-white relative overflow-hidden">
+        <section className="py-32 px-2 bg-white relative overflow-hidden">
             {/* Ambient Background Effects */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -27,7 +27,7 @@ const GuessSpeakers = () => {
                     data-aos-duration="2000"
                     data-aos-once="true"
                 >
-                    <h2 className="text-4xl md:text-7xl font-black font-cabinet-grotesk text-gray-900 mb-6">
+                    <h2 className="text-5xl md:text-7xl font-black font-cabinet-grotesk text-biro-blue-dark mb-6">
                         Guess the{' '} <br/>
                         <span className="text-biro-blue">
                             Speakers

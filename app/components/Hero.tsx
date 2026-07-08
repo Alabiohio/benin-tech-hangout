@@ -131,12 +131,9 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                     </div>
 
                     {/* Location & Date — right on lg, bottom on mobile */}
-                    <motion.div
+                    <div
                         className="mt-12 lg:mt-0 self-center md:self-end lg:self-center lg:pt-32"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: 0.5 }}
+                        data-aos="fade-left"
                     >
                         <div className="flex flex-col sm:flex-row lg:flex-col gap-4">
                             {/* Stacked Date Cards */}
@@ -166,7 +163,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                                 })}
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
 
 

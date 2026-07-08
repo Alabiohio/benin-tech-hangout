@@ -31,35 +31,32 @@ const slideLeft: Variants = {
     }
 };
 
+
 export default function About() {
     const stats = [
-        { value: "3000+", label: "ATTENDEES" },
-        { value: "30+", label: "COMMUNITIES" },
-        { value: "20+", label: "SPEAKERS" },
-        { value: "3 Day", label: "CONVERGENCE" }
+        { value: "3000+", label: "ATTENDEES", aosAnime: "fade-down-right" },
+        { value: "30+", label: "COMMUNITIES", aosAnime: "fade-down-left" },
+        { value: "20+", label: "SPEAKERS", aosAnime: "fade-up-right" },
+        { value: "3 Day", label: "CONVERGENCE", aosAnime: "fade-up-left" }
     ];
 
 
 
     return (
-        <section id="about" className="py-24 relative bg-white overflow-hidden">
+        <section id="about" className="py-32 relative bg-black overflow-hidden">
             <div className="container mx-auto px-6 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center mb-16">
                     {/* Header */}
-                    <motion.div
-                        variants={slideLeft}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        className="max-w-xl text-left mx-auto lg:mx-0"
+                    <div                     
+                        className="max-w-xl text-left mx-auto lg:mx-0 overflow-hidden"
                     >
-                        <h2 className="text-4xl md:text-7xl font-black font-cabinet-grotesk text-biro-blue-dark mb-6 uppercase leading-tight">
+                        <h2 className="text-4xl md:text-7xl font-black font-cabinet-grotesk text-white mb-6 uppercase" data-aos="zoom-out" data-aos-duration="1000" data-aos-easing="ease-out-cubic" data-aos-once="true">
                             Connecting <span className="text-blue-600">Edo</span> to the <span className="text-blue-600">Future of Tech</span>
                         </h2>
-                        <p className="text-lg text-slate-700 leading-relaxed">
-                            <span className="font-bold text-biro-blue-dark">Benin Tech Fest 2.0</span> is a community-driven technology and innovation convergence designed to strengthen Edo State's growing tech ecosystem through talent development, startup mentorship, ecosystem collaboration and access to opportunities.
+                        <p className="text-lg text-white leading-relaxed">
+                            <span className="font-bold text-biro-blue">Benin Tech Fest 2.0</span> is a community-driven technology and innovation convergence designed to strengthen Edo State's growing tech ecosystem through talent development, startup mentorship, ecosystem collaboration and access to opportunities.
                         </p>
-                    </motion.div>
+                    </div>
 
                     {/* Dynamic Overlapping Statistics Grid */}
                     <motion.div
@@ -71,24 +68,20 @@ export default function About() {
                         {/* Top Row - 2 Cards */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-0 mb-4 md:mb-0 md:relative md:h-60">
                             {stats.slice(0, 2).map((stat, index) => (
-                                <motion.div
+                                <div
                                     key={index}
-                                    variants={fadeUp}
-                                    transition={{ delay: index * 0.1 }}
                                     className={`relative group md:absolute w-full md:w-1/2 transition-transform duration-300 ${index === 0
                                             ? "md:top-auto md:bottom-0 md:left-0 md:translate-x-8 md:translate-y-6 lg:translate-x-8 lg:translate-y-6"
                                             : "md:bottom-0 md:right-0 md:translate-x-6 md:translate-y-3 lg:translate-x-6 lg:translate-y-3"
                                         }`}
-                                >
+                                data-aos={`${stat.aosAnime}`} data-aos-duration="1000" data-aos-easing="ease-out-cubic" data-aos-once="true">
                                     {/* Stacked layers */}
                                     <div className="absolute -bottom-4 -left-2 w-full h-full bg-slate-200 rounded-lg transform -rotate-2 opacity-40" />
                                     <div className="absolute -bottom-2 -right-2 w-full h-full bg-slate-300 rounded-lg transform rotate-1 opacity-30" />
 
                                     {/* Main card */}
-                                    <motion.div
+                                    <div
                                         className="relative bg-white border border-slate-300 rounded-lg p-6 shadow-lg hover:shadow-2xl transition-shadow duration-300 h-full"
-                                        whileHover={{ y: -4 }}
-                                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
                                     >
                                         <p className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-biro-blue-dark mb-2 tabular-nums">
                                             {stat.value}
@@ -96,32 +89,28 @@ export default function About() {
                                         <p className="text-slate-600 font-bold font-oswald uppercase tracking-widest text-xs md:text-sm">
                                             {stat.label}
                                         </p>
-                                    </motion.div>
-                                </motion.div>
+                                    </div>
+                                </div>
                             ))}
                         </div>
 
                         {/* Bottom Row - 2 Cards (Overlapping) */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-0 md:relative md:h-60 md:mt-0">
                             {stats.slice(2, 4).map((stat, index) => (
-                                <motion.div
+                                <div
                                     key={index + 2}
-                                    variants={fadeUp}
-                                    transition={{ delay: (index + 2) * 0.1 }}
                                     className={`relative group md:absolute w-full md:w-1/2 transition-transform duration-300 ${index === 0
                                             ? "md:top-0 md:bottom-auto md:left-0 md:translate-x-10 md:-translate-y-1 lg:translate-x-10 lg:-translate-y-1"
                                             : "md:top-0 md:right-0 md:translate-x-8 md:-translate-y-4 lg:translate-x-8 lg:-translate-y-4"
                                         }`}
-                                >
+                                data-aos={`${stat.aosAnime}`} data-aos-duration="1000" data-aos-easing="ease-out-cubic" data-aos-once="true">
                                     {/* Stacked layers */}
                                     <div className="absolute -bottom-4 -left-2 w-full h-full bg-slate-200 rounded-lg transform -rotate-2 opacity-40" />
                                     <div className="absolute -bottom-2 -right-2 w-full h-full bg-slate-300 rounded-lg transform rotate-1 opacity-30" />
 
                                     {/* Main card */}
-                                    <motion.div
+                                    <div
                                         className="relative bg-white border border-slate-300 rounded-lg p-6 shadow-lg hover:shadow-2xl transition-shadow duration-300 h-full"
-                                        whileHover={{ y: -4 }}
-                                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
                                     >
                                         <p className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-biro-blue-dark mb-2 tabular-nums">
                                             {stat.value}
@@ -129,8 +118,8 @@ export default function About() {
                                         <p className="text-slate-600 font-bold font-oswald uppercase tracking-widest text-xs md:text-sm">
                                             {stat.label}
                                         </p>
-                                    </motion.div>
-                                </motion.div>
+                                    </div>
+                                </div>
                             ))}
                         </div>
                     </motion.div>
@@ -145,15 +134,14 @@ export default function About() {
                     className="relative group"
                 >
                     {/* Stacked layers */}
-                    <div className="absolute -bottom-6 -left-4 w-full h-full bg-biro-blue-dark/60 rounded-lg transform -rotate-2 opacity-30" />
-                    <div className="absolute -bottom-3 -right-3 w-full h-full bg-biro-blue-dark/40 rounded-lg transform rotate-1 opacity-20" />
+                    <div className="absolute -bottom-6 -left-4 w-full h-full bg-biro-blue-dark/60 rounded-lg transform -rotate-2 opacity-30" data-aos="zoom-in-right" />
+                    <div className="absolute -bottom-3 -right-3 w-full h-full bg-biro-blue-dark/40 rounded-lg transform rotate-1 opacity-20" data-aos="zoom-in-right" />
 
                     {/* Main quote card */}
 
-                    <motion.div
+                    <div
                         className="relative bg-gradient-to-r from-biro-blue-dark to-blue-900 rounded-lg p-6 md:p-6 shadow-2xl hover:shadow-3xl transition-shadow duration-300 border border-blue-800/50"
-                        whileHover={{ y: -4 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                        data-aos="zoom-out"
                     >
 
                         <div className="flex flex-col gap-3 px-2 py-4">
@@ -190,7 +178,7 @@ export default function About() {
                                 </div>
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
 
                 </motion.div>
 

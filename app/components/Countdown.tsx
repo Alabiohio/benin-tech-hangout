@@ -51,7 +51,7 @@ function Counter({ value, isInView }: { value: number, isInView: boolean }) {
 
 export default function Countdown() {
     const [shouldAnimate, setShouldAnimate] = useState(false);
-    const targetDate = new Date('2026-10-02T10:00:00').getTime();
+    const targetDate = new Date('2026-11-05T21:00:00').getTime();
 
     const calculateTimeLeft = useCallback((): TimeLeft => {
         const now = new Date().getTime();
@@ -91,7 +91,7 @@ export default function Countdown() {
         <motion.section 
             onViewportEnter={() => setShouldAnimate(true)}
             viewport={{ once: true }}
-            className="py-20 relative overflow-hidden bg-black"
+            className="py-20 mb-16 relative overflow-hidden bg-black"
         >
             <div className="container mx-auto px-6 relative z-10 text-center">
                 <motion.div 
@@ -101,13 +101,13 @@ export default function Countdown() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
                 >
-                    <h2 className="text-3xl md:text-4xl font-black font-righteous text-white mb-4">
+                    <h2 className="text-3xl md:text-4xl font-black font-righteous text-white mb-4" data-aos="zoom-out" data-aos-duration="1000" data-aos-once="true">
                         Countdown to <span className="text-highlight-yellow">BTF 2.0</span>
                     </h2>
                     <div className="w-24 h-1 bg-highlight-yellow mx-auto rounded-full shadow-[0_0_10px_rgba(0,124,249,0.5)]"></div>
                 </motion.div>
 
-                <div className="flex items-center justify-center gap-2 md:gap-6">
+                <div className="flex items-center justify-center gap-2 md:gap-6" data-aos="zoom-out">
                     {values.map((value, index) => (
                         <div key={timeLabels[index]} className="flex items-center">
                             <div className="flex flex-col items-center min-w-[70px] md:min-w-[140px]">
