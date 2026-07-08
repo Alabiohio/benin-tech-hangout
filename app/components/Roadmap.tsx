@@ -42,7 +42,7 @@ const roadmapData = [
         phase: "06"
     },
     {
-        month: "October 2nd",
+        month: "November 5th",
         title: "Main Event — The Ecosystem Convergence",
         description: "The definitive gathering where innovation meets opportunity. The culmination of the year's efforts in a single day of impact.",
         phase: "Finale",

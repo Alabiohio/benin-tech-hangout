@@ -1,8 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
 import Button from './Button';
 
 const GuessSpeakers = () => {
@@ -10,12 +8,7 @@ const GuessSpeakers = () => {
     const [selectedFilter, setSelectedFilter] = useState<string>('All Speakers');
 
     const speakers = [
-        { id: 1, name: 'Aisha Okoro', role: 'Founder, Kora Labs', category: 'Keynote', image: '/past/speaker3.jpg' },
-        { id: 2, name: 'David Igbinedion', role: 'CTO, EdoWorks', category: 'Panelists', image: '/past/speaker1.jpeg' },
-        { id: 3, name: 'Ngozi Eze', role: 'Community Lead, DevHub', category: 'Facilitators', image: '/past/speaker2.jpeg' },
-        { id: 4, name: 'Tunde Balogun', role: 'Product Lead, StartX', category: 'Panelists', image: '/past/speaker5.jpeg' },
-        { id: 5, name: 'Chioma Umeh', role: 'CEO, BuildHer', category: 'Keynote', image: '/BTH-9-1.jpg' },
-        { id: 6, name: 'Emeka Nwosu', role: 'CTO, QuickPay', category: 'Facilitators', image: '/BTH-30-1.jpg' },
+        { id: 1, category: 'Keynote' },
     ];
 
     const filteredSpeakers =
@@ -28,12 +21,11 @@ const GuessSpeakers = () => {
 
             <div className="container mx-auto px-2 relative z-10">
                 {/* Heading */}
-                <motion.div
+                <div
                     className="text-left mb-12"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
+                    data-aos="fade-up"
+                    data-aos-duration="2000"
+                    data-aos-once="true"
                 >
                     <h2 className="text-4xl md:text-7xl font-black font-cabinet-grotesk text-gray-900 mb-6">
                         Guess the{' '} <br/>
@@ -44,9 +36,9 @@ const GuessSpeakers = () => {
                     <p className="text-gray-700 text-lg md:text-xl mx-auto leading-relaxed">
                         The stage is being set for Benin&apos;s brightest minds. Can you guess who will be sharing their vision at BTF 2.0?
                     </p>
-                </motion.div>
+                </div>
 
-                {/* Filter controls */}
+                {/* Filter controls 
                 <div className="flex flex-wrap items-start justify-start gap-2 mb-10">
                     {filters.map((f, i) => (
                         <div key={f} className="relative" style={{ zIndex: selectedFilter === f ? 10 : filters.length - i }}>
@@ -59,66 +51,61 @@ const GuessSpeakers = () => {
                             </Button>
                         </div>
                     ))}
-                </div>
+                </div> */}
 
                 {/* Speaker Grid */}
                 {filteredSpeakers.length === 0 ? (
                     <p className="text-center text-gray-500 py-12">No speakers match this filter yet.</p>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 mb-16">
+                    <div className="flex justify-center mb-16">
                         {filteredSpeakers.map((speaker, idx) => (
-                            <motion.div
+                            <div
                                 key={speaker.id}
-                                initial={{ opacity: 0, y: 24 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: idx * 0.08 }}
-                                className="group rounded-md overflow-hidden border border-2 border-[#DEDEDE] bg-[#F4F4F4] shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-400"
+                                className="group w-full max-w-2xl overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-400"
+                                data-aos="fade-up"
+                                data-aos-duration="600"
+                                data-aos-delay={idx * 80}
+                                data-aos-once="true"
                             >
-                                {/* Speaker Image */}
-                                <div className="relative w-full h-[300px] sm:h-[380px] md:h-[480px]">
-                                    <Image
-                                        src={speaker.image}
-                                        alt={speaker.name}
-                                        fill
-                                        className="object-cover object-top"
-                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                                    />
-                                </div>
+                                <div className="relative w-full h-[270px] sm:h-[380px] md:h-[380px] bg-gradient-to-br rounded-4xl from-black to-biro-blue overflow-hidden">
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <span className="text-9xl font-black font-cabinet-grotesk text-white/45 group-hover:text-blue-500/20 transition-all duration-700 select-none animate-float">
+                                            ?
+                                        </span>
+                                    </div>
 
-                                {/* Speaker Info */}
-                                <div className="p-5">
-                                    {/* Category badge */}
-                                    <span className="text-amber-700 text-[12px] font-bold uppercase font-oswald tracking-widest py-1">
-                                        {speaker.category}
-                                    </span>
-                                    <h3 className="text-xl font-black font-righteous text-gray-900 mb-1">
-                                        {speaker.name}
-                                    </h3>
-                                    <p className="text-sm text-blue-500 font-semibold">{speaker.role}</p>
+                                    {/* Decorative Overlay */}
+                                    <div className="absolute inset-x-0 bottom-0 p-8 bg-gradient-to-t from-black via-[#020617]/40 to-transparent">
+                                        <div className="h-2 w-12 bg-blue-500/30 rounded-full mb-4 group-hover:w-20 group-hover:bg-blue-500 transition-all duration-500"></div>
+                                        <h3 className="text-2xl font-black font-cabinet-grotesk text-white/50 group-hover:text-white/40 transition-all duration-500 uppercase tracking-tighter">
+                                            Unknown Icons
+                                        </h3>
+                                        <p className="text-white/90 text-xs font-bold uppercase font-oswald tracking-widest group-hover:text-blue-400/40 transition-all duration-500">
+                                            Revealing Soon
+                                        </p>
+                                    </div>
                                 </div>
-                            </motion.div>
+                            </div>
                         ))}
                     </div>
                 )}
 
                 {/* CTA */}
-                <motion.div
+                <div
                     className="flex flex-col items-center gap-6 text-center"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
+                    data-aos="fade-up"
+                    data-aos-duration="800"
+                    data-aos-once="true"
                 >
                     <div>
                         <h3 className="text-2xl font-black font-righteous text-gray-900 mb-2">Want to Speak at BTF 2.0?</h3>
-                        <p className="text-gray-500 font-medium">Share your expertise with 1,000+ attendees.</p>
+                        <p className="text-gray-500 font-medium">Share your expertise with 3,000+ attendees.</p>
                     </div>
 
                     <Button href="/speaker-registration" variant="biro">
                         Apply to Speak / Suggest a Speaker
                     </Button>
-                </motion.div>
+                </div>
             </div>
         </section>
     );

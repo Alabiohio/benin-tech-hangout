@@ -16,10 +16,10 @@ const partners = [
 
 export default function Partners() {
     return (
-        <section id="sponsors" className="py-14 bg-[#f8f9fa] overflow-hidden">
+        <section id="sponsors" className="py-14 pt-22 bg-[#f8f9fa] overflow-hidden">
             <div className="container mx-auto px-2 md:px-4 mb-8">
               <h2 className="text-3xl md:text-7xl font-black font-cabinet-grotesk text-biro-blue-dark mb-6">
-                        OUR <span className="text-biro-blue">PARTNERS</span>
+                        MEET OUR <span className="text-biro-blue">PARTNERS</span>
               </h2>
             </div>
 

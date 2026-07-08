@@ -33,9 +33,9 @@ const slideLeft: Variants = {
 
 export default function About() {
     const stats = [
-        { value: "1000+", label: "ATTENDEES" },
+        { value: "3000+", label: "ATTENDEES" },
         { value: "30+", label: "COMMUNITIES" },
-        { value: "10+", label: "SPEAKERS" },
+        { value: "20+", label: "SPEAKERS" },
         { value: "3 Day", label: "CONVERGENCE" }
     ];
 
@@ -76,8 +76,8 @@ export default function About() {
                                     variants={fadeUp}
                                     transition={{ delay: index * 0.1 }}
                                     className={`relative group md:absolute w-full md:w-1/2 transition-transform duration-300 ${index === 0
-                                            ? "md:top-0 md:left-0 lg:top-auto lg:bottom-0 lg:translate-x-8 lg:translate-y-6"
-                                            : "md:bottom-0 md:right-0 lg:translate-x-6 lg:translate-y-3"
+                                            ? "md:top-auto md:bottom-0 md:left-0 md:translate-x-8 md:translate-y-6 lg:translate-x-8 lg:translate-y-6"
+                                            : "md:bottom-0 md:right-0 md:translate-x-6 md:translate-y-3 lg:translate-x-6 lg:translate-y-3"
                                         }`}
                                 >
                                     {/* Stacked layers */}
@@ -90,7 +90,7 @@ export default function About() {
                                         whileHover={{ y: -4 }}
                                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
                                     >
-                                        <p className="text-4xl md:text-5xl font-black font-righteous text-biro-blue-dark mb-2 tabular-nums">
+                                        <p className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-biro-blue-dark mb-2 tabular-nums">
                                             {stat.value}
                                         </p>
                                         <p className="text-slate-600 font-bold font-oswald uppercase tracking-widest text-xs md:text-sm">
@@ -109,8 +109,8 @@ export default function About() {
                                     variants={fadeUp}
                                     transition={{ delay: (index + 2) * 0.1 }}
                                     className={`relative group md:absolute w-full md:w-1/2 transition-transform duration-300 ${index === 0
-                                            ? "md:bottom-0 md:left-0 lg:bottom-auto lg:top-0 lg:translate-x-10 lg:-translate-y-1"
-                                            : "md:top-0 md:right-0 lg:translate-x-8 lg:-translate-y-4"
+                                            ? "md:top-0 md:bottom-auto md:left-0 md:translate-x-10 md:-translate-y-1 lg:translate-x-10 lg:-translate-y-1"
+                                            : "md:top-0 md:right-0 md:translate-x-8 md:-translate-y-4 lg:translate-x-8 lg:-translate-y-4"
                                         }`}
                                 >
                                     {/* Stacked layers */}
@@ -123,7 +123,7 @@ export default function About() {
                                         whileHover={{ y: -4 }}
                                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
                                     >
-                                        <p className="text-4xl md:text-5xl font-black font-righteous text-biro-blue-dark mb-2 tabular-nums">
+                                        <p className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-biro-blue-dark mb-2 tabular-nums">
                                             {stat.value}
                                         </p>
                                         <p className="text-slate-600 font-bold font-oswald uppercase tracking-widest text-xs md:text-sm">

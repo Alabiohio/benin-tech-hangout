@@ -29,7 +29,8 @@ export async function POST(request: NextRequest) {
             phone,
             company,
             website,
-            description
+            description,
+            registration_type
         } = data;
 
         // Validate required fields
@@ -50,6 +51,7 @@ export async function POST(request: NextRequest) {
                 company VARCHAR(255) NOT NULL,
                 website VARCHAR(255),
                 description TEXT,
+                registration_type VARCHAR(50) DEFAULT 'exhibitor',
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         `);
@@ -57,11 +59,11 @@ export async function POST(request: NextRequest) {
         // Insert the submission
         const result = await client.query(
             `INSERT INTO exhibitor_registrations 
-            (name, email, phone, company, website, description)
+            (name, email, phone, company, website, description, registration_type)
             VALUES 
-            ($1, $2, $3, $4, $5, $6)
+            ($1, $2, $3, $4, $5, $6, $7)
             RETURNING id, created_at;`,
-            [name, email, phone, company, website || null, description || null]
+            [name, email, phone, company, website || null, description || null, registration_type || 'exhibitor']
         );
 
         return NextResponse.json(

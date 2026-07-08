@@ -19,7 +19,7 @@ export default function Footer({ onRegisterClick }: { onRegisterClick?: () => vo
                                     </Link>
                                 ))}
                             </div>
-                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-500">@benintechfest</span>
+                            <span className="text-[12px] font-black uppercase tracking-[0.3em] text-slate-500">@benintechfest</span>
                         </div>
                     </div>
 
@@ -34,10 +34,9 @@ export default function Footer({ onRegisterClick }: { onRegisterClick?: () => vo
 
                     {/* Contact & CTA */}
                     <div className="flex items-center gap-2">
-                        <span className="hidden sm:block text-[10px] font-black uppercase tracking-widest text-slate-400">hello@benintechfest.com</span>
-                        <button onClick={onRegisterClick} className="px-6 py-2.5 bg-highlight-yellow text-slate-950 font-black text-[9px] tracking-[0.2em] rounded-sm hover:bg-white transition-all uppercase">
-                            Register
-                        </button>
+                        <span className="sm:block text-[12px] font-black uppercase tracking-widest text-slate-400">benintechfest@gmail.com</span>
+                        <div className="md:block w-px h-3 bg-slate-800"></div>
+                        <span className="sm:block text-[12px] font-black uppercase tracking-widest text-slate-400">+234 701 234 1561</span>
                     </div>
                 </div>
 
@@ -45,16 +44,11 @@ export default function Footer({ onRegisterClick }: { onRegisterClick?: () => vo
                 <div className="flex flex-col gap-3 md:flex-row md:justify-between md:items-center md:gap-4 py-4 md:py-0">
                     <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6 text-center md:text-left">
                         <p className="text-slate-400 text-[11px] md:text-[12px] font-black uppercase tracking-widest">&copy; {new Date().getFullYear()} Benin Tech Fest</p>
-                        <div className="hidden md:block w-px h-3 bg-slate-800"></div>
-                        <div className="flex items-center gap-2 justify-center md:justify-start">
-                            <span className="text-[11px] md:text-[12px] font-black uppercase tracking-widest text-slate-600">By</span>
-                            <span className="text-[12px] md:text-[14px] font-black tracking-widest text-slate-400">PROLINE GROUP</span>
-                        </div>
                     </div>
                     
                     <div className="flex items-center gap-2 justify-center md:justify-end">
-                        <span className="text-[11px] md:text-[12px] font-black uppercase tracking-widest text-slate-600">Site by</span>
-                        <Link href="https://oheo.site" target="_blank" className="text-[12px] md:text-[14px] font-black tracking-widest text-slate-400 hover:text-highlight-yellow transition-colors border-b border-slate-800">OHEO</Link>
+                        <span className="text-[11px] md:text-[12px] font-black uppercase tracking-widest text-slate-600">By</span>
+                        <span className="text-[12px] md:text-[14px] font-black tracking-widest text-slate-400 hover:text-highlight-yellow transition-colors border-b border-slate-800">PROLINE GROUP</span>
                     </div>
                 </div>
             </div>

@@ -31,7 +31,7 @@ export default function EventDetails() {
     },
     { 
       label: "Date & Time", 
-      value: "Oct 02, 2026", 
+      value: "Nov 05, 2026", 
       icon: <><rect width="18" height="18" x="3" y="4" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></> 
     },
     { 

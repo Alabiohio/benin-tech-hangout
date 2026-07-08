@@ -65,12 +65,12 @@ export default function WhyAttend({ onRegisterClick }: WhyAttendProps) {
                         transition={{ delay: 0.4, duration: 0.6 }}
                         className="flex flex-col sm:flex-row items-center justify-center gap-6"
                     >
-                        <button
+                        <Button
                             onClick={onRegisterClick}
                             className="group relative w-full sm:w-auto px-8 py-3 bg-highlight-yellow text-white font-black font-oswald uppercase tracking-widest border-4 border-highlight-yellow hover:bg-transparent hover:text-highlight-yellow transition-colors duration-300 shadow-[10px_10px_0px_rgba(15,23,42,1)] hover:shadow-[4px_4px_0px_rgba(15,23,42,1)] hover:translate-y-1 hover:translate-x-1"
                         >
                             Register Now
-                        </button>
+                        </Button>
                         
                         <Button href="/volunteer" variant="outline">
                             Volunteer

@@ -72,7 +72,7 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                 <div className="flex items-center gap-4">
                     <Button
                         onClick={onRegisterClick}
-                        className="!hidden sm:flex px-6 py-2.5 text-lg font-black uppercase tracking-widest text-[11px] transition-all duration-300 active:scale-95 bg-biro-blue text-white hover:bg-biro-blue-dark"
+                        className="!hidden lg:!flex px-6 py-2.5 text-lg font-black uppercase tracking-widest text-[11px] transition-all duration-300 active:scale-95 bg-biro-blue text-white hover:bg-biro-blue-dark"
                     >
                         Register Now
                     </Button>

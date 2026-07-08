@@ -18,10 +18,11 @@ export default function ExhibitorPage() {
         phone: '',
         email: '',
         website: '',
-        description: ''
+        description: '',
+        registration_type: 'exhibitor'
     });
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
@@ -49,7 +50,8 @@ export default function ExhibitorPage() {
                     phone: '',
                     email: '',
                     website: '',
-                    description: ''
+                    description: '',
+                    registration_type: 'exhibitor'
                 });
             } else {
                 setMessage(`✗ Error: ${data.error || 'Failed to submit'}`);
@@ -88,7 +90,7 @@ export default function ExhibitorPage() {
                                     Showcase Your <span className="text-biro-blue">Brand</span>
                                 </h1>
                                 <p className="text-md text-slate-600 max-w-2xl mx-auto font-medium">
-                                    Expose your products, services, and innovations to over 1000+ tech enthusiasts, founders, and leaders at Benin Tech Fest 2.0.
+                                    Expose your products, services, and innovations to over 3000+ tech enthusiasts, founders, and leaders at Benin Tech Fest 2.0.
                                 </p>
                             </motion.div>
 
@@ -150,6 +152,19 @@ export default function ExhibitorPage() {
                                         </div>
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div>
+                                                <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">I am applying as</label>
+                                                <select
+                                                    name="registration_type"
+                                                    value={formData.registration_type}
+                                                    onChange={handleInputChange}
+                                                    className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900"
+                                                    required
+                                                >
+                                                    <option value="exhibitor">Exhibitor</option>
+                                                    <option value="vendor">Vendor</option>
+                                                </select>
+                                            </div>
                                             <div>
                                                 <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Contact Person</label>
                                                 <input 

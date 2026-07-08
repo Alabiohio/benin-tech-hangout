@@ -1,34 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Button from './Button';
 
 export default function PartnerCTA() {
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        const element = document.getElementById('partner-cta');
-
-        if (!element) return;
-
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    observer.disconnect();
-                }
-            },
-            { threshold: 0.2 }
-        );
-
-        observer.observe(element);
-
-        return () => observer.disconnect();
-    }, []);
-
     return (
         <div id="partner-cta" className="w-full px-4 py-10 pb-28 relative overflow-visible bg-gradient-to-b from-white to-slate-100">
-            <div className={`container mx-auto relative z-40 -mb-44 lg:-mb-62 py-10 px-4 border border-2 border-[#DEDEDE] bg-slate-950 transition-all duration-700 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+            <div className="container mx-auto relative z-40 -mb-44 lg:-mb-62 py-10 px-4 border border-2 border-[#DEDEDE] rounded-2xl bg-slate-950" data-aos="fade-up" data-aos-duration="5000" data-aos-once="true">
                 <div className="flex flex-col lg:flex-row gap-12 lg:gap-0 items-stretch">
                     <div className="lg:flex-1 flex flex-col justify-between">
                         <h2 className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-white leading-tight mb-8">

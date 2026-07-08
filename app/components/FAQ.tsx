@@ -26,7 +26,7 @@ export default function FAQ() {
         },
         {
             q: "How can my company become a sponsor?",
-            a: "Visit the Sponsors section, click 'ecome a Sponsor,' or contact us directly at benintechfest@gmail.com. We have multiple sponsorship tiers to suit your brand goals and budget."
+            a: "Visit the Sponsors section, click 'become a Sponsor,' or contact us directly at benintechfest@gmail.com. We have multiple sponsorship tiers to suit your brand goals and budget."
         },
         {
             q: "How do I volunteer at BTF 2.0?",

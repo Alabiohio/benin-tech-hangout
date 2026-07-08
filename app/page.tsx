@@ -23,6 +23,7 @@ import GuessSpeakers from "./components/GuessSpeakers";
 import Link from 'next/link';
 import PartnerCTA from "./components/PartnerCTA";
 import Agenda from "./components/Agenda";
+import ExhibitionCTA from "./components/ExhibitionCTA";
 
 export default function Home() {
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
@@ -37,13 +38,12 @@ export default function Home() {
                 <About />
                 <Countdown />
                 <WhatToExpect isModalOpen={isRegisterModalOpen} setIsModalOpen={setIsRegisterModalOpen} />
-
-                <Tickets onRegisterClick={() => setIsRegisterModalOpen(true)} />
+                <Partners />
+                <Tickets onRegisterClick={() => setIsRegisterModalOpen(true)} />                
                 <Shocase setIsModalOpen={setIsRegisterModalOpen} />
                 <WhyAttend onRegisterClick={() => setIsRegisterModalOpen(true)} />
-                               <Legacy />
+                <Legacy />
                 <GuessSpeakers />
-                <Partners />
                 <PartnerCTA />
                 <StartupPitch />
                 <FAQ />

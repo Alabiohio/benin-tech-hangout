@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Oswald } from "next/font/google"; // Import next/font/google
 import "./globals.css";
+import "aos/dist/aos.css";
 
 // Configure fonts
 const oswald = Oswald({
@@ -12,7 +13,7 @@ const oswald = Oswald({
 
 export const metadata: Metadata = {
   title: "Benin Tech Fest 2.0 | Strengthening Benin City's Tech Ecosystem",
-  description: "Join 1000+ innovators at the flagship tech event of Benin City. A curated space for the ecosystem to connect, learn, and scale. Connect with leaders, founders, and talents.",
+  description: "Join 3000+ innovators at the flagship tech event of Benin City. A curated space for the ecosystem to connect, learn, and scale. Connect with leaders, founders, and talents.",
   keywords: ["Benin Tech Fest", "Benin City Tech", "Tech Event Nigeria", "Edo State Tech", "Networking", "Innovation"],
   authors: [{ name: "Benin Tech Community" }],
   openGraph: {
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Benin Tech Fest 2.0",
-    description: "Uniting Benin City's Tech Community. Join 1000+ innovators this year.",
+    description: "Uniting Benin City's Tech Community. Join 3000+ innovators this year.",
     images: ["/BTH-10-1.jpg"],
   },
   icons: {
@@ -44,6 +45,7 @@ export const metadata: Metadata = {
 };
 
 
+import AosInit from "./components/AosInit";
 import ScrollToTop from "./components/ScrollToTop";
 
 export default function RootLayout({
@@ -54,6 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${oswald.variable}`}>
       <body className="antialiased font-righteous">
+        <AosInit />
         <ScrollToTop />
         {children}
       </body>
