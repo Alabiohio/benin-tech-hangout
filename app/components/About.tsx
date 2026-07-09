@@ -37,7 +37,7 @@ export default function About() {
                             Connecting <span className="text-blue-600">Edo</span> to the <span className="text-blue-600">Future of Tech</span>
                         </h2>
                         <p className="text-lg text-white leading-relaxed">
-                            <span className="font-bold text-biro-blue">Benin Tech Fest 2.0</span> is a community-driven technology and innovation convergence designed to strengthen Edo State&apos;s growing tech ecosystem through talent development, startup mentorship, ecosystem collaboration and access to opportunities.
+                            <span className="font-bold text-biro-blue">Benin Tech Fest 2.0 </span> is a community-driven technology and innovation convergence designed to strengthen Edo State&apos;s growing tech ecosystem through talent development, startup mentorship, ecosystem collaboration and access to opportunities.
                         </p>
                     </div>
 

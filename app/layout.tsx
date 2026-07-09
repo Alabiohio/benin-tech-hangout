@@ -17,13 +17,13 @@ export const metadata: Metadata = {
   keywords: ["Benin Tech Fest", "Benin City Tech", "Tech Event Nigeria", "Edo State Tech", "Networking", "Innovation"],
   authors: [{ name: "Benin Tech Community" }],
   openGraph: {
-    title: "Benin Tech Fest 2.0 | Experience the Future",
+    title: "Benin Tech Fest 2.0 | Building a Collaborative Ecosystem",
     description: "The flagship tech event of Benin City returns. Join the most impactful gathering of tech talents, founders, and organizations.",
     url: "https://benintechFestpreview.vercel.app",
     siteName: "Benin Tech Fest",
     images: [
       {
-        url: "/BTH-10-1.jpg",
+        url: "/logo/logo.png",
         width: 1200,
         height: 630,
         alt: "Benin Tech Fest 2.0 Hero Image",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Benin Tech Fest 2.0",
     description: "Uniting Benin City's Tech Community. Join 3000+ innovators this year.",
-    images: ["/BTH-10-1.jpg"],
+    images: ["/logo/logo.png"],
   },
   icons: {
     icon: "/logo/logo.png",
