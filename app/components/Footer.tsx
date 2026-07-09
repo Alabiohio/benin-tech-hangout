@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Footer({ }: { onRegisterClick?: () => void }) {
     return (
         <footer id="contact" className="relative z-10 bg-white text-white py-4 overflow-hidden">
-            <div className="container mx-auto px-6 relative z-10">
+            <div className="container mx-auto relative z-10">
                 <div className="flex flex-col lg:flex-row justify-between items-center gap-8 mb-8">
                     {/* Brand & Socials */}
                     <div className="flex flex-col items-center lg:items-start gap-4">
@@ -25,8 +25,8 @@ export default function Footer({ }: { onRegisterClick?: () => void }) {
 
                     {/* Quick Links */}
                     <nav className="flex flex-wrap justify-center gap-x-8 gap-y-2">
-                        {['Volunteer', 'Exhibition', 'Pitch', 'Sponsor'].map((item) => (
-                            <Link key={item} href={`/${item.toLowerCase()}`} className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-highlight-yellow transition-colors">
+                        {['Volunteer', 'Exhibitor', 'Tickets', 'Sponsor'].map((item) => (
+                            <Link key={item} href={`/${item.toLowerCase()}`} className="text-[12px] font-black uppercase tracking-widest text-slate-400 hover:text-highlight-yellow transition-colors">
                                 {item}
                             </Link>
                         ))}
