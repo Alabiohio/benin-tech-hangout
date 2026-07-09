@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function Footer({ onRegisterClick }: { onRegisterClick?: () => void }) {
+export default function Footer({ }: { onRegisterClick?: () => void }) {
     return (
         <footer id="contact" className="relative z-10 bg-white text-white py-4 overflow-hidden">
             <div className="container mx-auto px-6 relative z-10">

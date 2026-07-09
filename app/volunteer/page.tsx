@@ -3,7 +3,6 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import BackgroundWrapper from "../components/BackgroundWrapper";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Button from "../components/Button";

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, useMotionValue, useTransform, animate, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface TimeLeft {
     days: number;
@@ -42,7 +42,10 @@ function Counter({ value, isInView }: { value: number, isInView: boolean }) {
 
             requestAnimationFrame(animateCount);
         } else if (hasAnimated.current) {
-            setDisplayValue(value);
+            const rafId = requestAnimationFrame(() => {
+                setDisplayValue(value);
+            });
+            return () => cancelAnimationFrame(rafId);
         }
     }, [value, isInView]);
 
@@ -69,13 +72,9 @@ export default function Countdown() {
         };
     }, [targetDate]);
 
-    const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-    const [isMounted, setIsMounted] = useState(false);
+    const [timeLeft, setTimeLeft] = useState<TimeLeft>(calculateTimeLeft);
 
     useEffect(() => {
-        setIsMounted(true);
-        setTimeLeft(calculateTimeLeft());
-        
         const timer = setInterval(() => {
             setTimeLeft(calculateTimeLeft());
         }, 1000);
@@ -84,8 +83,6 @@ export default function Countdown() {
     }, [calculateTimeLeft]);
 
     const values = [timeLeft.days, timeLeft.hours, timeLeft.minutes, timeLeft.seconds];
-
-    if (!isMounted) return null;
 
     return (
         <motion.section 

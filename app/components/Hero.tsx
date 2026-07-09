@@ -1,9 +1,8 @@
 'use client';
 
 import Image from "next/image";
-import Link from "next/link";
-import { HiLocationMarker, HiCalendar } from "react-icons/hi";
-import { motion, useInView, Variants } from "framer-motion";
+import { HiCalendar } from "react-icons/hi";
+import { motion, useInView } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import Button from "./Button";
 

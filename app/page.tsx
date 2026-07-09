@@ -4,7 +4,6 @@ import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Highlights from "./components/Highlights";
-import EventDetails from "./components/EventDetails";
 import Partners from "./components/Partners";
 import About from "./components/About";
 import WhyAttend from "./components/WhyAttend";
@@ -14,7 +13,6 @@ import Shocase from "./components/Shocase";
 import Countdown from "./components/Countdown";
 import FAQ from "./components/FAQ";
 import Legacy from "./components/Legacy";
-import Roadmap from "./components/Roadmap";
 import Organizer from "./components/Organizer";
 import StartupPitch from "./components/StartupPitch";
 import Footer from "./components/Footer";
@@ -22,7 +20,6 @@ import BackgroundWrapper from "./components/BackgroundWrapper";
 import GuessSpeakers from "./components/GuessSpeakers";
 import Link from 'next/link';
 import PartnerCTA from "./components/PartnerCTA";
-import Agenda from "./components/Agenda";
 import ExhibitionCTA from "./components/ExhibitionCTA";
 
 export default function Home() {

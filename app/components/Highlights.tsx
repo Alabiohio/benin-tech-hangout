@@ -15,17 +15,6 @@ const highlightItems = [
     { label: "Women in Tech", title: "Women in Tech" },
 ];
 
-const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1,
-            delayChildren: 0.2,
-        },
-    },
-};
-
 const itemVariants: Variants = {
     hidden: { opacity: 0, scale: 0.9, y: 30 },
     visible: {

@@ -4,8 +4,9 @@ import { useState } from 'react';
 import Button from './Button';
 
 const GuessSpeakers = () => {
-    const filters = ['All Speakers', 'Keynote', 'Panelists', 'Facilitators'];
-    const [selectedFilter, setSelectedFilter] = useState<string>('All Speakers');
+    //const filters = ['All Speakers', 'Keynote', 'Panelists', 'Facilitators'];
+    //const [selectedFilter, setSelectedFilter] = useState<string>('All Speakers');
+    const [selectedFilter] = useState<string>('All Speakers');
 
     const speakers = [
         { id: 1, category: 'Keynote' },
@@ -28,11 +29,11 @@ const GuessSpeakers = () => {
                     data-aos-once="true"
                 >
                     <h2 className="text-5xl md:text-7xl font-black font-cabinet-grotesk text-biro-blue-dark mb-6">
-                        Guess the{' '} <br/>
+                        Guess the{' '} <br />
                         <span className="text-biro-blue">
                             Speakers
                         </span>
-                    </h2>       
+                    </h2>
                     <p className="text-gray-700 text-lg md:text-xl mx-auto leading-relaxed">
                         The stage is being set for Benin&apos;s brightest minds. Can you guess who will be sharing their vision at BTF 2.0?
                     </p>

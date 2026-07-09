@@ -1,17 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 import { FiCalendar, FiMapPin, FiClock } from "react-icons/fi";
 
-const fadeUp: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.6, ease: "easeOut" }
-    }
-};
 
 const slideRight: Variants = {
     hidden: { opacity: 0, x: -30 },
@@ -22,14 +13,6 @@ const slideRight: Variants = {
     }
 };
 
-const slideLeft: Variants = {
-    hidden: { opacity: 0, x: 30 },
-    visible: {
-        opacity: 1,
-        x: 0,
-        transition: { duration: 0.8, ease: "easeOut" }
-    }
-};
 
 
 export default function About() {
@@ -54,7 +37,7 @@ export default function About() {
                             Connecting <span className="text-blue-600">Edo</span> to the <span className="text-blue-600">Future of Tech</span>
                         </h2>
                         <p className="text-lg text-white leading-relaxed">
-                            <span className="font-bold text-biro-blue">Benin Tech Fest 2.0</span> is a community-driven technology and innovation convergence designed to strengthen Edo State's growing tech ecosystem through talent development, startup mentorship, ecosystem collaboration and access to opportunities.
+                            <span className="font-bold text-biro-blue">Benin Tech Fest 2.0</span> is a community-driven technology and innovation convergence designed to strengthen Edo State&apos;s growing tech ecosystem through talent development, startup mentorship, ecosystem collaboration and access to opportunities.
                         </p>
                     </div>
 
