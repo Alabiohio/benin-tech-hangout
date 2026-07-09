@@ -40,10 +40,7 @@ export default function Shocase({ setIsModalOpen }: { setIsModalOpen: (open: boo
                             {tiles[0].desc}
                         </p>
                         <div className="flex flex-col sm:flex-row lg:flex-col lg:items-start gap-3">
-                            <Button onClick={() => setIsModalOpen(true)} variant="primary">
-                                Apply to Pitch
-                            </Button>
-                            <Button onClick={() => setIsModalOpen(true)} variant="outline" className='border-white text-white hover:!bg-white hover:!text-black !shadow-[6px_6px_0px_rgba(255,255,255,0.4)] hover:!shadow-[3px_3px_0px_rgba(255,255,255,0.4)]'>
+                            <Button href="/exhibitor" variant="outline" className='border-white text-white hover:!bg-white hover:!text-black !shadow-[6px_6px_0px_rgba(255,255,255,0.4)] hover:!shadow-[3px_3px_0px_rgba(255,255,255,0.4)]'>
                                 Be an Exhibitor
                             </Button>
                         </div>

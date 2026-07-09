@@ -87,10 +87,6 @@ export default function WhatToExpect({ isModalOpen, setIsModalOpen }: { isModalO
                         );
                     })}
                 </div>
-
-                <div className="mt-10 text-center">
-                    <Button variant="biro" onClick={() => setIsModalOpen(true)} className="px-8 py-3 font-oswald">Register Now</Button>
-                </div>
             </div>
         </section>
     );
