@@ -15,7 +15,7 @@ export default function WhyAttend({ onRegisterClick }: WhyAttendProps) {
                     transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                     className="whitespace-nowrap"
                 >
-                    <span className="text-[10rem] md:text-[15rem] font-black font-righteous text-slate-900 leading-none">
+                    <span className="text-[10rem] md:text-[15rem] font-black font-cabinet-grotesk text-slate-900 leading-none">
                         ECOSYSTEM ECOSYSTEM ECOSYSTEM ECOSYSTEM 
                     </span>
                 </motion.div>
@@ -24,7 +24,7 @@ export default function WhyAttend({ onRegisterClick }: WhyAttendProps) {
                     transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
                     className="whitespace-nowrap"
                 >
-                    <span className="text-[10rem] md:text-[15rem] font-black font-righteous text-transparent stroke-text leading-none" style={{ WebkitTextStroke: '4px #0f172a' }}>
+                    <span className="text-[10rem] md:text-[15rem] font-black font-cabinet-grotesk text-transparent stroke-text leading-none" style={{ WebkitTextStroke: '4px #0f172a' }}>
                         BUILDERS BUILDERS BUILDERS BUILDERS
                     </span>
                 </motion.div>

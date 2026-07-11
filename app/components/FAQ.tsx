@@ -40,7 +40,7 @@ export default function FAQ() {
         <section className="py-8 bg-[#f8fbff] relative" id="faq">
             <div className="container mx-auto px-6 max-w-4xl relative z-10">
                 <div className="text-center mb-6">
-                    <h2 className="text-3xl md:text-4xl font-black font-righteous text-biro-blue-dark tracking-tight">
+                    <h2 className="text-3xl md:text-4xl font-black font-cabinet-grotesk text-biro-blue-dark tracking-tight">
                         Got <span className="text-biro-blue">Questions?</span>
                     </h2>
                 </div>

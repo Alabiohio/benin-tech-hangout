@@ -86,7 +86,7 @@ export default function ExhibitorPage() {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6 }}
                             >
-                                <h1 className="text-4xl md:text-6xl font-black font-righteous text-biro-blue-dark mb-4">
+                                <h1 className="text-4xl md:text-6xl font-black font-cabinet-grotesk text-biro-blue-dark mb-4">
                                     Showcase Your <span className="text-biro-blue">Brand</span>
                                 </h1>
                                 <p className="text-md text-slate-600 max-w-2xl mx-auto font-medium">
@@ -96,7 +96,7 @@ export default function ExhibitorPage() {
 
                             <div className="bg-white rounded-[1.5rem] overflow-hidden border border-blue-100 flex flex-col lg:flex-row-reverse">
                                 <div className="lg:w-2/5 p-10 md:p-14 bg-[#0f2f6b] flex flex-col justify-center text-white relative">
-                                    <h2 className="text-2xl md:text-3xl font-black mb-6 text-white font-righteous">Exhibitor Perks</h2>
+                                    <h2 className="text-2xl md:text-3xl font-black mb-6 text-white font-cabinet-grotesk">Exhibitor Perks</h2>
                                     <p className="text-blue-100/80 mb-8 leading-relaxed font-medium">
                                         Position your brand at the epicenter of innovation. Connect with your target audience where they learn, network, and grow.
                                     </p>
@@ -120,7 +120,7 @@ export default function ExhibitorPage() {
                                 </div>
 
                                 <div className="lg:w-3/5 p-10 md:p-14 bg-white">
-                                    <h3 className="text-2xl font-black text-biro-blue-dark mb-6 font-righteous">Exhibitor Registration</h3>
+                                    <h3 className="text-2xl font-black text-biro-blue-dark mb-6 font-cabinet-grotesk">Exhibitor Registration</h3>
                                     
                                     {cooldown > 0 ? (
                                         <div className="space-y-6">

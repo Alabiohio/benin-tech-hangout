@@ -55,7 +55,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${oswald.variable}`}>
-      <body className="antialiased font-righteous overflow-x-hidden">
+      <body className="antialiased font-cabinet-grotesk overflow-x-hidden">
         <AosInit />
         <ScrollToTop />
         {children}

@@ -15,7 +15,7 @@ export default function Registration() {
                 <div className="max-w-5xl mx-auto bg-white rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row">
                     {/* Left Info Panel */}
                     <div className="md:w-[45%] p-10 md:p-14 bg-biro-blue-dark flex flex-col justify-center text-white">
-                        <h2 className="text-3xl md:text-4xl font-black font-righteous mb-6 leading-tight">
+                        <h2 className="text-3xl md:text-4xl font-black font-cabinet-grotesk mb-6 leading-tight">
                             Secure Your <span className="text-highlight-yellow">Spot</span>
                         </h2>
                         <p className="text-blue-100/60 text-base md:text-lg mb-10 leading-relaxed font-medium">
@@ -78,7 +78,7 @@ export default function Registration() {
                                 </div>
                             </div>
 
-                            <button className="w-full py-5 bg-biro-blue-dark text-white font-black font-righteous text-lg rounded-xl hover:bg-highlight-yellow hover:text-biro-blue-dark transition-all active:scale-95 shadow-lg shadow-blue-900/10">
+                            <button className="w-full py-5 bg-biro-blue-dark text-white font-black font-cabinet-grotesk text-lg rounded-xl hover:bg-highlight-yellow hover:text-biro-blue-dark transition-all active:scale-95 shadow-lg shadow-blue-900/10">
                                 COMPLETE REGISTRATION
                             </button>
 

@@ -99,7 +99,7 @@ const GuessSpeakers = () => {
                     data-aos-once="true"
                 >
                     <div>
-                        <h3 className="text-2xl font-black font-righteous text-gray-900 mb-2">Want to Speak at BTF 2.0?</h3>
+                        <h3 className="text-2xl font-black font-cabinet-grotesk text-gray-900 mb-2">Want to Speak at BTF 2.0?</h3>
                         <p className="text-gray-500 font-medium">Share your expertise with 3,000+ attendees.</p>
                     </div>
 

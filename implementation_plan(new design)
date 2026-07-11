@@ -21,7 +21,7 @@ We will integrate **Cabinet Grotesk** via Fontshare and clean up the typography 
 #### [MODIFY] [globals.css](file:///c:/Users/ohioa/Projects/React/benin-tech-fest/app/globals.css)
 - Import Cabinet Grotesk using the Fontshare API:
   `@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&display=swap');`
-- Re-configure `@theme` to define `--font-cabinet-grotesk` and map `--font-righteous` (or a new `--font-cabinet`) to it so that it immediately propagates to all main visual headings without breaking the existing codebase.
+- Re-configure `@theme` to define `--font-cabinet-grotesk` and map `--font-cabinet-grotesk` (or a new `--font-cabinet`) to it so that it immediately propagates to all main visual headings without breaking the existing codebase.
 - Re-configure `--font-oswald` as the primary sub-typeface.
 
 #### [MODIFY] [layout.tsx](file:///c:/Users/ohioa/Projects/React/benin-tech-fest/app/layout.tsx)

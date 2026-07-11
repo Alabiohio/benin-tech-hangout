@@ -26,11 +26,11 @@ export default function VisionMission() {
                         transition={{ duration: 0.8, ease: "easeOut" }}
                         className="group relative flex flex-col justify-center bg-white/10 rounded-[2.5rem] p-10 md:p-14 border border-white/15 overflow-hidden transition-all duration-500"
                     >
-                        <div className="inline-block px-4 py-1.5 mb-10 text-xs font-black font-righteous tracking-[0.2em] text-[#fecaca] uppercase bg-white/10 rounded-xl border border-white/15 w-fit">
+                        <div className="inline-block px-4 py-1.5 mb-10 text-xs font-black font-cabinet-grotesk tracking-[0.2em] text-[#fecaca] uppercase bg-white/10 rounded-xl border border-white/15 w-fit">
                             Our Vision
                         </div>
 
-                        <h2 className="text-4xl md:text-5xl font-black font-righteous mb-8 leading-[1.15] text-white">
+                        <h2 className="text-4xl md:text-5xl font-black font-cabinet-grotesk mb-8 leading-[1.15] text-white">
                             To <span className="text-[#fecaca]">strengthen and grow</span> <br />
                             Benin City&apos;s tech ecosystem.
                         </h2>
@@ -47,7 +47,7 @@ export default function VisionMission() {
                         transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                         className="group relative bg-white rounded-[1.5rem] p-10 md:p-14 border border-blue-100 overflow-hidden transition-all duration-500"
                     >
-                        <div className="inline-block px-4 py-1.5 mb-10 text-xs font-black font-righteous tracking-[0.2em] text-biro-blue uppercase bg-blue-50 rounded-xl border border-blue-100 w-fit">
+                        <div className="inline-block px-4 py-1.5 mb-10 text-xs font-black font-cabinet-grotesk tracking-[0.2em] text-biro-blue uppercase bg-blue-50 rounded-xl border border-blue-100 w-fit">
                             Our Mission
                         </div>
 

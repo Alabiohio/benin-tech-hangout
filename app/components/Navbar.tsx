@@ -92,18 +92,18 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
             <div className={`fixed inset-0 bg-slate-900/60 lg:hidden transition-all duration-500 ease-in-out z-[200] ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsMenuOpen(false)}>
                 <div className={`absolute top-0 right-0 h-screen w-full max-w-sm bg-white transition-transform duration-500 flex flex-col ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`} onClick={(e) => e.stopPropagation()}>
                     <div className="flex items-center justify-between p-6 border-b border-slate-100">
-                        <Image src="/logo/logo.png" alt="Logo" width={48} height={48} className="w-auto h-10 object-contain" />
+                        <Image src="/logo/logo.png" alt="Logo" width={100} height={48} className="w-auto h-10 object-contain" />
                         <button onClick={() => setIsMenuOpen(false)} className="p-2 rounded-full bg-slate-100 text-slate-500 hover:text-biro-blue transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18M6 6l12 12" /></svg>
                         </button>
                     </div>
 
                     <div className="flex flex-col p-8 gap-5 overflow-y-auto">
-                        <Link href="#about" className={`text-2xl font-black font-righteous uppercase tracking-tight text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '100ms' }} onClick={handleLinkClick}>About</Link>
-                        <Link href="#highlights" className={`text-2xl font-black font-righteous uppercase tracking-tight text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '150ms' }} onClick={handleLinkClick}>Highlights</Link>
-                        <Link href="#tickets" className={`text-2xl font-black font-righteous uppercase tracking-tight text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '200ms' }} onClick={handleLinkClick}>Tickets</Link>
+                        <Link href="#about" className={`text-2xl font-black font-cabinet-grotesk uppercase tracking-tight text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '100ms' }} onClick={handleLinkClick}>About</Link>
+                        <Link href="#highlights" className={`text-2xl font-black font-cabinet-grotesk uppercase tracking-tight text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '150ms' }} onClick={handleLinkClick}>Highlights</Link>
+                        <Link href="#tickets" className={`text-2xl font-black font-cabinet-grotesk uppercase tracking-tight text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '200ms' }} onClick={handleLinkClick}>Tickets</Link>
                         <div className={`flex flex-col gap-3 transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '250ms' }}>
-                            <button onClick={() => setIsMobileRegisterOpen(!isMobileRegisterOpen)} className="flex items-center justify-between text-2xl font-black font-righteous uppercase tracking-tight text-slate-800 hover:text-biro-blue text-left w-full">
+                            <button onClick={() => setIsMobileRegisterOpen(!isMobileRegisterOpen)} className="flex items-center justify-between text-2xl font-black font-cabinet-grotesk uppercase tracking-tight text-slate-800 hover:text-biro-blue text-left w-full">
                                 Register
                                 <svg className={`w-6 h-6 transition-transform duration-300 ${isMobileRegisterOpen ? 'rotate-180 text-biro-blue' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7"></path></svg>
                             </button>
@@ -115,11 +115,11 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                                 </div>
                             </div>
                         </div>
-                        <Link href="#faq" className={`text-2xl font-black font-righteous uppercase tracking-tight text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '300ms' }} onClick={handleLinkClick}>FAQ</Link>
-                        <Link href="#contact" className={`text-2xl font-black font-righteous uppercase tracking-tight text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '350ms' }} onClick={handleLinkClick}>Contact</Link>
+                        <Link href="#faq" className={`text-2xl font-black font-cabinet-grotesk uppercase tracking-tight text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '300ms' }} onClick={handleLinkClick}>FAQ</Link>
+                        <Link href="#contact" className={`text-2xl font-black font-cabinet-grotesk uppercase tracking-tight text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '350ms' }} onClick={handleLinkClick}>Contact</Link>
 
                         <div className={`mt-4 pt-8 border-t border-slate-100 transition-all duration-500 transform ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`} style={{ transitionDelay: '450ms' }}>
-                            <Button onClick={() => { onRegisterClick?.(); handleLinkClick(); }} className="w-full flex items-center justify-center py-4 bg-biro-blue text-white text-center font-black font-righteous uppercase tracking-widest text-lg rounded-xl hover:bg-biro-blue-dark transition-all active:scale-95">
+                            <Button onClick={() => { onRegisterClick?.(); handleLinkClick(); }} className="w-full flex items-center justify-center py-4 bg-biro-blue text-white text-center font-black font-cabinet-grotesk uppercase tracking-widest text-lg hover:bg-biro-blue-dark transition-all active:scale-95">
                                 Register Now
                             </Button>
                         </div>

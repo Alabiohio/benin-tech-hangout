@@ -139,7 +139,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                     <div className="w-full max-w-4xl flex flex-col items-center text-center pt-4 md:pt-8">
                         
 
-                        <h1 className="text-[2.8rem] xs:text-[4.2rem] md:text-[4rem] lg:text-[3rem] xl:text-[5rem] font-black font-righteous tracking-tight leading-[0.88] text-white mb-6">
+                        <h1 className="text-[2.8rem] xs:text-[4.2rem] md:text-[4rem] lg:text-[3rem] xl:text-[5rem] font-black font-cabinet-grotesk tracking-tight leading-[0.88] text-white mb-6">
                             <motion.span 
                                 className="block whitespace-nowrap"
                                 initial={{ opacity: 0, x: -50 }}

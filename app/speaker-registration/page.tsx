@@ -86,7 +86,7 @@ export default function SpeakerRegistrationPage() {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6 }}
                             >
-                                <h1 className="text-4xl md:text-6xl font-black font-righteous text-biro-blue-dark mb-6 leading-tight">
+                                <h1 className="text-4xl md:text-6xl font-black font-cabinet-grotesk text-biro-blue-dark mb-6 leading-tight">
                                     Take The <span className="text-biro-blue">Stage</span>
                                 </h1>
                                 <p className="md:text-xl text-slate-600 max-w-2xl mx-auto font-medium leading-relaxed">
@@ -101,7 +101,7 @@ export default function SpeakerRegistrationPage() {
                                 transition={{ duration: 0.8, delay: 0.2 }}
                             >
                                 <div className="lg:w-2/5 p-10 md:p-14 bg-[#0f2f6b] flex flex-col justify-center text-white relative overflow-hidden">
-                                    <h2 className="text-2xl md:text-3xl font-black mb-6 relative z-10 font-righteous text-white">Why Speak at BTH?</h2>
+                                    <h2 className="text-2xl md:text-3xl font-black mb-6 relative z-10 font-cabinet-grotesk text-white">Why Speak at BTH?</h2>
                                     <p className="text-blue-100/80 mb-10 leading-relaxed text-lg relative z-10">
                                         Sharing your story at Benin Tech Fest connects you with thousands of developers, founders, and investors.
                                     </p>
@@ -132,7 +132,7 @@ export default function SpeakerRegistrationPage() {
                                 </div>
 
                                 <div className="lg:w-3/5 p-10 md:p-16 bg-white">
-                                    <h3 className="text-3xl font-black text-biro-blue-dark mb-8 font-righteous">Speaker Nomination</h3>
+                                    <h3 className="text-3xl font-black text-biro-blue-dark mb-8 font-cabinet-grotesk">Speaker Nomination</h3>
                                     
                                     {cooldown > 0 ? (
                                         <div className="space-y-6">

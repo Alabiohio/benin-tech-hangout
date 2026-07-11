@@ -117,7 +117,7 @@ export default function Agenda() {
     return (
         <section className="py-24 bg-[#0B0A11] relative z-10 overflow-hidden" id="agenda">
              {/* Subtle background text */}
-             <div className="absolute top-0 right-0 text-[15rem] font-black font-righteous text-white/[0.02] select-none pointer-events-none translate-x-1/2 -translate-y-1/4">
+             <div className="absolute top-0 right-0 text-[15rem] font-black font-cabinet-grotesk text-white/[0.02] select-none pointer-events-none translate-x-1/2 -translate-y-1/4">
                 AGENDA
             </div>
 
@@ -132,7 +132,7 @@ export default function Agenda() {
                     <span className="inline-block px-4 py-1.5 mb-6 text-xs font-black tracking-[0.3em] uppercase bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400">
                         Ecosystem Convergence
                     </span>
-                    <h2 className="text-4xl md:text-6xl font-black font-righteous text-white tracking-tight uppercase">
+                    <h2 className="text-4xl md:text-6xl font-black font-cabinet-grotesk text-white tracking-tight uppercase">
                         The <span className="text-highlight-yellow">4-Day</span> Program
                     </h2>
                 </motion.div>
@@ -150,7 +150,7 @@ export default function Agenda() {
                             }`}
                         >
                             <span className="text-xs font-black font-oswald uppercase tracking-widest text-highlight-yellow">{day.label}</span>
-                            <span className="text-lg font-black font-righteous leading-tight my-0.5">{day.date}</span>
+                            <span className="text-lg font-black font-cabinet-grotesk leading-tight my-0.5">{day.date}</span>
                             <span className="text-[10px] font-bold opacity-60 uppercase truncate w-full">{day.title}</span>
                         </button>
                     ))}
@@ -174,7 +174,7 @@ export default function Agenda() {
                                 >
                                     {/* Time */}
                                     <div className="flex-shrink-0 min-w-[120px] text-center md:text-left">
-                                        <span className="text-xl md:text-2xl font-black font-righteous text-highlight-yellow tabular-nums">
+                                        <span className="text-xl md:text-2xl font-black font-cabinet-grotesk text-highlight-yellow tabular-nums">
                                             {item.time}
                                         </span>
                                     </div>
@@ -185,7 +185,7 @@ export default function Agenda() {
                                     {/* Content */}
                                     <div className="flex-grow text-center md:text-left">
                                         <div className="flex flex-col md:flex-row md:items-center gap-3 mb-2 justify-center md:justify-start">
-                                            <h3 className="text-lg md:text-xl font-black font-righteous text-white group-hover:text-highlight-yellow transition-colors">
+                                            <h3 className="text-lg md:text-xl font-black font-cabinet-grotesk text-white group-hover:text-highlight-yellow transition-colors">
                                                 {item.title}
                                             </h3>
                                             <span className="inline-block px-3 py-1 text-[9px] font-black uppercase tracking-widest bg-white/5 border border-white/10 rounded-full text-white/50 group-hover:border-highlight-yellow/20 group-hover:text-highlight-yellow transition-all">

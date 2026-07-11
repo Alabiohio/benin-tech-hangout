@@ -82,7 +82,7 @@ export default function SponsorPage() {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6 }}
                             >
-                                <h1 className="text-4xl md:text-6xl font-black font-righteous text-biro-blue-dark mb- leading-tight">
+                                <h1 className="text-4xl md:text-6xl font-black font-cabinet-grotesk text-biro-blue-dark mb- leading-tight">
                                     Partner With <span className="text-biro-blue">Innovation</span>
                                 </h1>
                                 <p className="md:text-xl text-slate-600 max-w-2xl mx-auto font-medium leading-relaxed">
@@ -97,14 +97,14 @@ export default function SponsorPage() {
                                 transition={{ duration: 0.8, delay: 0.2 }}
                             >
                                 <div className="lg:w-2/5 p-10 md:p-14 bg-[#0f2f6b] flex flex-col justify-center text-white relative overflow-hidden">
-                                    <h2 className="text-3xl md:text-4xl font-black mb-6 relative z-10 font-righteous text-white">Why Sponsor BTH?</h2>
+                                    <h2 className="text-3xl md:text-4xl font-black mb-6 relative z-10 font-cabinet-grotesk text-white">Why Sponsor BTH?</h2>
                                     <p className="text-blue-100/80 mb-10 leading-relaxed text-lg relative z-10">
                                         Join a network of visionary brands supporting thousands of developers, founders, and tech enthusiasts.
                                     </p>
                                 </div>
 
                                 <div className="lg:w-3/5 p-10 md:p-16 bg-white">
-                                    <h3 className="text-3xl font-black text-biro-blue-dark mb-8 font-righteous">Sponsorship Inquiry</h3>
+                                    <h3 className="text-3xl font-black text-biro-blue-dark mb-8 font-cabinet-grotesk">Sponsorship Inquiry</h3>
                                     
                                     {cooldown > 0 ? (
                                         <div className="space-y-6">

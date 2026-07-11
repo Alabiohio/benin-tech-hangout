@@ -65,7 +65,7 @@ export default function Legacy() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
-                        <h2 className="text-4xl md:text-7xl font-black font-righteous text-white mb-8 leading-tight italic">
+                        <h2 className="text-4xl md:text-7xl font-black font-cabinet-grotesk text-white mb-8 leading-tight italic">
                             BTH 1.0 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Impact</span>
                         </h2>
 
@@ -81,11 +81,11 @@ export default function Legacy() {
                         {/* Stats grid integrated from Speakers */}
                         <div className="grid grid-cols-2 gap-6 p-8 bg-white/5 rounded-[2rem] border border-white/10 backdrop-blur-xl">
                             <div>
-                                <p className="text-4xl md:text-5xl font-black font-righteous text-highlight-yellow mb-1">500+</p>
+                                <p className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-highlight-yellow mb-1">500+</p>
                                 <p className="text-white/40 font-black uppercase tracking-widest text-[10px]">Attendees</p>
                             </div>
                             <div>
-                                <p className="text-4xl md:text-5xl font-black font-righteous text-blue-400 mb-1">100+</p>
+                                <p className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-blue-400 mb-1">100+</p>
                                 <p className="text-white/40 font-black uppercase tracking-widest text-[10px]">Communities</p>
                             </div>
                         </div>
@@ -149,7 +149,7 @@ export default function Legacy() {
                     >
                         <div className="space-y-2">
                             <span className="text-highlight-yellow font-black uppercase tracking-[0.3em] text-[10px]">Previous Editions</span>
-                            <h3 className="text-3xl md:text-5xl font-black font-righteous text-white">Past Speakers</h3>
+                            <h3 className="text-3xl md:text-5xl font-black font-cabinet-grotesk text-white">Past Speakers</h3>
                         </div>
                     </motion.div>
 
@@ -181,7 +181,7 @@ export default function Legacy() {
                                     <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/20 to-transparent opacity-90 z-10"></div>
                                     <div className="absolute bottom-8 left-8 z-20">
                                         <p className="text-highlight-yellow text-[10px] font-black uppercase tracking-widest mb-1">{speaker.role}</p>
-                                        <h3 className="text-xl md:text-2xl font-black font-righteous text-white">{speaker.name}</h3>
+                                        <h3 className="text-xl md:text-2xl font-black font-cabinet-grotesk text-white">{speaker.name}</h3>
                                     </div>
                                 </div>
                             </motion.div>

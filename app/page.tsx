@@ -65,7 +65,7 @@ export default function Home() {
                         </button>
 
                         <div className="mb-8 pr-8 text-center md:text-left">
-                            <h2 className="text-3xl md:text-4xl font-black font-righteous text-white mb-2 leading-tight">Join <span className="text-blue-300">BTF 2.0</span></h2>
+                            <h2 className="text-3xl md:text-4xl font-black font-cabinet-grotesk text-white mb-2 leading-tight">Join <span className="text-blue-300">BTF 2.0</span></h2>
                             <p className="text-white/50 text-sm font-medium">Select your registration path</p>
                         </div>
 
@@ -110,7 +110,7 @@ export default function Home() {
                                         {opt.icon}
                                     </div>
                                     <div className="text-left flex-grow">
-                                        <h3 className="text-lg font-black font-righteous text-white leading-none mb-1">{opt.title}</h3>
+                                        <h3 className="text-lg font-black font-cabinet-grotesk text-white leading-none mb-1">{opt.title}</h3>
                                         <p className="text-white/50 text-[11px] font-bold uppercase tracking-widest">{opt.desc}</p>
                                     </div>
                                     <div className="opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-1">
