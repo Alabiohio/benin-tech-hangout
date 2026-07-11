@@ -133,24 +133,24 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
                                 key={idx}
                                 data-ticket-card
                                 data-ticket-index={idx}
-                                className="h-full"
+                                className="relative h-full"
                                 data-aos={tier.aosAnime}
                                 data-aos-duration="1000"
                                 data-aos-easing="ease-out-cubic"
                                 data-aos-once="true"
                                 data-aos-delay={idx * 120}
                             >
+                                {tier.highlight && (
+                                    <div className="absolute -top-3 -right-4 z-50">
+                                        <div className="inline-flex items-center bg-brand-red text-white text-[11px] font-bold px-4 py-1.5 rounded-full uppercase tracking-[0.15em]">
+                                            Most Popular
+                                        </div>
+                                    </div>
+                                )}
                                 <div
                                     style={cardStyle}
                                     className={`relative h-full p-10 md:px-6 rounded-3xl border overflow-hidden flex flex-col group hover:-translate-y-2 transition-all duration-700 ease-out ${tier.highlight ? 'border-biro-blue bg-biro-blue-dark' : 'border-blue-100 bg-white'}`}
                                 >
-                                    {tier.highlight && (
-                                        <div className="absolute top-4 right-4 z-20">
-                                            <div className="inline-flex items-center bg-biro-blue text-white text-[11px] font-bold px-4 py-1.5 rounded-full uppercase tracking-[0.15em] border border-biro-blue/80">
-                                                Most Popular
-                                            </div>
-                                        </div>
-                                    )}
                                     <div className="relative z-10 flex flex-col h-full">
                                         <div className="mb-1">
                                             <span className={`text-4xl md:text-5xl font-oswald font-black flex items-start ${tier.highlight ? 'text-white' : 'text-biro-blue'}`}>
