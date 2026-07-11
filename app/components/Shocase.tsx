@@ -19,7 +19,7 @@ export default function Shocase({ setIsModalOpen }: { setIsModalOpen: (open: boo
     ];
 
     return (
-        <section id="shocase" className="py-32" style={{ background: '#000000' }}>
+        <section id="shocase" className="py-32 overflow-hidden" style={{ background: '#000000' }}>
             <div className="container mx-auto px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                     {/* First tile - regular div on the left */}

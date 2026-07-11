@@ -18,13 +18,13 @@ This plan outlines the design and structural enhancements to be made to the Beni
 ### 1. Typography Integration & Theme Mapping
 We will integrate **Cabinet Grotesk** via Fontshare and clean up the typography system to ensure the hierarchy matches the design doc.
 
-#### [MODIFY] [globals.css](file:///c:/Users/ohioa/Projects/React/benin-tech-hangout/app/globals.css)
+#### [MODIFY] [globals.css](file:///c:/Users/ohioa/Projects/React/benin-tech-fest/app/globals.css)
 - Import Cabinet Grotesk using the Fontshare API:
   `@import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&display=swap');`
 - Re-configure `@theme` to define `--font-cabinet-grotesk` and map `--font-righteous` (or a new `--font-cabinet`) to it so that it immediately propagates to all main visual headings without breaking the existing codebase.
 - Re-configure `--font-oswald` as the primary sub-typeface.
 
-#### [MODIFY] [layout.tsx](file:///c:/Users/ohioa/Projects/React/benin-tech-hangout/app/layout.tsx)
+#### [MODIFY] [layout.tsx](file:///c:/Users/ohioa/Projects/React/benin-tech-fest/app/layout.tsx)
 - Keep google font `Oswald` and base readability font `Andika`. Remove/clean up unused google fonts if they aren't needed to optimize performance.
 
 ---
@@ -32,7 +32,7 @@ We will integrate **Cabinet Grotesk** via Fontshare and clean up the typography 
 ### 2. Color Scheme Shift (Vibrant Blue Dominance & Recessive Red)
 We will align the color vars so that `#007cf9` is the hero and `#ff0000` is kept for key visual points.
 
-#### [MODIFY] [globals.css](file:///c:/Users/ohioa/Projects/React/benin-tech-hangout/app/globals.css)
+#### [MODIFY] [globals.css](file:///c:/Users/ohioa/Projects/React/benin-tech-fest/app/globals.css)
 - Modify `:root` variables:
   ```css
   --brand-blue: #007cf9;
@@ -47,12 +47,12 @@ We will align the color vars so that `#007cf9` is the hero and `#ff0000` is kept
 ### 3. Messaging: Convergence, Scale, & The Edo Startup Week Merger
 Since Benin Tech Fest has merged with Edo Startup Week and expanded to 4 days, the hero text and layout need to convey this scale.
 
-#### [MODIFY] [Hero.tsx](file:///c:/Users/ohioa/Projects/React/benin-tech-hangout/app/components/Hero.tsx)
+#### [MODIFY] [Hero.tsx](file:///c:/Users/ohioa/Projects/React/benin-tech-fest/app/components/Hero.tsx)
 - Add a prominent, sleek, glowing badge/banner: **"Benin Tech Fest × Edo Startup Week • Merged & Expanded to 4 Days"**.
 - Update dates and details to reflect the 4-day span clearly.
 - Adjust button colors and highlight elements to use `#007cf9` as the primary action and keep the red/white accents for the secondary elements.
 
-#### [MODIFY] [About.tsx](file:///c:/Users/ohioa/Projects/React/benin-tech-hangout/app/components/About.tsx)
+#### [MODIFY] [About.tsx](file:///c:/Users/ohioa/Projects/React/benin-tech-fest/app/components/About.tsx)
 - Update text content to explicitly mention:
   > *"Benin Tech Fest 2.0 has merged with Edo Startup Week, expanding into a massive 4-day convergence. It is Edo State's premier tech festival..."*
 - Add an overlapping geometric pattern to the side image to symbolize locking/uniting the ecosystem.
@@ -62,11 +62,11 @@ Since Benin Tech Fest has merged with Edo Startup Week and expanded to 4 days, t
 ### 4. Overlapping Layouts, Geometric Grids, and Craftsmanship Accents
 To make the designs feel "alive, active, and moving forward" while reflecting Benin's craftsmanship:
 
-#### [MODIFY] [Global3DBackground.tsx](file:///c:/Users/ohioa/Projects/React/benin-tech-hangout/app/components/Global3DBackground.tsx)
+#### [MODIFY] [Global3DBackground.tsx](file:///c:/Users/ohioa/Projects/React/benin-tech-fest/app/components/Global3DBackground.tsx)
 - Add an elegant, subtle background SVG grid or CSS pattern of sharp, interlocking lines representing "modern digital architecture" combined with structural guild grid lines.
 - Shift the color weights of the ambient blur blobs to favor blue.
 
-#### [MODIFY] [WhyAttend.tsx](file:///c:/Users/ohioa/Projects/React/benin-tech-hangout/app/components/WhyAttend.tsx) & [WhatToExpect.tsx](file:///c:/Users/ohioa/Projects/React/benin-tech-hangout/app/components/WhatToExpect.tsx)
+#### [MODIFY] [WhyAttend.tsx](file:///c:/Users/ohioa/Projects/React/benin-tech-fest/app/components/WhyAttend.tsx) & [WhatToExpect.tsx](file:///c:/Users/ohioa/Projects/React/benin-tech-fest/app/components/WhatToExpect.tsx)
 - Implement sharp geometric borders, grid layouts, and overlapping containers.
 - Introduce micro-animations (e.g., hover effects, scanlines, glowing outlines) on feature cards.
 
@@ -75,7 +75,7 @@ To make the designs feel "alive, active, and moving forward" while reflecting Be
 ### 5. Readability & Polish
 Prioritize absolute readability for key details (dates, tickets, schedules).
 
-#### [MODIFY] [Agenda.tsx](file:///c:/Users/ohioa/Projects/React/benin-tech-hangout/app/components/Agenda.tsx) & [Tickets.tsx](file:///c:/Users/ohioa/Projects/React/benin-tech-hangout/app/components/Tickets.tsx)
+#### [MODIFY] [Agenda.tsx](file:///c:/Users/ohioa/Projects/React/benin-tech-fest/app/components/Agenda.tsx) & [Tickets.tsx](file:///c:/Users/ohioa/Projects/React/benin-tech-fest/app/components/Tickets.tsx)
 - Make sure ticket details, dates, prices, and locations use a high-contrast sans font (e.g. Oswald / Andika) on crisp, dark backgrounds rather than low-contrast overlays.
 
 ---

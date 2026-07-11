@@ -31,7 +31,7 @@ export default function WhatToExpect({ isModalOpen, setIsModalOpen }: { isModalO
     ];
 
     return (
-        <section id="what-to-expect" className="py-32 bg-white">
+        <section id="what-to-expect" className="py-32 bg-white overflow-hidden">
             <div className="container mx-auto px-6">
                 <div className="text-center mb-10">
                     <h2 className="text-5xl md:text-6xl font-black text-biro-blue-dark font-cabinet-grotesk mb-4">What To Expect <span className="text-biro-blue underline">At BTF 2.0</span></h2>

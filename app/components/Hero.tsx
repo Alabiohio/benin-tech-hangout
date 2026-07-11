@@ -5,6 +5,7 @@ import { HiCalendar } from "react-icons/hi";
 import { motion, useInView } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import Button from "./Button";
+import heroSm from "@/assets/images/heroSm.png";
 
 function VersionCounter() {
     const [displayValue, setDisplayValue] = useState(1.0);
@@ -55,6 +56,13 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                         alt="Benin Tech Fest Hero"
                         fill
                         className="object-cover"
+                        priority
+                    />
+                    <Image
+                        src={heroSm}
+                        alt="Benin Tech Fest Hero"
+                        fill
+                        className="md:hidden object-cover"
                         priority
                     />
                     <div className="absolute inset-0 bg-black/75"></div>

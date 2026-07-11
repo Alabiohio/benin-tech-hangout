@@ -99,7 +99,7 @@ export default function Countdown() {
                     transition={{ duration: 0.8 }}
                 >
                     <h2 className="text-3xl md:text-4xl font-black font-righteous text-white mb-4" data-aos="zoom-out" data-aos-duration="1000" data-aos-once="true">
-                        Countdown to <span className="text-highlight-yellow">BTF 2.0</span>
+                        Countdown to <span className="text-biro-blue">BTF 2.0</span>
                     </h2>
                     <div className="w-24 h-1 bg-highlight-yellow mx-auto rounded-full shadow-[0_0_10px_rgba(0,124,249,0.5)]"></div>
                 </motion.div>
@@ -110,7 +110,7 @@ export default function Countdown() {
                             <div className="flex flex-col items-center min-w-[70px] md:min-w-[140px]">
                                 <span 
                                     className="text-5xl md:text-[6rem] font-black font-righteous text-white tabular-nums tracking-tighter leading-none" 
-                                    style={{ textShadow: '0 0 15px rgba(0,124,249,0.6), 0 0 30px rgba(0,124,249,0.3)' }}
+                                    style={{ textShadow: '0 0 15px rgba(255,0,0,0.6), 0 0 30px rgba(255,0,0,0.3)' }}
                                 >
                                     <Counter value={value} isInView={shouldAnimate} />
                                 </span>

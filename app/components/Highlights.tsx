@@ -83,7 +83,7 @@ export default function Highlights() {
 
             <style jsx>{`
                 .animate-highlights-marquee {
-                    animation: highlights-marquee 20s linear infinite;
+                    animation: highlights-marquee 13s linear infinite;
                     will-change: transform;
                 }
 

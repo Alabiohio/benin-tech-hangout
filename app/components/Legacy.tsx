@@ -85,7 +85,7 @@ export default function Legacy() {
                                 <p className="text-white/40 font-black uppercase tracking-widest text-[10px]">Attendees</p>
                             </div>
                             <div>
-                                <p className="text-4xl md:text-5xl font-black font-righteous text-blue-400 mb-1">30+</p>
+                                <p className="text-4xl md:text-5xl font-black font-righteous text-blue-400 mb-1">100+</p>
                                 <p className="text-white/40 font-black uppercase tracking-widest text-[10px]">Communities</p>
                             </div>
                         </div>

@@ -18,7 +18,7 @@ const slideRight: Variants = {
 export default function About() {
     const stats = [
         { value: "3000+", label: "ATTENDEES", aosAnime: "fade-down-right" },
-        { value: "30+", label: "COMMUNITIES", aosAnime: "fade-down-left" },
+        { value: "100+", label: "COMMUNITIES", aosAnime: "fade-down-left" },
         { value: "20+", label: "SPEAKERS", aosAnime: "fade-up-right" },
         { value: "3 Day", label: "CONVERGENCE", aosAnime: "fade-up-left" }
     ];
@@ -157,7 +157,7 @@ export default function About() {
                                 </div>
                                 <div className="flex flex-col justify-center">
                                     <span className="text-[10px] font-bold text-blue-300/80 uppercase tracking-widest leading-none mb-1">Time</span>
-                                    <span className="text-sm font-medium text-slate-300 tracking-wide leading-none">9:00 PM Daily</span>
+                                    <span className="text-sm font-medium text-slate-300 tracking-wide leading-none">9:00 AM Daily</span>
                                 </div>
                             </div>
                         </div>

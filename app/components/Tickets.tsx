@@ -7,11 +7,12 @@ import Button from './Button';
 
 const ticketTiers = [
     {
-        name: "General Pass",
-        price: "FREE",
+        name: "Regular Pass",
+        price: "₦3,500",
         features: [
             "Access to all general sessions",
             "Networking sessions",
+            "Exhibitions booths",
             "Limited Seats",
         ],
         aosAnime: "fade-right",
@@ -19,31 +20,44 @@ const ticketTiers = [
     },
     {
         name: "Builders Pass",
-        price: "₦15,000",
+        price: "₦10,000",
         features: [
-            "Priority seating",
-            "VIP access",
-            "Exclusive sessions and Recordings",
-            "Branded Merch",
+            "Access to Talent Matching Company ",
             "Official Benin Tech Fest participation E-certificate",
-            "Refreshments",
-            "Exclusive networking opportunities"
+            "Exclusive networking opportunities",
+            "Tech Skill Scholarship",
+            "Refreshments",           
         ],
         aosAnime: "fade-up",
         highlight: true,
     },
     {
-        name: "VIP Pass",
-        price: "₦25,000",
+        name: "Founders Pass",
+        price: "₦20,000",
         features: [
             "Showcase your startup",
             "Connect with investors",
-            "Access high-level sessions",
+            "Access high-level sessions & Recordings",
+            "Access to Regular Startup Mentorship Programs",
+            "Access to the Founders Network in Benin",
+            "Branded merch",
+            "Refreshments"
+        ],
+        aosAnime: "fade-up",
+        highlight: false,
+    },
+    {
+        name: "VIP Pass",
+        price: "₦25,000",
+        features: [
+            "Priority Seat",
+            "Connect with investors",
             "Access to Speakers",
             "Access high-level sessions & Recordings",
             "Branded Merch",
-            "Investors and Mentorship Program",
-            "Refreshment with your PA"
+            "Refreshments",
+            "Priority Media Coverage",
+            "With one free regular ticket"
         ],
         aosAnime: "fade-up",
         highlight: false,
@@ -86,7 +100,7 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
     }, []);
 
     return (
-        <section id="tickets" className="py-24 bg-[#f8fbff] relative overflow-hidden isolate z-20">
+        <section id="tickets" className="py-24 bg-[#f8fbff] relative overflow-hidden isolate z-20 items-center justify-center">
             <div
                 className="absolute grayscale inset-0 -z-10"
                 style={{
@@ -96,18 +110,18 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
                     opacity: 0.12,
                 }}
             />
-            <div className="container mx-auto px-6 relative z-10">
+            <div className="container mx-auto px-12 sm:px-6 md:px-12 lg:px-1 relative z-10">
                 <div className="text-center mb-16">
                     <h2 className="text-5xl md:text-7xl font-black font-cabinet-grotesk text-biro-blue-dark mb-6">
                         Get Your <span className="text-biro-blue">Event Pass</span>
                     </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mx-auto" style={{ perspective: '1200px' }}>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3" style={{ perspective: '1200px' }}>
                     {ticketTiers.map((tier, idx) => {
-                        const tiltRotation = isLargeScreen ? (idx === 0 ? '5deg' : idx === 3 ? '-5deg' : '0deg') : '0deg';
-                        const sideShift = idx === 0 ? '-0.45rem' : idx === 3 ? '0.45rem' : '0';
-                        const cardStyle = idx === 0 || idx === 3
+                        const tiltRotation = isLargeScreen ? (idx === 0 ? '0deg' : idx === 4 ? '0deg' : '0deg') : '0deg';
+                        const sideShift = idx === 0 ? '-0.45rem' : idx === 4 ? '0.45rem' : '0';
+                        const cardStyle = idx === 0 || idx === 4
                             ? {
                                 transform: `perspective(1200px) rotateY(${tiltRotation}) translateX(${sideShift})`,
                                 transformOrigin: 'center center',
@@ -128,11 +142,18 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
                             >
                                 <div
                                     style={cardStyle}
-                                    className={`relative h-full p-10 md:px-2 rounded-3xl border overflow-hidden flex flex-col group hover:-translate-y-2 transition-all duration-700 ease-out ${tier.highlight ? 'border-biro-blue bg-biro-blue-dark' : 'border-blue-100 bg-white'}`}
+                                    className={`relative h-full p-10 md:px-6 rounded-3xl border overflow-hidden flex flex-col group hover:-translate-y-2 transition-all duration-700 ease-out ${tier.highlight ? 'border-biro-blue bg-biro-blue-dark' : 'border-blue-100 bg-white'}`}
                                 >
+                                    {tier.highlight && (
+                                        <div className="absolute top-4 right-4 z-20">
+                                            <div className="inline-flex items-center bg-biro-blue text-white text-[11px] font-bold px-4 py-1.5 rounded-full uppercase tracking-[0.15em] border border-biro-blue/80">
+                                                Most Popular
+                                            </div>
+                                        </div>
+                                    )}
                                     <div className="relative z-10 flex flex-col h-full">
                                         <div className="mb-1">
-                                            <span className={`text-4xl md:text-5xl font-cabinet-grotesk font-black flex items-start ${tier.highlight ? 'text-white' : 'text-biro-blue'}`}>
+                                            <span className={`text-4xl md:text-5xl font-oswald font-black flex items-start ${tier.highlight ? 'text-white' : 'text-biro-blue'}`}>
                                                 {tier.price.startsWith('₦') ? (
                                                     <>
                                                         <sup className="text-xl md:text-2xl mt-2 mr-1">₦</sup>
