@@ -110,7 +110,7 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
                     opacity: 0.12,
                 }}
             />
-            <div className="container mx-auto px-12 sm:px-6 md:px-12 lg:px-1 relative z-10">
+            <div className="container mx-auto px-8 sm:px-6 md:px-12 lg:px-1 relative z-10">
                 <div className="text-center mb-16">
                     <h2 className="text-5xl md:text-7xl font-black font-cabinet-grotesk text-biro-blue-dark mb-6">
                         Get Your <span className="text-biro-blue">Event Pass</span>
