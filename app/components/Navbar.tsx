@@ -33,9 +33,9 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                     <Image
                         src="/logo/logo.png"
                         alt="Logo"
-                        width={100}
-                        height={100}
-                        className="w-auto h-16 md:h-16 object-contain"
+                        width={80}
+                        height={80}
+                        className="w-auto h-8 md:h-16 object-contain"
                         priority
                     />
                 </Link>
