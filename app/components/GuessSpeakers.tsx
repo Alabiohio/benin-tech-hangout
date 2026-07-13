@@ -103,7 +103,7 @@ const GuessSpeakers = () => {
                         <p className="text-gray-500 font-medium">Share your expertise with 3,000+ attendees.</p>
                     </div>
 
-                    <Button href="/speaker-registration" variant="biro">
+                    <Button href="/speaker-registration" variant="biro" className='!px-2'>
                         Apply to Speak / Suggest a Speaker
                     </Button>
                 </div>
