@@ -33,9 +33,9 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                     <Image
                         src="/logo/logo.png"
                         alt="Logo"
-                        width={80}
-                        height={80}
-                        className="w-auto h-8 md:h-16 object-contain"
+                        width={100}
+                        height={100}
+                        className="w-auto h-12 md:h-16 object-contain"
                         priority
                     />
                 </Link>
@@ -70,12 +70,14 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                 </nav>
 
                 <div className="flex items-center gap-4">
-                    <Button
-                        onClick={onRegisterClick}
-                        className="!hidden lg:!flex px-6 py-2.5 text-lg font-black uppercase tracking-widest text-[11px] transition-all duration-300 active:scale-95 bg-biro-blue text-white hover:bg-biro-blue-dark"
-                    >
-                        Register Now
-                    </Button>
+                    <div className="hidden lg:block">
+                        <Button
+                            onClick={onRegisterClick}
+                            className="px-6 py-2.5 text-lg font-black uppercase tracking-widest text-[11px] transition-all duration-300 active:scale-95 bg-biro-blue text-white hover:bg-biro-blue-dark"
+                        >
+                            Register Now
+                        </Button>
+                    </div>
 
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
