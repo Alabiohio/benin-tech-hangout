@@ -26,7 +26,7 @@ export default function Home() {
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
 
     return (
-        <div className="flex min-h-screen flex-col font-sans relative">
+        <div className="flex min-h-screen flex-col font-sans relative overflow-x-hidden">
             <BackgroundWrapper />
             <Navbar onRegisterClick={() => setIsRegisterModalOpen(true)} />
             <main className="flex-grow relative z-10">
