@@ -73,7 +73,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                 <div className="relative w-full min-h-[60vh] flex flex-col lg:flex-row lg:items-center lg:justify-between">
                     <div className="w-full max-w-5xl flex flex-col items-start text-left pt-4 md:pt-8">
 
-                        <h1 className="text-[4.3rem] xs:text-[4.2rem] md:text-[4rem] lg:text-[3rem] xl:text-[5rem] font-black font-cabinet-grotesk tracking-tight leading-[0.88] text-white mb-6">
+                        <h1 className="text-[4rem] xs:text-[4.2rem] md:text-[4rem] lg:text-[3rem] xl:text-[5rem] font-black font-cabinet-grotesk tracking-tight leading-[0.88] text-white mb-6">
                             <motion.span
                                 className="block whitespace-nowrap"
                                 initial={{ opacity: 0, x: -50 }}
@@ -99,7 +99,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.8, delay: 0.3 }}
-                                className="text-[#f3f7ff]/70 text-md font-black font-cabinet-grotesk uppercase"
+                                className="text-[#f3f7ff]/70 text-sm font-bold font-cabinet-grotesk uppercase"
                             >
                                 Building a Collaborative Ecosystem
                             </motion.span>
@@ -119,7 +119,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                             viewport={{ once: true }}
                             transition={{ duration: 0.8, delay: 0.6 }}
                         >
-                            <Button onClick={onRegisterClick} variant="primary" className="group">
+                            <Button onClick={onRegisterClick} variant="primary" className="group !py-2">
                                 <span className="flex items-center justify-center gap-3">
                                     Register Now
                                     <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -128,7 +128,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                                 </span>
                             </Button>
 
-                            <Button href="/sponsor" variant="outline" className="!border-white !text-white hover:!bg-white hover:!text-slate-900 group !shadow-[10px_10px_0px_rgba(255,255,255,0.15)] hover:!shadow-[4px_4px_0px_rgba(255,255,255,0.15)]">
+                            <Button href="/sponsor" variant="outline" className="!border-white !py-2 !text-white hover:!bg-white hover:!text-slate-900 group !shadow-[10px_10px_0px_rgba(255,255,255,0.15)] hover:!shadow-[4px_4px_0px_rgba(255,255,255,0.15)]">
                                 <span className="flex items-center justify-center gap-3">
                                     Become a Sponsor
                                     <svg className="w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"></path></svg>

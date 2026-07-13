@@ -2,7 +2,6 @@
 
 import { motion, Variants } from 'framer-motion';
 import { FaUsers, FaLaptopCode, FaBriefcase, FaHandshake, FaBook, FaTrophy } from 'react-icons/fa';
-import Button from './Button';
 
 const fade: Variants = {
     hidden: { opacity: 0, y: 50, scale: 0.95 },
@@ -32,9 +31,22 @@ export default function WhatToExpect({ isModalOpen, setIsModalOpen }: { isModalO
 
     return (
         <section id="what-to-expect" className="py-32 bg-white overflow-hidden">
-            <div className="container mx-auto px-6">
+            <div className="container mx-auto px-4">
                 <div className="text-center mb-10">
-                    <h2 className="text-5xl md:text-6xl font-black text-biro-blue-dark font-cabinet-grotesk mb-4">What To Expect <span className="text-biro-blue underline">At BTF 2.0</span></h2>
+                    <h2 className="text-4xl md:text-6xl font-black text-biro-blue-dark font-cabinet-grotesk mb-4">
+                        What To Expect{' '}
+                        <span className="text-biro-blue relative inline-block">
+                            At BTF 2.0
+                            <motion.span 
+                                className="absolute left-0 -bottom-1 md:-bottom-2 w-full h-1 md:h-[6px] bg-biro-blue rounded-full"
+                                initial={{ scaleX: 0 }}
+                                whileInView={{ scaleX: 1 }}
+                                viewport={{ once: true, margin: "-50px" }}
+                                transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+                                style={{ transformOrigin: "left" }}
+                            />
+                        </span>
+                    </h2>
                      </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0 sm:gap-6 md:gap-0 lg:auto-rows-fr">

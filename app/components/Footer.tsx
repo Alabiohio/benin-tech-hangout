@@ -1,12 +1,24 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer({ }: { onRegisterClick?: () => void }) {
     return (
         <footer id="contact" className="relative z-10 bg-white text-white py-4 overflow-hidden">
-            <div className="container mx-auto relative z-10">
-                <div className="flex flex-col lg:flex-row justify-between items-center gap-8 mb-8">
+            {/* Grayscale Background Logo */}
+            <div className="absolute inset-0 z-0 flex items-center justify-center opacity-[0.06] pointer-events-none">
+                <Image
+                    src="/logo/logo.png"
+                    alt=""
+                    width={800}
+                    height={800}
+                    className="w-[150%] md:w-[600px] lg:w-[800px] h-auto object-contain grayscale"
+                />
+            </div>
+            
+            <div className="container mx-auto relative z-10 px-4 md:px-8 pt-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-12 text-center sm:text-left">
                     {/* Brand & Socials */}
-                    <div className="flex flex-col items-center lg:items-start gap-4">
+                    <div className="flex flex-col items-center sm:items-start gap-4">
                         <div className="flex items-center gap-4">
                             <div className="flex gap-2">
                                 {[
@@ -24,31 +36,36 @@ export default function Footer({ }: { onRegisterClick?: () => void }) {
                     </div>
 
                     {/* Quick Links */}
-                    <nav className="flex flex-wrap justify-center gap-x-8 gap-y-2">
-                        {['Volunteer', 'Exhibitor', 'Tickets', 'Sponsor'].map((item) => (
-                            <Link key={item} href={`/${item.toLowerCase()}`} className="text-[12px] font-black uppercase tracking-widest text-slate-400 hover:text-highlight-yellow transition-colors">
-                                {item}
-                            </Link>
-                        ))}
-                    </nav>
+                    <div className="flex flex-col items-center sm:items-start gap-4">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Quick Links</span>
+                        <nav className="grid grid-cols-2 gap-x-8 gap-y-3">
+                            {['Volunteer', 'Exhibitor', 'Tickets', 'Sponsor'].map((item) => (
+                                <Link key={item} href={`/${item.toLowerCase()}`} className="text-[12px] font-black uppercase tracking-widest text-slate-400 hover:text-highlight-yellow transition-colors text-left">
+                                    {item}
+                                </Link>
+                            ))}
+                        </nav>
+                    </div>
 
                     {/* Contact & CTA */}
-                    <div className="flex items-center gap-2">
-                        <span className="sm:block text-[12px] font-black uppercase tracking-widest text-slate-400">benintechfest@gmail.com</span>
-                        <div className="md:block w-px h-3 bg-slate-800"></div>
-                        <span className="sm:block text-[12px] font-black uppercase tracking-widest text-slate-400">+234 701 234 1561</span>
+                    <div className="flex flex-col items-center sm:items-start lg:items-end gap-4 text-center lg:text-right">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Contact Us</span>
+                        <div className="flex flex-col gap-2">
+                            <a href="mailto:benintechfest@gmail.com" className="text-[12px] font-black uppercase tracking-widest text-slate-400 hover:text-highlight-yellow transition-colors">benintechfest@gmail.com</a>
+                            <a href="tel:+2347012341561" className="text-[12px] font-black uppercase tracking-widest text-slate-400 hover:text-highlight-yellow transition-colors">+234 701 234 1561</a>
+                        </div>
                     </div>
                 </div>
 
                 {/* Bottom Row */}
-                <div className="flex flex-col gap-3 md:flex-row md:justify-between md:items-center md:gap-4 py-4 md:py-0">
+                <div className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center py-6 md:py-4 mt-4 md:mt-0">
                     <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6 text-center md:text-left">
-                        <p className="text-slate-400 text-[11px] md:text-[12px] font-black uppercase tracking-widest">&copy; {new Date().getFullYear()} Benin Tech Fest</p>
+                        <p className="text-slate-500 text-[11px] md:text-[12px] font-black uppercase tracking-widest">&copy; {new Date().getFullYear()} Benin Tech Fest</p>
                     </div>
                     
                     <div className="flex items-center gap-2 justify-center md:justify-end">
                         <span className="text-[11px] md:text-[12px] font-black uppercase tracking-widest text-slate-600">By</span>
-                        <span className="text-[12px] md:text-[14px] font-black tracking-widest text-slate-400 hover:text-highlight-yellow transition-colors border-b border-slate-800">PROLINE GROUP</span>
+                        <span className="text-[12px] md:text-[13px] font-black tracking-widest text-slate-400 hover:text-highlight-yellow transition-colors border-b border-slate-800">PROLINE GROUP</span>
                     </div>
                 </div>
             </div>

@@ -92,34 +92,14 @@ export default function VolunteerPage() {
                             </motion.div>
 
                             <motion.div
-                                className="rounded-[1.5rem] overflow-hidden border border-blue-100 flex flex-col lg:flex-row"
+                                className="overflow-hidden flex flex-col lg:flex-row"
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.8, delay: 0.2 }}
                             >
-                                <div className="lg:w-2/5 p-10 md:p-14 bg-[#0f2f6b] flex flex-col justify-center text-white relative overflow-hidden">
-                                    <h2 className="text-2xl md:text-3xl font-black mb-4 relative z-10 font-cabinet-grotesk text-white">Why Volunteer?</h2>
-                                    <p className="text-blue-100/80 mb-4 leading-relaxed relative z-10">
-                                        Volunteering at BTH is more than just lending a hand. It&apos;s an opportunity to grow, network, and lead the change.
-                                    </p>
 
-                                    <div className="space-y-5 relative z-10">
-                                        {[
-                                            "Exclusive backstage access",
-                                            "Network with industry leaders",
-                                        ].map((item, i) => (
-                                            <div key={i} className="flex items-start gap-4 group">
-                                                <div className="w-8 h-8 shrink-0 rounded-lg bg-white/10 border border-white/15 text-white flex items-center justify-center font-bold transition-all">
-                                                    ✓
-                                                </div>
-                                                <span className="text-base font-semibold text-blue-50 leading-tight pt-1">{item}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="lg:w-3/5 p-10 md:p-16 bg-white">
-                                    <h3 className="text-3xl font-black text-biro-blue-dark mb-8 font-cabinet-grotesk">Application Form</h3>
+                                <div className="w-full max-w-4xl mx-auto py-10 px-2 md:py-16 md:px-24">
+                                    <h3 className="text-3xl font-black text-biro-blue-dark mb-8 font-cabinet-grotesk">Volunteer Application Form</h3>
                                     
                                     {cooldown > 0 ? (
                                         <div className="space-y-6">
@@ -220,7 +200,7 @@ export default function VolunteerPage() {
                                             />
                                         </div>
 
-                                        <Button type="submit" disabled={loading} variant="biro" className="w-full py-5 text-xl rounded-2xl border-0">
+                                        <Button type="submit" disabled={loading} variant="biro" className="w-full !py-3 text-xl rounded-2xl border-0">
                                             {loading ? 'Submitting...' : 'Send Application'}
                                         </Button>
                                     </form>

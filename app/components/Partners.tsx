@@ -17,14 +17,14 @@ const partners = [
 export default function Partners() {
     return (
         <section id="sponsors" className="py-32 pt-22 bg-[#f8f9fa] overflow-hidden">
-            <div className="container mx-auto px-2 md:px-4 mb-8">
-              <h2 className="text-5xl lg:text-6xl font-black font-cabinet-grotesk text-biro-blue-dark mb-6">
+            <div className="container mx-auto px-1 md:px-4 mb-8">
+              <h2 className="text-4xl lg:text-6xl font-black font-cabinet-grotesk text-biro-blue-dark mb-6 text-center">
                         Meet Our <span className="text-biro-blue">Partners</span>
               </h2>
             </div>
 
             <div className="container mx-auto">
-                <div className="relative py-6 bg-[#F8F9FA] shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
+                <div className="relative py-2 bg-[#F8F9FA] shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden">
                     <div className="animate-marquee">
                         <div className="marquee-content flex items-center gap-4">
                             {[...Array(2)].map((_, setIndex) => (
@@ -57,7 +57,7 @@ export default function Partners() {
 
                 .marquee-content {
                     display: inline-flex;
-                    animation: marquee 20s linear infinite;
+                    animation: marquee 8s linear infinite;
                     will-change: transform;
                 }
 

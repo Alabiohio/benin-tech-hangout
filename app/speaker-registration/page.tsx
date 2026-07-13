@@ -95,43 +95,13 @@ export default function SpeakerRegistrationPage() {
                             </motion.div>
 
                             <motion.div
-                                className="rounded-[1.5rem] overflow-hidden border border-blue-100 flex flex-col lg:flex-row"
+                                className="overflow-hidden flex flex-col item-center justify-center lg:flex-row"
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.8, delay: 0.2 }}
                             >
-                                <div className="lg:w-2/5 p-10 md:p-14 bg-[#0f2f6b] flex flex-col justify-center text-white relative overflow-hidden">
-                                    <h2 className="text-2xl md:text-3xl font-black mb-6 relative z-10 font-cabinet-grotesk text-white">Why Speak at BTH?</h2>
-                                    <p className="text-blue-100/80 mb-10 leading-relaxed text-lg relative z-10">
-                                        Sharing your story at Benin Tech Fest connects you with thousands of developers, founders, and investors.
-                                    </p>
 
-                                    <div className="space-y-5 relative z-10">
-                                        {[
-                                            "Influence the next generation of builders",
-                                            "Network with international tech leaders",
-                                            "Maximum visibility across ecosystem channels",
-                                            "Exclusive speaker lounge & VIP access",
-                                            "Professional photography & recordings"
-                                        ].map((item, i) => (
-                                            <div key={i} className="flex items-start gap-4 group">
-                                                <div className="w-8 h-8 shrink-0 rounded-lg bg-white/10 border border-white/15 text-white flex items-center justify-center font-bold transition-all">
-                                                    ✓
-                                                </div>
-                                                <span className="text-base font-semibold text-blue-50 leading-tight pt-1">{item}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-
-                                    <div className="mt-12 p-6 rounded-2xl bg-white/10 border border-white/10 relative z-10">
-                                        <p className="text-sm text-[#fecaca] font-black uppercase tracking-widest mb-2">Selection Process</p>
-                                        <p className="text-xs text-white/70 leading-relaxed font-bold">
-                                            Our editorial team reviews all suggestions and applications. Selected speakers will be contacted via email.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="lg:w-3/5 p-10 md:p-16 bg-white">
+                                <div className="w-full max-w-4xl mx-auto py-10 px-2 md:py-16 md:px-24">
                                     <h3 className="text-3xl font-black text-biro-blue-dark mb-8 font-cabinet-grotesk">Speaker Nomination</h3>
                                     
                                     {cooldown > 0 ? (
@@ -270,7 +240,7 @@ export default function SpeakerRegistrationPage() {
                                             />
                                         </div>
 
-                                        <Button type="submit" disabled={loading} variant="biro" className="w-full py-5 text-xl rounded-2xl border-0">
+                                        <Button type="submit" disabled={loading} variant="biro" className="w-full !py-2 text-xl rounded-2xl border-0">
                                             {loading ? 'Submitting...' : 'Submit Nomination'}
                                         </Button>
                                     </form>

@@ -94,32 +94,9 @@ export default function ExhibitorPage() {
                                 </p>
                             </motion.div>
 
-                            <div className="bg-white rounded-[1.5rem] overflow-hidden border border-blue-100 flex flex-col lg:flex-row-reverse">
-                                <div className="lg:w-2/5 p-10 md:p-14 bg-[#0f2f6b] flex flex-col justify-center text-white relative">
-                                    <h2 className="text-2xl md:text-3xl font-black mb-6 text-white font-cabinet-grotesk">Exhibitor Perks</h2>
-                                    <p className="text-blue-100/80 mb-8 leading-relaxed font-medium">
-                                        Position your brand at the epicenter of innovation. Connect with your target audience where they learn, network, and grow.
-                                    </p>
+                            <div className="overflow-hidden flex flex-col lg:flex-row-reverse">
 
-                                    <div className="space-y-6">
-                                        {[
-                                            "Premium Booth Location",
-                                            "Brand exposure across event media",
-                                            "Direct customer acquisition",
-                                            "Demo products to live audience",
-                                            "Exclusive networking with VIPs"
-                                        ].map((item, i) => (
-                                            <div key={i} className="flex items-center gap-4 group">
-                                                <div className="w-10 h-10 shrink-0 rounded-xl bg-white/10 border border-white/15 text-white flex items-center justify-center font-bold transition-all">
-                                                    ✓
-                                                </div>
-                                                <span className="text-lg font-semibold text-blue-50">{item}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="lg:w-3/5 p-10 md:p-14 bg-white">
+                                <div className="w-full max-w-4xl mx-auto py-10 px-2 md:py-16 md:px-24">
                                     <h3 className="text-2xl font-black text-biro-blue-dark mb-6 font-cabinet-grotesk">Exhibitor Registration</h3>
                                     
                                     {cooldown > 0 ? (
@@ -228,7 +205,7 @@ export default function ExhibitorPage() {
                                             />
                                         </div>
 
-                                        <Button type="submit" disabled={loading} variant="biro" className="w-full py-4 text-lg rounded-xl border-0">
+                                        <Button type="submit" disabled={loading} variant="biro" className="w-full !py-3 text-md border-0">
                                             {loading ? 'Submitting...' : 'Request Exhibitor Package'}
                                         </Button>
                                     </form>

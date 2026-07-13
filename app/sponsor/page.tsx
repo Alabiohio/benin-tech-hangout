@@ -91,19 +91,13 @@ export default function SponsorPage() {
                             </motion.div>
 
                             <motion.div 
-                                className="rounded-[1.5rem] overflow-hidden border border-blue-100 flex flex-col lg:flex-row"
+                                className="overflow-hidden flex flex-col lg:flex-row"
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.8, delay: 0.2 }}
                             >
-                                <div className="lg:w-2/5 p-10 md:p-14 bg-[#0f2f6b] flex flex-col justify-center text-white relative overflow-hidden">
-                                    <h2 className="text-3xl md:text-4xl font-black mb-6 relative z-10 font-cabinet-grotesk text-white">Why Sponsor BTH?</h2>
-                                    <p className="text-blue-100/80 mb-10 leading-relaxed text-lg relative z-10">
-                                        Join a network of visionary brands supporting thousands of developers, founders, and tech enthusiasts.
-                                    </p>
-                                </div>
 
-                                <div className="lg:w-3/5 p-10 md:p-16 bg-white">
+                                <div className="w-full max-w-4xl mx-auto p-10 px-2 md:py-16 md:px-24 bg-white">
                                     <h3 className="text-3xl font-black text-biro-blue-dark mb-8 font-cabinet-grotesk">Sponsorship Inquiry</h3>
                                     
                                     {cooldown > 0 ? (
@@ -205,7 +199,7 @@ export default function SponsorPage() {
                                             />
                                         </div>
 
-                                        <Button type="submit" disabled={loading} variant="biro" className="w-full py-5 text-xl rounded-2xl border-0">
+                                        <Button type="submit" disabled={loading} variant="biro" className="w-full !py-3 border-0">
                                             {loading ? 'Sending...' : 'Send Partnership Inquiry'}
                                         </Button>
                                     </form>

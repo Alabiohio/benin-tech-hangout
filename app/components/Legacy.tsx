@@ -52,8 +52,8 @@ export default function Legacy() {
             <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03] pointer-events-none mix-blend-overlay"></div>
 
             {/* Background Glows */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] -z-10 translate-x-1/2 -translate-y-1/2"></div>
-            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] -z-10 -translate-x-1/2 translate-y-1/2"></div>
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(37,99,235,0.1)_0%,transparent_70%)] -z-10 translate-x-1/2 -translate-y-1/2"></div>
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(79,70,229,0.1)_0%,transparent_70%)] -z-10 -translate-x-1/2 translate-y-1/2"></div>
 
             <div className="container mx-auto px-6 relative z-10">
                 <div className="flex flex-col lg:flex-row items-center gap-16 mb-24">

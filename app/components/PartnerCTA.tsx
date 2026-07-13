@@ -20,7 +20,7 @@ export default function PartnerCTA() {
                         <div className="relative w-full max-w-sm">
                             <div className="absolute inset-0 rounded-xl"></div>
                             <div className="relative rounded-xl p-5 space-y-5 shadow-2xl transform hover:scale-105 transition-transform duration-500">
-                                <Button href="/sponsor" variant="biro" className="px-3 py-4 hover:scale-105 transition-all font-bold text-lg w-full text-center">Become a Sponsor →</Button>
+                                <Button href="/sponsor" variant="biro" className="px-2 py-4 hover:scale-105 transition-all font-bold text-lg w-full text-center">Become a Sponsor</Button>
                             </div>
                         </div>
                     </div>

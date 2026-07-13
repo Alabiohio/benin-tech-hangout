@@ -32,9 +32,9 @@ export default function Shocase({ setIsModalOpen }: { setIsModalOpen: (open: boo
                         className="p-1 max-w-md mx-auto w-full"
                     >
                         <h3 className="font-black font-cabinet-grotesk leading-none text-white mb-4 flex flex-col gap-1" data-aos="fade-down" data-aos-duration="1000" data-aos-easing="ease-out-cubic" data-aos-once="true">
-                            <span className="text-6xl md:text-[5.2rem]">SHOWCASE.</span>
-                            <span className="text-6xl md:text-[5.2rem]">PITCH.</span>
-                            <span className="text-6xl md:text-[5.2rem]" style={{ color: '#007cf9' }}>GROW.</span>
+                            <span className="text-[2.8rem] md:text-[5.2rem]">SHOWCASE.</span>
+                            <span className="text-5xl md:text-[5.2rem]">PITCH.</span>
+                            <span className="text-5xl md:text-[5.2rem]" style={{ color: '#007cf9' }}>GROW.</span>
                         </h3>
                         <p className="text-lg text-white/90 mb-6">
                             {tiles[0].desc}

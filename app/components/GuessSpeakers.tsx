@@ -18,7 +18,7 @@ const GuessSpeakers = () => {
     return (
         <section className="py-32 px-2 bg-white relative overflow-hidden">
             {/* Ambient Background Effects */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(37,99,235,0.05)_0%,transparent_70%)] pointer-events-none" />
 
             <div className="container mx-auto px-2 relative z-10">
                 {/* Heading */}
@@ -28,7 +28,7 @@ const GuessSpeakers = () => {
                     data-aos-duration="2000"
                     data-aos-once="true"
                 >
-                    <h2 className="text-5xl md:text-7xl font-black font-cabinet-grotesk text-biro-blue-dark mb-6">
+                    <h2 className="text-4xl md:text-7xl font-black font-cabinet-grotesk text-biro-blue-dark mb-6">
                         Guess the{' '} <br />
                         <span className="text-biro-blue">
                             Speakers
@@ -99,12 +99,17 @@ const GuessSpeakers = () => {
                     data-aos-once="true"
                 >
                     <div>
-                        <h3 className="text-2xl font-black font-cabinet-grotesk text-gray-900 mb-2">Want to Speak at BTF 2.0?</h3>
-                        <p className="text-gray-500 font-medium">Share your expertise with 3,000+ attendees.</p>
+                        <h3 className="text-2xl font-black font-cabinet-grotesk text-gray-900 mb-2">Join Our Speaker Lineup</h3>
+                        <p className="text-gray-500 font-medium">Apply to speak or suggest an expert for BTF 2.0.</p>
                     </div>
 
-                    <Button href="/speaker-registration" variant="biro" className='!px-2'>
-                        Apply to Speak / Suggest a Speaker
+                    <Button href="/speaker-registration" variant="biro" className="!px-8 group">
+                        <span className="flex items-center justify-center gap-3">
+                            Go to Registration
+                            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </span>
                     </Button>
                 </div>
             </div>

@@ -12,8 +12,8 @@ export default function ExhibitionCTA() {
             </div>
 
             {/* Glowing network accent lines */}
-            <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#007cf9] rounded-full blur-3xl opacity-10 -translate-y-1/2"></div>
-            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#007cf9] rounded-full blur-3xl opacity-10 translate-y-1/2"></div>
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-[radial-gradient(circle,rgba(0,124,249,0.1)_0%,transparent_70%)] -translate-y-1/2"></div>
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[radial-gradient(circle,rgba(0,124,249,0.1)_0%,transparent_70%)] translate-y-1/2"></div>
 
             <div className="container mx-auto px-6 relative -mt-52 md:-mt-60">
                 <div className="mx-auto max-w-4xl" data-aos="flip-left" data-aos-duration="3000" data-aos-easing="ease-out-cubic" data-aos-once="true">
