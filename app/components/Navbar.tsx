@@ -26,7 +26,7 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
 
     return (
         <header
-            className="fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-in-out bg-white/99 py-4"
+            className="fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ease-in-out bg-white/99 py-4 overflow-x-clip"
         >
             <div className="container mx-auto px-4 md:px-8 h-12 md:h-14 flex items-center justify-between relative z-[101]">
                 <Link href="/" className="flex items-center gap-2 group relative" onClick={handleLinkClick}>
@@ -81,7 +81,7 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
 
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        className="lg:hidden p-2 cursor-pointer transition-colors duration-300 text-biro-blue"
+                        className="lg:hidden shrink-0 p-2 cursor-pointer transition-colors duration-300 text-biro-blue"
                         aria-label="Toggle Menu"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300">
