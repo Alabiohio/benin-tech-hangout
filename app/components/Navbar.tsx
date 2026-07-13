@@ -69,7 +69,7 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                     <Link href="#contact" className="hover:text-biro-blue-dark transition-colors">Contact</Link>
                 </nav>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 min-w-0">
                     <div className="hidden lg:block">
                         <button
                             onClick={onRegisterClick}
@@ -81,7 +81,7 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
 
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        className="lg:hidden shrink-0 p-2 -mr-2 cursor-pointer transition-colors duration-300 text-biro-blue"
+                        className="lg:hidden shrink-0 p-2 cursor-pointer transition-colors duration-300 text-biro-blue"
                         aria-label="Toggle Menu"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="transition-transform duration-300">
