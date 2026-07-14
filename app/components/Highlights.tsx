@@ -3,7 +3,7 @@
 import { motion, Variants } from "framer-motion";
 
 const highlightItems = [
-    { label: "2000+ Attendees", title: "2000+ Attendees" },
+    { label: "3000+ Attendees", title: "3000+ Attendees" },
     { label: "100+ Communities", title: "100+ Communities" },
     { label: "Tech Exhibition", title: "Tech Exhibition" },
     { label: "Networking", title: "Networking" },

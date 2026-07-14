@@ -47,7 +47,7 @@ function VersionCounter() {
 
 export default function Hero({ onRegisterClick }: { onRegisterClick: () => void }) {
     return (
-        <section className="relative md:px-24 text-white min-h-[750px] lg:min-h-screen pt-48 sm:pt-44 lg:pt-32 z-20 overflow-hidden">
+        <section className="relative md:px-24 text-white max-h-[650px] lg:min-h-screen pt-48 sm:pt-44 lg:pt-32 z-20 overflow-hidden">
             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
 
                 <div className="absolute inset-0 z-0 user-select-none pointer-events-none">
@@ -55,18 +55,11 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                         src="/images/hero.jpg"
                         alt="Benin Tech Fest Hero"
                         fill
-                        sizes="100vw"
-                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 100vw"
+                        className="object-contain md:object-cover object-center"
                         priority
                     />
-                    <Image
-                        src={heroSm}
-                        alt="Benin Tech Fest Hero"
-                        fill
-                        sizes="(max-width: 767px) 100vw"
-                        className="md:hidden object-cover"
-                        priority
-                    />
+                   
                     <div className="absolute inset-0 bg-black/75"></div>
                 </div>
             </div>

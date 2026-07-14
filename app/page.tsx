@@ -19,7 +19,6 @@ import Footer from './components/Footer';
 import RegisterModal from './components/RegisterModal';
 import BackgroundWrapper from "./components/BackgroundWrapper";
 import GuessSpeakers from "./components/GuessSpeakers";
-import Link from 'next/link';
 import PartnerCTA from "./components/PartnerCTA";
 import ExhibitionCTA from "./components/ExhibitionCTA";
 
