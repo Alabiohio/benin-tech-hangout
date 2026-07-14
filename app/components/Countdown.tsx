@@ -104,12 +104,12 @@ export default function Countdown() {
                     <div className="w-24 h-1 bg-highlight-yellow mx-auto rounded-full shadow-[0_0_10px_rgba(0,124,249,0.5)]"></div>
                 </motion.div>
 
-                <div className="flex items-center justify-center gap-2 md:gap-6" data-aos="zoom-out">
+                <div className="flex items-center justify-center gap-1 md:gap-6" data-aos="zoom-out">
                     {values.map((value, index) => (
                         <div key={timeLabels[index]} className="flex items-center">
                             <div className="flex flex-col items-center min-w-[70px] md:min-w-[140px]">
                                 <span 
-                                    className="text-5xl md:text-[6rem] font-black font-cabinet-grotesk text-white tabular-nums tracking-tighter leading-none" 
+                                    className="text-4xl md:text-[6rem] font-black font-cabinet-grotesk text-white tabular-nums tracking-tighter leading-none" 
                                     style={{ textShadow: '0 0 15px rgba(255,0,0,0.6), 0 0 30px rgba(255,0,0,0.3)' }}
                                 >
                                     <Counter value={value} isInView={shouldAnimate} />
@@ -117,7 +117,7 @@ export default function Countdown() {
                                 <span className="mt-4 text-blue-400 text-[10px] md:text-sm font-black uppercase tracking-[0.3em]">{timeLabels[index]}</span>
                             </div>
                             {index < values.length - 1 && (
-                                <div className="text-blue-500/80 text-3xl md:text-5xl font-black mx-1 md:mx-2 -mt-8 animate-pulse">:</div>
+                                <div className="text-blue-500/80 text-3xl md:text-5xl font-black md:mx-2 -mt-8 animate-pulse">:</div>
                             )}
                         </div>
                     ))}

@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Tickets from '../components/Tickets';
 import BackgroundWrapper from '../components/BackgroundWrapper';
+import RegisterModal from '../components/RegisterModal';
 
 export default function TicketsPage() {
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
@@ -17,6 +18,10 @@ export default function TicketsPage() {
                 <Tickets onRegisterClick={() => setIsRegisterModalOpen(true)} />
             </main>
             <Footer onRegisterClick={() => setIsRegisterModalOpen(true)} />
+            <RegisterModal 
+                isOpen={isRegisterModalOpen} 
+                onClose={() => setIsRegisterModalOpen(false)} 
+            />
         </div>
     );
 }
