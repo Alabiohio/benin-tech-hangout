@@ -60,7 +60,7 @@ export default function StartupPitch() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, delay: 0.4 }}
                     >
-                        <Button href="/exhibitor" className="group relative w-full lg:w-auto border-white px-4 py-4 bg-white text-slate-950 font-black text-lg uppercase tracking-widest overflow-hidden transition-all hover:bg-highlight-yellow hover:text-white active:scale-95 shadow-2xl">
+                        <Button href="/exhibitor" className="group relative w-full lg:w-auto border-white px-3 !py-3 bg-white text-slate-950 font-black text-lg uppercase tracking-widest overflow-hidden transition-all hover:bg-highlight-yellow hover:text-white active:scale-95 shadow-2xl">
                             <span className="relative z-10 flex text-2xl text-black hover:text-white items-center justify-center gap-3">
                                 Apply to Pitch
                                 <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

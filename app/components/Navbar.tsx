@@ -53,7 +53,7 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                 <nav className="hidden lg:flex items-center gap-8 text-[13px] font-black uppercase tracking-widest transition-colors duration-300 text-slate-800">
                     <Link href="/#about" className="hover:text-biro-blue-dark transition-colors">About</Link>
                     <Link href="/#highlights" className="hover:text-biro-blue-dark transition-colors">Highlights</Link>
-                    <Link href="/#tickets" className="hover:text-biro-blue-dark transition-colors">Tickets</Link>
+                    <Link href="/tickets" className="hover:text-biro-blue-dark transition-colors">Tickets</Link>
                     <div className="relative">
                         <button
                             onClick={(e) => {
@@ -113,7 +113,7 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                     <div className="flex flex-col p-8 gap-5 overflow-y-auto">
                         <Link href="/#about" className={`text-2xl font-black font-cabinet-grotesk uppercase tracking-tight text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '100ms' }} onClick={handleLinkClick}>About</Link>
                         <Link href="/#highlights" className={`text-2xl font-black font-cabinet-grotesk uppercase tracking-tight text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '150ms' }} onClick={handleLinkClick}>Highlights</Link>
-                        <Link href="/#tickets" className={`text-2xl font-black font-cabinet-grotesk uppercase tracking-tight text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '200ms' }} onClick={handleLinkClick}>Tickets</Link>
+                        <Link href="/tickets" className={`text-2xl font-black font-cabinet-grotesk uppercase tracking-tight text-slate-800 hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '200ms' }} onClick={handleLinkClick}>Tickets</Link>
                         <div className={`flex flex-col gap-3 transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '250ms' }}>
                             <button onClick={() => setIsMobileRegisterOpen(!isMobileRegisterOpen)} className="flex items-center justify-between text-2xl font-black font-cabinet-grotesk uppercase tracking-tight text-slate-800 hover:text-biro-blue text-left w-full">
                                 Register

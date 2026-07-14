@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Benin Tech Fest 2.0 | Building a Collaborative Ecosystem",
     description: "The flagship tech event of Benin City returns. Join the most impactful gathering of tech talents, founders, and organizations.",
-    url: "https://benintechFestpreview.vercel.app",
+    url: "https://benintechfest.com.ng",
     siteName: "Benin Tech Fest",
     images: [
       {

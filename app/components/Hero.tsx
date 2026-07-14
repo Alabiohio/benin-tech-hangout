@@ -55,6 +55,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                         src="/images/hero.jpg"
                         alt="Benin Tech Fest Hero"
                         fill
+                        sizes="100vw"
                         className="object-cover"
                         priority
                     />
@@ -62,6 +63,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                         src={heroSm}
                         alt="Benin Tech Fest Hero"
                         fill
+                        sizes="100vw"
                         className="md:hidden object-cover"
                         priority
                     />

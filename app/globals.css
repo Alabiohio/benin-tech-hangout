@@ -84,6 +84,10 @@ body {
   background: rgba(15, 47, 107, 0.82);
 }
 
+p {
+  font-family: var(--font-cabinet-grotesk);
+}
+
 
 
 [class*="drop-shadow"] {

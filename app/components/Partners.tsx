@@ -33,12 +33,13 @@ export default function Partners() {
                                         <div key={idx} className="flex items-center transition-all duration-300 bg-[#F8F9FA]">
                                             <div className="relative w-30 h-20 md:w-48 md:h-24 flex items-center justify-center p-1 mx-2 transition-shadow hover:-translate-y-1">
                                                 <div className="relative w-full h-full">
-                                                    <Image
-                                                        src={partner.logo}
-                                                        alt={partner.name}
-                                                        fill
-                                                        className="object-contain"
-                                                    />
+                                                        <Image
+                                                            src={partner.logo}
+                                                            alt={partner.name}
+                                                            fill
+                                                            sizes="(max-width: 768px) 120px, 192px"
+                                                            className="object-contain"
+                                                        />
                                                 </div>
                                             </div>
                                         </div>

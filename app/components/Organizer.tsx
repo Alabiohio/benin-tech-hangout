@@ -19,6 +19,7 @@ export default function Organizer() {
                                 src="/Proline logo_035534.png"
                                 alt="Proline Groups Logo"
                                 fill
+                                sizes="192px"
                                 className="object-contain"
                             />
                         </div>

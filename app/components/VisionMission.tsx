@@ -11,6 +11,7 @@ export default function VisionMission() {
                     src="/mission1.jpg"
                     alt="Community Mission"
                     fill
+                    sizes="100vw"
                     className="object-cover opacity-15"
                     loading="lazy"
                 />

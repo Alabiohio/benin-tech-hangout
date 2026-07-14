@@ -176,6 +176,7 @@ export default function Legacy() {
                                         src={speaker.image}
                                         alt={speaker.name}
                                         fill
+                                        sizes="(max-width: 768px) 280px, 350px"
                                         className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-[#020617]/20 to-transparent opacity-90 z-10"></div>
