@@ -5,6 +5,7 @@ import { HiCalendar } from "react-icons/hi";
 import { motion, useInView } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import Button from "./Button";
+import heroSm from "@/assets/images/heroSm.jpeg";
 
 function VersionCounter() {
     const [displayValue, setDisplayValue] = useState(1.0);
@@ -46,9 +47,8 @@ function VersionCounter() {
 
 export default function Hero({ onRegisterClick }: { onRegisterClick: () => void }) {
     return (
-        <section className="relative md:px-24 text-white min-h-[750px] lg:min-h-screen pt-48 sm:pt-44 lg:pt-32 z-20 overflow-hidden">
+        <section className="relative md:px-24 text-white max-h-[750px] lg:min-h-screen pt-38 sm:pt-44 lg:pt-32 z-20 overflow-hidden">
             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-
                 <div className="absolute inset-0 z-0 user-select-none pointer-events-none">
                     <Image
                         src="/images/hero.jpg"
@@ -58,7 +58,14 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                         className="object-cover md:object-cover object-center"
                         priority
                     />
-                   
+                    <Image
+                        src={heroSm}
+                        alt="Benin Tech Fest Hero"
+                        fill
+                        sizes="(max-width: 1200px) 100vw, 100vw"
+                        className="md:hidden object-cover md:object-cover object-center"
+                        priority
+                    />
                     <div className="absolute inset-0 bg-black/75"></div>
                 </div>
             </div>
@@ -88,7 +95,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                             </motion.span>
                         </h1>
                         <div className="flex items-center gap-3 mb-6">
-                            <motion.span 
+                            <motion.span
                                 initial={{ opacity: 0, y: 10 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
@@ -97,7 +104,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                             >
                                 Building a Collaborative Ecosystem
                             </motion.span>
-                            <motion.div 
+                            <motion.div
                                 initial={{ scaleX: 0 }}
                                 whileInView={{ scaleX: 1 }}
                                 viewport={{ once: true }}

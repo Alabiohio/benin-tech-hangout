@@ -87,7 +87,7 @@ const ticketTiers = [
         name: "Investors Pass",
         price: "₦200,000",
         features: [
-            "Everything in Startup Pass + curated meetings with selected startups",
+            "Curated meetings with selected startups",
             "Priority Seat at front",
             "Access to Deal Room",
             "Access to VIP Lounge",

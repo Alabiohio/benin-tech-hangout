@@ -25,7 +25,7 @@ export default function ExhibitionCTA() {
                         <div className="absolute -inset-1 bg-gradient-to-r from-[#007cf9] via-[#007cf9] to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm"></div>
 
                         {/* Main content container */}
-                        <div className="relative rounded-2xl border border-[#007cf9]/30 bg-gradient-to-br from-[#0a0a0a] via-[#0f0f1e] to-[#000000] p-8 md:p-12 backdrop-blur-xl overflow-hidden">
+                        <div className="relative rounded-2xl border border-[#007cf9]/30 bg-gradient-to-br from-[#0a0a0a] via-[#0f0f1e] to-[#000000] py-8 px-2 md:p-12 backdrop-blur-xl overflow-hidden">
                             {/* Geometric corner accent - top right */}
                             <div className="absolute -top-24 -right-24 w-48 h-48 border-2 border-[#007cf9]/20 rounded-full opacity-50"></div>
                             
@@ -43,7 +43,7 @@ export default function ExhibitionCTA() {
                                     <Button 
                                         href="/exhibitor" 
                                         variant="primary" 
-                                        className="px-8 py-3 hover:from-[#0099ff] hover:to-[#00d9ff] text-white font-bold rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(0,124,249,0.3)] hover:shadow-[0_0_30px_rgba(0,124,249,0.5)]"
+                                        className="px-8 !py-2 hover:from-[#0099ff] hover:to-[#00d9ff] text-white font-bold rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(0,124,249,0.3)] hover:shadow-[0_0_30px_rgba(0,124,249,0.5)]"
                                     >
                                         Apply Now
                                     </Button>
