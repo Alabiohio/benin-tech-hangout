@@ -63,7 +63,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                         src={heroSm}
                         alt="Benin Tech Fest Hero"
                         fill
-                        sizes="100vw"
+                        sizes="(max-width: 767px) 100vw"
                         className="md:hidden object-cover"
                         priority
                     />

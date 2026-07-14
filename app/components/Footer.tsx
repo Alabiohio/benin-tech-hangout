@@ -39,8 +39,8 @@ export default function Footer({ }: { onRegisterClick?: () => void }) {
                     <div className="flex flex-col items-center sm:items-start gap-4">
                         <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">Quick Links</span>
                         <nav className="grid grid-cols-2 gap-x-8 gap-y-3">
-                            {['Volunteer', 'Exhibitor', 'Tickets', 'Sponsor'].map((item) => (
-                                <Link key={item} href={`/${item.toLowerCase()}`} className="text-[12px] font-black uppercase tracking-widest text-slate-400 hover:text-highlight-yellow transition-colors text-left">
+                            {['Volunteer', 'Exhibitor', 'Tickets', 'Sponsor', 'Privacy Policy'].map((item) => (
+                                <Link key={item} href={item === 'Privacy Policy' ? '/privacy-policy' : `/${item.toLowerCase()}`} className="text-[12px] font-black uppercase tracking-widest text-slate-400 hover:text-highlight-yellow transition-colors text-left">
                                     {item}
                                 </Link>
                             ))}
