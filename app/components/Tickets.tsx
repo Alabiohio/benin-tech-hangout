@@ -7,13 +7,26 @@ import Button from './Button';
 
 const ticketTiers = [
     {
-        name: "Regular Pass",
-        price: "₦3,500",
+        name: "Community Pass",
+        price: "Free Access",
         features: [
             "Access to all general sessions",
             "Networking sessions",
             "Exhibitions booths",
-            "Limited Seats",
+            "Registration is Compulsory",
+        ],
+        aosAnime: "fade-right",
+        highlight: false,
+    },
+    {
+        name: "Explorer Pass",
+        price: "₦3,500",
+        features: [
+            "Everything in Community Pass + Event badge",
+            "Exhibitions booths",
+            "Priority registration",
+            "Digital certificate of attendance",
+            "Limited seats",
         ],
         aosAnime: "fade-right",
         highlight: false,
@@ -22,11 +35,13 @@ const ticketTiers = [
         name: "Builders Pass",
         price: "₦10,000",
         features: [
+            "Everything in Explorer Pass",
             "Access to Talent Matching Company ",
-            "Official Benin Tech Fest participation E-certificate",
             "Exclusive networking opportunities",
+            "Workshops",
             "Tech Skill Scholarship",
-            "Refreshments",           
+            "Access to Partners Merch",
+            "Refreshments",
         ],
         aosAnime: "fade-up",
         highlight: true,
@@ -35,11 +50,16 @@ const ticketTiers = [
         name: "Founders Pass",
         price: "₦20,000",
         features: [
-            "Showcase your startup",
+            "Everything in Builder Pass + Startup showcase",
+            "Reserved Seat",
             "Connect with investors",
+            "founders roundtable, startup resources",
             "Access high-level sessions & Recordings",
+            "Mentorship Programs",
+            "Access to the Founders Network in Edo State",
             "Access to Regular Startup Mentorship Programs",
             "Access to the Founders Network in Benin",
+            "Event Branded merch",
             "Branded merch",
             "Refreshments"
         ],
@@ -48,16 +68,17 @@ const ticketTiers = [
     },
     {
         name: "VIP Pass",
-        price: "₦25,000",
+        price: "₦50,000",
         features: [
             "Priority Seat",
             "Connect with investors",
-            "Access to Speakers",
-            "Access high-level sessions & Recordings",
+            "Access to speaker meet-and-greet",
+            "Refreshment & Gift Pack",
             "Branded Merch",
-            "Refreshments",
+            "Access to After Party",
             "Priority Media Coverage",
-            "With one free regular ticket"
+            "With one free regular ticket",
+            "business networking",
         ],
         aosAnime: "fade-up",
         highlight: false,
@@ -66,6 +87,7 @@ const ticketTiers = [
         name: "Investors Pass",
         price: "₦200,000",
         features: [
+            "Everything in Startup Pass + curated meetings with selected startups",
             "Priority Seat at front",
             "Access to Deal Room",
             "Access to VIP Lounge",
@@ -110,17 +132,17 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
                     opacity: 0.12,
                 }}
             />
-            <div className="container mx-auto px-4 sm:px-4 md:px-12 lg:px-1 relative z-10">
+            <div className="container mx-auto px-4 sm:px-4 md:px-12 lg:px-26 relative z-10">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-7xl font-black font-cabinet-grotesk text-biro-blue-dark mb-6">
                         Get Your <span className="text-biro-blue">Event Pass</span>
                     </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3" style={{ perspective: '1200px' }}>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2" style={{ perspective: '1200px' }}>
                     {ticketTiers.map((tier, idx) => {
                         const tiltRotation = isLargeScreen ? (idx === 0 ? '0deg' : idx === 4 ? '0deg' : '0deg') : '0deg';
-                        const sideShift = idx === 0 ? '-0.45rem' : idx === 4 ? '0.45rem' : '0';
+                        const sideShift = idx === 0 ? '0rem' : idx === 4 ? '0rem' : '0';
                         const cardStyle = idx === 0 || idx === 4
                             ? {
                                 transform: `perspective(1200px) rotateY(${tiltRotation}) translateX(${sideShift})`,
@@ -149,7 +171,7 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
                                 )}
                                 <div
                                     style={cardStyle}
-                                    className={`relative h-full p-10 md:px-6 rounded-3xl border overflow-hidden flex flex-col group hover:-translate-y-2 transition-all duration-700 ease-out ${tier.highlight ? 'border-biro-blue bg-biro-blue-dark' : 'border-blue-100 bg-white'}`}
+                                    className={`relative h-full py-10 px-6 md:px-6 rounded-3xl border overflow-hidden flex flex-col group hover:-translate-y-2 transition-all duration-700 ease-out ${tier.highlight ? 'border-biro-blue bg-biro-blue-dark' : 'border-blue-100 bg-white'}`}
                                 >
                                     <div className="relative z-10 flex flex-col h-full">
                                         <div className="mb-1">
@@ -168,16 +190,22 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
 
 
                                         <div className="space-y-4 mb-10 flex-grow relative z-10">
-                                            {tier.features.map((feature, fIdx) => (
-                                                <div key={fIdx} className="flex gap-3">
-                                                    <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] mt-0.5 shrink-0 ${tier.highlight ? 'bg-blue-50 text-highlight-yellow border border-blue-100' : 'bg-blue-50/50 text-biro-blue border border-blue-100/50'}`}>
-                                                        ✓
+                                            {tier.features.map((feature, fIdx) => {
+                                                const isIncludes = feature.startsWith('Everything in');
+                                                return (
+                                                    <div
+                                                        key={fIdx}
+                                                        className={`flex gap-3 ${isIncludes ? '-ml-10 md:-ml-6 mr-4 rounded-l-none rounded-r-xl px-3 pl-9 py-3 border-2 border-l-4 font-bold shadow-md' : ''} ${isIncludes ? (tier.highlight ? 'border-white bg-white' : 'border-biro-blue bg-biro-blue text-white') : ''}`}
+                                                    >
+                                                        <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] mt-0.5 shrink-0 ${isIncludes ? (tier.highlight ? 'bg-biro-blue-dark text-white' : 'bg-white text-biro-blue') : (tier.highlight ? 'bg-blue-50 text-highlight-yellow border border-blue-100' : 'bg-blue-50/50 text-biro-blue border border-blue-100/50')}`}>
+                                                            ✓
+                                                        </div>
+                                                        <p className={`text-sm leading-relaxed ${isIncludes ? (tier.highlight ? 'text-biro-blue-dark font-extrabold' : 'text-white font-extrabold') : (tier.highlight ? 'text-white font-bold' : 'text-slate-700 font-bold')}`}>
+                                                            {feature}
+                                                        </p>
                                                     </div>
-                                                    <p className={`text-slate-700 font-bold text-sm leading-relaxed ${tier.highlight ? 'text-white' : 'text-slate-700'}`}>
-                                                        {feature}
-                                                    </p>
-                                                </div>
-                                            ))}
+                                                );
+                                            })}
                                         </div>
 
                                         <Button
