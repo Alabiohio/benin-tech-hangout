@@ -66,7 +66,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                         className="md:hidden object-cover md:object-cover object-center"
                         priority
                     />
-                    <div className="absolute inset-0 bg-black/75"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/84 via-black/79 to-black/75"></div>
                 </div>
             </div>
 

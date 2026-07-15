@@ -57,7 +57,7 @@ const ticketTiers = [
             "Access high-level sessions & Recordings",
             "Mentorship Programs",
             "Access to the Founders Network in Edo State",
-            "Access to Regular Startup Mentorship Programs",
+            "Access to Startup Mentorship Programs",
             "Access to the Founders Network in Benin",
             "Event Branded merch",
             "Branded merch",
