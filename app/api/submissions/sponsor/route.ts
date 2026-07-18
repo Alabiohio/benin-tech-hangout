@@ -1,6 +1,7 @@
 import { Pool } from 'pg';
 import { NextRequest, NextResponse } from 'next/server';
 import { getClientIp, checkRateLimit } from '@/app/lib/rateLimit';
+import { sendFormNotificationEmail } from '@/app/lib/email';
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -63,6 +64,22 @@ export async function POST(request: NextRequest) {
             RETURNING id, created_at;`,
             [company_name, contact_person, email, phone, sponsorship_tier || null, interests || null]
         );
+
+        const tierLabels: Record<string, string> = {
+            bronze: '₦1,000,000 - ₦2,500,000',
+            silver: '₦2,500,000 - ₦5,000,000',
+            gold: '₦5,000,000 - ₦10,000,000+',
+            other: 'Others / Partnership',
+        };
+
+        sendFormNotificationEmail('Sponsorship Inquiry', data, [
+            { label: 'Company Name', value: company_name },
+            { label: 'Contact Person', value: contact_person },
+            { label: 'Email Address', value: email },
+            { label: 'Phone Number', value: phone },
+            { label: 'Sponsorship Tier', value: tierLabels[sponsorship_tier || ''] || sponsorship_tier || 'N/A' },
+            { label: 'Brand Objectives', value: interests || 'N/A' },
+        ]).catch((err) => console.error('Failed to send sponsor email:', err));
 
         return NextResponse.json(
             {

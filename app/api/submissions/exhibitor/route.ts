@@ -1,6 +1,7 @@
 import { Pool } from 'pg';
 import { NextRequest, NextResponse } from 'next/server';
 import { getClientIp, checkRateLimit } from '@/app/lib/rateLimit';
+import { sendFormNotificationEmail } from '@/app/lib/email';
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -65,6 +66,16 @@ export async function POST(request: NextRequest) {
             RETURNING id, created_at;`,
             [name, email, phone, company, website || null, description || null, registration_type || 'exhibitor']
         );
+
+        sendFormNotificationEmail('Exhibitor Registration', data, [
+            { label: 'Company / Brand', value: company },
+            { label: 'Contact Person', value: name },
+            { label: 'Email Address', value: email },
+            { label: 'Phone Number', value: phone },
+            { label: 'Registration Type', value: registration_type || 'exhibitor' },
+            { label: 'Website', value: website || 'N/A' },
+            { label: 'Description', value: description || 'N/A' },
+        ]).catch((err) => console.error('Failed to send exhibitor email:', err));
 
         return NextResponse.json(
             {

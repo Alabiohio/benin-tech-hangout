@@ -1,6 +1,7 @@
 import { Pool } from 'pg';
 import { NextRequest, NextResponse } from 'next/server';
 import { getClientIp, checkRateLimit } from '@/app/lib/rateLimit';
+import { sendFormNotificationEmail } from '@/app/lib/email';
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -63,6 +64,15 @@ export async function POST(request: NextRequest) {
             RETURNING id, created_at;`,
             [name, email, phone, skills || null, availability || null, motivation || null]
         );
+
+        sendFormNotificationEmail('Volunteer Registration', data, [
+            { label: 'Full Name', value: name },
+            { label: 'Email Address', value: email },
+            { label: 'Phone Number', value: phone },
+            { label: 'Preferred Area', value: availability || 'N/A' },
+            { label: 'Relevant Skills', value: skills || 'N/A' },
+            { label: 'Motivation', value: motivation || 'N/A' },
+        ]).catch((err) => console.error('Failed to send volunteer email:', err));
 
         return NextResponse.json(
             {

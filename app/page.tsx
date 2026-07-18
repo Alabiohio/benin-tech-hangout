@@ -13,7 +13,6 @@ import Shocase from "./components/Shocase";
 import Countdown from "./components/Countdown";
 import FAQ from "./components/FAQ";
 import Legacy from "./components/Legacy";
-import Organizer from "./components/Organizer";
 import StartupPitch from "./components/StartupPitch";
 import Footer from './components/Footer';
 import RegisterModal from './components/RegisterModal';
@@ -45,7 +44,6 @@ export default function Home() {
                 <PartnerCTA />
                 <StartupPitch />
                 <FAQ />
-                <Organizer />
             </main>
             <Footer onRegisterClick={() => setIsRegisterModalOpen(true)} />
 

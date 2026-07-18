@@ -1,6 +1,7 @@
 import { Pool } from 'pg';
 import { NextRequest, NextResponse } from 'next/server';
 import { getClientIp, checkRateLimit } from '@/app/lib/rateLimit';
+import { sendFormNotificationEmail } from '@/app/lib/email';
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -73,6 +74,17 @@ export async function POST(request: NextRequest) {
             RETURNING id, created_at;`,
             [application_type, name, email, phone, speaker_name || null, topic, speaker_category || null, why_speak || null]
         );
+
+        sendFormNotificationEmail('Speaker Nomination', data, [
+            { label: 'Application Type', value: application_type === 'self' ? 'Self-application' : 'Speaker suggestion' },
+            { label: 'Submitter Name', value: name },
+            { label: 'Submitter Email', value: email },
+            { label: 'Submitter Phone', value: phone },
+            { label: 'Speaker Name', value: speaker_name || name },
+            { label: 'Topic / Expertise', value: topic },
+            { label: 'Speaker Category', value: speaker_category || 'N/A' },
+            { label: 'Why Speak?', value: why_speak || 'N/A' },
+        ]).catch((err) => console.error('Failed to send speaker email:', err));
 
         return NextResponse.json(
             {

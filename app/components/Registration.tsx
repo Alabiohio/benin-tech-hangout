@@ -1,8 +1,49 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function Registration() {
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        primaryInterest: ''
+    });
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true);
+        setMessage('');
+
+        try {
+            const response = await fetch('/api/submissions/registration', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setMessage('✓ Registration successful! Check your email for confirmation.');
+                setFormData({ name: '', email: '', primaryInterest: '' });
+            } else {
+                setMessage(`✗ Error: ${data.error || 'Failed to submit'}`);
+            }
+        } catch (error) {
+            setMessage('✗ Error submitting registration. Please try again.');
+            console.error('Submission error:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <section id="register" className="py-24 md:py-32 bg-biro-blue-dark relative overflow-hidden">
             {/* Background Effects */}
@@ -45,14 +86,23 @@ export default function Registration() {
 
                     {/* Right Form Panel */}
                     <div className="md:w-[55%] p-10 md:p-14 bg-white">
-                        <form className="space-y-6">
+                        {message && (
+                            <div className={`mb-6 p-5 rounded-2xl border-2 shadow-lg transform transition-all duration-300 bg-gradient-to-r from-blue-50 to-blue-100 border-biro-blue text-biro-blue-dark`}>
+                                <p className="font-semibold leading-snug text-center">{message}</p>
+                            </div>
+                        )}
+                        <form className="space-y-6" onSubmit={handleSubmit}>
                             <div className="grid grid-cols-1 gap-6">
                                 <div>
                                     <label className="block text-[10px] font-black text-gray-400 mb-2 uppercase tracking-[0.2em]">Full Name</label>
                                     <input
                                         type="text"
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleInputChange}
                                         className="w-full px-5 py-4 rounded-xl border border-gray-100 bg-gray-50 focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium"
                                         placeholder="John Doe"
+                                        required
                                     />
                                 </div>
 
@@ -60,26 +110,40 @@ export default function Registration() {
                                     <label className="block text-[10px] font-black text-gray-400 mb-2 uppercase tracking-[0.2em]">Email Address</label>
                                     <input
                                         type="email"
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleInputChange}
                                         className="w-full px-5 py-4 rounded-xl border border-gray-100 bg-gray-50 focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium"
                                         placeholder="john@example.com"
+                                        required
                                     />
                                 </div>
 
                                 <div>
                                     <label className="block text-[10px] font-black text-gray-400 mb-2 uppercase tracking-[0.2em]">Primary Interest</label>
-                                    <select className="w-full px-5 py-4 rounded-xl border border-gray-100 bg-gray-50 focus:bg-white focus:border-biro-blue outline-none transition-all bg-white text-gray-900 font-medium cursor-pointer">
-                                        <option>Select Interest</option>
-                                        <option>Development</option>
-                                        <option>Design</option>
-                                        <option>Entrepreneurship</option>
-                                        <option>Investment</option>
-                                        <option>Sponsorship</option>
+                                    <select
+                                        name="primaryInterest"
+                                        value={formData.primaryInterest}
+                                        onChange={handleInputChange}
+                                        className="w-full px-5 py-4 rounded-xl border border-gray-100 bg-gray-50 focus:bg-white focus:border-biro-blue outline-none transition-all bg-white text-gray-900 font-medium cursor-pointer"
+                                        required
+                                    >
+                                        <option value="">Select Interest</option>
+                                        <option value="Development">Development</option>
+                                        <option value="Design">Design</option>
+                                        <option value="Entrepreneurship">Entrepreneurship</option>
+                                        <option value="Investment">Investment</option>
+                                        <option value="Sponsorship">Sponsorship</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <button className="w-full py-5 bg-biro-blue-dark text-white font-black font-cabinet-grotesk text-lg rounded-xl hover:bg-highlight-yellow hover:text-biro-blue-dark transition-all active:scale-95 shadow-lg shadow-blue-900/10">
-                                COMPLETE REGISTRATION
+                            <button 
+                                type="submit" 
+                                disabled={loading}
+                                className="w-full py-5 bg-biro-blue-dark text-white font-black font-cabinet-grotesk text-lg rounded-xl hover:bg-highlight-yellow hover:text-biro-blue-dark transition-all active:scale-95 shadow-lg shadow-blue-900/10 disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {loading ? 'Submitting...' : 'COMPLETE REGISTRATION'}
                             </button>
 
                             <p className="text-center text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-4">

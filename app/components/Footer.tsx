@@ -62,12 +62,7 @@ export default function Footer({ }: { onRegisterClick?: () => void }) {
                     <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6 text-center md:text-left">
                         <p className="text-slate-500 text-[11px] md:text-[12px] font-black uppercase tracking-widest">&copy; {new Date().getFullYear()} Benin Tech Fest</p>
                     </div>
-                    
-                    <div className="flex items-center gap-2 justify-center md:justify-end">
-                        <span className="text-[11px] md:text-[12px] font-black uppercase tracking-widest text-slate-600">By</span>
-                        <span className="text-[12px] md:text-[13px] font-black tracking-widest text-slate-400 hover:text-highlight-yellow transition-colors border-b border-slate-800">PROLINE GROUP</span>
-                    </div>
-                </div>
+                 </div>
             </div>
         </footer>
     );
