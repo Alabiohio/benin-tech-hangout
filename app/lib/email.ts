@@ -11,7 +11,8 @@ export interface EmailData {
   [key: string]: any;
 }
 
-function escapeHtml(text: string): string {
+function escapeHtml(text: string | number | null | undefined): string {
+  const normalized = text == null ? '' : String(text);
   const map: Record<string, string> = {
     '&': '&amp;',
     '<': '&lt;',
@@ -19,11 +20,11 @@ function escapeHtml(text: string): string {
     '"': '&quot;',
     "'": '&#039;',
   };
-  return text.replace(/[&<>"']/g, (m) => map[m] || m);
+  return normalized.replace(/[&<>"']/g, (m) => map[m] || m);
 }
 
 export function renderPlainTextEmail(title: string, data: EmailData, fields: { label: string; value: string }[]): string {
-  const fieldLines = fields.map((f) => `${f.label}: ${f.value || 'N/A'}`).join('\n');
+  const fieldLines = fields.map((f) => `${f.label}: ${f.value ?? 'N/A'}`).join('\n');
   return [
     `Benin Tech Fest 2.0 — ${title} Confirmation`,
     '='.repeat(50),
@@ -52,7 +53,7 @@ export function renderEmailTemplate(title: string, data: EmailData, fields: { la
       (field) => `
         <tr>
           <td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; font-weight: 600; color: #0f172a; width: 40%; font-size: 14px;">${escapeHtml(field.label)}</td>
-          <td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #334155; font-size: 14px;">${escapeHtml(field.value) || '<span style="color: #94a3b8;">N/A</span>'}</td>
+          <td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #334155; font-size: 14px;">${escapeHtml(field.value ?? '') || '<span style="color: #94a3b8;">N/A</span>'}</td>
         </tr>
       `
     )

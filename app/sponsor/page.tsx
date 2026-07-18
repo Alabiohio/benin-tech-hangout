@@ -16,7 +16,6 @@ export default function SponsorPage() {
         contact_person: '',
         email: '',
         phone: '',
-        sponsorship_tier: '',
         interests: ''
     });
 
@@ -47,7 +46,6 @@ export default function SponsorPage() {
                     contact_person: '',
                     email: '',
                     phone: '',
-                    sponsorship_tier: '',
                     interests: ''
                 });
             } else {
@@ -168,22 +166,6 @@ export default function SponsorPage() {
                                                     required 
                                                 />
                                             </div>
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Estimated Budget</label>
-                                            <select 
-                                                name="sponsorship_tier"
-                                                value={formData.sponsorship_tier}
-                                                onChange={handleInputChange}
-                                                className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium appearance-none cursor-pointer"
-                                            >
-                                                <option value="">Select a range</option>
-                                                <option value="bronze">₦1,000,000 - ₦2,500,000</option>
-                                                <option value="silver">₦2,500,000 - ₦5,000,000</option>
-                                                <option value="gold">₦5,000,000 - ₦10,000,000+</option>
-                                                <option value="other">Others / Partnership</option>
-                                            </select>
                                         </div>
 
                                         <div className="space-y-2">
