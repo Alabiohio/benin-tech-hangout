@@ -20,6 +20,7 @@ import BackgroundWrapper from "./components/BackgroundWrapper";
 import GuessSpeakers from "./components/GuessSpeakers";
 import PartnerCTA from "./components/PartnerCTA";
 import ExhibitionCTA from "./components/ExhibitionCTA";
+import WhatsAppFloat from "./components/WhatsAppFloat";
 
 export default function Home() {
     const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
@@ -51,6 +52,8 @@ export default function Home() {
                 isOpen={isRegisterModalOpen} 
                 onClose={() => setIsRegisterModalOpen(false)} 
             />
+
+            <WhatsAppFloat />
         </div>
     );
 }
