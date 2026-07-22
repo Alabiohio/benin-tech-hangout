@@ -60,7 +60,7 @@ export default function WhatsAppFloat() {
                         <WhatsAppIcon className="w-7 h-7 flex-shrink-0 relative z-10 drop-shadow" />
 
                         <span className="relative z-10 flex flex-col leading-tight">
-                            <span className="text-[10px] font-bold uppercase tracking-widest opacity-80">Stay in the loop</span>
+                            <span className="text-[10px] font-bold uppercase tracking-widest opacity-80">Stay updated</span>
                             <span className="text-sm font-black uppercase tracking-wide font-oswald whitespace-nowrap">
                                 Join our Channel
                             </span>
