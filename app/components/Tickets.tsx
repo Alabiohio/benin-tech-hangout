@@ -207,13 +207,23 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
                                             })}
                                         </div>
 
-                                        <Button
-                                            onClick={onRegisterClick}
-                                            variant={tier.highlight ? 'primary' : 'outline'}
-                                            className="w-full relative z-10 hover:!text-white hover:!border-white !px-4 !py-3 text-sm whitespace-nowrap"
-                                        >
-                                            Get Your Pass
-                                        </Button>
+                                        {idx === 0 ? (
+                                            <Button
+                                                href="/free-pass"
+                                                variant={tier.highlight ? 'primary' : 'outline'}
+                                                className="w-full relative z-10 hover:!text-white hover:!border-white !px-4 !py-3 text-sm whitespace-nowrap"
+                                            >
+                                                Get Your Pass
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                onClick={onRegisterClick}
+                                                variant={tier.highlight ? 'primary' : 'outline'}
+                                                className="w-full relative z-10 hover:!text-white hover:!border-white !px-4 !py-3 text-sm whitespace-nowrap"
+                                            >
+                                                Get Your Pass
+                                            </Button>
+                                        )}
                                     </div>
                                 </div>
                             </div>
