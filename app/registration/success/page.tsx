@@ -2,9 +2,9 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
-import Navbar from "../../../components/Navbar";
-import Footer from "../../../components/Footer";
-import BackgroundWrapper from "../../../components/BackgroundWrapper";
+import Navbar from "../../components/Navbar";
+import Footer from "../../components/Footer";
+import BackgroundWrapper from "../../components/BackgroundWrapper";
 import { motion } from "framer-motion";
 
 function SuccessContent() {
