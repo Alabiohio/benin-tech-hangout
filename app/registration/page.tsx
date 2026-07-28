@@ -9,7 +9,9 @@ import { motion } from "framer-motion";
 import Button from "../components/Button";
 import { ticketTiersMap as ticketTiers } from '../data/tickets';
 
-export default function RegistrationPage() {
+import { Suspense } from 'react';
+
+function RegistrationContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const tierParam = searchParams.get('tier') || 'community';
@@ -296,5 +298,13 @@ export default function RegistrationPage() {
             </main>
             <Footer />
         </div>
+    );
+}
+
+export default function RegistrationPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen flex items-center justify-center bg-[#f8fbff] text-biro-blue font-bold">Loading...</div>}>
+            <RegistrationContent />
+        </Suspense>
     );
 }
