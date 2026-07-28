@@ -150,6 +150,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                                     const offsetX = (2 - idx) * 6;
                                     const offsetY = idx * 6;
                                     const rotate = (idx - 1) * -2;
+                                    const bgColors = ['bg-brand-brown', 'bg-biro-blue', 'bg-brand-red'];
 
                                     return (
                                         <div
@@ -158,7 +159,7 @@ export default function Hero({ onRegisterClick }: { onRegisterClick: () => void 
                                                 zIndex: 10 + idx,
                                                 transform: `translate(${offsetX}px, ${offsetY}px) rotate(${rotate}deg)`,
                                             }}
-                                            className={`absolute left-0 top-0 w-full flex items-center gap-5 px-6 py-4 rounded-2xl bg-brand-red text-white shadow-xl transition-transform ${idx === 2 ? 'hover:-translate-y-2 cursor-pointer' : ''}`}>
+                                            className={`absolute left-0 top-0 w-full flex items-center gap-5 px-6 py-4 rounded-2xl ${bgColors[idx]} text-white shadow-xl transition-transform ${idx === 2 ? 'hover:-translate-y-2 cursor-pointer' : ''}`}>
                                             <div className="flex items-center justify-center w-14 h-14 rounded-full bg-black/10">
                                                 <HiCalendar className="w-7 h-7" />
                                             </div>

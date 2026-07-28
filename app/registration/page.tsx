@@ -8,6 +8,7 @@ import BackgroundWrapper from "../components/BackgroundWrapper";
 import { motion } from "framer-motion";
 import Button from "../components/Button";
 import { ticketTiersMap as ticketTiers } from '../data/tickets';
+import { IoIosArrowForward } from 'react-icons/io';
 
 import { Suspense } from 'react';
 
@@ -102,7 +103,7 @@ function RegistrationContent() {
                             </motion.div>
 
                             <div className="w-full mx-auto">
-                                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                                <form onSubmit={handleNext} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                                     <motion.div
                                         className="bg-white rounded-3xl p-8 border border-blue-100 shadow-sm lg:col-span-7 xl:col-span-8"
                                         initial={{ opacity: 0, x: -20 }}
@@ -129,7 +130,7 @@ function RegistrationContent() {
                                                 <p className="text-red-700 text-sm font-medium">{error}</p>
                                             </div>
                                         )}
-                                        <form className="space-y-5" onSubmit={handleNext}>
+                                        <div className="space-y-5">
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                 <div>
                                                     <label htmlFor="firstName" className="block text-sm font-bold text-slate-700 mb-2">
@@ -230,7 +231,7 @@ function RegistrationContent() {
 
                                             <div>
                                                 <label htmlFor="community" className="block text-sm font-bold text-slate-700 mb-2">
-                                                    Community / Tech Group <span className="text-slate-400 font-normal normal-case">(optional)</span>
+                                                    Community <span className="text-slate-400 font-normal normal-case">(optional)</span>
                                                 </label>
                                                 <input
                                                     type="text"
@@ -243,13 +244,19 @@ function RegistrationContent() {
                                                 />
                                             </div>
 
-                                            <Button type="submit" variant="biro" className="w-full !py-3 border-0 flex items-center justify-center gap-2">
-                                                Next — Review Your Details
-                                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                                                </svg>
-                                            </Button>
-                                        </form>
+                                            <div className="pt-4 hidden lg:block">
+                                                <Button type="submit" variant="biro" className="w-full !py-2 border-0 group !font-cabinet-grotesk text-lg shadow-lg shadow-biro-blue/20">
+                                                    <div className="flex items-center justify-center gap-2">
+                                                        <span className="font-black">Next</span>
+                                                        <IoIosArrowForward 
+                                                            className="w-6 h-6 transition-transform group-hover:translate-x-1" 
+                                                            stroke="currentColor" 
+                                                            strokeWidth={40}
+                                                        />
+                                                    </div>
+                                                </Button>
+                                            </div>
+                                        </div>
                                     </motion.div>
 
                                     <motion.div
@@ -289,8 +296,20 @@ function RegistrationContent() {
                                                 );
                                             })}
                                         </div>
+                                        <div className="mt-8 pt-6 border-t border-blue-100">
+                                            <Button type="submit" variant="biro" className="w-full !py-2 border-0 group !font-cabinet-grotesk text-lg shadow-lg shadow-biro-blue/20">
+                                                <div className="flex items-center justify-center gap-2">
+                                                    <span className="font-black">Next</span>
+                                                    <IoIosArrowForward 
+                                                        className="w-6 h-6 transition-transform group-hover:translate-x-1" 
+                                                        stroke="currentColor" 
+                                                        strokeWidth={40}
+                                                    />
+                                                </div>
+                                            </Button>
+                                        </div>
                                     </motion.div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

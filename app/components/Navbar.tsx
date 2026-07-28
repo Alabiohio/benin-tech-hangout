@@ -45,7 +45,7 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                         alt="Logo"
                         width={240}
                         height={240}
-                        className="w-auto h-18 md:h-16 object-contain"
+                        className="w-auto h-14 md:h-16 object-contain"
                         priority
                     />
                 </Link>
