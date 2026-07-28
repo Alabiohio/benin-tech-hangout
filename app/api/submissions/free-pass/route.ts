@@ -25,13 +25,17 @@ export async function POST(request: NextRequest) {
         const data = await request.json();
         
         const {
-            name,
+            firstName,
+            lastName,
             email,
-            phone
+            phone,
+            country,
+            nationality,
+            community
         } = data;
 
         // Validate required fields
-        if (!name || !email) {
+        if (!firstName || !lastName || !email || !country || !nationality) {
             return NextResponse.json(
                 { error: 'Missing required fields' },
                 { status: 400 }
@@ -42,9 +46,13 @@ export async function POST(request: NextRequest) {
         await client.query(`
             CREATE TABLE IF NOT EXISTS free_pass_registrations (
                 id SERIAL PRIMARY KEY,
-                name VARCHAR(255) NOT NULL,
+                first_name VARCHAR(255) NOT NULL,
+                last_name VARCHAR(255) NOT NULL,
                 email VARCHAR(255) NOT NULL UNIQUE,
                 phone VARCHAR(20),
+                country VARCHAR(255) NOT NULL,
+                nationality VARCHAR(255) NOT NULL,
+                community VARCHAR(255),
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
         `);
@@ -52,17 +60,22 @@ export async function POST(request: NextRequest) {
         // Insert the submission
         const result = await client.query(
             `INSERT INTO free_pass_registrations 
-            (name, email, phone)
+            (first_name, last_name, email, phone, country, nationality, community)
             VALUES 
-            ($1, $2, $3)
+            ($1, $2, $3, $4, $5, $6, $7)
             RETURNING id, created_at;`,
-            [name, email || null, phone || null]
+            [firstName, lastName, email, phone || null, country, nationality, community || null]
         );
 
+        const fullName = `${firstName} ${lastName}`;
+
         sendFormNotificationEmail('Community Pass Registration', data, [
-            { label: 'Full Name', value: name },
+            { label: 'Full Name', value: fullName },
             { label: 'Email Address', value: email },
             { label: 'Phone Number', value: phone || 'Not provided' },
+            { label: 'Country', value: country },
+            { label: 'Nationality', value: nationality },
+            { label: 'Community', value: community || 'Not provided' },
         ]).catch((err) => console.error('Failed to send community pass email:', err));
 
         return NextResponse.json(

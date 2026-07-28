@@ -8,14 +8,19 @@ import Footer from '../components/Footer';
 export default function FreePassPage() {
     const router = useRouter();
     const [formData, setFormData] = useState({
-        name: '',
+        firstName: '',
+        lastName: '',
         email: '',
         phone: '',
+        country: '',
+        nationality: '',
+        community: '',
     });
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
     const [isDuplicate, setIsDuplicate] = useState(false);
+    const [submittedEmail, setSubmittedEmail] = useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -32,14 +37,32 @@ export default function FreePassPage() {
         setError('');
 
         // Validate required fields
-        if (!formData.name.trim()) {
-            setError('Name is required');
+        if (!formData.firstName.trim()) {
+            setError('First name is required');
+            setIsLoading(false);
+            return;
+        }
+
+        if (!formData.lastName.trim()) {
+            setError('Last name is required');
             setIsLoading(false);
             return;
         }
 
         if (!formData.email.trim()) {
             setError('Email is required');
+            setIsLoading(false);
+            return;
+        }
+
+        if (!formData.country.trim()) {
+            setError('Country of residence is required');
+            setIsLoading(false);
+            return;
+        }
+
+        if (!formData.nationality.trim()) {
+            setError('Nationality is required');
             setIsLoading(false);
             return;
         }
@@ -59,9 +82,13 @@ export default function FreePassPage() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    name: formData.name.trim(),
+                    firstName: formData.firstName.trim(),
+                    lastName: formData.lastName.trim(),
                     email: formData.email.trim(),
-                    phone: formData.phone.trim() || null,
+                    phone: formData.phone.trim(),
+                    country: formData.country.trim(),
+                    nationality: formData.nationality.trim(),
+                    community: formData.community.trim(),
                 }),
             });
 
@@ -79,8 +106,9 @@ export default function FreePassPage() {
                 return;
             }
 
+            setSubmittedEmail(formData.email.trim());
             setSuccess(true);
-            setFormData({ name: '', email: '', phone: '' });
+            setFormData({ firstName: '', lastName: '', email: '', phone: '', country: '', nationality: '', community: '' });
         } catch (err) {
             setError('An error occurred. Please try again.');
             console.error('Registration error:', err);
@@ -192,7 +220,7 @@ export default function FreePassPage() {
                             Thank you for registering for the <strong>Community Pass</strong>!
                         </p>
                         <p className="text-blue-100 text-sm mb-4">
-                            A confirmation email has been sent to <strong>{formData.email}</strong> with your registration details and event information.
+                            A confirmation email has been sent to <strong>{submittedEmail}</strong> with your registration details and event information.
                         </p>
                         <div className="text-left space-y-3 text-sm text-blue-100">
                             <div className="flex gap-3">
@@ -277,20 +305,37 @@ export default function FreePassPage() {
                             </div>
                         )}
 
-                        <div>
-                            <label htmlFor="name" className="block text-sm font-bold text-slate-700 mb-2">
-                                Full Name <span className="text-red-500">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                value={formData.name}
-                                onChange={handleChange}
-                                placeholder="Enter your full name"
-                                className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100 transition-colors"
-                                required
-                            />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label htmlFor="firstName" className="block text-sm font-bold text-slate-700 mb-2">
+                                    First Name <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="firstName"
+                                    name="firstName"
+                                    value={formData.firstName}
+                                    onChange={handleChange}
+                                    placeholder="Enter your first name"
+                                    className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100 transition-colors"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="lastName" className="block text-sm font-bold text-slate-700 mb-2">
+                                    Last Name <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="lastName"
+                                    name="lastName"
+                                    value={formData.lastName}
+                                    onChange={handleChange}
+                                    placeholder="Enter your last name"
+                                    className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100 transition-colors"
+                                    required
+                                />
+                            </div>
                         </div>
 
                         <div>
@@ -309,9 +354,42 @@ export default function FreePassPage() {
                             />
                         </div>
 
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label htmlFor="country" className="block text-sm font-bold text-slate-700 mb-2">
+                                    Country of Residence <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="country"
+                                    name="country"
+                                    value={formData.country}
+                                    onChange={handleChange}
+                                    placeholder="Country of residence"
+                                    className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100 transition-colors"
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="nationality" className="block text-sm font-bold text-slate-700 mb-2">
+                                    Nationality <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="nationality"
+                                    name="nationality"
+                                    value={formData.nationality}
+                                    onChange={handleChange}
+                                    placeholder="Nationality"
+                                    className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100 transition-colors"
+                                    required
+                                />
+                            </div>
+                        </div>
+
                         <div>
                             <label htmlFor="phone" className="block text-sm font-bold text-slate-700 mb-2">
-                                Phone Number <span className="text-slate-500 text-xs">(Optional)</span>
+                                Phone Number <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="tel"
@@ -321,6 +399,7 @@ export default function FreePassPage() {
                                 onChange={handleChange}
                                 placeholder="+234 or any format"
                                 className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100 transition-colors"
+                                required
                             />
                         </div>
 

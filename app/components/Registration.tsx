@@ -85,7 +85,7 @@ export default function Registration() {
                     </div>
 
                     {/* Right Form Panel */}
-                    <div className="md:w-[55%] p-10 md:p-14 bg-white">
+                    <div className="p-10 md:p-14 bg-white">
                         {message && (
                             <div className={`mb-6 p-5 rounded-2xl border-2 shadow-lg transform transition-all duration-300 ${message.startsWith('✓') ? 'bg-gradient-to-r from-green-50 to-green-100 border-green-500 text-green-800' : 'bg-gradient-to-r from-red-50 to-red-100 border-red-500 text-red-800'}`}>
                                 <p className="font-semibold leading-snug text-center">{message}</p>
