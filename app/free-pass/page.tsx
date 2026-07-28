@@ -179,7 +179,15 @@ export default function FreePassPage() {
                         <button
                             onClick={() => {
                                 setIsDuplicate(false);
-                                setFormData({ name: '', email: '', phone: '' });
+                                setFormData({
+                                    firstName: '',
+                                    lastName: '',
+                                    email: '',
+                                    phone: '',
+                                    country: '',
+                                    nationality: '',
+                                    community: '',
+                                });
                             }}
                             className="w-full text-blue-200 hover:text-white font-semibold py-2 px-4 transition-colors"
                         >
