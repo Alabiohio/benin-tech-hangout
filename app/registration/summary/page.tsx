@@ -257,10 +257,6 @@ export default function RegistrationSummaryPage() {
                                         </div>
                                     </Button>
                                 </div>
-
-                                <p className="text-center text-xs text-slate-400 font-medium">
-                                    By registering you agree to our terms and conditions.
-                                </p>
                             </motion.div>
                         </div>
                     </div>
