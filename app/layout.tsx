@@ -17,6 +17,14 @@ export const metadata: Metadata = {
   description: "Join 3000+ innovators at the flagship tech event of Benin City. A curated space for the ecosystem to connect, learn, and scale. Connect with leaders, founders, and talents.",
   keywords: ["Benin Tech Fest", "Benin City Tech", "Tech Event Nigeria", "Edo State Tech", "Networking", "Innovation"],
   authors: [{ name: "Benin Tech Fest" }],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
     title: "Benin Tech Fest 2.0 | Building a Collaborative Ecosystem",
     description: "The flagship tech event of Benin City returns. Join the most impactful gathering of tech talents, founders, and organizations.",
