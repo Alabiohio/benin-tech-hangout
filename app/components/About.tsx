@@ -2,6 +2,8 @@
 
 import { motion, Variants } from "framer-motion";
 import { FiCalendar, FiMapPin, FiClock } from "react-icons/fi";
+import patternBg from "@/assets/images/patterns1.png";
+import pattern2Bg from "@/assets/images/pattern3.png";
 
 
 const slideRight: Variants = {
@@ -46,8 +48,13 @@ export default function About() {
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true }}
-                        className="relative h-auto w-full max-w-lg mx-auto lg:mx-0 lg:ml-auto"
+                        className="relative h-auto w-full max-w-lg mx-auto md:px-3 lg:mx-0 lg:ml-auto rounded-2xl p-4"
                     >
+                        {/* Faded background pattern */}
+                        <div
+                            className="absolute inset-0 bg-cover bg-center bg-no-repeat rounded-2xl opacity-20 pointer-events-none"
+                            style={{ backgroundImage: `url(${patternBg.src})` }}
+                        />
                         {/* Top Row - 2 Cards */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-0 mb-4 md:mb-0 md:relative md:h-60">
                             {stats.slice(0, 2).map((stat, index) => (
@@ -59,8 +66,8 @@ export default function About() {
                                         }`}
                                     data-aos={`${stat.aosAnime}`} data-aos-duration="1000" data-aos-easing="ease-out-cubic" data-aos-once="true">
                                     {/* Stacked layers */}
-                                    <div className="absolute -bottom-4 -left-2 w-full h-full bg-slate-200 rounded-lg transform -rotate-2 opacity-40" />
-                                    <div className="absolute -bottom-2 -right-2 w-full h-full bg-slate-300 rounded-lg transform rotate-1 opacity-30" />
+                                    <div className="absolute -bottom-4 -left-2 w-full h-full bg-brand-gold rounded-lg transform -rotate-2 opacity-40" />
+                                    <div className="absolute -bottom-2 -right-2 w-full h-full bg-biro-blue rounded-lg transform rotate-1 opacity-30" />
 
                                     {/* Main card */}
                                     <div
@@ -88,8 +95,8 @@ export default function About() {
                                         }`}
                                     data-aos={`${stat.aosAnime}`} data-aos-duration="1000" data-aos-easing="ease-out-cubic" data-aos-once="true">
                                     {/* Stacked layers */}
-                                    <div className="absolute -bottom-4 -left-2 w-full h-full bg-slate-200 rounded-lg transform -rotate-2 opacity-40" />
-                                    <div className="absolute -bottom-2 -right-2 w-full h-full bg-slate-300 rounded-lg transform rotate-1 opacity-30" />
+                                    <div className="absolute -bottom-4 -left-2 w-full h-full bg-brand-red rounded-lg transform -rotate-2 opacity-40" />
+                                    <div className="absolute -bottom-2 -right-2 w-full h-full bg-brand-green rounded-lg transform rotate-1 opacity-30" />
 
                                     {/* Main card */}
                                     <div
@@ -113,15 +120,15 @@ export default function About() {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true }}
-                    className="relative group w-full mx-auto lg:ml-auto"
+                    className="relative group w-full mx-auto lg:ml-auto overflow-hidden rounded-none md:rounded-2xl"
                 >
-                    <div className="flex items-stretch gap-1 overflow-hidden">
+                    <div className="relative flex items-stretch gap-1 overflow-hidden">
                         {/* Main content div - right edge cut */}
                         <div
-                            className="relative bg-white flex-1 rounded-[32px_0_0_32px]"
+                            className="relative bg-white flex-none pr-10 md:pr-20 rounded-[32px_0_0_32px]"
                             style={{ clipPath: 'polygon(0 0, 100% 0, calc(100% - 42px) 100%, 0 100%)' }}
                         >
-                            <div className="flex flex-col gap-2 py-3 px-2 md:py-3 md:px-5" data-aos="fade-left">
+                            <div className="relative z-10 flex flex-col gap-2 py-3 px-2 md:py-3 md:px-5" data-aos="fade-left">
                                 {/* Date Item */}
                                 <div className="flex items-center gap-5">
                                     <div className="hidden md:flex items-center justify-center shrink-0 w-12 h-12 bg-black text-white transform rounded-2xl -skew-x-12 shadow-md">
@@ -157,14 +164,14 @@ export default function About() {
 
                         {/* First slash */}
                         <div
-                            className="w-20 bg-brand-gold -ml-[32px]"
+                            className="w-20 bg-brand-gold -ml-[42px]"
                             style={{ clipPath: 'polygon(42px 0, 100% 0, calc(100% - 42px) 100%, 0 100%)' }}
                             data-aos="fade-left"
                         ></div>
 
                         {/* Second slash */}
                         <div
-                            className="w-20 bg-red-600 -ml-[32px]"
+                            className="w-20 bg-red-600 -ml-[42px]"
                             style={{ clipPath: 'polygon(42px 0, 100% 0, calc(100% - 42px) 100%, 0 100%)' }}
                             data-aos="fade-left"
                             data-aos-delay="100"

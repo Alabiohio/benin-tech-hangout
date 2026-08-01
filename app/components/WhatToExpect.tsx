@@ -22,7 +22,7 @@ const fade: Variants = {
 export default function WhatToExpect({ isModalOpen, setIsModalOpen }: { isModalOpen?: boolean; setIsModalOpen: (open: boolean) => void }) {
     const tiles = [
         { title: 'Interactive Sessions', desc: 'Panel discussions and focused workshops led by industry experts.', bg1: 'bg-blue-200', bg2: 'bg-blue-300', icon: FaUsers },
-        { title: 'Live Demo & Exhibition', desc: 'Curated showcases and product demos from leading builders.', bg1: 'bg-orange-200', bg2: 'bg-orange-300', icon: FaLaptopCode },
+        { title: 'Live Demo & Exhibition', desc: 'Curated showcases and product demos from leading builders.', bg1: 'bg-brown-200', bg2: 'bg-orange-300', icon: FaLaptopCode },
         { title: 'Job Fair & Recruitment', desc: 'Connect with hiring teams and discover career opportunities.', bg1: 'bg-amber-200', bg2: 'bg-amber-300', icon: FaBriefcase },
         { title: 'Investor Matchmaking', desc: 'One-on-one meetings and curated pitch rounds.', bg1: 'bg-emerald-200', bg2: 'bg-emerald-300', icon: FaHandshake },
         { title: 'Mentorship & Workshops', desc: 'Practical sessions and mentor office hours to upskill.', bg1: 'bg-violet-200', bg2: 'bg-violet-300', icon: FaBook },

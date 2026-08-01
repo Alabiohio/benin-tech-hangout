@@ -4,13 +4,16 @@
 :root {
   --background: #ffffff;
   --foreground: #14213d;
-  --brand-blue: #007cf9;
-  --brand-red: rgb(255, 0, 0);
+  --brand-blue: #1570EF;
+  --brand-green: #14AE5C;
+  --brand-red: #F62511;
+  --brand-amber: #FFA500;
+  --brand-brown: #93653F;
+  --brand-purple: #9747FF;
   --biro-blue: #317EFE;
   --biro-blue-dark: #0f2f6b;
   --signal-red: #b91c1c;
-  --brand-brown: #7B4A1E;
-  --brand-gold: #E2B65A;
+  --brand-gold: var(--brand-amber);
 }
 
 @theme inline {
@@ -19,9 +22,13 @@
   --color-biro-blue: var(--biro-blue);
   --color-biro-blue-dark: var(--biro-blue-dark);
   --color-highlight-yellow: var(--brand-blue);
+  --color-brand-blue: var(--brand-blue);
   --color-brand-red: var(--brand-red);
   --color-brand-brown: var(--brand-brown);
-  --color-brand-gold: var(--brand-gold);
+  --color-brand-gold: var(--brand-amber);
+  --color-brand-amber: var(--brand-amber);
+  --color-brand-green: var(--brand-green);
+  --color-brand-purple: var(--brand-purple);
   --font-cabinet-grotesk: 'Cabinet Grotesk Variable', 'Cabinet Grotesk', sans-serif;
     --font-oswald: var(--font-oswald-google), sans-serif;
   --font-geologica: var(--font-geologica-google), sans-serif;

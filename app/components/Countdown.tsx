@@ -109,7 +109,7 @@ export default function Countdown() {
                         <div key={timeLabels[index]} className="flex items-center">
                             <div className="flex flex-col items-center min-w-[70px] md:min-w-[140px]">
                                 <span 
-                                    className="text-4xl md:text-[6rem] font-black font-cabinet-grotesk text-white tabular-nums tracking-tighter leading-none" 
+                                    className="text-4xl md:text-[6rem] lg:text-[8rem] font-black font-cabinet-grotesk text-white tabular-nums tracking-tighter leading-none" 
                                     style={{ textShadow: '0 0 15px rgba(255,0,0,0.6), 0 0 30px rgba(255,0,0,0.3)' }}
                                 >
                                     <Counter value={value} isInView={shouldAnimate} />

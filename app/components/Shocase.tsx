@@ -13,9 +13,9 @@ export default function Shocase({ setIsModalOpen }: { setIsModalOpen: (open: boo
     // Using only allowed colors from design.txt: #ffffff, #000000, #ff0000, #007cf9
     const tiles = [
         { title: 'SHOWCASE. CONNECT. GROW.', desc: 'Showcase your products, services, or innovations at Benin Tech Fest 2.0. Connect with thousands of attendees, generate quality leads, build valuable partnerships, and grow your business through direct access to customers, investors, and the tech ecosystem.', colored: true, bg: 'linear-gradient(135deg, #007cf9 0%, #000000 100%)', border: '1px solid rgba(255,255,255,0.08)' },
-        { title: '₦5M PRIZE POOL', desc: 'Compete to access cash prizes and funding from angels, VCs, and government agencies.', colored: false, stackBg1: '#000000', stackBg2: '#007cf9', bg: '#000000', border: '1px solid rgba(255,255,255,0.06)', icon: FiAward },
-        { title: 'BUSINESS MENTORSHIP', desc: 'Intensive training with our Mentors and Experts before and after the Event, also access to a Community of Founders and Monthly opportunities and trainings.', colored: false, stackBg1: '#000000', stackBg2: '#007cf9', bg: '#000000', border: '1px solid rgba(255,255,255,0.06)', icon: FiUsers },
-        { title: 'MARKET VISIBILITY', desc: 'Present to 3,000+ attendees, 100+ communities, and corporate partners at BTF 2.0.', colored: false, stackBg1: '#000000', stackBg2: '#007cf9', bg: '#000000', border: '1px solid rgba(255,255,255,0.06)', icon: FiGlobe },
+        { title: '₦5M PRIZE POOL', desc: 'Compete to access cash prizes and funding from angels, VCs, and government agencies.', colored: false, stackBg1: '#000000', stackBg2: 'var(--brand-amber)', bg: '#000000', border: '1px solid rgba(255,255,255,0.06)', icon: FiAward },
+        { title: 'BUSINESS MENTORSHIP', desc: 'Intensive training with our Mentors and Experts before and after the Event, also access to a Community of Founders and Monthly opportunities and trainings.', colored: false, stackBg1: '#000000', stackBg2: 'var(--brand-blue)', bg: '#000000', border: '1px solid rgba(255,255,255,0.06)', icon: FiUsers },
+        { title: 'MARKET VISIBILITY', desc: 'Present to 3,000+ attendees, 100+ communities, and corporate partners at BTF 2.0.', colored: false, stackBg1: '#000000', stackBg2: 'var(--brand-green)', bg: '#000000', border: '1px solid rgba(255,255,255,0.06)', icon: FiGlobe },
     ];
 
     return (

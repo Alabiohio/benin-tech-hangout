@@ -6,7 +6,7 @@ import Button from './Button';
 export default function StartupPitch() {
     return (
         <section id="pitch" className="w-full md:px-4 py-24 pb-28 relative bg-gradient-to-b from-black via-black to-black">
-            <div className="container mx-auto relative z-40 py-10 px-4 bg-black border-t border-t-2 border-b border-b-2 border-white ml-8 md:ml-12 shadow-2xl">
+            <div className="container mx-auto relative z-40 py-10 px-4 bg-black border-t border-t-6 border-t-brand-amber border-b border-b-6 border-b-brand-green ml-8 md:ml-12 shadow-2xl">
                 <div className="flex flex-col lg:flex-row gap-12 lg:gap-0 items-stretch">
                     <div className="lg:flex-1 flex flex-col justify-between">
                         <motion.div
@@ -15,9 +15,9 @@ export default function StartupPitch() {
                             viewport={{ once: true }}
                             transition={{ duration: 0.8, ease: 'easeOut' }}
                         >
-                            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-8 uppercase italic tracking-tight">
+                            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight mb-8 uppercase tracking-tight">
                                 The Stage <br />
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 not-italic">is Yours.</span>
+                                <span className="text-biro-blue">is Yours.</span>
                             </h2>
                         </motion.div>
 

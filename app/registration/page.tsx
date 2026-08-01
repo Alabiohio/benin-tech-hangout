@@ -18,6 +18,16 @@ function RegistrationContent() {
     const tierParam = searchParams.get('tier') || 'community';
     const tier = ticketTiers[tierParam] || ticketTiers['community'];
 
+    const colorsMap: Record<string, any> = {
+        'community': { bg: 'bg-brand-green', text: 'text-brand-green', border: 'border-brand-green/30' },
+        'explorer': { bg: 'bg-brand-blue', text: 'text-brand-blue', border: 'border-brand-blue/30' },
+        'builders': { bg: 'bg-brand-purple', text: 'text-brand-purple', border: 'border-brand-purple/30' },
+        'founders': { bg: 'bg-brand-red', text: 'text-brand-red', border: 'border-brand-red/30' },
+        'vip': { bg: 'bg-brand-amber', text: 'text-brand-amber', border: 'border-brand-amber/30' },
+        'investors': { bg: 'bg-biro-blue-dark', text: 'text-biro-blue-dark', border: 'border-biro-blue-dark/30' }
+    };
+    const tierColor = colorsMap[tierParam] || colorsMap['community'];
+
     const [error, setError] = useState('');
 
     const [formData, setFormData] = useState({
@@ -245,7 +255,7 @@ function RegistrationContent() {
                                             </div>
 
                                             <div className="pt-4 hidden lg:block">
-                                                <Button type="submit" variant="biro" className="w-full !py-2 border-0 group !font-cabinet-grotesk text-lg shadow-lg shadow-biro-blue/20">
+                                                <Button type="submit" className={`w-full !py-3 border-0 group !font-cabinet-grotesk text-lg shadow-lg text-white hover:opacity-90 transition-all ${tierColor.bg}`}>
                                                     <div className="flex items-center justify-center gap-2">
                                                         <span className="font-black">Next</span>
                                                         <IoIosArrowForward 
@@ -260,14 +270,15 @@ function RegistrationContent() {
                                     </motion.div>
 
                                     <motion.div
-                                        className="bg-white rounded-3xl p-8 border border-blue-100 shadow-sm lg:col-span-5 xl:col-span-4 lg:sticky lg:top-32"
+                                        className={`bg-white rounded-3xl p-8 border ${tierColor.border} shadow-xl lg:col-span-5 xl:col-span-4 lg:sticky lg:top-32 overflow-hidden relative`}
                                         initial={{ opacity: 0, x: 20 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ duration: 0.6, delay: 0.3 }}
                                     >
-                                        <div className="mb-6">
-                                            <h3 className="text-2xl font-black text-biro-blue-dark mb-2 font-cabinet-grotesk">{tier.name}</h3>
-                                            <p className="text-3xl font-black text-biro-blue font-oswald">
+                                        <div className={`absolute top-0 left-0 w-full h-2 ${tierColor.bg}`}></div>
+                                        <div className="mb-6 mt-2">
+                                            <h3 className={`text-2xl font-black ${tierColor.text} mb-2 font-cabinet-grotesk uppercase`}>{tier.name}</h3>
+                                            <p className={`text-4xl font-black ${tierColor.text} font-oswald`}>
                                                 {tier.price.startsWith('₦') ? (
                                                     <>
                                                         <sup className="text-xl md:text-2xl mt-2 mr-1">₦</sup>
@@ -284,9 +295,9 @@ function RegistrationContent() {
                                                 return (
                                                     <div
                                                         key={fIdx}
-                                                        className={`flex gap-3 ${isIncludes ? '-ml-4 mr-2 rounded-l-none rounded-r-xl px-3 pl-9 py-3 border-2 border-l-4 font-bold shadow-md bg-biro-blue text-white' : ''}`}
+                                                        className={`flex gap-3 ${isIncludes ? `-ml-4 mr-2 rounded-l-none rounded-r-xl px-3 pl-9 py-3 border-2 border-l-4 font-bold shadow-md border-white ${tierColor.bg} text-white` : ''}`}
                                                     >
-                                                        <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] mt-0.5 shrink-0 ${isIncludes ? 'bg-biro-blue-dark text-white' : 'bg-blue-50/50 text-biro-blue border border-blue-100/50'}`}>
+                                                        <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] mt-0.5 shrink-0 ${isIncludes ? `bg-white ${tierColor.text}` : `${tierColor.bg}/10 ${tierColor.text} border ${tierColor.border}`}`}>
                                                             ✓
                                                         </div>
                                                         <p className={`text-sm leading-relaxed ${isIncludes ? 'text-white font-extrabold' : 'text-slate-700 font-bold'}`}>
@@ -296,8 +307,8 @@ function RegistrationContent() {
                                                 );
                                             })}
                                         </div>
-                                        <div className="mt-8 pt-6 border-t border-blue-100">
-                                            <Button type="submit" variant="biro" className="w-full !py-2 border-0 group !font-cabinet-grotesk text-lg shadow-lg shadow-biro-blue/20">
+                                        <div className={`mt-8 pt-6 border-t ${tierColor.border}`}>
+                                            <Button type="submit" className={`w-full !py-3 border-0 group !font-cabinet-grotesk text-lg shadow-lg text-white hover:opacity-90 transition-all ${tierColor.bg}`}>
                                                 <div className="flex items-center justify-center gap-2">
                                                     <span className="font-black">Next</span>
                                                     <IoIosArrowForward 

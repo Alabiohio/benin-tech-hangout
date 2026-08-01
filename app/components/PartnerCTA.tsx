@@ -5,11 +5,11 @@ import Button from './Button';
 export default function PartnerCTA() {
     return (
         <div id="partner-cta" className="w-full md:px-4 py-24 pb-28 relative bg-gradient-to-b from-white to-slate-100">
-            <div className="container mx-auto relative z-40 -mb-44 lg:-mb-62 py-10 px-4 border border-2 border-[#DEDEDE] rounded-2xl bg-slate-950" data-aos="fade-up" data-aos-duration="1000">
+            <div className="container mx-auto relative z-40 -mb-44 lg:-mb-62 py-10 px-4 border border-2 border-[#DEDEDE] rounded-2xl bg-black" data-aos="fade-up" data-aos-duration="1000">
                 <div className="flex flex-col lg:flex-row gap-12 lg:gap-0 items-stretch">
                     <div className="lg:flex-1 flex flex-col justify-between">
                         <h2 className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-white leading-tight mb-8">
-                            BE PART OF THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">ECOSYSTEM LEADERS</span>
+                            BE PART OF THE <span className="text-biro-blue">ECOSYSTEM LEADERS</span>
                         </h2>
                         <p className="text-lg text-slate-300 font-medium leading-relaxed mb-6 max-w-xl">
                             Partner with us to position your brand at the center of tech innovation in Edo State. Reach 1,000+ engaged builders and founders.

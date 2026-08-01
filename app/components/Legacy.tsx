@@ -81,11 +81,11 @@ export default function Legacy() {
                         {/* Stats grid integrated from Speakers */}
                         <div className="grid grid-cols-2 gap-6 p-8 bg-white/5 rounded-[2rem] border border-white/10 backdrop-blur-xl">
                             <div>
-                                <p className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-highlight-yellow mb-1">500+</p>
+                                <p className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-brand-amber mb-1">500+</p>
                                 <p className="text-white/40 font-black uppercase tracking-widest text-[10px]">Attendees</p>
                             </div>
                             <div>
-                                <p className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-blue-400 mb-1">100+</p>
+                                <p className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-brand-green mb-1">100+</p>
                                 <p className="text-white/40 font-black uppercase tracking-widest text-[10px]">Communities</p>
                             </div>
                         </div>

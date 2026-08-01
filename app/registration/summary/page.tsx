@@ -8,6 +8,7 @@ import BackgroundWrapper from "../../components/BackgroundWrapper";
 import { motion } from "framer-motion";
 import Button from "../../components/Button";
 import { ticketTiersMap } from '../../data/tickets';
+import ticketBg from '../../../assets/images/patterns1.png';
 
 interface RegistrationData {
     tierParam: string;
@@ -42,6 +43,16 @@ export default function RegistrationSummaryPage() {
     if (!data) return null;
 
     const tier = ticketTiersMap[data.tierParam] || ticketTiersMap['community'];
+
+    const colorsMap: Record<string, any> = {
+        'community': { bg: 'bg-brand-green', text: 'text-brand-green', border: 'border-brand-green/30' },
+        'explorer': { bg: 'bg-brand-blue', text: 'text-brand-blue', border: 'border-brand-blue/30' },
+        'builders': { bg: 'bg-brand-purple', text: 'text-brand-purple', border: 'border-brand-purple/30' },
+        'founders': { bg: 'bg-brand-red', text: 'text-brand-red', border: 'border-brand-red/30' },
+        'vip': { bg: 'bg-brand-amber', text: 'text-brand-amber', border: 'border-brand-amber/30' },
+        'investors': { bg: 'bg-biro-blue-dark', text: 'text-biro-blue-dark', border: 'border-biro-blue-dark/30' }
+    };
+    const tierColor = colorsMap[data.tierParam] || colorsMap['community'];
 
     const submitRegistration = async (reference?: string) => {
         try {
@@ -176,13 +187,21 @@ export default function RegistrationSummaryPage() {
                                 className="space-y-5"
                             >
                                 {/* Ticket info card */}
-                                <div className="bg-gradient-to-br from-biro-blue-dark to-biro-blue rounded-2xl p-6 text-white flex items-center justify-between shadow-lg">
-                                    <div>
-                                        <p className="text-blue-200 text-sm font-bold uppercase tracking-wide mb-1">Selected Pass</p>
+                                <div className={`relative ${tierColor.bg} rounded-2xl p-6 text-white flex items-center justify-between shadow-lg overflow-hidden`}>
+                                    <div 
+                                        className="absolute inset-0 opacity-20 mix-blend-overlay pointer-events-none"
+                                        style={{
+                                            backgroundImage: `url(${ticketBg.src || ticketBg})`,
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: 'center',
+                                        }}
+                                    />
+                                    <div className="relative z-10">
+                                        <p className="text-white/80 text-sm font-bold uppercase tracking-wide mb-1">Selected Pass</p>
                                         <h3 className="text-2xl font-black font-cabinet-grotesk">{tier.name}</h3>
                                     </div>
-                                    <div className="text-right">
-                                        <p className="text-blue-200 text-sm font-bold uppercase tracking-wide mb-1">Price</p>
+                                    <div className="text-right relative z-10">
+                                        <p className="text-white/80 text-sm font-bold uppercase tracking-wide mb-1">Price</p>
                                         <p className="text-3xl font-black font-oswald text-white">{tier.price}</p>
                                     </div>
                                 </div>

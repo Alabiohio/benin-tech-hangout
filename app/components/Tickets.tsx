@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import AOS from 'aos';
-import ticketBg from '../../assets/images/1696.jpg';
+import ticketBg from '../../assets/images/patterns1.png';
 import Button from './Button';
 import { ticketTiersList as ticketTiers } from '../data/tickets';
 
@@ -57,6 +57,16 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
                             }
                             : undefined;
 
+                        const colors = [
+                            { bg: 'bg-brand-green', text: 'text-brand-green', border: 'border-brand-green/30' },
+                            { bg: 'bg-brand-blue', text: 'text-brand-blue', border: 'border-brand-blue/30' },
+                            { bg: 'bg-brand-purple', text: 'text-brand-purple', border: 'border-brand-purple/30' },
+                            { bg: 'bg-brand-red/80', text: 'text-brand-red', border: 'border-brand-red/30' },
+                            { bg: 'bg-brand-amber', text: 'text-brand-amber', border: 'border-brand-amber/30' },
+                            { bg: 'bg-biro-blue-dark', text: 'text-biro-blue-dark', border: 'border-biro-blue-dark/30' }
+                        ];
+                        const tierColor = colors[idx % colors.length];
+
                         return (
                             <div
                                 key={idx}
@@ -70,19 +80,38 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
                                 data-aos-delay={idx * 120}
                             >
                                 {tier.highlight && (
-                                    <div className="absolute -top-3 -right-4 z-50">
-                                        <div className="inline-flex items-center bg-brand-red text-white text-[11px] font-bold px-4 py-1.5 rounded-full uppercase tracking-[0.15em]">
-                                            Most Popular
+                                    <div className="absolute -top-1 right-6 md:right-8 z-50" style={{ filter: 'drop-shadow(0px 6px 6px rgba(0,0,0,0.2))' }}>
+                                        <div 
+                                            className={`w-16 md:w-20 bg-[#316a1b] text-white font-black uppercase text-center pt-3 pb-6 md:pt-4 md:pb-8 border-b-0`}
+                                            style={{
+                                                clipPath: 'polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%)'
+                                            }}
+                                        >
+                                            <span className="block text-[9px] md:text-[11px] leading-tight tracking-widest opacity-90">Most</span>
+                                            <span className="block text-[9px] md:text-[11px] leading-tight tracking-widest opacity-90">Popular</span>
                                         </div>
                                     </div>
                                 )}
                                 <div
                                     style={cardStyle}
-                                    className={`relative h-full py-10 px-6 md:px-6 rounded-3xl border overflow-hidden flex flex-col group hover:-translate-y-2 transition-all duration-700 ease-out ${tier.highlight ? 'border-biro-blue bg-biro-blue-dark' : 'border-blue-100 bg-white'}`}
+                                    className={`relative h-full rounded-3xl border ${tierColor.border} overflow-hidden flex flex-col group hover:-translate-y-2 transition-all duration-700 ease-out bg-white shadow-xl hover:shadow-2xl`}
                                 >
-                                    <div className="relative z-10 flex flex-col h-full">
-                                        <div className="mb-1">
-                                            <span className={`text-4xl md:text-5xl font-oswald font-black flex items-start ${tier.highlight ? 'text-white' : 'text-biro-blue'}`}>
+                                    {/* Header Banner */}
+                                    <div className={`relative px-6 py-6 flex items-center ${tierColor.bg} overflow-hidden`}>
+                                        <div 
+                                            className="absolute inset-0 opacity-50 mix-blend-overlay"
+                                            style={{
+                                                backgroundImage: `url(${ticketBg.src || ticketBg})`,
+                                                backgroundSize: 'cover',
+                                                backgroundPosition: 'center',
+                                            }}
+                                        />
+                                        <h3 className="relative z-10 text-2xl font-black font-oswald text-white uppercase m-0">{tier.name}</h3>
+                                    </div>
+
+                                    <div className="relative z-10 flex flex-col h-full py-8 px-6 md:px-6">
+                                        <div className="mb-8">
+                                            <span className={`text-4xl md:text-5xl font-oswald font-black flex items-start ${tierColor.text}`}>
                                                 {tier.price.startsWith('₦') ? (
                                                     <>
                                                         <sup className="text-xl md:text-2xl mt-2 mr-1">₦</sup>
@@ -93,8 +122,6 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
                                                 )}
                                             </span>
                                         </div>
-                                        <h3 className={`text-2xl mb-8 font-black opacity-75 font-oswald ${tier.highlight ? 'text-white' : 'text-biro-blue-dark'} mb-2 uppercase`}>{tier.name}</h3>
-
 
                                         <div className="space-y-4 mb-10 flex-grow relative z-10">
                                             {tier.features.map((feature, fIdx) => {
@@ -102,12 +129,12 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
                                                 return (
                                                     <div
                                                         key={fIdx}
-                                                        className={`flex gap-3 ${isIncludes ? '-ml-10 md:-ml-6 mr-4 rounded-l-none rounded-r-xl px-3 pl-9 py-3 border-2 border-l-4 font-bold shadow-md' : ''} ${isIncludes ? (tier.highlight ? 'border-white bg-white' : 'border-biro-blue bg-biro-blue text-white') : ''}`}
+                                                        className={`flex gap-3 ${isIncludes ? `-ml-10 md:-ml-6 mr-4 rounded-l-none rounded-r-xl px-3 pl-9 py-3 border-2 border-l-4 font-bold shadow-md border-white ${tierColor.bg} text-white` : ''}`}
                                                     >
-                                                        <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] mt-0.5 shrink-0 ${isIncludes ? (tier.highlight ? 'bg-biro-blue-dark text-white' : 'bg-white text-biro-blue') : (tier.highlight ? 'bg-blue-50 text-highlight-yellow border border-blue-100' : 'bg-blue-50/50 text-biro-blue border border-blue-100/50')}`}>
+                                                        <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] mt-0.5 shrink-0 ${isIncludes ? 'bg-white ' + tierColor.text : tierColor.bg + '/10 ' + tierColor.text + ' border ' + tierColor.border}`}>
                                                             ✓
                                                         </div>
-                                                        <p className={`text-sm leading-relaxed ${isIncludes ? (tier.highlight ? 'text-biro-blue-dark font-extrabold' : 'text-white font-extrabold') : (tier.highlight ? 'text-white font-bold' : 'text-slate-700 font-bold')}`}>
+                                                        <p className={`text-sm leading-relaxed ${isIncludes ? 'text-white font-extrabold' : 'text-slate-700 font-bold'}`}>
                                                             {feature}
                                                         </p>
                                                     </div>
@@ -127,8 +154,8 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
                                             return (
                                                 <Button
                                                     href={`/registration?tier=${tierSlug}`}
-                                                    variant={tier.highlight ? 'primary' : 'outline'}
-                                                    className="w-full relative z-10 hover:!text-white hover:!border-white !px-4 !py-3 text-sm whitespace-nowrap"
+                                                    variant='outline'
+                                                    className={`w-full relative z-10 !px-4 !py-3 text-sm whitespace-nowrap text-white !bg-black hover:!bg-transparent hover:!text-black`}
                                                 >
                                                     Get Your Pass
                                                 </Button>
