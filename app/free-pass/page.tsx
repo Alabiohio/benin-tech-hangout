@@ -2,12 +2,25 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import patterns1 from '../../assets/images/patterns1.png';
 import Button from '../components/Button';
 import Footer from '../components/Footer';
 
+type FormData = {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    country: string;
+    nationality: string;
+    community: string;
+};
+
+type FormErrors = Partial<Record<keyof FormData, string>>;
+
 export default function FreePassPage() {
     const router = useRouter();
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormData>({
         firstName: '',
         lastName: '',
         email: '',
@@ -18,17 +31,98 @@ export default function FreePassPage() {
     });
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const [errors, setErrors] = useState<FormErrors>({});
     const [success, setSuccess] = useState(false);
     const [isDuplicate, setIsDuplicate] = useState(false);
     const [submittedEmail, setSubmittedEmail] = useState('');
 
+    const validateField = (name: keyof FormData, value: string) => {
+        const trimmedValue = value.trim();
+
+        if (name === 'firstName') {
+            return trimmedValue ? '' : 'First name is required.';
+        }
+
+        if (name === 'lastName') {
+            return trimmedValue ? '' : 'Last name is required.';
+        }
+
+        if (name === 'email') {
+            if (!trimmedValue) {
+                return 'Email is required.';
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedValue)) {
+                return 'Please enter a valid email address.';
+            }
+
+            return '';
+        }
+
+        if (name === 'phone') {
+            if (!trimmedValue) {
+                return 'Phone number is required.';
+            }
+
+            if (!/^\+?[0-9\s()-]{7,20}$/.test(trimmedValue)) {
+                return 'Please enter a valid phone number.';
+            }
+
+            return '';
+        }
+
+        if (name === 'country') {
+            return trimmedValue ? '' : 'Country of residence is required.';
+        }
+
+        if (name === 'nationality') {
+            return trimmedValue ? '' : 'Nationality is required.';
+        }
+
+        return '';
+    };
+
+    const validateForm = (data: FormData) => {
+        const nextErrors: FormErrors = {};
+
+        const firstNameError = validateField('firstName', data.firstName);
+        const lastNameError = validateField('lastName', data.lastName);
+        const emailError = validateField('email', data.email);
+        const phoneError = validateField('phone', data.phone);
+        const countryError = validateField('country', data.country);
+        const nationalityError = validateField('nationality', data.nationality);
+
+        if (firstNameError) nextErrors.firstName = firstNameError;
+        if (lastNameError) nextErrors.lastName = lastNameError;
+        if (emailError) nextErrors.email = emailError;
+        if (phoneError) nextErrors.phone = phoneError;
+        if (countryError) nextErrors.country = countryError;
+        if (nationalityError) nextErrors.nationality = nationalityError;
+
+        return nextErrors;
+    };
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+        const fieldName = name as keyof FormData;
         setFormData(prev => ({
             ...prev,
-            [name]: value,
+            [fieldName]: value,
         }));
         setError('');
+
+        const fieldError = validateField(fieldName, value);
+        setErrors(prevErrors => {
+            const nextErrors = { ...prevErrors };
+
+            if (fieldError) {
+                nextErrors[fieldName] = fieldError;
+            } else {
+                delete nextErrors[fieldName];
+            }
+
+            return nextErrors;
+        });
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -36,41 +130,21 @@ export default function FreePassPage() {
         setIsLoading(true);
         setError('');
 
-        // Validate required fields
-        if (!formData.firstName.trim()) {
-            setError('First name is required');
-            setIsLoading(false);
-            return;
-        }
+        const trimmedData: FormData = {
+            firstName: formData.firstName.trim(),
+            lastName: formData.lastName.trim(),
+            email: formData.email.trim(),
+            phone: formData.phone.trim(),
+            country: formData.country.trim(),
+            nationality: formData.nationality.trim(),
+            community: formData.community.trim(),
+        };
 
-        if (!formData.lastName.trim()) {
-            setError('Last name is required');
-            setIsLoading(false);
-            return;
-        }
+        const nextErrors = validateForm(trimmedData);
+        setErrors(nextErrors);
 
-        if (!formData.email.trim()) {
-            setError('Email is required');
-            setIsLoading(false);
-            return;
-        }
-
-        if (!formData.country.trim()) {
-            setError('Country of residence is required');
-            setIsLoading(false);
-            return;
-        }
-
-        if (!formData.nationality.trim()) {
-            setError('Nationality is required');
-            setIsLoading(false);
-            return;
-        }
-
-        // Basic email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData.email)) {
-            setError('Please enter a valid email address');
+        if (Object.keys(nextErrors).length > 0) {
+            setError('Please correct the highlighted fields before continuing.');
             setIsLoading(false);
             return;
         }
@@ -81,15 +155,7 @@ export default function FreePassPage() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    firstName: formData.firstName.trim(),
-                    lastName: formData.lastName.trim(),
-                    email: formData.email.trim(),
-                    phone: formData.phone.trim(),
-                    country: formData.country.trim(),
-                    nationality: formData.nationality.trim(),
-                    community: formData.community.trim(),
-                }),
+                body: JSON.stringify(trimmedData),
             });
 
             const data = await response.json();
@@ -109,6 +175,7 @@ export default function FreePassPage() {
             setSubmittedEmail(formData.email.trim());
             setSuccess(true);
             setFormData({ firstName: '', lastName: '', email: '', phone: '', country: '', nationality: '', community: '' });
+            setErrors({});
         } catch (err) {
             setError('An error occurred. Please try again.');
             console.error('Registration error:', err);
@@ -118,7 +185,15 @@ export default function FreePassPage() {
 
     if (isDuplicate) {
         return (
-            <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-biro-blue-dark via-blue-900 to-biro-blue py-24 px-4">
+            <section
+                className="min-h-screen flex items-center justify-center py-24 px-4"
+                style={{
+                    backgroundImage: `linear-gradient(135deg, rgba(2, 37, 84, 0.95), rgba(30, 64, 175, 0.95)), url(${patterns1.src})`,
+                    backgroundPosition: 'center, 0 0',
+                    backgroundRepeat: 'no-repeat, repeat',
+                    backgroundSize: 'cover, 220px 220px',
+                }}
+            >
                 <div className="text-center text-white max-w-md">
                     {/* Alert icon */}
                     <div className="mb-8">
@@ -201,7 +276,15 @@ export default function FreePassPage() {
 
     if (success) {
         return (
-            <section className="min-h-screen flex items-center justify-center bg-gradient-to-br from-biro-blue-dark via-blue-900 to-biro-blue py-24 px-4">
+            <section
+                className="min-h-screen flex items-center justify-center py-24 px-4"
+                style={{
+                    backgroundImage: `linear-gradient(135deg, rgba(2, 37, 84, 0.95), rgba(30, 64, 175, 0.95)), url(${patterns1.src})`,
+                    backgroundPosition: 'center, 0 0',
+                    backgroundRepeat: 'no-repeat, repeat',
+                    backgroundSize: 'cover, 220px 220px',
+                }}
+            >
                 <div className="text-center text-white max-w-md">
                     {/* Animated checkmark */}
                     <div className="mb-8">
@@ -278,27 +361,40 @@ export default function FreePassPage() {
 
     return (
         <>
-        <section className="min-h-screen bg-gradient-to-br from-biro-blue-dark via-blue-900 to-biro-blue py-24 px-4">
-            <div className="container mx-auto max-w-md">
-                <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-10">
-                    <div className="mb-8">
-                        <h1 className="text-3xl md:text-4xl font-black font-cabinet-grotesk text-biro-blue-dark mb-2">
-                            Community Pass
-                        </h1>
-                        <p className="text-slate-600 text-sm">
-                            Free Access to Benin Tech Fest
-                        </p>
-                        <div className="mt-4 pt-4 border-t border-blue-100">
-                            <ul className="space-y-2 text-sm text-slate-700">
-                                <li className="flex gap-2">
+        <section
+            className="min-h-screen py-24 px-2"
+            style={{
+                backgroundImage: `linear-gradient(135deg, rgba(2, 37, 84, 0.95), rgba(30, 64, 175, 0.95)), url(${patterns1.src})`,
+                backgroundPosition: 'center, 0 0',
+                backgroundRepeat: 'no-repeat, repeat',
+                backgroundSize: 'cover, 220px 220px',
+            }}
+        >
+            <div className="container mx-auto max-w-2xl">
+                <div className="relative overflow-hidden rounded-[32px] border border-white/50 shadow-[0_30px_80px_rgba(2,37,84,0.25)] backdrop-blur-3xl p-5 md:p-10">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/35 to-transparent" />
+                    <div className="relative">
+                        <div className="mb-8 flex flex-col gap-4 rounded-2xl border border-blue-100/80 bg-gradient-to-r from-blue-50/80 to-white/70 p-5 shadow-sm backdrop-blur-xl md:flex-row md:items-start md:justify-between">
+                            <div>
+                                <h1 className="text-3xl md:text-4xl font-black font-cabinet-grotesk text-biro-blue-dark mb-2">
+                                    Community Pass
+                                </h1>
+                                <p className="text-slate-600 text-sm md:text-base">
+                                    Free Access to Benin Tech Fest
+                                </p>
+                            </div>
+                        </div>
+                        <div className="mt-4 mb-6 rounded-2xl border border-blue-100/80 bg-slate-50/70 p-4 backdrop-blur-xl">
+                            <ul className="grid gap-2 text-sm text-slate-700 sm:grid-cols-3">
+                                <li className="flex gap-2 rounded-xl bg-white/70 px-3 py-2">
                                     <span className="text-biro-blue">✓</span>
                                     Access to all general sessions
                                 </li>
-                                <li className="flex gap-2">
+                                <li className="flex gap-2 rounded-xl bg-white/70 px-3 py-2">
                                     <span className="text-biro-blue">✓</span>
                                     Networking sessions
                                 </li>
-                                <li className="flex gap-2">
+                                <li className="flex gap-2 rounded-xl bg-white/70 px-3 py-2">
                                     <span className="text-biro-blue">✓</span>
                                     Exhibitions booths
                                 </li>
@@ -306,16 +402,16 @@ export default function FreePassPage() {
                         </div>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-5">
+                    <form onSubmit={handleSubmit} className="relative space-y-5" noValidate>
                         {error && (
-                            <div className="p-4 rounded-lg bg-red-50 border border-red-200">
+                            <div className="rounded-2xl border border-red-200 bg-red-50/90 p-4 backdrop-blur-sm">
                                 <p className="text-red-700 text-sm font-medium">{error}</p>
                             </div>
                         )}
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label htmlFor="firstName" className="block text-sm font-bold text-slate-700 mb-2">
+                                <label htmlFor="firstName" className="mb-2 block text-sm font-bold text-black">
                                     First Name <span className="text-red-500">*</span>
                                 </label>
                                 <input
@@ -325,12 +421,14 @@ export default function FreePassPage() {
                                     value={formData.firstName}
                                     onChange={handleChange}
                                     placeholder="Enter your first name"
-                                    className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100 transition-colors"
-                                    required
+                                    className={`w-full rounded-xl border bg-white/90 px-4 py-3 shadow-sm transition-all ${errors.firstName ? 'border-red-400 focus:border-red-500 focus:ring-red-100' : 'border-blue-200 focus:border-biro-blue focus:ring-2 focus:ring-blue-100'}`}
+                                    aria-invalid={!!errors.firstName}
+                                    aria-describedby={errors.firstName ? 'firstName-error' : undefined}
                                 />
+                                {errors.firstName && <p id="firstName-error" className="mt-2 text-sm text-red-600">{errors.firstName}</p>}
                             </div>
                             <div>
-                                <label htmlFor="lastName" className="block text-sm font-bold text-slate-700 mb-2">
+                                <label htmlFor="lastName" className="block text-sm font-bold text-black mb-2">
                                     Last Name <span className="text-red-500">*</span>
                                 </label>
                                 <input
@@ -340,14 +438,16 @@ export default function FreePassPage() {
                                     value={formData.lastName}
                                     onChange={handleChange}
                                     placeholder="Enter your last name"
-                                    className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100 transition-colors"
-                                    required
+                                    className={`w-full rounded-xl border bg-white/90 px-4 py-3 shadow-sm transition-all ${errors.lastName ? 'border-red-400 focus:border-red-500 focus:ring-red-100' : 'border-blue-200 focus:border-biro-blue focus:ring-2 focus:ring-blue-100'}`}
+                                    aria-invalid={!!errors.lastName}
+                                    aria-describedby={errors.lastName ? 'lastName-error' : undefined}
                                 />
+                                {errors.lastName && <p id="lastName-error" className="mt-2 text-sm text-red-600">{errors.lastName}</p>}
                             </div>
                         </div>
 
                         <div>
-                            <label htmlFor="email" className="block text-sm font-bold text-slate-700 mb-2">
+                            <label htmlFor="email" className="block text-sm font-bold text-black mb-2">
                                 Email Address <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -357,14 +457,16 @@ export default function FreePassPage() {
                                 value={formData.email}
                                 onChange={handleChange}
                                 placeholder="your.email@example.com"
-                                className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100 transition-colors"
-                                required
+                                className={`w-full rounded-xl border bg-white/90 px-4 py-3 shadow-sm transition-all ${errors.email ? 'border-red-400 focus:border-red-500 focus:ring-red-100' : 'border-blue-200 focus:border-biro-blue focus:ring-2 focus:ring-blue-100'}`}
+                                aria-invalid={!!errors.email}
+                                aria-describedby={errors.email ? 'email-error' : undefined}
                             />
+                            {errors.email && <p id="email-error" className="mt-2 text-sm text-red-600">{errors.email}</p>}
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label htmlFor="country" className="block text-sm font-bold text-slate-700 mb-2">
+                                <label htmlFor="country" className="block text-sm font-bold text-white mb-2">
                                     Country of Residence <span className="text-red-500">*</span>
                                 </label>
                                 <input
@@ -374,12 +476,14 @@ export default function FreePassPage() {
                                     value={formData.country}
                                     onChange={handleChange}
                                     placeholder="Country of residence"
-                                    className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100 transition-colors"
-                                    required
+                                    className={`w-full rounded-xl border bg-white/90 px-4 py-3 shadow-sm transition-all ${errors.country ? 'border-red-400 focus:border-red-500 focus:ring-red-100' : 'border-blue-200 focus:border-biro-blue focus:ring-2 focus:ring-blue-100'}`}
+                                    aria-invalid={!!errors.country}
+                                    aria-describedby={errors.country ? 'country-error' : undefined}
                                 />
+                                {errors.country && <p id="country-error" className="mt-2 text-sm text-red-600">{errors.country}</p>}
                             </div>
                             <div>
-                                <label htmlFor="nationality" className="block text-sm font-bold text-slate-700 mb-2">
+                                <label htmlFor="nationality" className="block text-sm font-bold text-white mb-2">
                                     Nationality <span className="text-red-500">*</span>
                                 </label>
                                 <input
@@ -389,14 +493,16 @@ export default function FreePassPage() {
                                     value={formData.nationality}
                                     onChange={handleChange}
                                     placeholder="Nationality"
-                                    className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100 transition-colors"
-                                    required
+                                    className={`w-full rounded-xl border bg-white/90 px-4 py-3 shadow-sm transition-all ${errors.nationality ? 'border-red-400 focus:border-red-500 focus:ring-red-100' : 'border-blue-200 focus:border-biro-blue focus:ring-2 focus:ring-blue-100'}`}
+                                    aria-invalid={!!errors.nationality}
+                                    aria-describedby={errors.nationality ? 'nationality-error' : undefined}
                                 />
+                                {errors.nationality && <p id="nationality-error" className="mt-2 text-sm text-red-600">{errors.nationality}</p>}
                             </div>
                         </div>
 
                         <div>
-                            <label htmlFor="phone" className="block text-sm font-bold text-slate-700 mb-2">
+                            <label htmlFor="phone" className="block text-sm font-bold text-white mb-2">
                                 Phone Number <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -406,8 +512,27 @@ export default function FreePassPage() {
                                 value={formData.phone}
                                 onChange={handleChange}
                                 placeholder="+234 or any format"
-                                className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100 transition-colors"
-                                required
+                                    className="w-full rounded-xl border border-blue-200 bg-white/90 px-4 py-3 shadow-sm transition-all focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100"
+                                    aria-invalid={!!errors.phone}
+                                    aria-describedby={errors.phone ? 'phone-error' : undefined}
+                                    required
+                                />
+                                {errors.phone && <p id="phone-error" className="mt-2 text-sm text-red-600">{errors.phone}</p>}
+                        </div>
+
+                        <div>
+                            <label htmlFor="community" className="block text-sm font-bold text-white mb-2">
+                                Community / Tech Group <span className="text-slate-400 font-medium">(optional)</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="community"
+                                name="community"
+                                value={formData.community}
+                                onChange={handleChange}
+                                placeholder="e.g. Benin Tech Community"
+                                maxLength={255}
+                                className="w-full rounded-xl border border-blue-200 bg-white/90 px-4 py-3 shadow-sm transition-all focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100"
                             />
                         </div>
 
@@ -415,7 +540,7 @@ export default function FreePassPage() {
                             type="submit"
                             disabled={isLoading}
                             variant="primary"
-                            className="w-full !py-3 font-bold text-base"
+                            className="w-full !py-3 font-bold text-base shadow-lg shadow-blue-600/20 hover:!text-white hover:!border-white"
                         >
                             {isLoading ? 'Registering...' : 'Register for Free Pass'}
                         </Button>

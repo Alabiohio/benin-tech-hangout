@@ -1,29 +1,29 @@
 import { Pool } from 'pg';
 import { NextRequest, NextResponse } from 'next/server';
 import { sendFormNotificationEmail } from '@/app/lib/email';
+import { checkRateLimit, getClientIp } from '@/app/lib/rateLimit';
+import { email, invalidFormResponse, readFormBody, rejectOversizedBody, requiredText } from '@/app/lib/formSecurity';
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
 });
 
 export async function POST(request: NextRequest) {
-    const client = await pool.connect();
+    const oversized = rejectOversizedBody(request);
+    if (oversized) return oversized;
+    const rateLimit = checkRateLimit(getClientIp(request));
+    if (!rateLimit.allowed) return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429, headers: { 'Retry-After': String(rateLimit.retryAfter) } });
 
     try {
-        const data = await request.json();
+        const data = await readFormBody(request);
+        if (!data) return invalidFormResponse();
+        const name = requiredText(data.name);
+        const emailAddress = email(data.email);
+        const primaryInterest = requiredText(data.primaryInterest);
 
-        const {
-            name,
-            email,
-            primaryInterest
-        } = data;
-
-        if (!name || !email || !primaryInterest) {
-            return NextResponse.json(
-                { error: 'Missing required fields' },
-                { status: 400 }
-            );
-        }
+        if (!name || !emailAddress || !primaryInterest) return invalidFormResponse();
+        const client = await pool.connect();
+        try {
 
         await client.query(`
             CREATE TABLE IF NOT EXISTS registration_submissions (
@@ -41,12 +41,12 @@ export async function POST(request: NextRequest) {
             VALUES 
             ($1, $2, $3)
             RETURNING id, created_at;`,
-            [name, email, primaryInterest]
+            [name, emailAddress, primaryInterest]
         );
 
         sendFormNotificationEmail('General Registration', data, [
             { label: 'Full Name', value: name },
-            { label: 'Email Address', value: email },
+            { label: 'Email Address', value: emailAddress },
             { label: 'Primary Interest', value: primaryInterest },
         ]).catch((err) => console.error('Failed to send registration email:', err));
 
@@ -58,13 +58,12 @@ export async function POST(request: NextRequest) {
             },
             { status: 201 }
         );
+        } finally { client.release(); }
     } catch (error) {
         console.error('Error submitting registration:', error);
         return NextResponse.json(
             { error: 'Failed to submit registration' },
             { status: 500 }
         );
-    } finally {
-        client.release();
     }
 }

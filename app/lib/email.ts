@@ -5,10 +5,10 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Benin Tech Fest <noreply@info.oheo.site>';
 
 export interface EmailData {
-  name: string;
-  email: string;
-  phone: string;
-  [key: string]: any;
+  name?: string;
+  email?: string;
+  phone?: string;
+  [key: string]: unknown;
 }
 
 function escapeHtml(text: string | number | null | undefined): string {
@@ -122,7 +122,7 @@ export async function sendFormNotificationEmail(
 
     const { error } = await resend.emails.send({
       from: FROM_EMAIL,
-      to: [data.email],
+      to: [data.email!],
       replyTo: FROM_EMAIL,
       subject,
       html,

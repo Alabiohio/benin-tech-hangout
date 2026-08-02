@@ -6,6 +6,14 @@ const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
 });
 
+const TIER_AMOUNTS: Record<string, number> = {
+    explorer: 350000,
+    builders: 1000000,
+    founders: 2000000,
+    vip: 5000000,
+    investors: 20000000,
+};
+
 export async function POST(req: NextRequest) {
     try {
         const body = await req.text();
@@ -20,7 +28,7 @@ export async function POST(req: NextRequest) {
         // Verify the webhook signature
         const expectedSignature = crypto.createHmac('sha512', secret).update(body).digest('hex');
 
-        if (signature !== expectedSignature) {
+        if (!signature || !/^[a-f0-9]{128}$/i.test(signature) || !crypto.timingSafeEqual(Buffer.from(signature, 'hex'), Buffer.from(expectedSignature, 'hex'))) {
             console.warn('Invalid Paystack Webhook Signature');
             return NextResponse.json({ status: 'error', message: 'Invalid signature' }, { status: 400 });
         }
@@ -28,11 +36,16 @@ export async function POST(req: NextRequest) {
         const event = JSON.parse(body);
 
         // Handle the 'charge.success' event
-        if (event.event === 'charge.success') {
+        if (event.event === 'charge.success' && event.data?.status === 'success') {
             const data = event.data;
             const paymentReference = data.reference;
-            const email = data.customer.email;
             const metadata = data.metadata;
+            const ticketType = typeof metadata?.ticket_type === 'string' ? metadata.ticket_type : '';
+
+            if (typeof paymentReference !== 'string' || !TIER_AMOUNTS[ticketType] || data.currency !== 'NGN' || data.amount !== TIER_AMOUNTS[ticketType]) {
+                console.warn('Rejected Paystack webhook with invalid payment details');
+                return NextResponse.json({ status: 'success' }, { status: 200 });
+            }
             
             const client = await pool.connect();
             try {
@@ -47,11 +60,11 @@ export async function POST(req: NextRequest) {
                     // This means the user paid but closed the window before the frontend callback hit our API.
                     // If we passed the form data in metadata during initialization, we could save it here.
                     
-                    console.warn(`Webhook received for payment ${paymentReference} (${email}), but no registration record found in database. The user might have closed the browser early.`);
+                    console.warn(`Webhook received for payment ${paymentReference}, but no registration record was found.`);
                     
                     if (metadata && metadata.custom_fields) {
                         // We could implement fallback insertion here using metadata if we sent it
-                        console.log('Metadata available, fallback insertion can be implemented', metadata);
+                        console.log('Payment metadata is available for reconciliation.');
                     }
                 } else {
                     console.log(`Webhook confirmed: Payment ${paymentReference} is already recorded successfully.`);

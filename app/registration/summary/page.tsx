@@ -34,7 +34,13 @@ export default function RegistrationSummaryPage() {
             return;
         }
         try {
-            setData(JSON.parse(stored));
+            const parsed = JSON.parse(stored) as RegistrationData;
+            if (parsed.tierParam === 'community') {
+                sessionStorage.removeItem('btf_registration');
+                router.replace('/free-pass');
+                return;
+            }
+            setData(parsed);
         } catch {
             router.replace('/registration');
         }
@@ -102,23 +108,33 @@ export default function RegistrationSummaryPage() {
                 // We'll import it at the top level or require it here.
                 const PaystackPop = (await import('@paystack/inline-js')).default;
                 
-                const amountString = tier.price.replace(/[^\d.]/g, '');
-                const amount = parseInt(amountString, 10) * 100;
+                const initialization = await fetch('/api/payments/initialize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        ticket_type: data.tierParam,
+                        email: data.email,
+                        firstName: data.firstName,
+                        lastName: data.lastName,
+                    }),
+                });
+                const initializationData: { accessCode?: string; error?: string } = await initialization.json();
+                if (!initialization.ok || !initializationData.accessCode) {
+                    setError(initializationData.error || 'Unable to start payment. Please try again.');
+                    setIsLoading(false);
+                    return;
+                }
 
                 const paystack = new PaystackPop();
                 paystack.newTransaction({
-                    key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || '',
-                    email: data.email,
-                    amount: amount,
-                    firstname: data.firstName,
-                    lastname: data.lastName,
-                    onSuccess: (transaction: any) => {
+                    accessCode: initializationData.accessCode,
+                    onSuccess: (transaction) => {
                         submitRegistration(transaction.reference);
                     },
                     onCancel: () => {
                         setIsLoading(false);
                     },
-                    onError: (error: any) => {
+                    onError: (error) => {
                         console.error('Payment error:', error);
                         router.push('/registration/failure?reason=' + encodeURIComponent('Payment failed or was cancelled. Please try again.'));
                     }

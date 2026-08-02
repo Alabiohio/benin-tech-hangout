@@ -2,13 +2,13 @@ import { Pool } from 'pg';
 import { NextRequest, NextResponse } from 'next/server';
 import { getClientIp, checkRateLimit } from '@/app/lib/rateLimit';
 import { sendFormNotificationEmail } from '@/app/lib/email';
+import { cleanText, email, invalidFormResponse, phone, readFormBody, rejectOversizedBody, requiredText } from '@/app/lib/formSecurity';
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
 });
 
 const TIER_LABELS: Record<string, string> = {
-    community: 'Community Pass',
     explorer: 'Explorer Pass',
     builders: 'Builders Pass',
     founders: 'Founders Pass',
@@ -16,7 +16,17 @@ const TIER_LABELS: Record<string, string> = {
     investors: 'Investors Pass',
 };
 
+const TIER_AMOUNTS: Record<string, number> = {
+    explorer: 350000,
+    builders: 1000000,
+    founders: 2000000,
+    vip: 5000000,
+    investors: 20000000,
+};
+
 export async function POST(request: NextRequest) {
+    const oversized = rejectOversizedBody(request);
+    if (oversized) return oversized;
     const clientIp = getClientIp(request);
     const rateLimit = checkRateLimit(clientIp);
 
@@ -27,31 +37,26 @@ export async function POST(request: NextRequest) {
         );
     }
 
-    const client = await pool.connect();
-
     try {
-        const data = await request.json();
+        const body = await readFormBody(request);
+        if (!body) return invalidFormResponse();
+        const ticket_type = requiredText(body.ticket_type, 100);
+        const firstName = requiredText(body.firstName);
+        const lastName = requiredText(body.lastName);
+        const emailAddress = email(body.email);
+        const phoneNumber = phone(body.phone, false);
+        const country = requiredText(body.country);
+        const nationality = requiredText(body.nationality);
+        const community = cleanText(body.community, 255);
+        const paymentReference = cleanText(body.paymentReference, 255);
 
-        const {
-            ticket_type,
-            firstName,
-            lastName,
-            email,
-            phone,
-            country,
-            nationality,
-            community,
-            paymentReference,
-        } = data;
+        if (!ticket_type || !TIER_LABELS[ticket_type] || !firstName || !lastName || !emailAddress || phoneNumber === null || !country || !nationality || community === null || paymentReference === null) return invalidFormResponse();
 
-        if (!ticket_type || !firstName || !lastName || !email || !country || !nationality) {
-            return NextResponse.json(
-                { error: 'Missing required fields' },
-                { status: 400 }
-            );
+        if (TIER_AMOUNTS[ticket_type] > 0 && (!paymentReference || !process.env.PAYSTACK_SECRET_KEY)) {
+            return NextResponse.json({ error: 'A verified payment is required for this ticket.' }, { status: 400 });
         }
 
-        if (paymentReference && process.env.PAYSTACK_SECRET_KEY) {
+        if (TIER_AMOUNTS[ticket_type] > 0 && paymentReference && process.env.PAYSTACK_SECRET_KEY) {
             try {
                 const paystackRes = await fetch(`https://api.paystack.co/transaction/verify/${paymentReference}`, {
                     headers: {
@@ -59,7 +64,7 @@ export async function POST(request: NextRequest) {
                     }
                 });
                 const paystackData = await paystackRes.json();
-                if (!paystackRes.ok || !paystackData.status || paystackData.data.status !== 'success') {
+                if (!paystackRes.ok || !paystackData.status || paystackData.data.status !== 'success' || paystackData.data.reference !== paymentReference || paystackData.data.customer?.email?.toLowerCase() !== emailAddress || paystackData.data.amount !== TIER_AMOUNTS[ticket_type]) {
                     return NextResponse.json({ error: 'Payment verification failed' }, { status: 400 });
                 }
             } catch (err) {
@@ -67,6 +72,8 @@ export async function POST(request: NextRequest) {
                 return NextResponse.json({ error: 'Payment verification error' }, { status: 500 });
             }
         }
+        const client = await pool.connect();
+        try {
 
         await client.query(`
             CREATE TABLE IF NOT EXISTS ticket_registrations (
@@ -94,21 +101,31 @@ export async function POST(request: NextRequest) {
             END $$;
         `);
 
+        if (paymentReference) {
+            const existingPayment = await client.query(
+                'SELECT 1 FROM ticket_registrations WHERE payment_reference = $1 LIMIT 1',
+                [paymentReference]
+            );
+            if (existingPayment.rowCount) {
+                return NextResponse.json({ error: 'This payment has already been used.' }, { status: 409 });
+            }
+        }
+
         const result = await client.query(
             `INSERT INTO ticket_registrations
             (ticket_type, first_name, last_name, email, phone, country, nationality, community, payment_reference)
             VALUES
             ($1, $2, $3, $4, $5, $6, $7, $8, $9)
             RETURNING id, created_at;`,
-            [ticket_type, firstName, lastName, email, phone || null, country, nationality, community || null, paymentReference || null]
+            [ticket_type, firstName, lastName, emailAddress, phoneNumber || null, country, nationality, community || null, paymentReference || null]
         );
 
-        sendFormNotificationEmail('Ticket Registration', data, [
+        sendFormNotificationEmail('Ticket Registration', body, [
             { label: 'Ticket Type', value: TIER_LABELS[ticket_type] || ticket_type },
             { label: 'First Name', value: firstName },
             { label: 'Last Name', value: lastName },
-            { label: 'Email Address', value: email },
-            { label: 'Phone Number', value: phone || 'Not provided' },
+            { label: 'Email Address', value: emailAddress },
+            { label: 'Phone Number', value: phoneNumber || 'Not provided' },
             { label: 'Country', value: country },
             { label: 'Nationality', value: nationality },
             { label: 'Community', value: community || 'Not provided' },
@@ -123,13 +140,12 @@ export async function POST(request: NextRequest) {
             },
             { status: 201 }
         );
+        } finally { client.release(); }
     } catch (error) {
         console.error('Error submitting ticket registration:', error);
         return NextResponse.json(
             { error: 'Failed to submit registration' },
             { status: 500 }
         );
-    } finally {
-        client.release();
     }
 }

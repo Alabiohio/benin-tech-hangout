@@ -7,21 +7,98 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Button from "../components/Button";
 
+type FormData = {
+    company_name: string;
+    contact_person: string;
+    email: string;
+    phone: string;
+    interests: string;
+};
+
+type FormErrors = Partial<Record<keyof FormData, string>>;
+
 export default function SponsorPage() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [cooldown, setCooldown] = useState(0);
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormData>({
         company_name: '',
         contact_person: '',
         email: '',
         phone: '',
         interests: ''
     });
+    const [errors, setErrors] = useState<FormErrors>({});
+
+    const validateField = (name: keyof FormData, value: string) => {
+        const trimmedValue = value.trim();
+
+        if (name === 'company_name') {
+            return trimmedValue ? '' : 'Please enter your company name.';
+        }
+
+        if (name === 'contact_person') {
+            return trimmedValue ? '' : 'Please enter the contact person name.';
+        }
+
+        if (name === 'email') {
+            if (!trimmedValue) {
+                return 'Please enter your email address.';
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedValue)) {
+                return 'Please enter a valid email address.';
+            }
+
+            return '';
+        }
+
+        if (name === 'phone') {
+            return trimmedValue ? '' : 'Please enter your phone number.';
+        }
+
+        if (name === 'interests') {
+            return trimmedValue ? '' : 'Please tell us how you would like to partner.';
+        }
+
+        return '';
+    };
+
+    const validateForm = (data: FormData) => {
+        const nextErrors: FormErrors = {};
+
+        const companyError = validateField('company_name', data.company_name);
+        const contactError = validateField('contact_person', data.contact_person);
+        const emailError = validateField('email', data.email);
+        const phoneError = validateField('phone', data.phone);
+        const interestsError = validateField('interests', data.interests);
+
+        if (companyError) nextErrors.company_name = companyError;
+        if (contactError) nextErrors.contact_person = contactError;
+        if (emailError) nextErrors.email = emailError;
+        if (phoneError) nextErrors.phone = phoneError;
+        if (interestsError) nextErrors.interests = interestsError;
+
+        return nextErrors;
+    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        const fieldName = name as keyof FormData;
+        setFormData(prev => ({ ...prev, [fieldName]: value }));
+
+        const fieldError = validateField(fieldName, value);
+        setErrors(prevErrors => {
+            const nextErrors = { ...prevErrors };
+
+            if (fieldError) {
+                nextErrors[fieldName] = fieldError;
+            } else {
+                delete nextErrors[fieldName];
+            }
+
+            return nextErrors;
+        });
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -29,11 +106,28 @@ export default function SponsorPage() {
         setLoading(true);
         setMessage('');
 
+        const trimmedData: FormData = {
+            company_name: formData.company_name.trim(),
+            contact_person: formData.contact_person.trim(),
+            email: formData.email.trim(),
+            phone: formData.phone.trim(),
+            interests: formData.interests.trim()
+        };
+
+        const nextErrors = validateForm(trimmedData);
+        setErrors(nextErrors);
+
+        if (Object.keys(nextErrors).length > 0) {
+            setMessage('Please correct the highlighted fields before submitting.');
+            setLoading(false);
+            return;
+        }
+
         try {
             const response = await fetch('/api/submissions/sponsor', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(trimmedData)
             });
 
             const data = await response.json();
@@ -48,6 +142,7 @@ export default function SponsorPage() {
                     phone: '',
                     interests: ''
                 });
+                setErrors({});
             } else {
                 setMessage(`✗ Error: ${data.error || 'Failed to submit'}`);
             }
@@ -128,7 +223,7 @@ export default function SponsorPage() {
                                             )}
                                         </div>
                                     ) : (
-                                    <form className="space-y-6" onSubmit={handleSubmit}>
+                                    <form className="space-y-6" onSubmit={handleSubmit} noValidate>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <div className="space-y-2">
                                                 <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Company Name</label>
@@ -137,10 +232,12 @@ export default function SponsorPage() {
                                                     name="company_name"
                                                     value={formData.company_name}
                                                     onChange={handleInputChange}
-                                                    className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" 
+                                                    className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400 ${errors.company_name ? 'border-red-400' : 'border-blue-100'}`} 
                                                     placeholder="Your Brand Ltd." 
-                                                    required 
+                                                    aria-invalid={!!errors.company_name}
+                                                    aria-describedby={errors.company_name ? 'company_name-error' : undefined}
                                                 />
+                                                {errors.company_name && <p id="company_name-error" className="mt-2 text-sm text-red-600">{errors.company_name}</p>}
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Contact Person</label>
@@ -149,10 +246,12 @@ export default function SponsorPage() {
                                                     name="contact_person"
                                                     value={formData.contact_person}
                                                     onChange={handleInputChange}
-                                                    className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" 
+                                                    className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400 ${errors.contact_person ? 'border-red-400' : 'border-blue-100'}`} 
                                                     placeholder="John Doe" 
-                                                    required 
+                                                    aria-invalid={!!errors.contact_person}
+                                                    aria-describedby={errors.contact_person ? 'contact_person-error' : undefined}
                                                 />
+                                                {errors.contact_person && <p id="contact_person-error" className="mt-2 text-sm text-red-600">{errors.contact_person}</p>}
                                             </div>
                                         </div>
 
@@ -164,10 +263,12 @@ export default function SponsorPage() {
                                                     name="email"
                                                     value={formData.email}
                                                     onChange={handleInputChange}
-                                                    className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" 
+                                                    className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400 ${errors.email ? 'border-red-400' : 'border-blue-100'}`} 
                                                     placeholder="john@brand.com" 
-                                                    required 
+                                                    aria-invalid={!!errors.email}
+                                                    aria-describedby={errors.email ? 'email-error' : undefined}
                                                 />
+                                                {errors.email && <p id="email-error" className="mt-2 text-sm text-red-600">{errors.email}</p>}
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Phone Number</label>
@@ -176,10 +277,12 @@ export default function SponsorPage() {
                                                     name="phone"
                                                     value={formData.phone}
                                                     onChange={handleInputChange}
-                                                    className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" 
+                                                    className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400 ${errors.phone ? 'border-red-400' : 'border-blue-100'}`} 
                                                     placeholder="+234 XXX XXXX" 
-                                                    required 
+                                                    aria-invalid={!!errors.phone}
+                                                    aria-describedby={errors.phone ? 'phone-error' : undefined}
                                                 />
+                                                {errors.phone && <p id="phone-error" className="mt-2 text-sm text-red-600">{errors.phone}</p>}
                                             </div>
                                         </div>
 
@@ -190,10 +293,12 @@ export default function SponsorPage() {
                                                 name="interests"
                                                 value={formData.interests}
                                                 onChange={handleInputChange}
-                                                className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 resize-none font-medium placeholder:text-gray-400" 
+                                                className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 resize-none font-medium placeholder:text-gray-400 ${errors.interests ? 'border-red-400' : 'border-blue-100'}`} 
                                                 placeholder="Tell us about your brand objectives and what you're looking for..."
-                                                required
+                                                aria-invalid={!!errors.interests}
+                                                aria-describedby={errors.interests ? 'interests-error' : undefined}
                                             />
+                                            {errors.interests && <p id="interests-error" className="mt-2 text-sm text-red-600">{errors.interests}</p>}
                                         </div>
 
                                         <Button type="submit" disabled={loading} variant="biro" className="w-full !py-3 border-0">

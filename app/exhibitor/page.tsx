@@ -8,11 +8,23 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import React from "react";
 
+type FormData = {
+    company: string;
+    name: string;
+    phone: string;
+    email: string;
+    website: string;
+    description: string;
+    registration_type: string;
+};
+
+type FormErrors = Partial<Record<keyof FormData, string>>;
+
 export default function ExhibitorPage() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [cooldown, setCooldown] = useState(0);
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormData>({
         company: '',
         name: '',
         phone: '',
@@ -21,10 +33,77 @@ export default function ExhibitorPage() {
         description: '',
         registration_type: 'exhibitor'
     });
+    const [errors, setErrors] = useState<FormErrors>({});
+
+    const validateField = (name: keyof FormData, value: string) => {
+        const trimmedValue = value.trim();
+
+        if (name === 'company') {
+            return trimmedValue ? '' : 'Please enter your company or brand name.';
+        }
+
+        if (name === 'name') {
+            return trimmedValue ? '' : 'Please enter the contact person name.';
+        }
+
+        if (name === 'phone') {
+            return trimmedValue ? '' : 'Please enter your phone number.';
+        }
+
+        if (name === 'email') {
+            if (!trimmedValue) {
+                return 'Please enter your email address.';
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedValue)) {
+                return 'Please enter a valid email address.';
+            }
+
+            return '';
+        }
+
+        if (name === 'registration_type') {
+            return trimmedValue ? '' : 'Please select how you are applying.';
+        }
+
+        return '';
+    };
+
+    const validateForm = (data: FormData) => {
+        const nextErrors: FormErrors = {};
+
+        const companyError = validateField('company', data.company);
+        const nameError = validateField('name', data.name);
+        const phoneError = validateField('phone', data.phone);
+        const emailError = validateField('email', data.email);
+        const registrationTypeError = validateField('registration_type', data.registration_type);
+
+        if (companyError) nextErrors.company = companyError;
+        if (nameError) nextErrors.name = nameError;
+        if (phoneError) nextErrors.phone = phoneError;
+        if (emailError) nextErrors.email = emailError;
+        if (registrationTypeError) nextErrors.registration_type = registrationTypeError;
+
+        return nextErrors;
+    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        const fieldName = name as keyof FormData;
+        setFormData(prev => ({ ...prev, [fieldName]: value }));
+
+        const fieldError = validateField(fieldName, value);
+        setErrors(prevErrors => {
+            const nextErrors = { ...prevErrors };
+
+            if (fieldError) {
+                nextErrors[fieldName] = fieldError;
+            } else {
+                delete nextErrors[fieldName];
+            }
+
+            return nextErrors;
+        });
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -32,11 +111,30 @@ export default function ExhibitorPage() {
         setLoading(true);
         setMessage('');
 
+        const trimmedData: FormData = {
+            company: formData.company.trim(),
+            name: formData.name.trim(),
+            phone: formData.phone.trim(),
+            email: formData.email.trim(),
+            website: formData.website.trim(),
+            description: formData.description.trim(),
+            registration_type: formData.registration_type.trim()
+        };
+
+        const nextErrors = validateForm(trimmedData);
+        setErrors(nextErrors);
+
+        if (Object.keys(nextErrors).length > 0) {
+            setMessage('Please correct the highlighted fields before submitting.');
+            setLoading(false);
+            return;
+        }
+
         try {
             const response = await fetch('/api/submissions/exhibitor', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(trimmedData)
             });
 
             const data = await response.json();
@@ -53,6 +151,7 @@ export default function ExhibitorPage() {
                     description: '',
                     registration_type: 'exhibitor'
                 });
+                setErrors({});
             } else {
                 setMessage(`✗ Error: ${data.error || 'Failed to submit'}`);
             }
@@ -129,7 +228,7 @@ export default function ExhibitorPage() {
                                             )}
                                         </div>
                                     ) : (
-                                    <form className="space-y-6" onSubmit={handleSubmit}>
+                                    <form className="space-y-6" onSubmit={handleSubmit} noValidate>
                                         <div>
                                             <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Company / Brand Name</label>
                                             <input 
@@ -137,10 +236,12 @@ export default function ExhibitorPage() {
                                                 name="company"
                                                 value={formData.company}
                                                 onChange={handleInputChange}
-                                                className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900" 
+                                                className={`w-full px-5 py-3.5 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 ${errors.company ? 'border-red-400' : 'border-blue-100'}`} 
                                                 placeholder="Acme Corp" 
-                                                required 
+                                                aria-invalid={!!errors.company}
+                                                aria-describedby={errors.company ? 'company-error' : undefined}
                                             />
+                                            {errors.company && <p id="company-error" className="mt-2 text-sm text-red-600">{errors.company}</p>}
                                         </div>
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -150,12 +251,14 @@ export default function ExhibitorPage() {
                                                     name="registration_type"
                                                     value={formData.registration_type}
                                                     onChange={handleInputChange}
-                                                    className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900"
-                                                    required
+                                                    className={`w-full px-5 py-3.5 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 ${errors.registration_type ? 'border-red-400' : 'border-blue-100'}`}
+                                                    aria-invalid={!!errors.registration_type}
+                                                    aria-describedby={errors.registration_type ? 'registration_type-error' : undefined}
                                                 >
                                                     <option value="exhibitor">Exhibitor</option>
                                                     <option value="vendor">Vendor</option>
                                                 </select>
+                                                {errors.registration_type && <p id="registration_type-error" className="mt-2 text-sm text-red-600">{errors.registration_type}</p>}
                                             </div>
                                             <div>
                                                 <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Contact Person</label>
@@ -164,10 +267,12 @@ export default function ExhibitorPage() {
                                                     name="name"
                                                     value={formData.name}
                                                     onChange={handleInputChange}
-                                                    className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900" 
+                                                    className={`w-full px-5 py-3.5 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 ${errors.name ? 'border-red-400' : 'border-blue-100'}`} 
                                                     placeholder="Jane Doe" 
-                                                    required 
+                                                    aria-invalid={!!errors.name}
+                                                    aria-describedby={errors.name ? 'name-error' : undefined}
                                                 />
+                                                {errors.name && <p id="name-error" className="mt-2 text-sm text-red-600">{errors.name}</p>}
                                             </div>
                                             <div>
                                                 <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Phone Number</label>
@@ -176,10 +281,12 @@ export default function ExhibitorPage() {
                                                     name="phone"
                                                     value={formData.phone}
                                                     onChange={handleInputChange}
-                                                    className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900" 
+                                                    className={`w-full px-5 py-3.5 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 ${errors.phone ? 'border-red-400' : 'border-blue-100'}`} 
                                                     placeholder="+234 XXX XXXX" 
-                                                    required 
+                                                    aria-invalid={!!errors.phone}
+                                                    aria-describedby={errors.phone ? 'phone-error' : undefined}
                                                 />
+                                                {errors.phone && <p id="phone-error" className="mt-2 text-sm text-red-600">{errors.phone}</p>}
                                             </div>
                                         </div>
 
@@ -191,10 +298,12 @@ export default function ExhibitorPage() {
                                                     name="email"
                                                     value={formData.email}
                                                     onChange={handleInputChange}
-                                                    className="w-full px-5 py-3.5 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900" 
+                                                    className={`w-full px-5 py-3.5 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 ${errors.email ? 'border-red-400' : 'border-blue-100'}`} 
                                                     placeholder="jane@acmecorp.com" 
-                                                    required 
+                                                    aria-invalid={!!errors.email}
+                                                    aria-describedby={errors.email ? 'email-error' : undefined}
                                                 />
+                                                {errors.email && <p id="email-error" className="mt-2 text-sm text-red-600">{errors.email}</p>}
                                             </div>
                                             <div>
                                                 <label className="block text-xs font-bold text-slate-700 mb-2 uppercase tracking-wider">Website (Optional)</label>

@@ -2,22 +2,100 @@
 
 import React, { useState } from 'react';
 
+type FormData = {
+    name: string;
+    email: string;
+    primaryInterest: string;
+};
+
+type FormErrors = Partial<Record<keyof FormData, string>>;
+
 export default function Registration() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormData>({
         name: '',
         email: '',
         primaryInterest: ''
     });
+    const [errors, setErrors] = useState<FormErrors>({});
+
+    const validateField = (name: keyof FormData, value: string) => {
+        const trimmedValue = value.trim();
+
+        if (name === 'name') {
+            return trimmedValue ? '' : 'Please enter your full name.';
+        }
+
+        if (name === 'email') {
+            if (!trimmedValue) {
+                return 'Please enter your email address.';
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedValue)) {
+                return 'Please enter a valid email address.';
+            }
+
+            return '';
+        }
+
+        if (name === 'primaryInterest') {
+            return trimmedValue ? '' : 'Please select your primary interest.';
+        }
+
+        return '';
+    };
+
+    const validateForm = (data: FormData) => {
+        const nextErrors: FormErrors = {};
+
+        const nameError = validateField('name', data.name);
+        const emailError = validateField('email', data.email);
+        const interestError = validateField('primaryInterest', data.primaryInterest);
+
+        if (nameError) nextErrors.name = nameError;
+        if (emailError) nextErrors.email = emailError;
+        if (interestError) nextErrors.primaryInterest = interestError;
+
+        return nextErrors;
+    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        const fieldName = name as keyof FormData;
+
+        setFormData(prev => ({ ...prev, [fieldName]: value }));
+
+        const fieldError = validateField(fieldName, value);
+        setErrors(prevErrors => {
+            const nextErrors = { ...prevErrors };
+
+            if (fieldError) {
+                nextErrors[fieldName] = fieldError;
+            } else {
+                delete nextErrors[fieldName];
+            }
+
+            return nextErrors;
+        });
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const trimmedData: FormData = {
+            name: formData.name.trim(),
+            email: formData.email.trim(),
+            primaryInterest: formData.primaryInterest.trim()
+        };
+
+        const nextErrors = validateForm(trimmedData);
+        setErrors(nextErrors);
+
+        if (Object.keys(nextErrors).length > 0) {
+            setMessage('Please correct the highlighted fields before submitting.');
+            return;
+        }
+
         setLoading(true);
         setMessage('');
 
@@ -25,7 +103,7 @@ export default function Registration() {
             const response = await fetch('/api/submissions/registration', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(trimmedData)
             });
 
             const data = await response.json();
@@ -33,6 +111,7 @@ export default function Registration() {
             if (response.ok) {
                 setMessage('✓ Registration successful! Check your email for confirmation.');
                 setFormData({ name: '', email: '', primaryInterest: '' });
+                setErrors({});
             } else {
                 setMessage(`✗ Error: ${data.error || 'Failed to submit'}`);
             }
@@ -106,7 +185,7 @@ export default function Registration() {
                                 )}
                             </div>
                         )}
-                        <form className="space-y-6" onSubmit={handleSubmit}>
+                        <form className="space-y-6" onSubmit={handleSubmit} noValidate>
                             <div className="grid grid-cols-1 gap-6">
                                 <div>
                                     <label className="block text-[10px] font-black text-gray-400 mb-2 uppercase tracking-[0.2em]">Full Name</label>
@@ -115,10 +194,12 @@ export default function Registration() {
                                         name="name"
                                         value={formData.name}
                                         onChange={handleInputChange}
-                                        className="w-full px-5 py-4 rounded-xl border border-gray-100 bg-gray-50 focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium"
+                                        className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-gray-900 font-medium ${errors.name ? 'border-red-400 bg-red-50 focus:border-red-500' : 'border-gray-100 bg-gray-50 focus:bg-white focus:border-biro-blue'}`}
                                         placeholder="John Doe"
-                                        required
+                                        aria-invalid={!!errors.name}
+                                        aria-describedby={errors.name ? 'name-error' : undefined}
                                     />
+                                    {errors.name && <p id="name-error" className="mt-2 text-sm text-red-600">{errors.name}</p>}
                                 </div>
 
                                 <div>
@@ -128,10 +209,12 @@ export default function Registration() {
                                         name="email"
                                         value={formData.email}
                                         onChange={handleInputChange}
-                                        className="w-full px-5 py-4 rounded-xl border border-gray-100 bg-gray-50 focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium"
+                                        className={`w-full px-5 py-4 rounded-xl border outline-none transition-all text-gray-900 font-medium ${errors.email ? 'border-red-400 bg-red-50 focus:border-red-500' : 'border-gray-100 bg-gray-50 focus:bg-white focus:border-biro-blue'}`}
                                         placeholder="john@example.com"
-                                        required
+                                        aria-invalid={!!errors.email}
+                                        aria-describedby={errors.email ? 'email-error' : undefined}
                                     />
+                                    {errors.email && <p id="email-error" className="mt-2 text-sm text-red-600">{errors.email}</p>}
                                 </div>
 
                                 <div>
@@ -140,8 +223,9 @@ export default function Registration() {
                                         name="primaryInterest"
                                         value={formData.primaryInterest}
                                         onChange={handleInputChange}
-                                        className="w-full px-5 py-4 rounded-xl border border-gray-100 bg-gray-50 focus:bg-white focus:border-biro-blue outline-none transition-all bg-white text-gray-900 font-medium cursor-pointer"
-                                        required
+                                        className={`w-full px-5 py-4 rounded-xl border outline-none transition-all bg-white text-gray-900 font-medium cursor-pointer ${errors.primaryInterest ? 'border-red-400 bg-red-50 focus:border-red-500' : 'border-gray-100 bg-gray-50 focus:bg-white focus:border-biro-blue'}`}
+                                        aria-invalid={!!errors.primaryInterest}
+                                        aria-describedby={errors.primaryInterest ? 'interest-error' : undefined}
                                     >
                                         <option value="">Select Interest</option>
                                         <option value="Development">Development</option>
@@ -150,6 +234,7 @@ export default function Registration() {
                                         <option value="Investment">Investment</option>
                                         <option value="Sponsorship">Sponsorship</option>
                                     </select>
+                                    {errors.primaryInterest && <p id="interest-error" className="mt-2 text-sm text-red-600">{errors.primaryInterest}</p>}
                                 </div>
                             </div>
 

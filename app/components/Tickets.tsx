@@ -151,9 +151,13 @@ export default function Tickets({ onRegisterClick }: { onRegisterClick: () => vo
                                                 : tier.name === 'Investors Pass' ? 'investors'
                                                 : tier.name.toLowerCase();
 
+                                            const registrationHref = tierSlug === 'community'
+                                                ? '/free-pass'
+                                                : `/registration?tier=${tierSlug}`;
+
                                             return (
                                                 <Button
-                                                    href={`/registration?tier=${tierSlug}`}
+                                                    href={registrationHref}
                                                     variant='outline'
                                                     className={`w-full relative z-10 !px-4 !py-3 text-sm whitespace-nowrap text-white !bg-black hover:!bg-transparent hover:!text-black`}
                                                 >

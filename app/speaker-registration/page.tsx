@@ -7,11 +7,24 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Button from "../components/Button";
 
+type FormData = {
+    application_type: string;
+    name: string;
+    email: string;
+    phone: string;
+    speaker_name: string;
+    topic: string;
+    speaker_category: string;
+    why_speak: string;
+};
+
+type FormErrors = Partial<Record<keyof FormData, string>>;
+
 export default function SpeakerRegistrationPage() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [cooldown, setCooldown] = useState(0);
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormData>({
         application_type: 'self',
         name: '',
         email: '',
@@ -21,10 +34,77 @@ export default function SpeakerRegistrationPage() {
         speaker_category: 'Keynote',
         why_speak: ''
     });
+    const [errors, setErrors] = useState<FormErrors>({});
+
+    const validateField = (name: keyof FormData, value: string) => {
+        const trimmedValue = value.trim();
+
+        if (name === 'name') {
+            return trimmedValue ? '' : 'Please enter your name.';
+        }
+
+        if (name === 'email') {
+            if (!trimmedValue) {
+                return 'Please enter your email address.';
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedValue)) {
+                return 'Please enter a valid email address.';
+            }
+
+            return '';
+        }
+
+        if (name === 'phone') {
+            return trimmedValue ? '' : 'Please enter your phone number.';
+        }
+
+        if (name === 'topic') {
+            return trimmedValue ? '' : 'Please enter a talk topic or area of expertise.';
+        }
+
+        if (name === 'speaker_category') {
+            return trimmedValue ? '' : 'Please select a speaker category.';
+        }
+
+        return '';
+    };
+
+    const validateForm = (data: FormData) => {
+        const nextErrors: FormErrors = {};
+
+        const nameError = validateField('name', data.name);
+        const emailError = validateField('email', data.email);
+        const phoneError = validateField('phone', data.phone);
+        const topicError = validateField('topic', data.topic);
+        const speakerCategoryError = validateField('speaker_category', data.speaker_category);
+
+        if (nameError) nextErrors.name = nameError;
+        if (emailError) nextErrors.email = emailError;
+        if (phoneError) nextErrors.phone = phoneError;
+        if (topicError) nextErrors.topic = topicError;
+        if (speakerCategoryError) nextErrors.speaker_category = speakerCategoryError;
+
+        return nextErrors;
+    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        const fieldName = name as keyof FormData;
+        setFormData(prev => ({ ...prev, [fieldName]: value }));
+
+        const fieldError = validateField(fieldName, value);
+        setErrors(prevErrors => {
+            const nextErrors = { ...prevErrors };
+
+            if (fieldError) {
+                nextErrors[fieldName] = fieldError;
+            } else {
+                delete nextErrors[fieldName];
+            }
+
+            return nextErrors;
+        });
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -32,11 +112,31 @@ export default function SpeakerRegistrationPage() {
         setLoading(true);
         setMessage('');
 
+        const trimmedData: FormData = {
+            application_type: formData.application_type.trim(),
+            name: formData.name.trim(),
+            email: formData.email.trim(),
+            phone: formData.phone.trim(),
+            speaker_name: formData.speaker_name.trim(),
+            topic: formData.topic.trim(),
+            speaker_category: formData.speaker_category.trim(),
+            why_speak: formData.why_speak.trim()
+        };
+
+        const nextErrors = validateForm(trimmedData);
+        setErrors(nextErrors);
+
+        if (Object.keys(nextErrors).length > 0) {
+            setMessage('Please correct the highlighted fields before submitting.');
+            setLoading(false);
+            return;
+        }
+
         try {
             const response = await fetch('/api/submissions/speaker', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(trimmedData)
             });
 
             const data = await response.json();
@@ -54,6 +154,7 @@ export default function SpeakerRegistrationPage() {
                     speaker_category: 'Keynote',
                     why_speak: ''
                 });
+                setErrors({});
             } else {
                 setMessage(`✗ Error: ${data.error || 'Failed to submit'}`);
             }
@@ -134,7 +235,7 @@ export default function SpeakerRegistrationPage() {
                                             )}
                                         </div>
                                     ) : (
-                                    <form className="space-y-6" onSubmit={handleSubmit}>
+                                    <form className="space-y-6" onSubmit={handleSubmit} noValidate>
                                         <div className="space-y-2">
                                             <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">I am...</label>
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -170,10 +271,12 @@ export default function SpeakerRegistrationPage() {
                                                 name="name"
                                                 value={formData.name}
                                                 onChange={handleInputChange}
-                                                className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" 
+                                                className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400 ${errors.name ? 'border-red-400' : 'border-blue-100'}`} 
                                                 placeholder="John Doe" 
-                                                required 
+                                                aria-invalid={!!errors.name}
+                                                aria-describedby={errors.name ? 'name-error' : undefined}
                                             />
+                                            {errors.name && <p id="name-error" className="mt-2 text-sm text-red-600">{errors.name}</p>}
                                         </div>
 
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -184,10 +287,12 @@ export default function SpeakerRegistrationPage() {
                                                     name="email"
                                                     value={formData.email}
                                                     onChange={handleInputChange}
-                                                    className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" 
+                                                    className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400 ${errors.email ? 'border-red-400' : 'border-blue-100'}`} 
                                                     placeholder="john@example.com" 
-                                                    required 
+                                                    aria-invalid={!!errors.email}
+                                                    aria-describedby={errors.email ? 'email-error' : undefined}
                                                 />
+                                                {errors.email && <p id="email-error" className="mt-2 text-sm text-red-600">{errors.email}</p>}
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Phone Number</label>
@@ -196,10 +301,12 @@ export default function SpeakerRegistrationPage() {
                                                     name="phone"
                                                     value={formData.phone}
                                                     onChange={handleInputChange}
-                                                    className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" 
+                                                    className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400 ${errors.phone ? 'border-red-400' : 'border-blue-100'}`} 
                                                     placeholder="+234 XXX XXXX" 
-                                                    required 
+                                                    aria-invalid={!!errors.phone}
+                                                    aria-describedby={errors.phone ? 'phone-error' : undefined}
                                                 />
+                                                {errors.phone && <p id="phone-error" className="mt-2 text-sm text-red-600">{errors.phone}</p>}
                                             </div>
                                         </div>
 
@@ -222,10 +329,12 @@ export default function SpeakerRegistrationPage() {
                                                 name="topic"
                                                 value={formData.topic}
                                                 onChange={handleInputChange}
-                                                className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" 
+                                                className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400 ${errors.topic ? 'border-red-400' : 'border-blue-100'}`} 
                                                 placeholder="e.g. AI, FinTech, Creative Economy, Scaling Tech Roles" 
-                                                required 
+                                                aria-invalid={!!errors.topic}
+                                                aria-describedby={errors.topic ? 'topic-error' : undefined}
                                             />
+                                            {errors.topic && <p id="topic-error" className="mt-2 text-sm text-red-600">{errors.topic}</p>}
                                         </div>
 
                                         <div className="space-y-2">
@@ -234,13 +343,15 @@ export default function SpeakerRegistrationPage() {
                                                 name="speaker_category"
                                                 value={formData.speaker_category}
                                                 onChange={handleInputChange}
-                                                className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium" 
-                                                required 
+                                                className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium ${errors.speaker_category ? 'border-red-400' : 'border-blue-100'}`} 
+                                                aria-invalid={!!errors.speaker_category}
+                                                aria-describedby={errors.speaker_category ? 'speaker_category-error' : undefined}
                                             >
                                                 <option value="Keynote">Keynote</option>
                                                 <option value="Panelists">Panelists</option>
                                                 <option value="Facilitators">Facilitators</option>
                                             </select>
+                                            {errors.speaker_category && <p id="speaker_category-error" className="mt-2 text-sm text-red-600">{errors.speaker_category}</p>}
                                         </div>
 
                                         <div className="space-y-2">

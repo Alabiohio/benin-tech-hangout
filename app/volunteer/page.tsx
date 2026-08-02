@@ -7,11 +7,22 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import Button from "../components/Button";
 
+type FormData = {
+    name: string;
+    email: string;
+    phone: string;
+    skills: string;
+    availability: string;
+    motivation: string;
+};
+
+type FormErrors = Partial<Record<keyof FormData, string>>;
+
 export default function VolunteerPage() {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [cooldown, setCooldown] = useState(0);
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<FormData>({
         name: '',
         email: '',
         phone: '',
@@ -19,10 +30,77 @@ export default function VolunteerPage() {
         availability: '',
         motivation: ''
     });
+    const [errors, setErrors] = useState<FormErrors>({});
+
+    const validateField = (name: keyof FormData, value: string) => {
+        const trimmedValue = value.trim();
+
+        if (name === 'name') {
+            return trimmedValue ? '' : 'Please enter your full name.';
+        }
+
+        if (name === 'email') {
+            if (!trimmedValue) {
+                return 'Please enter your email address.';
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedValue)) {
+                return 'Please enter a valid email address.';
+            }
+
+            return '';
+        }
+
+        if (name === 'phone') {
+            return trimmedValue ? '' : 'Please enter your phone number.';
+        }
+
+        if (name === 'availability') {
+            return trimmedValue ? '' : 'Please select your preferred area.';
+        }
+
+        if (name === 'motivation') {
+            return trimmedValue ? '' : 'Please tell us why you want to volunteer.';
+        }
+
+        return '';
+    };
+
+    const validateForm = (data: FormData) => {
+        const nextErrors: FormErrors = {};
+
+        const nameError = validateField('name', data.name);
+        const emailError = validateField('email', data.email);
+        const phoneError = validateField('phone', data.phone);
+        const availabilityError = validateField('availability', data.availability);
+        const motivationError = validateField('motivation', data.motivation);
+
+        if (nameError) nextErrors.name = nameError;
+        if (emailError) nextErrors.email = emailError;
+        if (phoneError) nextErrors.phone = phoneError;
+        if (availabilityError) nextErrors.availability = availabilityError;
+        if (motivationError) nextErrors.motivation = motivationError;
+
+        return nextErrors;
+    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        const fieldName = name as keyof FormData;
+        setFormData(prev => ({ ...prev, [fieldName]: value }));
+
+        const fieldError = validateField(fieldName, value);
+        setErrors(prevErrors => {
+            const nextErrors = { ...prevErrors };
+
+            if (fieldError) {
+                nextErrors[fieldName] = fieldError;
+            } else {
+                delete nextErrors[fieldName];
+            }
+
+            return nextErrors;
+        });
     };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -30,11 +108,29 @@ export default function VolunteerPage() {
         setLoading(true);
         setMessage('');
 
+        const trimmedData: FormData = {
+            name: formData.name.trim(),
+            email: formData.email.trim(),
+            phone: formData.phone.trim(),
+            skills: formData.skills.trim(),
+            availability: formData.availability.trim(),
+            motivation: formData.motivation.trim()
+        };
+
+        const nextErrors = validateForm(trimmedData);
+        setErrors(nextErrors);
+
+        if (Object.keys(nextErrors).length > 0) {
+            setMessage('Please correct the highlighted fields before submitting.');
+            setLoading(false);
+            return;
+        }
+
         try {
             const response = await fetch('/api/submissions/volunteer', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(trimmedData)
             });
 
             const data = await response.json();
@@ -50,6 +146,7 @@ export default function VolunteerPage() {
                     availability: '',
                     motivation: ''
                 });
+                setErrors({});
             } else {
                 setMessage(`✗ Error: ${data.error || 'Failed to submit'}`);
             }
@@ -131,7 +228,7 @@ export default function VolunteerPage() {
                                             )}
                                         </div>
                                     ) : (
-                                    <form className="space-y-6" onSubmit={handleSubmit}>
+                                    <form className="space-y-6" onSubmit={handleSubmit} noValidate>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                             <div className="space-y-2">
                                                 <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Full Name</label>
@@ -140,10 +237,12 @@ export default function VolunteerPage() {
                                                     name="name"
                                                     value={formData.name}
                                                     onChange={handleInputChange}
-                                                    className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" 
+                                                    className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400 ${errors.name ? 'border-red-400' : 'border-blue-100'}`} 
                                                     placeholder="John Doe" 
-                                                    required 
+                                                    aria-invalid={!!errors.name}
+                                                    aria-describedby={errors.name ? 'name-error' : undefined}
                                                 />
+                                                {errors.name && <p id="name-error" className="mt-2 text-sm text-red-600">{errors.name}</p>}
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Email Address</label>
@@ -152,10 +251,12 @@ export default function VolunteerPage() {
                                                     name="email"
                                                     value={formData.email}
                                                     onChange={handleInputChange}
-                                                    className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" 
+                                                    className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400 ${errors.email ? 'border-red-400' : 'border-blue-100'}`} 
                                                     placeholder="john@example.com" 
-                                                    required 
+                                                    aria-invalid={!!errors.email}
+                                                    aria-describedby={errors.email ? 'email-error' : undefined}
                                                 />
+                                                {errors.email && <p id="email-error" className="mt-2 text-sm text-red-600">{errors.email}</p>}
                                             </div>
                                         </div>
 
@@ -167,10 +268,12 @@ export default function VolunteerPage() {
                                                     name="phone"
                                                     value={formData.phone}
                                                     onChange={handleInputChange}
-                                                    className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" 
+                                                    className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400 ${errors.phone ? 'border-red-400' : 'border-blue-100'}`} 
                                                     placeholder="+234 XXX XXXX" 
-                                                    required 
+                                                    aria-invalid={!!errors.phone}
+                                                    aria-describedby={errors.phone ? 'phone-error' : undefined}
                                                 />
+                                                {errors.phone && <p id="phone-error" className="mt-2 text-sm text-red-600">{errors.phone}</p>}
                                             </div>
                                             <div className="space-y-2">
                                                 <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Preferred Area</label>
@@ -178,7 +281,9 @@ export default function VolunteerPage() {
                                                     name="availability"
                                                     value={formData.availability}
                                                     onChange={handleInputChange}
-                                                    className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 appearance-none font-medium"
+                                                    className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 appearance-none font-medium ${errors.availability ? 'border-red-400' : 'border-blue-100'}`}
+                                                    aria-invalid={!!errors.availability}
+                                                    aria-describedby={errors.availability ? 'availability-error' : undefined}
                                                 >
                                                     <option value="" className="text-gray-500">Select an area of interest</option>
                                                     <option className="text-gray-900">Logistics & Operations</option>
@@ -188,6 +293,7 @@ export default function VolunteerPage() {
                                                     <option className="text-gray-900">Photography & Videography</option>
                                                     <option className="text-gray-900">Other</option>
                                                 </select>
+                                                {errors.availability && <p id="availability-error" className="mt-2 text-sm text-red-600">{errors.availability}</p>}
                                             </div>
                                         </div>
 
@@ -210,9 +316,12 @@ export default function VolunteerPage() {
                                                 name="motivation"
                                                 value={formData.motivation}
                                                 onChange={handleInputChange}
-                                                className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 resize-none font-medium placeholder:text-gray-400" 
+                                                className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 resize-none font-medium placeholder:text-gray-400 ${errors.motivation ? 'border-red-400' : 'border-blue-100'}`} 
                                                 placeholder="Tell us briefly about your motivation and any relevant experience..."
+                                                aria-invalid={!!errors.motivation}
+                                                aria-describedby={errors.motivation ? 'motivation-error' : undefined}
                                             />
+                                            {errors.motivation && <p id="motivation-error" className="mt-2 text-sm text-red-600">{errors.motivation}</p>}
                                         </div>
 
                                         <Button type="submit" disabled={loading} variant="biro" className="w-full !py-3 text-xl rounded-2xl border-0">

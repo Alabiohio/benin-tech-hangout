@@ -15,11 +15,19 @@ import { Suspense } from 'react';
 function RegistrationContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
-    const tierParam = searchParams.get('tier') || 'community';
-    const tier = ticketTiers[tierParam] || ticketTiers['community'];
+    const requestedTier = searchParams.get('tier');
+    const tierParam = requestedTier && requestedTier !== 'community' && ticketTiers[requestedTier]
+        ? requestedTier
+        : 'explorer';
+    const tier = ticketTiers[tierParam];
+
+    useEffect(() => {
+        if (!requestedTier || requestedTier === 'community' || !ticketTiers[requestedTier]) {
+            router.replace('/free-pass');
+        }
+    }, [requestedTier, router]);
 
     const colorsMap: Record<string, any> = {
-        'community': { bg: 'bg-brand-green', text: 'text-brand-green', border: 'border-brand-green/30' },
         'explorer': { bg: 'bg-brand-blue', text: 'text-brand-blue', border: 'border-brand-blue/30' },
         'builders': { bg: 'bg-brand-purple', text: 'text-brand-purple', border: 'border-brand-purple/30' },
         'founders': { bg: 'bg-brand-red', text: 'text-brand-red', border: 'border-brand-red/30' },
@@ -29,6 +37,7 @@ function RegistrationContent() {
     const tierColor = colorsMap[tierParam] || colorsMap['community'];
 
     const [error, setError] = useState('');
+    const [errors, setErrors] = useState<Partial<Record<keyof typeof formData, string>>>({});
 
     const [formData, setFormData] = useState({
         firstName: '',
@@ -39,6 +48,69 @@ function RegistrationContent() {
         nationality: '',
         community: '',
     });
+
+    const validateField = (name: keyof typeof formData, value: string) => {
+        const trimmedValue = value.trim();
+
+        if (name === 'firstName') {
+            return trimmedValue ? '' : 'Please enter your first name.';
+        }
+
+        if (name === 'lastName') {
+            return trimmedValue ? '' : 'Please enter your last name.';
+        }
+
+        if (name === 'email') {
+            if (!trimmedValue) {
+                return 'Please enter your email address.';
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedValue)) {
+                return 'Please enter a valid email address.';
+            }
+
+            return '';
+        }
+
+        if (name === 'phone') {
+            if (!trimmedValue) {
+                return 'Please enter your phone number.';
+            }
+
+            if (!/^\+?[0-9\s()-]{7,15}$/.test(trimmedValue)) {
+                return 'Please enter a valid phone number.';
+            }
+
+            return '';
+        }
+
+        if (name === 'country') {
+            return trimmedValue ? '' : 'Please enter your country of residence.';
+        }
+
+        if (name === 'nationality') {
+            return trimmedValue ? '' : 'Please enter your nationality.';
+        }
+
+        return '';
+    };
+
+    const validateForm = (data: typeof formData) => {
+        const nextErrors: Partial<Record<keyof typeof formData, string>> = {};
+
+        (Object.keys(data) as Array<keyof typeof formData>).forEach((fieldName) => {
+            if (fieldName === 'community') {
+                return;
+            }
+
+            const fieldError = validateField(fieldName, data[fieldName]);
+            if (fieldError) {
+                nextErrors[fieldName] = fieldError;
+            }
+        });
+
+        return nextErrors;
+    };
 
     // Restore form data if user navigates back from the summary page
     useEffect(() => {
@@ -63,29 +135,52 @@ function RegistrationContent() {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        const fieldName = name as keyof typeof formData;
+
+        setFormData(prev => ({ ...prev, [fieldName]: value }));
         setError('');
+
+        const fieldError = validateField(fieldName, value);
+        setErrors(prevErrors => {
+            const nextErrors = { ...prevErrors };
+
+            if (fieldError) {
+                nextErrors[fieldName] = fieldError;
+            } else {
+                delete nextErrors[fieldName];
+            }
+
+            return nextErrors;
+        });
     };
 
     const handleNext = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError('');
 
-        if (!formData.firstName.trim() || !formData.lastName.trim() || !formData.email.trim() || !formData.country.trim() || !formData.nationality.trim() || !formData.phone.trim()) {
-            setError('Please fill in all required fields');
-            return;
-        }
+        const trimmedData = {
+            ...formData,
+            firstName: formData.firstName.trim(),
+            lastName: formData.lastName.trim(),
+            email: formData.email.trim(),
+            phone: formData.phone.trim(),
+            country: formData.country.trim(),
+            nationality: formData.nationality.trim(),
+            community: formData.community.trim(),
+        };
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(formData.email)) {
-            setError('Please enter a valid email address');
+        const nextErrors = validateForm(trimmedData);
+        setErrors(nextErrors);
+
+        if (Object.keys(nextErrors).length > 0) {
+            setError('Please correct the highlighted fields before continuing.');
             return;
         }
 
         // Save to sessionStorage and navigate to summary page
         sessionStorage.setItem('btf_registration', JSON.stringify({
             tierParam,
-            ...formData,
+            ...trimmedData,
         }));
         router.push('/registration/summary');
     };
@@ -113,7 +208,7 @@ function RegistrationContent() {
                             </motion.div>
 
                             <div className="w-full mx-auto">
-                                <form onSubmit={handleNext} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                                <form onSubmit={handleNext} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" noValidate>
                                     <motion.div
                                         className="bg-white rounded-3xl p-8 border border-blue-100 shadow-sm lg:col-span-7 xl:col-span-8"
                                         initial={{ opacity: 0, x: -20 }}
@@ -153,9 +248,11 @@ function RegistrationContent() {
                                                         value={formData.firstName}
                                                         onChange={handleChange}
                                                         placeholder="Enter your first name"
-                                                        className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100 transition-colors"
-                                                        required
+                                                        className={`w-full px-4 py-3 rounded-lg border transition-colors ${errors.firstName ? 'border-red-400 focus:border-red-500 focus:ring-red-100' : 'border-blue-200 focus:border-biro-blue focus:ring-blue-100'}`}
+                                                        aria-invalid={!!errors.firstName}
+                                                        aria-describedby={errors.firstName ? 'firstName-error' : undefined}
                                                     />
+                                                    {errors.firstName && <p id="firstName-error" className="mt-2 text-sm text-red-600">{errors.firstName}</p>}
                                                 </div>
                                                 <div>
                                                     <label htmlFor="lastName" className="block text-sm font-bold text-slate-700 mb-2">
@@ -168,9 +265,11 @@ function RegistrationContent() {
                                                         value={formData.lastName}
                                                         onChange={handleChange}
                                                         placeholder="Enter your last name"
-                                                        className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100 transition-colors"
-                                                        required
+                                                        className={`w-full px-4 py-3 rounded-lg border transition-colors ${errors.lastName ? 'border-red-400 focus:border-red-500 focus:ring-red-100' : 'border-blue-200 focus:border-biro-blue focus:ring-blue-100'}`}
+                                                        aria-invalid={!!errors.lastName}
+                                                        aria-describedby={errors.lastName ? 'lastName-error' : undefined}
                                                     />
+                                                    {errors.lastName && <p id="lastName-error" className="mt-2 text-sm text-red-600">{errors.lastName}</p>}
                                                 </div>
                                             </div>
 
@@ -185,9 +284,11 @@ function RegistrationContent() {
                                                     value={formData.email}
                                                     onChange={handleChange}
                                                     placeholder="your.email@example.com"
-                                                    className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100 transition-colors"
-                                                    required
+                                                    className={`w-full px-4 py-3 rounded-lg border transition-colors ${errors.email ? 'border-red-400 focus:border-red-500 focus:ring-red-100' : 'border-blue-200 focus:border-biro-blue focus:ring-blue-100'}`}
+                                                    aria-invalid={!!errors.email}
+                                                    aria-describedby={errors.email ? 'email-error' : undefined}
                                                 />
+                                                {errors.email && <p id="email-error" className="mt-2 text-sm text-red-600">{errors.email}</p>}
                                             </div>
 
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -202,9 +303,11 @@ function RegistrationContent() {
                                                         value={formData.country}
                                                         onChange={handleChange}
                                                         placeholder="Country of residence"
-                                                        className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100 transition-colors"
-                                                        required
+                                                        className={`w-full px-4 py-3 rounded-lg border transition-colors ${errors.country ? 'border-red-400 focus:border-red-500 focus:ring-red-100' : 'border-blue-200 focus:border-biro-blue focus:ring-blue-100'}`}
+                                                        aria-invalid={!!errors.country}
+                                                        aria-describedby={errors.country ? 'country-error' : undefined}
                                                     />
+                                                    {errors.country && <p id="country-error" className="mt-2 text-sm text-red-600">{errors.country}</p>}
                                                 </div>
                                                 <div>
                                                     <label htmlFor="nationality" className="block text-sm font-bold text-slate-700 mb-2">
@@ -217,9 +320,11 @@ function RegistrationContent() {
                                                         value={formData.nationality}
                                                         onChange={handleChange}
                                                         placeholder="Nationality"
-                                                        className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100 transition-colors"
-                                                        required
+                                                        className={`w-full px-4 py-3 rounded-lg border transition-colors ${errors.nationality ? 'border-red-400 focus:border-red-500 focus:ring-red-100' : 'border-blue-200 focus:border-biro-blue focus:ring-blue-100'}`}
+                                                        aria-invalid={!!errors.nationality}
+                                                        aria-describedby={errors.nationality ? 'nationality-error' : undefined}
                                                     />
+                                                    {errors.nationality && <p id="nationality-error" className="mt-2 text-sm text-red-600">{errors.nationality}</p>}
                                                 </div>
                                             </div>
 
@@ -234,9 +339,11 @@ function RegistrationContent() {
                                                     value={formData.phone}
                                                     onChange={handleChange}
                                                     placeholder="+234 or any format"
-                                                    className="w-full px-4 py-3 rounded-lg border border-blue-200 focus:outline-none focus:border-biro-blue focus:ring-2 focus:ring-blue-100 transition-colors"
-                                                    required
+                                                    className={`w-full px-4 py-3 rounded-lg border transition-colors ${errors.phone ? 'border-red-400 focus:border-red-500 focus:ring-red-100' : 'border-blue-200 focus:border-biro-blue focus:ring-blue-100'}`}
+                                                    aria-invalid={!!errors.phone}
+                                                    aria-describedby={errors.phone ? 'phone-error' : undefined}
                                                 />
+                                                {errors.phone && <p id="phone-error" className="mt-2 text-sm text-red-600">{errors.phone}</p>}
                                             </div>
 
                                             <div>

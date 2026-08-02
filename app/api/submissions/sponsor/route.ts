@@ -2,12 +2,15 @@ import { Pool } from 'pg';
 import { NextRequest, NextResponse } from 'next/server';
 import { getClientIp, checkRateLimit } from '@/app/lib/rateLimit';
 import { sendFormNotificationEmail } from '@/app/lib/email';
+import { hasSafeTextFields, invalidFormResponse, readFormBody, rejectOversizedBody } from '@/app/lib/formSecurity';
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
 });
 
 export async function POST(request: NextRequest) {
+    const oversized = rejectOversizedBody(request);
+    if (oversized) return oversized;
     // Check rate limit first
     const clientIp = getClientIp(request);
     const rateLimit = checkRateLimit(clientIp);
@@ -22,7 +25,8 @@ export async function POST(request: NextRequest) {
     const client = await pool.connect();
     
     try {
-        const data = await request.json();
+        const data = await readFormBody(request);
+        if (!data || !hasSafeTextFields(data)) return invalidFormResponse();
         
         const {
             company_name,
