@@ -77,6 +77,12 @@ function SuccessContent() {
                                 <span>Join WhatsApp Channel</span>
                             </a>
                             <button
+                                onClick={() => router.push('/registration/badge')}
+                                className="inline-block bg-white text-biro-blue font-bold border border-biro-blue py-3 px-8 rounded-lg transition-all duration-300 hover:bg-biro-blue hover:text-white"
+                            >
+                                Lookup Your Badge
+                            </button>
+                            <button
                                 onClick={() => router.push('/')}
                                 className="inline-block bg-gradient-to-r from-blue-400 to-blue-500 hover:from-blue-500 hover:to-blue-600 text-white font-bold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105"
                             >

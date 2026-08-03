@@ -158,8 +158,14 @@ export default function RegistrationSummaryPage() {
     ];
 
     return (
-        <div className="flex min-h-screen flex-col font-sans relative bg-[#f8fbff]">
-            <BackgroundWrapper />
+        <div className="flex min-h-screen flex-col font-sans relative bg-[#f8fbff]"
+        style={{
+                        backgroundImage: `linear-gradient(135deg, rgba(2, 37, 84, 0.90), rgba(30, 64, 175, 0.90)), url(${ticketBg.src})`,
+                        backgroundPosition: 'center, 0 0',
+                        backgroundRepeat: 'no-repeat, repeat',
+                        backgroundSize: 'cover, 220px 220px',
+                    }}
+        >
             <Navbar />
             <main className="flex-grow relative z-10 pt-14 md:pt-32 pb-16">
                 <section className="relative overflow-hidden py-12">
@@ -171,10 +177,10 @@ export default function RegistrationSummaryPage() {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5 }}
                             >
-                                <h1 className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-biro-blue-dark mb-3 leading-tight">
-                                    Review Your <span className="text-biro-blue">Registration</span>
+                                <h1 className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-white mb-3 leading-tight">
+                                    Review Your <span className="text-brand-green">Registration</span>
                                 </h1>
-                                <p className="text-slate-600 font-medium">
+                                <p className="text-white font-medium">
                                     Please confirm your details before submitting.
                                 </p>
                             </motion.div>
@@ -187,12 +193,12 @@ export default function RegistrationSummaryPage() {
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                         </svg>
                                     </div>
-                                    <span className="text-sm font-bold text-slate-500">Your Details</span>
+                                    <span className="text-sm font-bold text-white">Your Details</span>
                                 </div>
                                 <div className="flex-1 h-0.5 bg-biro-blue rounded-full" />
                                 <div className="flex items-center gap-2">
                                     <div className="w-7 h-7 rounded-full bg-biro-blue text-white text-xs font-black flex items-center justify-center">2</div>
-                                    <span className="text-sm font-bold text-biro-blue">Review & Submit</span>
+                                    <span className="text-sm font-bold text-white">Review & Submit</span>
                                 </div>
                             </div>
 

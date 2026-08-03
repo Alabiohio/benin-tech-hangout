@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import BackgroundWrapper from "../components/BackgroundWrapper";
+import patterns1 from '../../assets/images/patterns1.png';
 import { motion } from "framer-motion";
 import Button from "../components/Button";
 import { ticketTiersMap as ticketTiers } from '../data/tickets';
@@ -186,8 +186,15 @@ function RegistrationContent() {
     };
 
     return (
-        <div className="flex min-h-screen flex-col font-sans relative bg-[#f8fbff]">
-            <BackgroundWrapper />
+        <section
+            className="min-h-screen py-24 px-2"
+            style={{
+                backgroundImage: `linear-gradient(135deg, rgba(2, 37, 84, 0.90), rgba(30, 64, 175, 0.90)), url(${patterns1.src})`,
+                backgroundPosition: 'center, 0 0',
+                backgroundRepeat: 'no-repeat, repeat',
+                backgroundSize: 'cover, 220px 220px',
+            }}
+        >
             <Navbar />
             <main className="flex-grow relative z-10 pt-14 md:pt-32 pb-16">
                 <section className="relative overflow-hidden py-12">
@@ -199,10 +206,10 @@ function RegistrationContent() {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.6 }}
                             >
-                                <h1 className="text-4xl md:text-6xl font-black font-cabinet-grotesk text-biro-blue-dark mb-4 leading-tight">
-                                    Register for <span className="text-biro-blue">{tier.name}</span>
+                                <h1 className="text-4xl md:text-6xl font-black font-cabinet-grotesk text-white mb-4 leading-tight">
+                                    Register for <span className="text-brand-amber">{tier.name}</span>
                                 </h1>
-                                <p className="md:text-xl text-slate-600 max-w-2xl mx-auto font-medium leading-relaxed">
+                                <p className="md:text-xl text-white max-w-2xl mx-auto font-medium leading-relaxed">
                                     Secure your spot at Benin Tech Fest 2.0 and unlock exclusive access.
                                 </p>
                             </motion.div>
@@ -210,7 +217,7 @@ function RegistrationContent() {
                             <div className="w-full mx-auto">
                                 <form onSubmit={handleNext} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" noValidate>
                                     <motion.div
-                                        className="bg-white rounded-3xl p-8 border border-blue-100 shadow-sm lg:col-span-7 xl:col-span-8"
+                                        className="bg-white backdrop-blur-md rounded-3xl p-8 border border-blue-100 shadow-sm lg:col-span-7 xl:col-span-8"
                                         initial={{ opacity: 0, x: -20 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ duration: 0.6, delay: 0.2 }}
@@ -434,7 +441,7 @@ function RegistrationContent() {
                 </section>
             </main>
             <Footer />
-        </div>
+        </section>
     );
 }
 

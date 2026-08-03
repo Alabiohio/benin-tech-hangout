@@ -337,6 +337,12 @@ export default function FreePassPage() {
                     {/* Action buttons */}
                     <div className="flex flex-col gap-3 w-full">
                         <a
+                            href={`https://benintechfest.com.ng/registration/badge/download?email=${encodeURIComponent(submittedEmail)}&source=free-pass`}
+                            className="inline-flex items-center justify-center gap-3 bg-biro-blue text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 text-center shadow-lg hover:bg-biro-blue-dark"
+                        >
+                            Download Badge Page
+                        </a>
+                        <a
                             href="https://whatsapp.com/channel/0029VbCyw0P9mrGciiEpD71G"
                             target="_blank"
                             rel="noopener noreferrer"
