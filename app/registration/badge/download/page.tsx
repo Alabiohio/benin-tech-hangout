@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
@@ -21,7 +21,7 @@ interface BadgePayload {
     email?: string;
 }
 
-export default function BadgeDownloadPage() {
+function BadgeDownloadContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const email = searchParams.get('email') || '';
@@ -111,9 +111,9 @@ export default function BadgeDownloadPage() {
                                         <div className="space-y-6">
                                             <div className="rounded-3xl border border-blue-100 bg-slate-50 p-6">
                                                 <p className="text-sm uppercase tracking-[0.25em] text-biro-blue font-bold mb-3">Badge details</p>
-                                                <h2 className="text-3xl font-black text-slate-900 mb-2">{badge.fullName}</h2>
-                                                <p className="text-sm text-slate-600 mb-1"><strong>Email:</strong> {badge.email}</p>
-                                                <p className="text-sm text-slate-600"><strong>Badge Type:</strong> {badge.ticketType}</p>
+                                                <h2 className="text-3xl font-black text-slate-900 mb-2">{badge.badge?.fullName}</h2>
+                                                <p className="text-sm text-slate-600 mb-1"><strong>Email:</strong> {badge.badge?.email}</p>
+                                                <p className="text-sm text-slate-600"><strong>Badge Type:</strong> {badge.badge?.ticketType}</p>
                                             </div>
 
                                             <div className="rounded-3xl border border-blue-100 bg-white p-6">
@@ -159,5 +159,13 @@ export default function BadgeDownloadPage() {
             </main>
             <Footer />
         </div>
+    );
+}
+
+export default function BadgeDownloadPage() {
+    return (
+        <Suspense fallback={<div className="flex min-h-screen items-center justify-center bg-[#f8fbff] text-biro-blue font-bold">Loading badge details...</div>}>
+            <BadgeDownloadContent />
+        </Suspense>
     );
 }
