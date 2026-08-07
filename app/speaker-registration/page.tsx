@@ -139,7 +139,10 @@ export default function SpeakerRegistrationPage() {
                 body: JSON.stringify(trimmedData)
             });
 
-            const data = await response.json();
+            const contentType = response.headers.get('content-type') || '';
+            const data = contentType.includes('application/json')
+                ? await response.json()
+                : { error: 'Unexpected server response' };
 
             if (response.ok) {
                 setMessage('✓ Nomination submitted successfully!');

@@ -22,8 +22,8 @@ export async function POST(request: NextRequest) {
         );
     }
 
-    const client = await pool.connect();
-    
+    let client: any = null;
+
     try {
         const data = await readFormBody(request);
         if (!data || !hasSafeTextFields(data)) return invalidFormResponse();
@@ -38,6 +38,8 @@ export async function POST(request: NextRequest) {
             speaker_category,
             why_speak
         } = data;
+
+        client = await pool.connect();
 
         // Validate required fields
         if (!name || !email || !phone || !topic) {
@@ -105,6 +107,8 @@ export async function POST(request: NextRequest) {
             { status: 500 }
         );
     } finally {
-        client.release();
+        if (client) {
+            client.release();
+        }
     }
 }
