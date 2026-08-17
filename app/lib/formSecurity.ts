@@ -7,9 +7,9 @@ const PHONE_PATTERN = /^\+?[0-9\s()-]{7,20}$/;
 
 type FormRecord = Record<string, unknown>;
 
-export function rejectOversizedBody(request: Request) {
+export function rejectOversizedBody(request: Request, maxBytes = MAX_BODY_BYTES) {
   const contentLength = Number(request.headers.get('content-length') || 0);
-  return Number.isFinite(contentLength) && contentLength > MAX_BODY_BYTES
+  return Number.isFinite(contentLength) && contentLength > maxBytes
     ? NextResponse.json({ error: 'Request is too large.' }, { status: 413 })
     : null;
 }
@@ -49,6 +49,14 @@ export function invalidFormResponse() {
   return NextResponse.json({ error: 'Please provide valid form details.' }, { status: 400 });
 }
 
-export function hasSafeTextFields(data: FormRecord): data is Record<string, string> {
-  return Object.values(data).every((value) => typeof value === 'string' && cleanText(value) !== null);
+export function hasSafeTextFields(data: FormRecord): boolean {
+  return Object.values(data).every((value) => {
+    if (typeof value === 'string') return cleanText(value) !== null;
+    if (typeof value === 'boolean') return true;
+    if (typeof value === 'number') return Number.isFinite(value);
+    if (Array.isArray(value)) {
+      return value.every((item) => typeof item === 'string' && cleanText(item) !== null);
+    }
+    return false;
+  });
 }

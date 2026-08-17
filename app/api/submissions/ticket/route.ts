@@ -76,34 +76,89 @@ export async function POST(request: NextRequest) {
         try {
 
         await client.query(`
-            CREATE TABLE IF NOT EXISTS ticket_registrations (
+            CREATE TABLE IF NOT EXISTS "btf-registration" (
                 id SERIAL PRIMARY KEY,
-                ticket_type VARCHAR(100) NOT NULL,
-                first_name VARCHAR(255) NOT NULL,
-                last_name VARCHAR(255) NOT NULL,
-                email VARCHAR(255) NOT NULL,
-                phone VARCHAR(20),
-                country VARCHAR(255) NOT NULL,
-                nationality VARCHAR(255) NOT NULL,
+                ticket_type VARCHAR(100),
+                first_name VARCHAR(255),
+                last_name VARCHAR(255),
+                email VARCHAR(255),
+                phone VARCHAR(30),
+                country VARCHAR(255),
+                nationality VARCHAR(255),
                 community VARCHAR(255),
                 payment_reference VARCHAR(255),
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                name VARCHAR(255),
+                primary_interest VARCHAR(255),
+                agreed_to_terms BOOLEAN DEFAULT FALSE,
+                created_at TIMESTAMPTZ DEFAULT NOW()
             );
         `);
 
-        // Check if column exists, and if not, add it (useful since the table might already be created)
         await client.query(`
-            DO $$ 
-            BEGIN 
-                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='ticket_registrations' AND column_name='payment_reference') THEN 
-                    ALTER TABLE ticket_registrations ADD COLUMN payment_reference VARCHAR(255); 
-                END IF; 
+            DO $$
+            BEGIN
+                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'ticket_type') THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN ticket_type VARCHAR(100);
+                END IF;
+
+                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'first_name') THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN first_name VARCHAR(255);
+                END IF;
+
+                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'last_name') THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN last_name VARCHAR(255);
+                END IF;
+
+                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'email') THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN email VARCHAR(255);
+                END IF;
+
+                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'phone') THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN phone VARCHAR(30);
+                END IF;
+
+                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'country') THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN country VARCHAR(255);
+                END IF;
+
+                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'nationality') THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN nationality VARCHAR(255);
+                END IF;
+
+                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'community') THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN community VARCHAR(255);
+                END IF;
+
+                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'payment_reference') THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN payment_reference VARCHAR(255);
+                END IF;
+
+                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'name') THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN name VARCHAR(255);
+                END IF;
+
+                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'primary_interest') THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN primary_interest VARCHAR(255);
+                END IF;
+
+                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'agreed_to_terms') THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN agreed_to_terms BOOLEAN DEFAULT FALSE;
+                END IF;
+
+                ALTER TABLE "btf-registration" ALTER COLUMN name DROP NOT NULL;
+                ALTER TABLE "btf-registration" ALTER COLUMN email DROP NOT NULL;
+                ALTER TABLE "btf-registration" ALTER COLUMN primary_interest DROP NOT NULL;
+                ALTER TABLE "btf-registration" ALTER COLUMN ticket_type DROP NOT NULL;
+                ALTER TABLE "btf-registration" ALTER COLUMN first_name DROP NOT NULL;
+                ALTER TABLE "btf-registration" ALTER COLUMN last_name DROP NOT NULL;
+                ALTER TABLE "btf-registration" ALTER COLUMN country DROP NOT NULL;
+                ALTER TABLE "btf-registration" ALTER COLUMN nationality DROP NOT NULL;
             END $$;
         `);
 
         if (paymentReference) {
             const existingPayment = await client.query(
-                'SELECT 1 FROM ticket_registrations WHERE payment_reference = $1 LIMIT 1',
+                'SELECT 1 FROM "btf-registration" WHERE payment_reference = $1 LIMIT 1',
                 [paymentReference]
             );
             if (existingPayment.rowCount) {
@@ -112,7 +167,7 @@ export async function POST(request: NextRequest) {
         }
 
         const result = await client.query(
-            `INSERT INTO ticket_registrations
+            `INSERT INTO "btf-registration"
             (ticket_type, first_name, last_name, email, phone, country, nationality, community, payment_reference)
             VALUES
             ($1, $2, $3, $4, $5, $6, $7, $8, $9)

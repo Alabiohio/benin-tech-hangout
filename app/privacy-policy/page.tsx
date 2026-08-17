@@ -1,19 +1,22 @@
 import Link from "next/link";
 import Image from "next/image";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="bg-slate-50 border-b border-slate-100">
+      <Navbar/>
+      <div className="bg-slate-50 border-b border-slate-100 mt-24">
         <div className="container mx-auto px-4 md:px-8 py-8">
           <Link href="/" className="inline-flex items-center gap-2 text-biro-blue hover:text-biro-blue-dark transition-colors mb-6">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7"></path>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4.5" d="M15 19l-7-7 7-7"></path>
             </svg>
-            <span className="text-[11px] font-black uppercase tracking-widest">Back to Home</span>
+            <span className="text-[14px] font-black uppercase tracking-widest">Back to Home</span>
           </Link>
-          <h1 className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-slate-900 uppercase tracking-tight">
+          <h1 className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-black uppercase tracking-tight">
             Privacy Policy
           </h1>
           <p className="mt-3 text-slate-500 font-medium max-w-2xl">
@@ -26,14 +29,14 @@ export default function PrivacyPolicyPage() {
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 md:px-8 py-12 md:py-16">
+      <div className="container mx-auto px-4 md:px-8 py-12 md:py-16 bg-background">
         <div className="max-w-3xl mx-auto space-y-12">
 
           <section>
-            <h2 className="text-2xl font-black font-cabinet-grotesk text-slate-900 uppercase tracking-tight mb-4">
+            <h2 className="text-2xl font-black font-cabinet-grotesk text-colors-inverted uppercase tracking-tight mb-4">
               1. Information We Collect
             </h2>
-            <div className="space-y-4 text-slate-600 leading-relaxed">
+            <div className="space-y-4 text-colors-inverted/60 leading-relaxed">
               <p>
                 We may collect personal information that you voluntarily provide to us when you:
               </p>
@@ -56,10 +59,10 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-black font-cabinet-grotesk text-slate-900 uppercase tracking-tight mb-4">
+            <h2 className="text-2xl font-black font-cabinet-grotesk text-colors-inverted uppercase tracking-tight mb-4">
               2. How We Use Your Information
             </h2>
-            <div className="space-y-4 text-slate-600 leading-relaxed">
+            <div className="space-y-4 text-colors-inverted/60 leading-relaxed">
               <p>We use the information we collect to:</p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>Process your event registration and confirm your attendance</li>
@@ -75,10 +78,10 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-black font-cabinet-grotesk text-slate-900 uppercase tracking-tight mb-4">
+            <h2 className="text-2xl font-black font-cabinet-grotesk text-colors-inverted uppercase tracking-tight mb-4">
               3. How We Share Your Information
             </h2>
-            <div className="space-y-4 text-slate-600 leading-relaxed">
+            <div className="space-y-4 text-colors-inverted/60 leading-relaxed">
               <p>We do not sell, trade, or rent your personal information to third parties. We may share your information with:</p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li><strong>Service Providers:</strong> Third-party vendors who assist us in operating our website, processing payments, sending emails, and providing event services.</li>
@@ -90,10 +93,10 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-black font-cabinet-grotesk text-slate-900 uppercase tracking-tight mb-4">
+            <h2 className="text-2xl font-black font-cabinet-grotesk text-colors-inverted uppercase tracking-tight mb-4">
               4. Data Security
             </h2>
-            <div className="space-y-4 text-slate-600 leading-relaxed">
+            <div className="space-y-4 text-colors-inverted/60 leading-relaxed">
               <p>
                 We implement appropriate technical and organizational security measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.
               </p>
@@ -101,10 +104,10 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-black font-cabinet-grotesk text-slate-900 uppercase tracking-tight mb-4">
+            <h2 className="text-2xl font-black font-cabinet-grotesk text-colors-inverted uppercase tracking-tight mb-4">
               5. Cookies and Tracking Technologies
             </h2>
-            <div className="space-y-4 text-slate-600 leading-relaxed">
+            <div className="space-y-4 text-colors-inverted/60 leading-relaxed">
               <p>
                 Our website may use cookies and similar tracking technologies to enhance your browsing experience, analyze site traffic, and understand user preferences. You can choose to disable cookies through your browser settings, though some features of the website may not function properly as a result.
               </p>
@@ -112,10 +115,10 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-black font-cabinet-grotesk text-slate-900 uppercase tracking-tight mb-4">
+            <h2 className="text-2xl font-black font-cabinet-grotesk text-colors-inverted uppercase tracking-tight mb-4">
               6. Your Rights
             </h2>
-            <div className="space-y-4 text-slate-600 leading-relaxed">
+            <div className="space-y-4 text-colors-inverted/60 leading-relaxed">
               <p>Depending on your jurisdiction, you may have the following rights regarding your personal data:</p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li><strong>Access:</strong> Request a copy of the personal information we hold about you.</li>
@@ -131,10 +134,10 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-black font-cabinet-grotesk text-slate-900 uppercase tracking-tight mb-4">
+            <h2 className="text-2xl font-black font-cabinet-grotesk text-colors-inverted uppercase tracking-tight mb-4">
               7. Third-Party Links
             </h2>
-            <div className="space-y-4 text-slate-600 leading-relaxed">
+            <div className="space-y-4 text-colors-inverted/60 leading-relaxed">
               <p>
                 Our website may contain links to third-party websites, including payment processors and social media platforms. We are not responsible for the privacy practices or content of these external sites. We encourage you to review the privacy policies of any third-party sites you visit.
               </p>
@@ -142,10 +145,10 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-black font-cabinet-grotesk text-slate-900 uppercase tracking-tight mb-4">
+            <h2 className="text-2xl font-black font-cabinet-grotesk text-colors-inverted uppercase tracking-tight mb-4">
               8. Children&apos;s Privacy
             </h2>
-            <div className="space-y-4 text-slate-600 leading-relaxed">
+            <div className="space-y-4 text-colors-inverted/60 leading-relaxed">
               <p>
                 Our services are not directed to individuals under the age of 13. We do not knowingly collect personal information from children. If we become aware that we have collected personal information from a child under 13, we will take steps to delete that information.
               </p>
@@ -153,10 +156,10 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-black font-cabinet-grotesk text-slate-900 uppercase tracking-tight mb-4">
+            <h2 className="text-2xl font-black font-cabinet-grotesk text-colors-inverted uppercase tracking-tight mb-4">
               9. Changes to This Privacy Policy
             </h2>
-            <div className="space-y-4 text-slate-600 leading-relaxed">
+            <div className="space-y-4 text-colors-inverted/60 leading-relaxed">
               <p>
                 We may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. We will notify you of any material changes by posting the updated policy on this page and updating the &quot;Last updated&quot; date. We encourage you to review this policy periodically.
               </p>
@@ -164,23 +167,23 @@ export default function PrivacyPolicyPage() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-black font-cabinet-grotesk text-slate-900 uppercase tracking-tight mb-4">
+            <h2 className="text-2xl font-black font-cabinet-grotesk text-colors-inverted uppercase tracking-tight mb-4">
               10. Contact Us
             </h2>
-            <div className="space-y-4 text-slate-600 leading-relaxed">
+            <div className="space-y-4 text-colors-inverted/60 leading-relaxed">
               <p>
                 If you have any questions or concerns about this Privacy Policy or our data practices, please contact us:
               </p>
-              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 space-y-2">
-                <p className="font-black text-slate-900 uppercase text-[11px] tracking-widest">Benin Tech Fest</p>
+              <div className="bg-background border border-slate-100 rounded-2xl p-6 space-y-2">
+                <p className="font-black text-colors-inverted uppercase text-[11px] tracking-widest">Benin Tech Fest</p>
                 <p>Email: <a href="mailto:benintechfest@gmail.com" className="text-biro-blue hover:text-biro-blue-dark underline">benintechfest@gmail.com</a></p>
-                <p>Phone: <a href="tel:+2347012341561" className="text-biro-blue hover:text-biro-blue-dark underline">+234 701 234 1561</a></p>
+                <p>Phone: <a href="tel:+2347012341561" className="text-biro-blue hover:text-biro-blue-dark underline">+2348142289951</a></p>
               </div>
             </div>
           </section>
-
         </div>
       </div>
+       <Footer/>
     </div>
   );
 }

@@ -147,3 +147,221 @@ export async function sendFormNotificationEmail(
     return false;
   }
 }
+
+const SPEAKERS_BRIEF_URL = 'https://drive.google.com/file/d/1M9jEcDne1e6J0C8b5wZxvblZyA9auEFB/view?usp=drivesdk';
+
+export async function sendSpeakerBriefEmail({ name, email }: Pick<EmailData, 'name' | 'email'>): Promise<boolean> {
+  try {
+    if (!process.env.RESEND_API_KEY || !email) {
+      console.warn('RESEND_API_KEY or recipient email is missing. Speaker brief email not sent.');
+      return false;
+    }
+
+    const recipientName = name?.trim() || 'there';
+    const subject = 'Your speaker application has been received — Benin Tech Fest 2.0';
+    const text = [
+      `Hi ${recipientName},`,
+      '',
+      'Thank you for applying to speak at Benin Tech Fest 2.0. We have received your application.',
+      'Please take a moment to read the Speakers Brief for important event and speaker information:',
+      SPEAKERS_BRIEF_URL,
+      '',
+      'We will be in touch with next steps.',
+      '',
+      'Benin Tech Fest 2.0',
+    ].join('\n');
+    const html = `
+      <!DOCTYPE html>
+      <html lang="en">
+        <body style="margin:0;padding:10px;background:#f8fbff;font-family:Arial,sans-serif;color:#0f172a;">
+          <main style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;">
+            <img src="https://pub-eeb28071668c42f88a2072344768bdf9.r2.dev/formBanner.png" style="width:100%;height:auto;display:block;" alt="Benin Tech Fest 2.0 Banner" />
+            <div style="padding:32px;">
+              <h1 style="margin:0 0 24px;color:#1570ef;font-size:24px;">Benin Tech Fest 2.0</h1>
+              <p style="line-height:1.6;">Hi <strong>${escapeHtml(recipientName)}</strong>,</p>
+              <p style="line-height:1.6;">Thank you for applying to speak at Benin Tech Fest 2.0. We have received your application.</p>
+              <p style="line-height:1.6;">Please take a moment to read the Speakers Brief for important event and speaker information.</p>
+              <p style="margin:28px 0;">
+                <a href="${SPEAKERS_BRIEF_URL}" style="display:inline-block;border-radius:8px;background:#1570ef;padding:12px 20px;color:#ffffff;text-decoration:none;font-weight:700;">Read the Speakers Brief</a>
+              </p>
+              <p style="line-height:1.6;">We will be in touch with next steps.</p>
+            </div>
+            <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+              <tr>
+                <td style="padding: 24px 32px; background-color: #f8fbff; text-align: center;">
+                  <p style="margin: 0 0 4px; color: #64748b; font-size: 12px;">Submitted on ${new Date().toLocaleString()}</p>
+                  <p style="margin: 0 0 8px; color: #94a3b8; font-size: 12px;">You received this email because you submitted a form on <a href="https://benintechfest.com.ng" style="color: #94a3b8;">benintechfest.com.ng</a>.</p>
+                  <p style="margin: 0 0 8px; color: #94a3b8; font-size: 12px;">If you did not make this submission, please ignore this email.</p>
+                  <p style="margin: 0; color: #cbd5e1; font-size: 11px;">Benin Tech Fest 2.0 &bull; Benin City, Edo State, Nigeria &bull; <a href="https://benintechfest.com.ng" style="color: #cbd5e1;">benintechfest.com.ng</a></p>
+                </td>
+              </tr>
+            </table>
+          </main>
+        </body>
+      </html>`;
+
+    const { error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: [email],
+      replyTo: FROM_EMAIL,
+      subject,
+      html,
+      text,
+    });
+
+    if (error) {
+      console.error('Failed to send speaker brief email via Resend:', error);
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Error sending speaker brief email:', error);
+    return false;
+  }
+}
+
+const EXHIBITORS_BRIEF_URL = 'https://drive.google.com/file/d/1XNQbEX-FfHrOG2fwfZCTXRjig5OP1I1z/view?usp=drivesdk';
+
+export async function sendExhibitorBriefEmail({ name, email }: Pick<EmailData, 'name' | 'email'>): Promise<boolean> {
+  try {
+    if (!process.env.RESEND_API_KEY || !email) {
+      console.warn('RESEND_API_KEY or recipient email is missing. Exhibitor brief email not sent.');
+      return false;
+    }
+
+    const recipientName = name?.trim() || 'there';
+    const subject = 'Your exhibitor application has been received — Benin Tech Fest 2.0';
+    const text = [
+      `Hi ${recipientName},`,
+      '',
+      'Thank you for applying to exhibit at Benin Tech Fest 2.0. We have received your application.',
+      'Please take a moment to read the Exhibitors Brief for important event and exhibitor information:',
+      EXHIBITORS_BRIEF_URL,
+      '',
+      'We will be in touch with next steps.',
+      '',
+      'Benin Tech Fest 2.0',
+    ].join('\n');
+    const html = `
+      <!DOCTYPE html>
+      <html lang="en">
+        <body style="margin:0;padding:10px;background:#f8fbff;font-family:Arial,sans-serif;color:#0f172a;">
+          <main style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;">
+            <img src="https://pub-eeb28071668c42f88a2072344768bdf9.r2.dev/formBanner.png" style="width:100%;height:auto;display:block;" alt="Benin Tech Fest 2.0 Banner" />
+            <div style="padding:32px;">
+              <h1 style="margin:0 0 24px;color:#1570ef;font-size:24px;">Benin Tech Fest 2.0</h1>
+              <p style="line-height:1.6;">Hi <strong>${escapeHtml(recipientName)}</strong>,</p>
+              <p style="line-height:1.6;">Thank you for applying to exhibit at Benin Tech Fest 2.0. We have received your application.</p>
+              <p style="line-height:1.6;">Please take a moment to read the Exhibitors Brief for important event and exhibitor information.</p>
+              <p style="margin:28px 0;">
+                <a href="${EXHIBITORS_BRIEF_URL}" style="display:inline-block;border-radius:8px;background:#1570ef;padding:12px 20px;color:#ffffff;text-decoration:none;font-weight:700;">Read the Exhibitors Brief</a>
+              </p>
+              <p style="line-height:1.6;">We will be in touch with next steps.</p>
+            </div>
+            <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+              <tr>
+                <td style="padding: 24px 32px; background-color: #f8fbff; text-align: center;">
+                  <p style="margin: 0 0 4px; color: #64748b; font-size: 12px;">Submitted on ${new Date().toLocaleString()}</p>
+                  <p style="margin: 0 0 8px; color: #94a3b8; font-size: 12px;">You received this email because you submitted a form on <a href="https://benintechfest.com.ng" style="color: #94a3b8;">benintechfest.com.ng</a>.</p>
+                  <p style="margin: 0 0 8px; color: #94a3b8; font-size: 12px;">If you did not make this submission, please ignore this email.</p>
+                  <p style="margin: 0; color: #cbd5e1; font-size: 11px;">Benin Tech Fest 2.0 &bull; Benin City, Edo State, Nigeria &bull; <a href="https://benintechfest.com.ng" style="color: #cbd5e1;">benintechfest.com.ng</a></p>
+                </td>
+              </tr>
+            </table>
+          </main>
+        </body>
+      </html>`;
+
+    const { error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: [email],
+      replyTo: FROM_EMAIL,
+      subject,
+      html,
+      text,
+    });
+
+    if (error) {
+      console.error('Failed to send exhibitor brief email via Resend:', error);
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Error sending exhibitor brief email:', error);
+    return false;
+  }
+}
+
+export async function sendRegistrationEmail({ name, email }: Pick<EmailData, 'name' | 'email'>): Promise<boolean> {
+  try {
+    if (!process.env.RESEND_API_KEY || !email) {
+      console.warn('RESEND_API_KEY or recipient email is missing. Registration email not sent.');
+      return false;
+    }
+
+    const recipientName = name?.trim() || 'there';
+    const subject = 'Your registration has been received — Benin Tech Fest 2.0';
+    const text = [
+      `Hi ${recipientName},`,
+      '',
+      'Thank you for registering to attend Benin Tech Fest 2.0. We have received your details.',
+      'To complete your registration, please make sure to secure your ticket:',
+      'https://benintechfest.com.ng/ticket',
+      '',
+      'We look forward to seeing you there.',
+      '',
+      'Benin Tech Fest 2.0',
+    ].join('\n');
+    const html = `
+      <!DOCTYPE html>
+      <html lang="en">
+        <body style="margin:0;padding:10px;background:#f8fbff;font-family:Arial,sans-serif;color:#0f172a;">
+          <main style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;">
+            <img src="https://pub-eeb28071668c42f88a2072344768bdf9.r2.dev/formBanner.png" style="width:100%;height:auto;display:block;" alt="Benin Tech Fest 2.0 Banner" />
+            <div style="padding:32px;">
+              <h1 style="margin:0 0 24px;color:#1570ef;font-size:24px;">Benin Tech Fest 2.0</h1>
+              <p style="line-height:1.6;">Hi <strong>${escapeHtml(recipientName)}</strong>,</p>
+              <p style="line-height:1.6;">Thank you for registering to attend Benin Tech Fest 2.0. We have received your details.</p>
+              <p style="line-height:1.6;">To complete your registration and secure your spot, please make sure to purchase your ticket.</p>
+              <p style="margin:28px 0;">
+                <a href="https://benintechfest.com.ng/ticket" style="display:inline-block;border-radius:8px;background:#1570ef;padding:12px 20px;color:#ffffff;text-decoration:none;font-weight:700;">Get Your Ticket</a>
+              </p>
+              <p style="line-height:1.6;">We look forward to seeing you there.</p>
+            </div>
+            <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+              <tr>
+                <td style="padding: 24px 32px; background-color: #f8fbff; text-align: center;">
+                  <p style="margin: 0 0 4px; color: #64748b; font-size: 12px;">Submitted on ${new Date().toLocaleString()}</p>
+                  <p style="margin: 0 0 8px; color: #94a3b8; font-size: 12px;">You received this email because you submitted a form on <a href="https://benintechfest.com.ng" style="color: #94a3b8;">benintechfest.com.ng</a>.</p>
+                  <p style="margin: 0 0 8px; color: #94a3b8; font-size: 12px;">If you did not make this submission, please ignore this email.</p>
+                  <p style="margin: 0; color: #cbd5e1; font-size: 11px;">Benin Tech Fest 2.0 &bull; Benin City, Edo State, Nigeria &bull; <a href="https://benintechfest.com.ng" style="color: #cbd5e1;">benintechfest.com.ng</a></p>
+                </td>
+              </tr>
+            </table>
+          </main>
+        </body>
+      </html>`;
+
+    const { error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: [email],
+      replyTo: FROM_EMAIL,
+      subject,
+      html,
+      text,
+    });
+
+    if (error) {
+      console.error('Failed to send registration email via Resend:', error);
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Error sending registration email:', error);
+    return false;
+  }
+}
+

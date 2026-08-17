@@ -1,6 +1,6 @@
 import { Pool } from 'pg';
 import { NextRequest, NextResponse } from 'next/server';
-import { sendFormNotificationEmail } from '@/app/lib/email';
+import { sendFormNotificationEmail, sendRegistrationEmail } from '@/app/lib/email';
 import { checkRateLimit, getClientIp } from '@/app/lib/rateLimit';
 import { email, invalidFormResponse, readFormBody, rejectOversizedBody, requiredText } from '@/app/lib/formSecurity';
 
@@ -20,35 +20,166 @@ export async function POST(request: NextRequest) {
         const name = requiredText(data.name);
         const emailAddress = email(data.email);
         const primaryInterest = requiredText(data.primaryInterest);
+        const agreedToTerms = typeof data.agreedToTerms === 'boolean' ? data.agreedToTerms : false;
 
         if (!name || !emailAddress || !primaryInterest) return invalidFormResponse();
         const client = await pool.connect();
         try {
 
         await client.query(`
-            CREATE TABLE IF NOT EXISTS registration_submissions (
+            CREATE TABLE IF NOT EXISTS "btf-registration" (
                 id SERIAL PRIMARY KEY,
-                name VARCHAR(255) NOT NULL,
-                email VARCHAR(255) NOT NULL,
-                primary_interest VARCHAR(255) NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                name VARCHAR(255),
+                email VARCHAR(255),
+                primary_interest VARCHAR(255),
+                agreed_to_terms BOOLEAN DEFAULT FALSE,
+                ticket_type VARCHAR(100),
+                first_name VARCHAR(255),
+                last_name VARCHAR(255),
+                phone VARCHAR(30),
+                country VARCHAR(255),
+                nationality VARCHAR(255),
+                community VARCHAR(255),
+                payment_reference VARCHAR(255),
+                created_at TIMESTAMPTZ DEFAULT NOW()
             );
         `);
 
+        await client.query(`
+            DO $$
+            BEGIN
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM information_schema.columns
+                    WHERE table_name = 'btf-registration'
+                    AND column_name = 'name'
+                ) THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN name VARCHAR(255);
+                END IF;
+
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM information_schema.columns
+                    WHERE table_name = 'btf-registration'
+                    AND column_name = 'email'
+                ) THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN email VARCHAR(255);
+                END IF;
+
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM information_schema.columns
+                    WHERE table_name = 'btf-registration'
+                    AND column_name = 'primary_interest'
+                ) THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN primary_interest VARCHAR(255);
+                END IF;
+
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM information_schema.columns
+                    WHERE table_name = 'btf-registration'
+                    AND column_name = 'agreed_to_terms'
+                ) THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN agreed_to_terms BOOLEAN DEFAULT FALSE;
+                END IF;
+
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM information_schema.columns
+                    WHERE table_name = 'btf-registration'
+                    AND column_name = 'ticket_type'
+                ) THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN ticket_type VARCHAR(100);
+                END IF;
+
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM information_schema.columns
+                    WHERE table_name = 'btf-registration'
+                    AND column_name = 'first_name'
+                ) THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN first_name VARCHAR(255);
+                END IF;
+
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM information_schema.columns
+                    WHERE table_name = 'btf-registration'
+                    AND column_name = 'last_name'
+                ) THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN last_name VARCHAR(255);
+                END IF;
+
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM information_schema.columns
+                    WHERE table_name = 'btf-registration'
+                    AND column_name = 'phone'
+                ) THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN phone VARCHAR(30);
+                END IF;
+
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM information_schema.columns
+                    WHERE table_name = 'btf-registration'
+                    AND column_name = 'country'
+                ) THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN country VARCHAR(255);
+                END IF;
+
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM information_schema.columns
+                    WHERE table_name = 'btf-registration'
+                    AND column_name = 'nationality'
+                ) THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN nationality VARCHAR(255);
+                END IF;
+
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM information_schema.columns
+                    WHERE table_name = 'btf-registration'
+                    AND column_name = 'community'
+                ) THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN community VARCHAR(255);
+                END IF;
+
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM information_schema.columns
+                    WHERE table_name = 'btf-registration'
+                    AND column_name = 'payment_reference'
+                ) THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN payment_reference VARCHAR(255);
+                END IF;
+
+                ALTER TABLE "btf-registration" ALTER COLUMN name DROP NOT NULL;
+                ALTER TABLE "btf-registration" ALTER COLUMN email DROP NOT NULL;
+                ALTER TABLE "btf-registration" ALTER COLUMN primary_interest DROP NOT NULL;
+                ALTER TABLE "btf-registration" ALTER COLUMN ticket_type DROP NOT NULL;
+                ALTER TABLE "btf-registration" ALTER COLUMN first_name DROP NOT NULL;
+                ALTER TABLE "btf-registration" ALTER COLUMN last_name DROP NOT NULL;
+                ALTER TABLE "btf-registration" ALTER COLUMN country DROP NOT NULL;
+                ALTER TABLE "btf-registration" ALTER COLUMN nationality DROP NOT NULL;
+            END $$;
+        `);
+
         const result = await client.query(
-            `INSERT INTO registration_submissions 
-            (name, email, primary_interest)
+            `INSERT INTO "btf-registration"
+            (name, email, primary_interest, agreed_to_terms)
             VALUES 
-            ($1, $2, $3)
+            ($1, $2, $3, $4)
             RETURNING id, created_at;`,
-            [name, emailAddress, primaryInterest]
+            [name, emailAddress, primaryInterest, agreedToTerms]
         );
 
-        sendFormNotificationEmail('General Registration', data, [
-            { label: 'Full Name', value: name },
-            { label: 'Email Address', value: emailAddress },
-            { label: 'Primary Interest', value: primaryInterest },
-        ]).catch((err) => console.error('Failed to send registration email:', err));
+        await sendRegistrationEmail({
+            name,
+            email: emailAddress,
+        });
 
         return NextResponse.json(
             {

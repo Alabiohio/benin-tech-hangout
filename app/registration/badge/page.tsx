@@ -84,7 +84,7 @@ export default function RegistrationBadgePage() {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5 }}
                             >
-                                   <h1 className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-biro-blue-dark mb-4">
+                                <h1 className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-biro-blue-dark mb-4">
                                     Find your badge and download it here.
                                 </h1>
                                 <p className="text-slate-600 text-lg leading-relaxed">

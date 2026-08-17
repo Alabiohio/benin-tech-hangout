@@ -372,9 +372,9 @@ function RegistrationContent() {
                                                 <Button type="submit" className={`w-full !py-3 border-0 group !font-cabinet-grotesk text-lg shadow-lg text-white hover:opacity-90 transition-all ${tierColor.bg}`}>
                                                     <div className="flex items-center justify-center gap-2">
                                                         <span className="font-black">Next</span>
-                                                        <IoIosArrowForward 
-                                                            className="w-6 h-6 transition-transform group-hover:translate-x-1" 
-                                                            stroke="currentColor" 
+                                                        <IoIosArrowForward
+                                                            className="w-6 h-6 transition-transform group-hover:translate-x-1"
+                                                            stroke="currentColor"
                                                             strokeWidth={40}
                                                         />
                                                     </div>
@@ -425,9 +425,9 @@ function RegistrationContent() {
                                             <Button type="submit" className={`w-full !py-3 border-0 group !font-cabinet-grotesk text-lg shadow-lg text-white hover:opacity-90 transition-all ${tierColor.bg}`}>
                                                 <div className="flex items-center justify-center gap-2">
                                                     <span className="font-black">Next</span>
-                                                    <IoIosArrowForward 
-                                                        className="w-6 h-6 transition-transform group-hover:translate-x-1" 
-                                                        stroke="currentColor" 
+                                                    <IoIosArrowForward
+                                                        className="w-6 h-6 transition-transform group-hover:translate-x-1"
+                                                        stroke="currentColor"
                                                         strokeWidth={40}
                                                     />
                                                 </div>

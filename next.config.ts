@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ['192.168.137.1'],
   async headers() {
     return [{
       source: '/:path*',
@@ -11,6 +12,11 @@ const nextConfig: NextConfig = {
         { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
       ],
     }];
+  },
+  // Increase API body size limit for file uploads
+  onDemandEntries: {
+    maxInactiveAge: 60 * 1000,
+    pagesBufferLength: 5,
   },
 };
 

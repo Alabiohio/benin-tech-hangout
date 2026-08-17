@@ -60,12 +60,27 @@ The following tables are created automatically when forms are submitted:
 - motivation (optional)
 - created_at
 
+### 5. registration_exhibition (NEW)
+- id (Primary Key)
+- first_name
+- last_name
+- email
+- phone
+- message (optional)
+- company_name
+- website (optional)
+- exhibition_package
+- immediate_payment
+- logo_url (stored in Cloudflare R2)
+- created_at
+
 ## API Endpoints
 
 - **Speaker Registration:** `POST /api/submissions/speaker`
 - **Exhibitor Registration:** `POST /api/submissions/exhibitor`
 - **Sponsor Registration:** `POST /api/submissions/sponsor`
 - **Volunteer Registration:** `POST /api/submissions/volunteer`
+- **Exhibition Registration:** `POST /api/submissions/exhibition` (with file upload)
 
 ## Setup Steps Completed
 

@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
 import { NextRequest, NextResponse } from 'next/server';
 import { getClientIp, checkRateLimit } from '@/app/lib/rateLimit';
-import { sendFormNotificationEmail } from '@/app/lib/email';
+import { sendSpeakerBriefEmail } from '@/app/lib/email';
 import { hasSafeTextFields, invalidFormResponse, readFormBody, rejectOversizedBody } from '@/app/lib/formSecurity';
 
 const pool = new Pool({
@@ -36,61 +36,94 @@ export async function POST(request: NextRequest) {
             speaker_name,
             topic,
             speaker_category,
-            why_speak
+            why_speak,
+            firstName,
+            lastName,
+            company,
+            role,
+            socialMedia,
+            speakingCategory,
+            areaOfInterest,
+            hasExperience,
+            previousEngagement,
+            largestAudience,
+            whySpeak,
+            agreedToTerms,
         } = data;
 
         client = await pool.connect();
 
-        // Validate required fields
-        if (!name || !email || !phone || !topic) {
+        const normalizedFirstName = typeof firstName === 'string' ? firstName.trim() : (typeof name === 'string' ? name.trim() : '');
+        const normalizedLastName = typeof lastName === 'string' ? lastName.trim() : '';
+        const normalizedEmail = typeof email === 'string' ? email.trim() : '';
+        const normalizedPhone = typeof phone === 'string' ? phone.trim() : '';
+        const normalizedCompany = typeof company === 'string' ? company.trim() : '';
+        const normalizedRole = typeof role === 'string' ? role.trim() : '';
+        const normalizedSocialMedia = Array.isArray(socialMedia) ? socialMedia.filter((entry) => typeof entry === 'string' && entry.trim().length > 0) : [];
+        const normalizedSpeakingCategory = typeof speakingCategory === 'string' ? speakingCategory.trim() : (typeof speaker_category === 'string' ? speaker_category.trim() : '');
+        const normalizedAreaOfInterest = typeof areaOfInterest === 'string' ? areaOfInterest.trim() : '';
+        const normalizedHasExperience = hasExperience === 'Yes' || hasExperience === true || hasExperience === 'true';
+        const normalizedPreviousEngagement = typeof previousEngagement === 'string' ? previousEngagement.trim() : (typeof speaker_name === 'string' ? speaker_name.trim() : '');
+        const normalizedLargestAudience = typeof largestAudience === 'string' ? largestAudience.trim() : '';
+        const normalizedWhySpeak = typeof whySpeak === 'string' ? whySpeak.trim() : (typeof why_speak === 'string' ? why_speak.trim() : '');
+        const normalizedAgreedToTerms = Boolean(agreedToTerms);
+
+        if (!normalizedFirstName || !normalizedLastName || !normalizedEmail || !normalizedPhone || !normalizedSpeakingCategory || !normalizedAreaOfInterest || !normalizedWhySpeak) {
             return NextResponse.json(
                 { error: 'Missing required fields' },
                 { status: 400 }
             );
         }
 
-        // Create table if it doesn't exist and add missing columns
         await client.query(`
-            CREATE TABLE IF NOT EXISTS speaker_registrations (
+            CREATE TABLE IF NOT EXISTS "registration-speakers" (
                 id SERIAL PRIMARY KEY,
-                application_type VARCHAR(50) NOT NULL,
-                name VARCHAR(255) NOT NULL,
+                first_name VARCHAR(255) NOT NULL,
+                last_name VARCHAR(255) NOT NULL,
                 email VARCHAR(255) NOT NULL,
-                phone VARCHAR(20) NOT NULL,
-                speaker_name VARCHAR(255),
-                topic VARCHAR(255) NOT NULL,
-                speaker_category VARCHAR(50),
-                why_speak TEXT,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                phone VARCHAR(30) NOT NULL,
+                company VARCHAR(255),
+                role VARCHAR(255),
+                social_media TEXT[],
+                speaking_category VARCHAR(255),
+                area_of_interest VARCHAR(255),
+                has_experience BOOLEAN,
+                previous_engagement TEXT,
+                largest_audience VARCHAR(255),
+                why_speak TEXT NOT NULL,
+                agreed_to_terms BOOLEAN DEFAULT FALSE,
+                created_at TIMESTAMPTZ DEFAULT NOW()
             );
         `);
 
-        // Add speaker_category column if it doesn't exist
-        await client.query(`
-            ALTER TABLE speaker_registrations
-            ADD COLUMN IF NOT EXISTS speaker_category VARCHAR(50);
-        `);
-
-        // Insert the submission
         const result = await client.query(
-            `INSERT INTO speaker_registrations 
-            (application_type, name, email, phone, speaker_name, topic, speaker_category, why_speak)
-            VALUES 
-            ($1, $2, $3, $4, $5, $6, $7, $8)
+            `INSERT INTO "registration-speakers"
+            (first_name, last_name, email, phone, company, role, social_media, speaking_category, area_of_interest, has_experience, previous_engagement, largest_audience, why_speak, agreed_to_terms)
+            VALUES
+            ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
             RETURNING id, created_at;`,
-            [application_type, name, email, phone, speaker_name || null, topic, speaker_category || null, why_speak || null]
+            [
+                normalizedFirstName,
+                normalizedLastName,
+                normalizedEmail,
+                normalizedPhone,
+                normalizedCompany || null,
+                normalizedRole || null,
+                normalizedSocialMedia.length > 0 ? normalizedSocialMedia : null,
+                normalizedSpeakingCategory,
+                normalizedAreaOfInterest,
+                normalizedHasExperience,
+                normalizedHasExperience ? (normalizedPreviousEngagement || null) : null,
+                normalizedHasExperience ? (normalizedLargestAudience || null) : null,
+                normalizedWhySpeak,
+                normalizedAgreedToTerms,
+            ]
         );
 
-        sendFormNotificationEmail('Speaker Nomination', data, [
-            { label: 'Application Type', value: application_type === 'self' ? 'Self-application' : 'Speaker suggestion' },
-            { label: 'Submitter Name', value: name },
-            { label: 'Submitter Email', value: email },
-            { label: 'Submitter Phone', value: phone },
-            { label: 'Speaker Name', value: speaker_name || name },
-            { label: 'Topic / Expertise', value: topic },
-            { label: 'Speaker Category', value: speaker_category || 'N/A' },
-            { label: 'Why Speak?', value: why_speak || 'N/A' },
-        ]).catch((err) => console.error('Failed to send speaker email:', err));
+        await sendSpeakerBriefEmail({
+            name: `${normalizedFirstName} ${normalizedLastName}`.trim(),
+            email: normalizedEmail,
+        });
 
         return NextResponse.json(
             {

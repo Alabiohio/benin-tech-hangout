@@ -1,178 +1,201 @@
-'use client';
+"use client";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import Button from "./Button";
+import image from "@/assets/images/ticket/pattern1.png";
+import passBadge from "@/assets/images/ticket/pattern1.png";
+import passBadge2 from "@/assets/images/ticket/pattern1.png";
+import passBadge3 from "@/assets/images/ticket/pattern1.png";
 
-import { useEffect, useState } from 'react';
-import AOS from 'aos';
-import ticketBg from '../../assets/images/patterns1.png';
-import Button from './Button';
-import { ticketTiersList as ticketTiers } from '../data/tickets';
+const passes = [
+  {
+    name: "Regular",
+    price: "₦3,500",
+    audience: "EVERYBODY ACCESS",
+    badge: passBadge,
+    colorClass: "bg-brand-blue",
+    textColorClass: "text-colours-blue",
+    features: [
+      "Full 3-day event access",
+      "Access to exhibition floor + all public sessions",
+      "Access to job fair and recruiting companies",
+      "Digital certificate of participation",
+      "Speed mentoring session",
+    ],
+  },
+  {
+    name: "Standard",
+    price: "₦10,000",
+    audience: "BEST FOR EXPLORERS",
+    badge: image,
+    colorClass: "bg-brand-green",
+    textColorClass: "text-colours-green",
+    features: [
+      "Everything in Regular PLUS",
+      "Priority seating",
+      "Premium merch (hoodie + cap & more)",
+      "Refreshments (day 1 & 2)",
+      "Digital certificate of participation",
+      "Event program booklet & notepad",
+      "Access to lounge area",
+    ],
+  },
+  {
+    name: "Business",
+    price: "₦35,000",
+    audience: "THE BUSINESS-MINDED",
+    badge: passBadge2,
+    colorClass: "bg-brand-brown",
+    textColorClass: "text-colours-brown",
+    features: [
+      "Everything in Standard PLUS:",
+      "VIP Lounge + front-row seating",
+      "30 min investor meeting and networking",
+      "Founders' roundtable & startup resources",
+      "Refreshments (all 3 days)",
+      "Spotlight feature on BTF social media",
+      "Lifetime recording access to sessions",
+    ],
+  },
+  {
+    name: "VIP",
+    price: "₦85,000",
+    audience: "EXCLUSIVE EXPERIENCE",
+    badge: passBadge3,
+    colorClass: "bg-brand-purple",
+    textColorClass: "text-colours-purple",
+    features: [
+      "Everything in Business PLUS:",
+      "Reserved seats in front row",
+      "Red carpet VIP concierge service",
+      "Premium VIP lounge, deal room & exclusive lunch",
+      "Assigned PA & special duties",
+      "Media interviews & priority press coverage",
+    ],
+  },
+];
 
+function EventExperienceIntroSection() {
+  return (
+    <section
+      className="relative flex w-full self-stretch flex-[0_0_auto] flex-col items-start gap-4 px-4 lg:px-8"
+      aria-labelledby="event-experience-heading"
+    >
+      <h2
+        id="event-experience-heading"
+        className="relative mt-[-1px] self-stretch text-[40px] md:text-[60px] lg:text-[80px] leading-[0.9] tracking-[-1.4px] text-colours-inverted"
+      >
+        <span data-aos="fade-up" data-aos-duration="500" data-aos-delay="200" className="inline-block font-light leading-[var(--display-display-thin-line-height)] tracking-[var(--display-display-thin-letter-spacing)]">
+          Choose Your
+          <br />
+        </span>
+        <strong data-aos="fade-up" data-aos-duration="700" data-aos-delay="400" className="block font-display-display-bold font-bold leading-[var(--display-display-bold-line-height)] tracking-[var(--display-display-bold-letter-spacing)]">
+          Event Experience
+        </strong>
+      </h2>
+      <p className="relative self-stretch font-body-paragraph leading-[var(--body-paragraph-line-height)] tracking-[var(--body-paragraph-letter-spacing)] text-colours-inverted mb-5">
+        <span className="font-body-paragraph text-[length:var(--body-paragraph-font-size)] font-[number:var(--body-paragraph-font-weight)] leading-[var(--body-paragraph-line-height)] tracking-[var(--body-paragraph-letter-spacing)] [font-style:var(--body-paragraph-font-style)]">
+          Register through any of our partner communities you belong to
+          <br />
+          and get a free regular pass (limited slots).{" "}
+        </span>
+        <a
+          href="/ticket#communities"
+          className="font-body-paragraph text-[#1570ef] text-[length:var(--body-paragraph-font-size)] font-[number:var(--body-paragraph-font-weight)] leading-[var(--body-paragraph-line-height)] tracking-[var(--body-paragraph-letter-spacing)] underline [font-style:var(--body-paragraph-font-style)]"
+        >
+          See communities
+        </a>
+      </p>
+    </section>
+  );
+}
 
-export default function Tickets({ onRegisterClick }: { onRegisterClick: () => void }) {
-    const [isLargeScreen, setIsLargeScreen] = useState(true);
+function EventPassPricingSection() {
+  const router = useRouter();
 
-    useEffect(() => {
-        const handleResize = () => {
-            setIsLargeScreen(window.innerWidth >= 1024);
-        };
+  const handlePassSelection = (passName: string, passPrice: number) => {
+    router.push(`/buy-ticket?pass=${encodeURIComponent(passName)}&price=${passPrice}`);
+  };
 
-        handleResize();
-        window.addEventListener('resize', handleResize);
-
-        const refreshTimer = window.setTimeout(() => {
-            AOS.refresh();
-        }, 200);
-
-        return () => {
-            window.clearTimeout(refreshTimer);
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
-    return (
-        <section id="tickets" className="py-24 bg-[#f8fbff] relative overflow-hidden isolate z-20 items-center justify-center">
-            <div
-                className="absolute grayscale inset-0 -z-10"
-                style={{
-                    backgroundImage: `url(${ticketBg.src || ticketBg})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    opacity: 0.12,
-                }}
-            />
-            <div className="container mx-auto px-4 sm:px-4 md:px-12 lg:px-26 relative z-10">
-                <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-7xl font-black font-cabinet-grotesk text-biro-blue-dark mb-6">
-                        Get Your <span className="text-biro-blue">Event Pass</span>
-                    </h2>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2" style={{ perspective: '1200px' }}>
-                    {ticketTiers.map((tier, idx) => {
-                        const tiltRotation = isLargeScreen ? (idx === 0 ? '0deg' : idx === 4 ? '0deg' : '0deg') : '0deg';
-                        const sideShift = idx === 0 ? '0rem' : idx === 4 ? '0rem' : '0';
-                        const cardStyle = idx === 0 || idx === 4
-                            ? {
-                                transform: `perspective(1200px) rotateY(${tiltRotation}) translateX(${sideShift})`,
-                                transformOrigin: 'center center',
-                            }
-                            : undefined;
-
-                        const colors = [
-                            { bg: 'bg-brand-green', text: 'text-brand-green', border: 'border-brand-green/30' },
-                            { bg: 'bg-brand-blue', text: 'text-brand-blue', border: 'border-brand-blue/30' },
-                            { bg: 'bg-brand-purple', text: 'text-brand-purple', border: 'border-brand-purple/30' },
-                            { bg: 'bg-brand-red/80', text: 'text-brand-red', border: 'border-brand-red/30' },
-                            { bg: 'bg-brand-amber', text: 'text-brand-amber', border: 'border-brand-amber/30' },
-                            { bg: 'bg-biro-blue-dark', text: 'text-biro-blue-dark', border: 'border-biro-blue-dark/30' }
-                        ];
-                        const tierColor = colors[idx % colors.length];
-
-                        return (
-                            <div
-                                key={idx}
-                                data-ticket-card
-                                data-ticket-index={idx}
-                                className="relative h-full"
-                                data-aos={tier.aosAnime}
-                                data-aos-duration="1000"
-                                data-aos-easing="ease-out-cubic"
-                                data-aos-once="true"
-                                data-aos-delay={idx * 120}
-                            >
-                                {tier.highlight && (
-                                    <div className="absolute -top-1 right-6 md:right-8 z-50" style={{ filter: 'drop-shadow(0px 6px 6px rgba(0,0,0,0.2))' }}>
-                                        <div 
-                                            className={`w-16 md:w-20 bg-[#316a1b] text-white font-black uppercase text-center pt-3 pb-6 md:pt-4 md:pb-8 border-b-0`}
-                                            style={{
-                                                clipPath: 'polygon(0 0, 100% 0, 100% 100%, 50% 85%, 0 100%)'
-                                            }}
-                                        >
-                                            <span className="block text-[9px] md:text-[11px] leading-tight tracking-widest opacity-90">Most</span>
-                                            <span className="block text-[9px] md:text-[11px] leading-tight tracking-widest opacity-90">Popular</span>
-                                        </div>
-                                    </div>
-                                )}
-                                <div
-                                    style={cardStyle}
-                                    className={`relative h-full rounded-3xl border ${tierColor.border} overflow-hidden flex flex-col group hover:-translate-y-2 transition-all duration-700 ease-out bg-white shadow-xl hover:shadow-2xl`}
-                                >
-                                    {/* Header Banner */}
-                                    <div className={`relative px-6 py-6 flex items-center ${tierColor.bg} overflow-hidden`}>
-                                        <div 
-                                            className="absolute inset-0 opacity-50 mix-blend-overlay"
-                                            style={{
-                                                backgroundImage: `url(${ticketBg.src || ticketBg})`,
-                                                backgroundSize: 'cover',
-                                                backgroundPosition: 'center',
-                                            }}
-                                        />
-                                        <h3 className="relative z-10 text-2xl font-black font-oswald text-white uppercase m-0">{tier.name}</h3>
-                                    </div>
-
-                                    <div className="relative z-10 flex flex-col h-full py-8 px-6 md:px-6">
-                                        <div className="mb-8">
-                                            <span className={`text-4xl md:text-5xl font-oswald font-black flex items-start ${tierColor.text}`}>
-                                                {tier.price.startsWith('₦') ? (
-                                                    <>
-                                                        <sup className="text-xl md:text-2xl mt-2 mr-1">₦</sup>
-                                                        {tier.price.substring(1)}
-                                                    </>
-                                                ) : (
-                                                    tier.price
-                                                )}
-                                            </span>
-                                        </div>
-
-                                        <div className="space-y-4 mb-10 flex-grow relative z-10">
-                                            {tier.features.map((feature, fIdx) => {
-                                                const isIncludes = feature.startsWith('Everything in');
-                                                return (
-                                                    <div
-                                                        key={fIdx}
-                                                        className={`flex gap-3 ${isIncludes ? `-ml-10 md:-ml-6 mr-4 rounded-l-none rounded-r-xl px-3 pl-9 py-3 border-2 border-l-4 font-bold shadow-md border-white ${tierColor.bg} text-white` : ''}`}
-                                                    >
-                                                        <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] mt-0.5 shrink-0 ${isIncludes ? 'bg-white ' + tierColor.text : tierColor.bg + '/10 ' + tierColor.text + ' border ' + tierColor.border}`}>
-                                                            ✓
-                                                        </div>
-                                                        <p className={`text-sm leading-relaxed ${isIncludes ? 'text-white font-extrabold' : 'text-slate-700 font-bold'}`}>
-                                                            {feature}
-                                                        </p>
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-
-                                        {(() => {
-                                            const tierSlug = tier.name === 'Community Pass' ? 'community'
-                                                : tier.name === 'Explorer Pass' ? 'explorer'
-                                                : tier.name === 'Builders Pass' ? 'builders'
-                                                : tier.name === 'Founders Pass' ? 'founders'
-                                                : tier.name === 'VIP Pass' ? 'vip'
-                                                : tier.name === 'Investors Pass' ? 'investors'
-                                                : tier.name.toLowerCase();
-
-                                            const registrationHref = tierSlug === 'community'
-                                                ? '/free-pass'
-                                                : `/registration?tier=${tierSlug}`;
-
-                                            return (
-                                                <Button
-                                                    href={registrationHref}
-                                                    variant='outline'
-                                                    className={`w-full relative z-10 !px-4 !py-3 text-sm whitespace-nowrap text-white !bg-black hover:!bg-transparent hover:!text-black`}
-                                                >
-                                                    Get Your Pass
-                                                </Button>
-                                            );
-                                        })()}
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
-
+  return (
+    <section
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-start gap-4 relative self-stretch w-full flex-[0_0_auto] px-8 pb-8"
+      aria-label="Event pass pricing"
+    >
+      {passes.map((pass, index) => (
+        <motion.article
+          key={pass.name}
+          className="flex flex-col h-[560px] items-start relative flex-1 grow bg-colours-neutral"
+          aria-labelledby={`${pass.name.toLowerCase()}-pass-title`}
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, delay: index * 0.15, ease: "easeOut" }}
+        >
+          <div
+            className={`${pass.colorClass} absolute w-full h-full top-0 left-0 opacity-15 rounded-[30px]`}
+            aria-hidden="true"
+          />
+          <header
+            className={`${pass.colorClass} rounded-[30px_30px_0_0] flex flex-col items-start pl-6 pr-0 py-6 relative self-stretch w-full flex-[0_0_auto]`}
+          >
+            <div className="relative self-stretch mt-[-1.00px] opacity-60 font-heading-head-sm font-[number:var(--heading-head-sm-font-weight)] text-colours-neutral text-[length:var(--heading-head-sm-font-size)] tracking-[var(--heading-head-sm-letter-spacing)] leading-[var(--heading-head-sm-line-height)] [font-style:var(--heading-head-sm-font-style)]">
+              {pass.price}
             </div>
-        </section>
-    );
+            <h3
+              id={`${pass.name.toLowerCase()}-pass-title`}
+              className="relative self-stretch font-heading-head-lg font-bold text-3xl text-colours-neutral tracking-[var(--heading-head-lg-letter-spacing)] leading-[var(--heading-head-lg-line-height)]"
+            >
+              {pass.name}
+            </h3>
+            <div className="relative flex items-center self-stretch opacity-50 font-body-caption font-[number:var(--body-caption-font-weight)] text-colours-neutral text-[length:var(--body-caption-font-size)] tracking-[var(--body-caption-letter-spacing)] leading-[var(--body-caption-line-height)] [font-style:var(--body-caption-font-style)]">
+              {pass.audience}
+            </div>
+            <Image
+              className="absolute top-0 right-0 w-20 h-[90px] aspect-[1] rounded-[0_30px_0_30px] object-cover"
+              alt=""
+              aria-hidden="true"
+              src={pass.badge}
+            />
+          </header>
+          <div className="flex flex-col items-start gap-4 pt-4 pb-6 px-4 relative flex-1 self-stretch w-full grow">
+            <h4
+              className={`${pass.textColorClass} relative self-stretch mt-[-2.00px] font-body-title font-[number:var(--body-title-font-weight)] text-[length:var(--body-title-font-size)] tracking-[var(--body-title-letter-spacing)] leading-[var(--body-title-line-height)] [font-style:var(--body-title-font-style)]`}
+            >
+              What&apos;s included?
+            </h4>
+            <ul className="relative flex-1 self-stretch list-disc pl-5 font-body-caption font-[number:var(--body-caption-font-weight)] text-colours-inverted text-[length:var(--body-caption-font-size)] tracking-[var(--body-caption-letter-spacing)] leading-[var(--body-caption-line-height)] [font-style:var(--body-caption-font-style)]">
+              {pass.features.map((feature) => (
+                <li key={feature}>{feature}</li>
+              ))}
+            </ul>
+            <button
+              type="button"
+              className={`${pass.colorClass} all-unset box-border flex items-center justify-center gap-2 py-3 px-10 relative self-stretch w-full flex-[0_0_auto] rounded-[1000px] cursor-pointer hover:opacity-90 transition-opacity`}
+              aria-label={`Get ${pass.name} pass for ${pass.price}`}
+              onClick={() => handlePassSelection(pass.name, parseInt(pass.price.replace(/[₦,]/g, '')))}
+            >
+              <span className="relative flex items-center justify-center w-fit mt-[-1.00px] font-label-sm font-[number:var(--label-sm-font-weight)] text-colours-neutral text-[length:var(--label-sm-font-size)] text-center tracking-[var(--label-sm-letter-spacing)] leading-[var(--label-sm-line-height)] whitespace-nowrap [font-style:var(--label-sm-font-style)]">
+                GET PASS
+              </span>
+            </button>
+          </div>
+        </motion.article>
+      ))}
+    </section>
+  );
+}
+
+export default function TicketsScreen() {
+  return (
+    <main
+      className="relative flex w-full flex-col items-start gap-[var(--breakpoint-device-gap)] px-[var(--breakpoint-device-margin)] py-[var(--breakpoint-device-margin)]"
+      data-breakpoint-mode="desktop"
+      data-colours-mode="light-mode"
+    >
+      <EventExperienceIntroSection />
+      <EventPassPricingSection />
+    </main>
+  );
 }

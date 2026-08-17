@@ -56,6 +56,7 @@ export const metadata: Metadata = {
 
 import AosInit from "./components/AosInit";
 import ScrollToTop from "./components/ScrollToTop";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 export default function RootLayout({
   children,
@@ -63,11 +64,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${oswald.variable}`}>
+    <html lang="en" className={`${oswald.variable}`} suppressHydrationWarning>
       <body className="antialiased font-cabinet-grotesk overflow-x-hidden">
-        <AosInit />
-        <ScrollToTop />
-        {children}
+        <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
+          <AosInit />
+          <ScrollToTop />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

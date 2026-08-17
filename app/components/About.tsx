@@ -1,186 +1,193 @@
 "use client";
+import edoMan from "@/assets/images/about/edoman.png";
+import edoMap from "@/assets/images/about/edomap.png";
+import image from "@/assets/images/about/pattern2.png";
+import patternShape from "@/assets/images/about/pattern1.png";
+import shapePattern from "@/assets/images/about/starShape.png";
+import Image from "next/image";
+import { motion } from "framer-motion";
 
-import { motion, Variants } from "framer-motion";
-import { FiCalendar, FiMapPin, FiClock } from "react-icons/fi";
-import patternBg from "@/assets/images/patterns1.png";
-import pattern2Bg from "@/assets/images/pattern3.png";
+const attendanceBenefits = [
+  {
+    title: "What you can expect",
+    description:
+      "Attend inspiring keynote sessions, workshops and panel discussions from industry experts; experience live product demos and showcases from innovative tech startups and businesses across Edo State, and dedicated strategic job, investor and mentorship networking opportunities.",
+  },
+  {
+    title: "What you’ll experience",
+    description:
+      "Get exposed to potential recruiters, investors and government agencies through career job fair, startup pitch, innovation hub onboarding and investor matchmaking. Get recognised and awarded for meaning innovation, ecosystem and community impact to Edo State tech landscape.",
+  },
+  {
+    title: "Who you will meet",
+    description:
+      "Over 3,000+ digitally active, talented and passionate young people from various industries including creatives, designers, developers, web3 natives, builders, founders, mentors, investors, business people and recruiting companies scouting talents across the country.",
+  },
+];
 
-
-const slideRight: Variants = {
-    hidden: { opacity: 0, x: -30 },
-    visible: {
-        opacity: 1,
-        x: 0,
-        transition: { duration: 0.8, ease: "easeOut" }
-    }
-};
-
-
+const statisticRows = [
+  [
+    {
+      value: "3,000+",
+      label: "Attendees",
+      className: "bg-green-inverted rounded-[1000px_0px_0px_1000px]",
+    },
+    {
+      value: "100+",
+      label: "Communities",
+      className: "bg-purple-inverted rounded-[0px_1000px_1000px_0px]",
+    },
+  ],
+  [
+    {
+      value: "20+",
+      label: "Speakers",
+      className: "bg-brown-inverted rounded-[0px_1000px_1000px_0px]",
+    },
+    {
+      value: "3-day",
+      label: "Convergence",
+      className: "bg-blue-inverted rounded-[1000px_0px_0px_1000px]",
+    },
+  ],
+];
 
 export default function About() {
-    const stats = [
-        { value: "3000+", label: "ATTENDEES", aosAnime: "fade-down-right" },
-        { value: "100+", label: "COMMUNITIES", aosAnime: "fade-down-left" },
-        { value: "20+", label: "SPEAKERS", aosAnime: "fade-up-right" },
-        { value: "3 Day", label: "CONVERGENCE", aosAnime: "fade-up-left" }
-    ];
+  return (
+    <div className="relative flex w-full flex-col items-start" id="about">
+      <section
+        className="relative flex w-full flex-[0_0_auto] flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-12 bg-brand-blue px-6 lg:pr-[var(--breakpoint-device-margin)] lg:pl-[120px] py-16 lg:py-24 overflow-hidden"
+        aria-labelledby="about-heading"
+      >
+        <h1
+          id="about-heading"
+          className="relative mt-[-2.00px] w-full lg:flex-1 text-left lg:text-right text-[38px] sm:text-[48px] md:text-[60px] lg:text-[80px] leading-[1.1] lg:leading-[64.0px] tracking-tight lg:tracking-[-6.40px] text-[var(--color-inverted)] z-10"
+        >
+          <span className="text-white font-light inline-block" data-aos="fade-up" data-aos-duration="700">
+            Connecting
+            <br />
+            Edo to the
+            <br />
+          </span>
+          <strong data-aos="fade-up" data-aos-duration="900" className="inline-block font-display-display-bold !font-bold text-white lg:whitespace-pre-wrap leading-[var(--display-display-bold-line-height)] tracking-[var(--display-display-bold-letter-spacing)]">
+            Future of <br className="hidden lg:block" />
+            Tech
+          </strong>
+        </h1> 
+        <motion.div
+          className="absolute right-[13px] top-[40px] md:right-10 lg:relative lg:right-auto lg:top-auto h-[85px] w-[85px] md:h-[150px] md:w-[150px] lg:h-[200px] lg:w-[200px] aspect-[1]"
+          initial={{ opacity: 0, y: 50, rotate: -180 }}
+          whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+        >
+          <Image
+            className="h-full w-full"
+            width={100}
+            height={100}
+            alt=""
+            aria-hidden="true"
+            src={shapePattern.src}
+          />
+        </motion.div>
+        <div className="relative flex w-full lg:flex-1 flex-col items-start lg:items-center justify-center gap-6 lg:gap-4 z-10">
+          <p data-aos="fade-up" data-aos-duration="900" className="relative mt-[-1.00px] self-stretch font-body-paragraph text-[length:var(--body-paragraph-font-size)] font-light leading-[var(--body-paragraph-line-height)] tracking-[var(--body-paragraph-letter-spacing)] text-white">
+            Benin Tech Fest is a community-driven technology and innovation
+            convergence designed to strengthen Edo State&apos;s growing tech
+            ecosystem through talent and skill development, startup mentorship
+            and innovation support, community collaboration and access to talent
+            and business opportunities.
+          </p>
+          <p data-aos="fade-up" data-aos-duration="900" className="relative self-stretch font-body-title text-[length:var(--body-title-font-size)] font-extrabold leading-[var(--body-title-line-height)] tracking-[var(--body-title-letter-spacing)] text-white">
+            JOIN US ON 5TH - 7TH NOV. | 2026
+            <br />
+            AT VICTOR UWAIFO CREATIVE HUB,
+            <br />
+            BENIN CITY, EDO STATE
+          </p>
+        </div>
+        <img
+          className="hidden lg:block absolute bottom-0 left-0 h-80 w-[280px] aspect-[1] object-cover"
+          alt="Edo Tech Fest attendee"
+          src={edoMan.src}
+          data-aos="fade-up-left"
+          data-aos-duration="900" 
+        />
+      </section>
+      <section
+        className="relative flex w-full flex-[0_0_auto] flex-col items-start justify-center gap-4 bg-trans-10-inverted px-4 py-12"
+        aria-labelledby="why-attend-heading"
+      >
+        <h2
+          id="why-attend-heading"
+          className="relative mt-[-1.00px] self-stretch font-body-title text-[length:var(--body-title-font-size)] font-[number:var(--body-title-font-weight)] leading-[var(--body-title-line-height)] tracking-[var(--body-title-letter-spacing)] text-inverted font-bold"
+        >
+          WHY ATTEND?
+        </h2>
+        <div className="relative grid w-full grid-cols-1 items-start gap-10 lg:grid-cols-3">
+          {attendanceBenefits.map((benefit) => (
+            <article
+              key={benefit.title}
+              className="relative flex w-full flex-col items-start gap-4"
+            >
+              <h3 data-aos="fade-up" data-aos-duration="500" data-aos-delay="200" className="relative mt-[-1.00px] self-stretch font-heading-head-lg text-4xl leading-[var(--heading-head-lg-line-height)] tracking-[var(--heading-head-lg-letter-spacing)] text-inverted font-bold">
+                {benefit.title}
+              </h3>
+              <p className="relative self-stretch font-body-paragraph text-[length:var(--body-paragraph-font-size)] font-[number:var(--body-paragraph-font-weight)] leading-[var(--body-paragraph-line-height)] tracking-[var(--body-paragraph-letter-spacing)] text-gray-inverted [font-style:var(--body-paragraph-font-style)]">
+                {benefit.description}
+              </p>
+            </article>
+          ))}
 
-
-
-    return (
-        <section id="about" className="py-32 relative bg-black overflow-hidden">
-            <div className="container mx-auto px-2 relative z-10">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center mb-16">
-                    {/* Header */}
-                    <div
-                        className="max-w-xl text-left mx-auto lg:mx-0 overflow-hidden"
-                    >
-                        <h2 className="text-4xl md:text-7xl font-black font-cabinet-grotesk text-white mb-6 uppercase" data-aos="zoom-out" data-aos-duration="1000" data-aos-easing="ease-out-cubic" data-aos-once="true">
-                            Connecting <span className="text-blue-600">Edo</span> to the <span className="text-blue-600">Future of Tech</span>
-                        </h2>
-                        <p className="text-lg text-white leading-relaxed">
-                            <span className="font-bold text-biro-blue">Benin Tech Fest 2.0 </span> is a community-driven technology and innovation convergence designed to strengthen Edo State&apos;s growing tech ecosystem through talent development, startup mentorship, ecosystem collaboration and access to opportunities.
-                        </p>
-                    </div>
-
-                    {/* Dynamic Overlapping Statistics Grid */}
-                    <motion.div
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        className="relative h-auto w-full max-w-lg mx-auto md:px-3 lg:mx-0 lg:ml-auto rounded-2xl p-4"
-                    >
-                        {/* Faded background pattern */}
-                        <div
-                            className="absolute inset-0 bg-cover bg-center bg-no-repeat rounded-2xl opacity-20 pointer-events-none"
-                            style={{ backgroundImage: `url(${patternBg.src})` }}
-                        />
-                        {/* Top Row - 2 Cards */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-0 mb-4 md:mb-0 md:relative md:h-60">
-                            {stats.slice(0, 2).map((stat, index) => (
-                                <div
-                                    key={index}
-                                    className={`relative group md:absolute w-full md:w-1/2 transition-transform duration-300 ${index === 0
-                                        ? "md:top-auto md:bottom-0 md:left-0 md:translate-x-8 md:translate-y-6 lg:translate-x-8 lg:translate-y-6"
-                                        : "md:bottom-0 md:right-0 md:translate-x-6 md:translate-y-3 lg:translate-x-6 lg:translate-y-3"
-                                        }`}
-                                    data-aos={`${stat.aosAnime}`} data-aos-duration="1000" data-aos-easing="ease-out-cubic" data-aos-once="true">
-                                    {/* Stacked layers */}
-                                    <div className="absolute -bottom-4 -left-2 w-full h-full bg-brand-gold rounded-lg transform -rotate-2 opacity-40" />
-                                    <div className="absolute -bottom-2 -right-2 w-full h-full bg-biro-blue rounded-lg transform rotate-1 opacity-30" />
-
-                                    {/* Main card */}
-                                    <div
-                                        className="relative bg-white border border-slate-300 rounded-lg p-6 shadow-lg hover:shadow-2xl transition-shadow duration-300 h-full"
-                                    >
-                                        <p className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-biro-blue-dark mb-2 tabular-nums">
-                                            {stat.value}
-                                        </p>
-                                        <p className="text-slate-600 font-bold font-oswald uppercase tracking-widest text-xs md:text-sm">
-                                            {stat.label}
-                                        </p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Bottom Row - 2 Cards (Overlapping) */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-0 md:relative md:h-60 md:mt-0">
-                            {stats.slice(2, 4).map((stat, index) => (
-                                <div
-                                    key={index + 2}
-                                    className={`relative group md:absolute w-full md:w-1/2 transition-transform duration-300 ${index === 0
-                                        ? "md:top-0 md:bottom-auto md:left-0 md:translate-x-10 md:-translate-y-1 lg:translate-x-10 lg:-translate-y-1"
-                                        : "md:top-0 md:right-0 md:translate-x-8 md:-translate-y-4 lg:translate-x-8 lg:-translate-y-4"
-                                        }`}
-                                    data-aos={`${stat.aosAnime}`} data-aos-duration="1000" data-aos-easing="ease-out-cubic" data-aos-once="true">
-                                    {/* Stacked layers */}
-                                    <div className="absolute -bottom-4 -left-2 w-full h-full bg-brand-red rounded-lg transform -rotate-2 opacity-40" />
-                                    <div className="absolute -bottom-2 -right-2 w-full h-full bg-brand-green rounded-lg transform rotate-1 opacity-30" />
-
-                                    {/* Main card */}
-                                    <div
-                                        className="relative bg-white border border-slate-300 rounded-lg p-6 shadow-lg hover:shadow-2xl transition-shadow duration-300 h-full"
-                                    >
-                                        <p className="text-4xl md:text-5xl font-black font-cabinet-grotesk text-biro-blue-dark mb-2 tabular-nums">
-                                            {stat.value}
-                                        </p>
-                                        <p className="text-slate-600 font-bold font-oswald uppercase tracking-widest text-xs md:text-sm">
-                                            {stat.label}
-                                        </p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </motion.div>
+          <img
+            className="absolute top-0 left-[calc(50.00%_-_200px)] h-[400px] w-[400px] aspect-[1] object-cover"
+            alt="Map of Edo State"
+            src={edoMap.src}
+          />
+        </div>
+        <div
+          className="relative flex w-full flex-[0_0_auto] flex-col items-center justify-center pt-8 px-0"
+          aria-label="Event statistics"
+        >
+          {statisticRows.map((row, rowIndex) => (
+            <div
+              key={`statistic-row-${rowIndex}`}
+              className={`relative flex w-full flex-[0_0_auto] ${
+                rowIndex === 0 ? "items-center" : "items-start"
+              }`}
+            >
+              <div
+                className={`relative flex flex-1 grow flex-col items-center justify-center px-0 py-5 md:py-10 ${row[0].className}`}
+              >
+                <div className="relative mt-[-1.00px] w-fit whitespace-nowrap text-[1.5rem] md:text-5xl font-extrabold leading-[var(--display-display-bold-line-height)] tracking-[-2px] text-inverted">
+                  {row[0].value}
                 </div>
-
-                <motion.div
-                    variants={slideRight}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    className="relative group w-full mx-auto lg:ml-auto overflow-hidden rounded-none md:rounded-2xl"
-                >
-                    <div className="relative flex items-stretch gap-1 overflow-hidden">
-                        {/* Main content div - right edge cut */}
-                        <div
-                            className="relative bg-white flex-none pr-10 md:pr-20 rounded-[32px_0_0_32px]"
-                            style={{ clipPath: 'polygon(0 0, 100% 0, calc(100% - 42px) 100%, 0 100%)' }}
-                        >
-                            <div className="relative z-10 flex flex-col gap-2 py-3 px-2 md:py-3 md:px-5" data-aos="fade-left">
-                                {/* Date Item */}
-                                <div className="flex items-center gap-5">
-                                    <div className="hidden md:flex items-center justify-center shrink-0 w-12 h-12 bg-black text-white transform rounded-2xl -skew-x-12 shadow-md">
-                                        <FiCalendar className="w-5 h-5 transform skew-x-12" />
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <span className="text-xl md:text-2xl font-black text-black uppercase tracking-wide font-cabinet-grotesk">Nov <span className="md:text-3xl"> 5th–7th</span>, 2026</span>
-                                    </div>
-                                </div>
-
-                                {/* Location Item */}
-                                <div className="flex items-center gap-5">
-                                    <div className="hidden md:flex items-center justify-center  rounded-2xl shrink-0 w-12 h-12 bg-blue-600 text-white transform -skew-x-12 shadow-md">
-                                        <FiMapPin className="w-5 h-5 transform skew-x-12" />
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <span className="text-lg md:text-xl font-black text-black uppercase tracking-wide font-cabinet-grotesk"> <span className="md:text-3xl">Benin City,</span> Edo State</span>
-                                    </div>
-                                </div>
-
-                                {/* Time Item */}
-                                <div className="flex items-center gap-5">
-                                    <div className="hidden md:flex items-center justify-center rounded-2xl shrink-0 w-12 h-12 bg-black text-white transform -skew-x-12 shadow-md">
-                                        <FiClock className="w-5 h-5 transform skew-x-12" />
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <span className="text-lg md:text-xl font-black text-black uppercase tracking-wide font-cabinet-grotesk"><span className="md:text-3xl">9:00 AM</span> Daily</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        {/* First slash */}
-                        <div
-                            className="w-20 bg-brand-gold -ml-[42px]"
-                            style={{ clipPath: 'polygon(42px 0, 100% 0, calc(100% - 42px) 100%, 0 100%)' }}
-                            data-aos="fade-left"
-                        ></div>
-
-                        {/* Second slash */}
-                        <div
-                            className="w-20 bg-red-600 -ml-[42px]"
-                            style={{ clipPath: 'polygon(42px 0, 100% 0, calc(100% - 42px) 100%, 0 100%)' }}
-                            data-aos="fade-left"
-                            data-aos-delay="100"
-                        ></div>
-                    </div>
-                </motion.div>
-
+                <div className="relative w-fit whitespace-nowrap font-heading-head-lg -mt-2 font-bold leading-[var(--heading-head-lg-line-height)] tracking-[var(--heading-head-lg-letter-spacing)] text-inverted">
+                  {row[0].label}
+                </div>
+              </div>
+              <Image
+                className="relative self-stretch aspect-[1] h-24 w-24 md:h-34 md:w-34"
+                width={140}
+                height={140}
+                alt=""
+                aria-hidden="true"
+                src={rowIndex === 0 ? patternShape.src : image.src}
+              />
+              <div
+                className={`relative flex flex-1 grow flex-col items-center justify-center px-0 py-5 md:py-10 ${row[1].className}`}
+              >
+                <div className="relative mt-[-1.00px] w-fit whitespace-nowrap text-[1.5rem] md:text-5xl font-extrabold leading-[var(--display-display-bold-line-height)] tracking-[-2px] text-inverted">
+                  {row[1].value}
+                </div>
+                <div className="relative w-fit whitespace-nowrap font-heading-head-lg -mt-2 font-bold leading-[var(--heading-head-lg-line-height)] tracking-[var(--heading-head-lg-letter-spacing)] text-inverted">
+                  {row[1].label}
+                </div>
+              </div>
             </div>
-        </section>
-    );
-}
-
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+};

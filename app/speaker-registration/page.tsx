@@ -1,385 +1,417 @@
 'use client';
 
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
-import BackgroundWrapper from "../components/BackgroundWrapper";
-import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
-import Button from "../components/Button";
+import { ChangeEvent, FormEvent, useState } from 'react';
+import Image from 'next/image';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import formBanner from "@/assets/images/formBanner.png";
+import DropdownIcon from "../components/DropdownIcon";
+import ConfirmationModal from '../components/ConfirmationModal';
+import Spinner from '../components/Spinner';
 
-type FormData = {
-    application_type: string;
-    name: string;
+type FormState = {
+    firstName: string;
+    lastName: string;
     email: string;
     phone: string;
-    speaker_name: string;
-    topic: string;
-    speaker_category: string;
-    why_speak: string;
+    company: string;
+    role: string;
+    socialMedia: string[];
+    speakingCategory: string;
+    areaOfInterest: string;
+    hasExperience: string;
+    previousEngagement: string;
+    largestAudience: string;
+    whySpeak: string;
+    agreedToTerms: boolean;
 };
 
-type FormErrors = Partial<Record<keyof FormData, string>>;
+const initialForm: FormState = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    company: '',
+    role: '',
+    socialMedia: [''],
+    speakingCategory: '',
+    areaOfInterest: '',
+    hasExperience: '',
+    previousEngagement: '',
+    largestAudience: '',
+    whySpeak: '',
+    agreedToTerms: false,
+};
 
-export default function SpeakerRegistrationPage() {
-    const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState('');
-    const [cooldown, setCooldown] = useState(0);
-    const [formData, setFormData] = useState<FormData>({
-        application_type: 'self',
-        name: '',
-        email: '',
-        phone: '',
-        speaker_name: '',
-        topic: '',
-        speaker_category: 'Keynote',
-        why_speak: ''
-    });
-    const [errors, setErrors] = useState<FormErrors>({});
+export default function RegisterPage() {
+    const [formData, setFormData] = useState<FormState>(initialForm);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState('');
 
-    const validateField = (name: keyof FormData, value: string) => {
-        const trimmedValue = value.trim();
-
-        if (name === 'name') {
-            return trimmedValue ? '' : 'Please enter your name.';
+    const handleChange = (
+        event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    ) => {
+        const { name, value, type } = event.target;
+        if (type === 'checkbox') {
+            setFormData((prev) => ({ ...prev, [name]: (event.target as HTMLInputElement).checked }));
+        } else {
+            setFormData((prev) => ({ ...prev, [name]: value }));
         }
-
-        if (name === 'email') {
-            if (!trimmedValue) {
-                return 'Please enter your email address.';
-            }
-
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedValue)) {
-                return 'Please enter a valid email address.';
-            }
-
-            return '';
-        }
-
-        if (name === 'phone') {
-            return trimmedValue ? '' : 'Please enter your phone number.';
-        }
-
-        if (name === 'topic') {
-            return trimmedValue ? '' : 'Please enter a talk topic or area of expertise.';
-        }
-
-        if (name === 'speaker_category') {
-            return trimmedValue ? '' : 'Please select a speaker category.';
-        }
-
-        return '';
     };
 
-    const validateForm = (data: FormData) => {
-        const nextErrors: FormErrors = {};
+    const isError = (fieldName: keyof FormState) => {
+        if (!submitted) return false;
 
-        const nameError = validateField('name', data.name);
-        const emailError = validateField('email', data.email);
-        const phoneError = validateField('phone', data.phone);
-        const topicError = validateField('topic', data.topic);
-        const speakerCategoryError = validateField('speaker_category', data.speaker_category);
+        if (fieldName === 'socialMedia') {
+            return formData.socialMedia.every((link) => !link.trim());
+        }
 
-        if (nameError) nextErrors.name = nameError;
-        if (emailError) nextErrors.email = emailError;
-        if (phoneError) nextErrors.phone = phoneError;
-        if (topicError) nextErrors.topic = topicError;
-        if (speakerCategoryError) nextErrors.speaker_category = speakerCategoryError;
+        if (fieldName === 'agreedToTerms') {
+            return !formData.agreedToTerms;
+        }
 
-        return nextErrors;
+        return !String(formData[fieldName]).trim();
     };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        const fieldName = name as keyof FormData;
-        setFormData(prev => ({ ...prev, [fieldName]: value }));
+    const getFieldClass = (fieldName: keyof FormState) => {
+        const activeError = isError(fieldName);
+        return `bg-[var(--color-trans-10-inverted,rgba(255,255,255,0.1))] min-h-[56px] overflow-clip px-[var(--button-x-pad,24px)] py-[var(--button-y-pad-sm,16px)] rounded-[8px] w-full border-2 transition-all duration-200 ${activeError ? 'border-[#FF8484]' : 'border-transparent focus:border-[#84CAFF]'}`;
+    };
 
-        const fieldError = validateField(fieldName, value);
-        setErrors(prevErrors => {
-            const nextErrors = { ...prevErrors };
+    const inputTextClass = "text-[color:var(--color-inverted,white)] placeholder:text-[color:var(--color-gray-inverted,#a1a1a1)] placeholder:opacity-70 focus:outline-none";
 
-            if (fieldError) {
-                nextErrors[fieldName] = fieldError;
-            } else {
-                delete nextErrors[fieldName];
-            }
+    const renderError = (fieldName: keyof FormState, message: string) => {
+        if (!isError(fieldName)) return null;
+        return <span className="text-[#FF8484] text-sm mt-1 ml-1 block">{message}</span>;
+    };
 
-            return nextErrors;
+    const handleSocialMediaChange = (index: number, value: string) => {
+        setFormData((prev) => {
+            const newSocialMedia = [...prev.socialMedia];
+            newSocialMedia[index] = value;
+            return { ...prev, socialMedia: newSocialMedia };
         });
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setLoading(true);
-        setMessage('');
+    const addSocialMediaLink = () => {
+        setFormData((prev) => ({
+            ...prev,
+            socialMedia: [...prev.socialMedia, '']
+        }));
+    };
+    
+    const removeSocialMediaLink = (index: number) => {
+        if (formData.socialMedia.length === 1) return;
+        setFormData((prev) => {
+            const newSocialMedia = prev.socialMedia.filter((_, i) => i !== index);
+            return { ...prev, socialMedia: newSocialMedia };
+        });
+    };
 
-        const trimmedData: FormData = {
-            application_type: formData.application_type.trim(),
-            name: formData.name.trim(),
-            email: formData.email.trim(),
-            phone: formData.phone.trim(),
-            speaker_name: formData.speaker_name.trim(),
-            topic: formData.topic.trim(),
-            speaker_category: formData.speaker_category.trim(),
-            why_speak: formData.why_speak.trim()
-        };
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        setSubmitted(true);
+        setSubmitError('');
 
-        const nextErrors = validateForm(trimmedData);
-        setErrors(nextErrors);
+        const requiredFields: Array<keyof FormState> = [
+            'firstName',
+            'lastName',
+            'email',
+            'phone',
+            'company',
+            'role',
+            'speakingCategory',
+            'areaOfInterest',
+            'hasExperience',
+            'whySpeak',
+            'agreedToTerms',
+        ];
 
-        if (Object.keys(nextErrors).length > 0) {
-            setMessage('Please correct the highlighted fields before submitting.');
-            setLoading(false);
+        const hasRequiredErrors = requiredFields.some((field) => isError(field));
+        if (hasRequiredErrors) {
             return;
         }
 
+        const payload = {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            phone: formData.phone,
+            company: formData.company,
+            role: formData.role,
+            socialMedia: formData.socialMedia.filter((link) => link.trim().length > 0),
+            speakingCategory: formData.speakingCategory,
+            areaOfInterest: formData.areaOfInterest,
+            hasExperience: formData.hasExperience,
+            previousEngagement: formData.previousEngagement,
+            largestAudience: formData.largestAudience,
+            whySpeak: formData.whySpeak,
+            agreedToTerms: formData.agreedToTerms,
+        };
+
+        setIsSubmitting(true);
         try {
             const response = await fetch('/api/submissions/speaker', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(trimmedData)
+                body: JSON.stringify(payload),
             });
 
-            const contentType = response.headers.get('content-type') || '';
-            const data = contentType.includes('application/json')
-                ? await response.json()
-                : { error: 'Unexpected server response' };
+            const data = await response.json();
 
-            if (response.ok) {
-                setMessage('✓ Nomination submitted successfully!');
-                setCooldown(30);
-                setFormData({
-                    application_type: 'self',
-                    name: '',
-                    email: '',
-                    phone: '',
-                    speaker_name: '',
-                    topic: '',
-                    speaker_category: 'Keynote',
-                    why_speak: ''
-                });
-                setErrors({});
-            } else {
-                setMessage(`✗ Error: ${data.error || 'Failed to submit'}`);
+            if (!response.ok) {
+                throw new Error(data?.error || 'Failed to submit speaker application.');
             }
+
+            setFormData(initialForm);
+            setSubmitted(false);
+            setIsSuccessModalOpen(true);
         } catch (error) {
-            setMessage('✗ Error submitting nomination. Please try again.');
-            console.error('Submission error:', error);
+            console.error('Speaker submission error:', error);
+            setSubmitError(error instanceof Error ? error.message : 'An unexpected error occurred. Please try again.');
         } finally {
-            setLoading(false);
+            setIsSubmitting(false);
         }
     };
 
-    useEffect(() => {
-        if (cooldown > 0) {
-            const timer = setTimeout(() => setCooldown(cooldown - 1), 1000);
-            return () => clearTimeout(timer);
-        }
-    }, [cooldown]);
-
     return (
-        <div className="flex min-h-screen flex-col font-sans relative bg-[#f8fbff]">
-            <BackgroundWrapper />
+        <div className="min-h-screen bg-[var(--background,#ffffff)] text-[var(--foreground,#000000)]">
             <Navbar />
-            <main className="flex-grow relative z-10 pt-14 md:pt-32 pb-16">
-                <section className="relative overflow-hidden py-12">
-                    <div className="container mx-auto px-2 relative z-10">
-                        <div className="max-w-6xl mx-auto">
-                            <motion.div
-                                className="text-center mb-8"
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.6 }}
-                            >
-                                <h1 className="text-4xl md:text-6xl font-black font-cabinet-grotesk text-biro-blue-dark mb-6 leading-tight">
-                                    Take The <span className="text-biro-blue">Stage</span>
-                                </h1>
-                                <p className="md:text-xl text-slate-600 max-w-2xl mx-auto font-medium leading-relaxed">
-                                    Whether you want to share your expertise or recommend a visionary leader, help us shape the conversations at <span className="text-biro-blue-dark font-bold">BTF 2.0</span>.
+
+            <main className="relative z-10 pt-28 pb-16 md:pt-32 md:pb-20">
+                <div className='h-full w-full'>
+                    <Image
+                        width={2000}
+                        height={10}
+                        src={formBanner.src}
+                        alt='form banner'
+                        loading="eager"
+                    />
+                </div>
+                <section className="mx-auto max-w-[1080px] px-4 md:px-6 xl:px-0 pt-18">
+                    <div className="content-stretch flex flex-col gap-[var(--device-margin,40px)] items-start justify-center relative size-full">
+                        <div className="flex flex-col w-full max-w-[1080px] gap-y-[32px] relative shrink-0 mb-4">
+                            <div className="flex flex-col md:flex-row justify-between items-start md:items-end w-full gap-y-[24px] gap-x-[24px]">
+                                <h2 className="text-[48px] font-light leading-[0.9] tracking-[-0.04em] text-colors-inverted md:text-[80px]">
+                                    Apply to
+                                    <span className="block font-bold">Speak at BTF 2.0</span>
+                                </h2>
+
+                                <div className="flex flex-col font-cabinet-grotesk justify-end leading-[1.4] text-colors-inverted shrink-0 mb-1">
+                                    <p className="font-bold text-[16px]">5TH - 7TH NOV. | 2026</p>
+                                    <p className="font-bold text-[16px]">VICTOR UWAIFO CREATIVE HUB,</p>
+                                    <p className="font-bold text-[16px]">BENIN CITY, EDO STATE</p>
+                                </div>
+                            </div>
+                                
+                            <div className="font-['Inter:Regular'] text-[16px] leading-[1.4] text-colors-inverted">
+                                <p>For more enquires:</p>
+                                <p>+234-8142289951; +234-8145658605</p>
+                                <p>info@benintechfest.com.ng</p>
+                            </div>
+                        </div>
+
+                        {submitError && (
+                            <div className="w-full max-w-[1080px] rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+                                {submitError}
+                            </div>
+                        )}
+
+                        <form onSubmit={handleSubmit} className="w-full max-w-[1080px] gap-x-[24px] gap-y-[24px] grid grid-cols-1 md:grid-cols-2">
+                            {/* PERSONAL INFO SECTION */}
+                            <div className="col-span-1 flex flex-col gap-[24px]">
+                                <p className="font-['Bricolage_Grotesque:Regular'] font-normal leading-[1.2] text-[color:var(--color-inverted,white)] text-[length:var(--type-title,20px)] tracking-[-0.8px] uppercase" style={{ fontVariationSettings: '"opsz" 14, "wdth" 100' }}>
+                                    PERSONAL INFO
                                 </p>
-                            </motion.div>
 
-                            <motion.div
-                                className="overflow-hidden flex flex-col item-center justify-center lg:flex-row"
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.8, delay: 0.2 }}
-                            >
+                                <input name="firstName" type="text" value={formData.firstName} onChange={handleChange} placeholder="First name *" className={`${getFieldClass('firstName')} ${inputTextClass}`} />
+                                {renderError('firstName', 'First name is required')}
 
-                                <div className="w-full max-w-4xl mx-auto py-10 px-2 md:py-16 md:px-24">
-                                    <h3 className="text-3xl font-black text-biro-blue-dark mb-8 font-cabinet-grotesk">Speaker Nomination</h3>
-                                    
-                                    {cooldown > 0 ? (
-                                        <div className="space-y-6">
-                                            {message && (
-                                                <div className={`p-5 rounded-2xl border-2 shadow-lg transform transition-all duration-300 ${message.startsWith('✓') ? 'bg-gradient-to-r from-green-50 to-green-100 border-green-500 text-green-800' : 'bg-gradient-to-r from-red-50 to-red-100 border-red-500 text-red-800'}`}>
-                                                    <div className="flex items-center justify-center gap-3">
-                                                        <span className={`text-4xl font-bold ${message.startsWith('✓') ? 'text-green-500' : 'text-red-500'}`}>{message.startsWith('✓') ? '✓' : '✗'}</span>
-                                                        <div className="text-center">
-                                                            <p className="font-semibold leading-snug text-lg">{message.replace(/^[✓✗⚠] /, '')}</p>
-                                                            <p className={`text-sm mt-2 ${message.startsWith('✓') ? 'text-green-800/70' : 'text-red-800/70'}`}>You can submit another form in {cooldown} seconds</p>
-                                                            {message.startsWith('✓') && (
-                                                                <div className="flex justify-center mt-4">
-                                                                    <a
-                                                                        href="https://whatsapp.com/channel/0029VbCyw0P9mrGciiEpD71G"
-                                                                        target="_blank"
-                                                                        rel="noopener noreferrer"
-                                                                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#25D366] text-white font-bold text-sm hover:bg-[#1da851] transition-colors"
-                                                                    >
-                                                                        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                                                                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                                                                        </svg>
-                                                                        Join Channel
-                                                                    </a>
-                                                                </div>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                <input name="lastName" type="text" value={formData.lastName} onChange={handleChange} placeholder="Last name *" className={`${getFieldClass('lastName')} ${inputTextClass}`} />
+                                {renderError('lastName', 'Last name is required')}
+
+                                <input name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Email *" className={`${getFieldClass('email')} ${inputTextClass}`} />
+                                {renderError('email', 'Valid email is required')}
+
+                                <input name="phone" type="tel" value={formData.phone} onChange={handleChange} placeholder="Phone (preferably WhatsApp) *" className={`${getFieldClass('phone')} ${inputTextClass}`} />
+                                {renderError('phone', 'Phone number is required')}
+
+                                <input name="company" type="text" value={formData.company} onChange={handleChange} placeholder="Company/organisation *" className={`${getFieldClass('company')} ${inputTextClass}`} />
+                                {renderError('company', 'Company or organisation is required')}
+
+                                <input name="role" type="text" value={formData.role} onChange={handleChange} placeholder="Role/designation *" className={`${getFieldClass('role')} ${inputTextClass}`} />
+                                {renderError('role', 'Role or designation is required')}
+
+                                <div className="flex flex-col gap-4 w-full">
+                                    {formData.socialMedia.map((link, index) => (
+                                        <div key={index} className="bg-[var(--color-trans-10-inverted,rgba(255,255,255,0.1))] content-stretch flex gap-[4px] items-center overflow-clip px-[var(--button-x-pad,24px)] py-[var(--button-y-pad-sm,16px)] relative rounded-[8px] shrink-0 w-full focus-within:ring-1 focus-within:ring-[color:var(--color-inverted,white)] transition">
+                                            <input
+                                                type="text"
+                                                value={link}
+                                                onChange={(e) => handleSocialMediaChange(index, e.target.value)}
+                                                placeholder={index === 0 ? "Social media (LinkedIn, X, IG or FB page)" : "Additional social media link"}
+                                                className="bg-transparent border-none w-full focus:outline-none text-[color:var(--color-inverted,white)] placeholder:text-[color:var(--color-gray-inverted,#a1a1a1)] placeholder:opacity-70"
+                                            />
+                                            {index === formData.socialMedia.length - 1 ? (
+                                                <button
+                                                    type="button"
+                                                    onClick={addSocialMediaLink}
+                                                    className="ml-auto text-[color:var(--color-inverted,white)] opacity-70 hover:opacity-100 flex-shrink-0 transition-opacity"
+                                                    aria-label="Add social media link"
+                                                >
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    </svg>
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => removeSocialMediaLink(index)}
+                                                    className="ml-auto text-[#FF695B] opacity-70 hover:opacity-100 flex-shrink-0 transition-opacity"
+                                                    aria-label="Remove social media link"
+                                                >
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                    </svg>
+                                                </button>
                                             )}
                                         </div>
-                                    ) : (
-                                    <form className="space-y-6" onSubmit={handleSubmit} noValidate>
-                                        <div className="space-y-2">
-                                            <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">I am...</label>
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                <label className="flex items-center gap-3 p-4 border border-blue-100 rounded-xl cursor-pointer hover:border-biro-blue transition-all has-[:checked]:border-biro-blue has-[:checked]:bg-blue-50/50">
-                                                    <input 
-                                                        type="radio" 
-                                                        name="application_type" 
-                                                        value="self" 
-                                                        className="w-5 h-5 accent-blue-600"
-                                                        checked={formData.application_type === 'self'}
-                                                        onChange={handleInputChange}
-                                                    />
-                                                    <span className="font-bold text-gray-900">Applying to speak</span>
-                                                </label>
-                                                <label className="flex items-center gap-3 p-4 border border-blue-100 rounded-xl cursor-pointer hover:border-biro-blue transition-all has-[:checked]:border-biro-blue has-[:checked]:bg-blue-50/50">
-                                                    <input 
-                                                        type="radio" 
-                                                        name="application_type" 
-                                                        value="suggest"
-                                                        className="w-5 h-5 accent-blue-600"
-                                                        checked={formData.application_type === 'suggest'}
-                                                        onChange={handleInputChange}
-                                                    />
-                                                    <span className="font-bold text-gray-900">Suggesting a speaker</span>
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Your Name</label>
-                                            <input 
-                                                type="text" 
-                                                name="name"
-                                                value={formData.name}
-                                                onChange={handleInputChange}
-                                                className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400 ${errors.name ? 'border-red-400' : 'border-blue-100'}`} 
-                                                placeholder="John Doe" 
-                                                aria-invalid={!!errors.name}
-                                                aria-describedby={errors.name ? 'name-error' : undefined}
-                                            />
-                                            {errors.name && <p id="name-error" className="mt-2 text-sm text-red-600">{errors.name}</p>}
-                                        </div>
-
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            <div className="space-y-2">
-                                                <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Your Email</label>
-                                                <input 
-                                                    type="email" 
-                                                    name="email"
-                                                    value={formData.email}
-                                                    onChange={handleInputChange}
-                                                    className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400 ${errors.email ? 'border-red-400' : 'border-blue-100'}`} 
-                                                    placeholder="john@example.com" 
-                                                    aria-invalid={!!errors.email}
-                                                    aria-describedby={errors.email ? 'email-error' : undefined}
-                                                />
-                                                {errors.email && <p id="email-error" className="mt-2 text-sm text-red-600">{errors.email}</p>}
-                                            </div>
-                                            <div className="space-y-2">
-                                                <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Phone Number</label>
-                                                <input 
-                                                    type="tel" 
-                                                    name="phone"
-                                                    value={formData.phone}
-                                                    onChange={handleInputChange}
-                                                    className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400 ${errors.phone ? 'border-red-400' : 'border-blue-100'}`} 
-                                                    placeholder="+234 XXX XXXX" 
-                                                    aria-invalid={!!errors.phone}
-                                                    aria-describedby={errors.phone ? 'phone-error' : undefined}
-                                                />
-                                                {errors.phone && <p id="phone-error" className="mt-2 text-sm text-red-600">{errors.phone}</p>}
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Speaker Name (if suggesting)</label>
-                                            <input 
-                                                type="text" 
-                                                name="speaker_name"
-                                                value={formData.speaker_name}
-                                                onChange={handleInputChange}
-                                                className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400" 
-                                                placeholder="Name of the person you're suggesting" 
-                                            />
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Talk Topic / Areas of Expertise</label>
-                                            <input 
-                                                type="text" 
-                                                name="topic"
-                                                value={formData.topic}
-                                                onChange={handleInputChange}
-                                                className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium placeholder:text-gray-400 ${errors.topic ? 'border-red-400' : 'border-blue-100'}`} 
-                                                placeholder="e.g. AI, FinTech, Creative Economy, Scaling Tech Roles" 
-                                                aria-invalid={!!errors.topic}
-                                                aria-describedby={errors.topic ? 'topic-error' : undefined}
-                                            />
-                                            {errors.topic && <p id="topic-error" className="mt-2 text-sm text-red-600">{errors.topic}</p>}
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Speaker Category</label>
-                                            <select 
-                                                name="speaker_category"
-                                                value={formData.speaker_category}
-                                                onChange={handleInputChange}
-                                                className={`w-full px-5 py-4 rounded-xl border bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 font-medium ${errors.speaker_category ? 'border-red-400' : 'border-blue-100'}`} 
-                                                aria-invalid={!!errors.speaker_category}
-                                                aria-describedby={errors.speaker_category ? 'speaker_category-error' : undefined}
-                                            >
-                                                <option value="Keynote">Keynote</option>
-                                                <option value="Panelists">Panelists</option>
-                                                <option value="Facilitators">Facilitators</option>
-                                            </select>
-                                            {errors.speaker_category && <p id="speaker_category-error" className="mt-2 text-sm text-red-600">{errors.speaker_category}</p>}
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            <label className="block text-sm font-bold text-slate-700 uppercase tracking-wider">Why should they/you speak?</label>
-                                            <textarea 
-                                                rows={4} 
-                                                name="why_speak"
-                                                value={formData.why_speak}
-                                                onChange={handleInputChange}
-                                                className="w-full px-5 py-4 rounded-xl border border-blue-100 bg-[#f8fbff] focus:bg-white focus:border-biro-blue outline-none transition-all text-gray-900 resize-none font-medium placeholder:text-gray-400" 
-                                                placeholder="Tell us briefly about the impact and relevance..."
-                                            />
-                                        </div>
-
-                                        <Button type="submit" disabled={loading} variant="biro" className="w-full !py-2 text-xl rounded-2xl border-0">
-                                            {loading ? 'Submitting...' : 'Submit Nomination'}
-                                        </Button>
-                                    </form>
-                                    )}
+                                    ))}
                                 </div>
-                            </motion.div>
-                        </div>
+                            </div>
+
+                            {/* SPEAKING INFO SECTION */}
+                            <div className="col-span-1 flex flex-col gap-[24px]">
+                                <p className="font-['Bricolage_Grotesque:Regular'] font-normal leading-[1.2] text-[color:var(--color-inverted,white)] text-[length:var(--type-title,20px)] tracking-[-0.8px] uppercase" style={{ fontVariationSettings: '"opsz" 14, "wdth" 100' }}>
+                                    SPEAKING INFO
+                                </p>
+
+                                <div className="relative w-full">
+                                    <select
+                                        name="speakingCategory"
+                                        value={formData.speakingCategory}
+                                        onChange={handleChange}
+                                        className={`${getFieldClass('speakingCategory')} ${inputTextClass} appearance-none cursor-pointer pr-[52px]`}
+                                        aria-label="Speaking category"
+                                    >
+                                        <option value="" disabled hidden>
+                                            Speaking category *
+                                        </option>
+                                        <option value="Guest speaker">Guest speaker</option>
+                                        <option value="Panelist">Panelist</option>
+                                        <option value="Masterclass Facilitator">Masterclass Facilitator</option>
+                                    </select>
+                                    <DropdownIcon className="pointer-events-none absolute right-[24px] top-[20px] h-[17px] w-[10px] text-[color:var(--color-inverted,white)]" />
+                                </div>
+                                {renderError('speakingCategory', 'Please select a speaking category')}
+
+                                <div className="relative w-full">
+                                    <select
+                                        name="areaOfInterest"
+                                        value={formData.areaOfInterest}
+                                        onChange={handleChange}
+                                        className={`${getFieldClass('areaOfInterest')} ${inputTextClass} appearance-none cursor-pointer pr-[52px]`}
+                                        aria-label="Area of interest"
+                                    >
+                                        <option value="" disabled hidden>
+                                            Area of interest *
+                                        </option>
+                                        <option value="Skill, industry & talent development">Skill, industry & talent development</option>
+                                        <option value="Entrepreneurship, business and startup mentorship">Entrepreneurship, business and startup mentorship</option>
+                                        <option value="Community and ecosystem impact">Community and ecosystem impact</option>
+                                        <option value="Edo history & heritage">Edo history & heritage</option>
+                                    </select>
+                                    <DropdownIcon className="pointer-events-none absolute right-[24px] top-[20px] h-[17px] w-[10px] text-[color:var(--color-inverted,white)]" />
+                                </div>
+                                {renderError('areaOfInterest', 'Please select your area of interest')}
+
+                                <div className="relative w-full">
+                                    <select
+                                        name="hasExperience"
+                                        value={formData.hasExperience}
+                                        onChange={handleChange}
+                                        className={`${getFieldClass('hasExperience')} ${inputTextClass} appearance-none cursor-pointer pr-[52px]`}
+                                        aria-label="Do you have any speaking experience?"
+                                    >
+                                        <option value="" disabled hidden>
+                                            Do you have any speaking experience? *
+                                        </option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                    <DropdownIcon className="pointer-events-none absolute right-[24px] top-[20px] h-[17px] w-[10px] text-[color:var(--color-inverted,white)]" />
+                                </div>
+                                {renderError('hasExperience', 'Please tell us if you have speaking experience')}
+
+                                    <input
+                                        name="previousEngagement"
+                                        type="text"
+                                        value={formData.previousEngagement}
+                                        onChange={handleChange}
+                                        placeholder="If yes, paste a link to any of your previous engagement"
+                                        disabled={formData.hasExperience === 'No'}
+                                        className={`${getFieldClass('previousEngagement')} ${inputTextClass} disabled:cursor-not-allowed ${formData.hasExperience === 'No' ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    />
+
+                                    <input
+                                        name="largestAudience"
+                                        type="text"
+                                        value={formData.largestAudience}
+                                        onChange={handleChange}
+                                        placeholder="What's the largest audience you've spoken to?"
+                                        disabled={formData.hasExperience === 'No'}
+                                        className={`${getFieldClass('largestAudience')} ${inputTextClass} disabled:cursor-not-allowed ${formData.hasExperience === 'No' ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    />
+
+                                    <textarea
+                                        name="whySpeak"
+                                        value={formData.whySpeak}
+                                        onChange={handleChange}
+                                        placeholder="Why do you want to speak at BTF 2.0? *"
+                                        className={`${getFieldClass('whySpeak')} ${inputTextClass} resize-none`}
+                                        rows={4}
+                                    />
+                                {renderError('whySpeak', 'Tell us why you want to speak')}
+
+                                <label className={`flex gap-[4px] items-center rounded-[8px] w-full border-2 px-[var(--button-x-pad,24px)] py-[var(--button-y-pad-sm,16px)] transition-all duration-200 ${isError('agreedToTerms') ? 'border-[#FF8484]' : 'border-transparent bg-[var(--color-trans-10-inverted,rgba(255,255,255,0.1))]'}`}>
+                                    <input
+                                        type="checkbox"
+                                        name="agreedToTerms"
+                                        checked={formData.agreedToTerms}
+                                        onChange={handleChange}
+                                        className="mt-1 h-4 w-4 rounded border-white/40 bg-transparent text-[#1570EF] focus:ring-[#1570EF]"
+                                    />
+                                    <span>
+                                        I agree to be considered for speaking opportunities at BTF 2.0 and understand that my details may be reviewed by the organizing team.
+                                    </span>
+                                </label>
+                                {renderError('agreedToTerms', 'You must agree before submitting')}
+                            </div>
+
+                            <button
+                                type="submit"
+                                disabled={!formData.agreedToTerms || isSubmitting}
+                                aria-busy={isSubmitting}
+                                aria-live="polite"
+                                className="bg-[var(--static-blue,#1570ef)] cursor-pointer content-stretch flex gap-[8px] items-center justify-center px-[var(--button-x-pad,24px)] py-[var(--button-y-pad-sm,16px)] relative rounded-[1000px] shrink-0 text-[color:var(--static-white,white)] font-['Bricolage_Grotesque:Medium'] font-medium text-[length:var(--button-label-sm,20px)] uppercase tracking-[-0.4px] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed col-span-1 md:col-start-1 md:col-span-1"
+                            >
+                                {isSubmitting ? (
+                                    <>
+                                        <span className="sr-only">Submitting...</span>
+                                        <Spinner size="24" color="white" />
+                                    </>
+                                ) : "Submit"}
+                            </button>
+                        </form>
                     </div>
                 </section>
             </main>
+
+            <ConfirmationModal isOpen={isSuccessModalOpen} onClose={() => setIsSuccessModalOpen(false)} />
             <Footer />
         </div>
     );

@@ -107,7 +107,7 @@ export default function RegistrationSummaryPage() {
                 // Dynamically import PaystackPop to avoid SSR issues if necessary, or just use the imported one.
                 // We'll import it at the top level or require it here.
                 const PaystackPop = (await import('@paystack/inline-js')).default;
-                
+
                 const initialization = await fetch('/api/payments/initialize', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -159,12 +159,12 @@ export default function RegistrationSummaryPage() {
 
     return (
         <div className="flex min-h-screen flex-col font-sans relative bg-[#f8fbff]"
-        style={{
-                        backgroundImage: `linear-gradient(135deg, rgba(2, 37, 84, 0.90), rgba(30, 64, 175, 0.90)), url(${ticketBg.src})`,
-                        backgroundPosition: 'center, 0 0',
-                        backgroundRepeat: 'no-repeat, repeat',
-                        backgroundSize: 'cover, 220px 220px',
-                    }}
+            style={{
+                backgroundImage: `linear-gradient(135deg, rgba(2, 37, 84, 0.90), rgba(30, 64, 175, 0.90)), url(${ticketBg.src})`,
+                backgroundPosition: 'center, 0 0',
+                backgroundRepeat: 'no-repeat, repeat',
+                backgroundSize: 'cover, 220px 220px',
+            }}
         >
             <Navbar />
             <main className="flex-grow relative z-10 pt-14 md:pt-32 pb-16">
@@ -210,7 +210,7 @@ export default function RegistrationSummaryPage() {
                             >
                                 {/* Ticket info card */}
                                 <div className={`relative ${tierColor.bg} rounded-2xl p-6 text-white flex items-center justify-between shadow-lg overflow-hidden`}>
-                                    <div 
+                                    <div
                                         className="absolute inset-0 opacity-20 mix-blend-overlay pointer-events-none"
                                         style={{
                                             backgroundImage: `url(${ticketBg.src || ticketBg})`,

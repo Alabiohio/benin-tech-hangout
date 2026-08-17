@@ -18,9 +18,9 @@ export default function TicketsPage() {
                 <Tickets onRegisterClick={() => setIsRegisterModalOpen(true)} />
             </main>
             <Footer onRegisterClick={() => setIsRegisterModalOpen(true)} />
-            <RegisterModal 
-                isOpen={isRegisterModalOpen} 
-                onClose={() => setIsRegisterModalOpen(false)} 
+            <RegisterModal
+                isOpen={isRegisterModalOpen}
+                onClose={() => setIsRegisterModalOpen(false)}
             />
         </div>
     );
