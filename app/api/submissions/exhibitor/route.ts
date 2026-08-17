@@ -2,7 +2,7 @@ import { Pool } from 'pg';
 import { NextRequest, NextResponse } from 'next/server';
 import { getClientIp, checkRateLimit } from '@/app/lib/rateLimit';
 import { sendFormNotificationEmail } from '@/app/lib/email';
-import { hasSafeTextFields, invalidFormResponse, readFormBody, rejectOversizedBody } from '@/app/lib/formSecurity';
+import { cleanText, hasSafeTextFields, invalidFormResponse, readFormBody, rejectOversizedBody, requiredText } from '@/app/lib/formSecurity';
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -28,15 +28,13 @@ export async function POST(request: NextRequest) {
         const data = await readFormBody(request);
         if (!data || !hasSafeTextFields(data)) return invalidFormResponse();
         
-        const {
-            name,
-            email,
-            phone,
-            company,
-            website,
-            description,
-            registration_type
-        } = data;
+        const name = requiredText(data.name);
+        const email = requiredText(data.email);
+        const phone = requiredText(data.phone);
+        const company = requiredText(data.company);
+        const website = cleanText(data.website);
+        const description = cleanText(data.description);
+        const registration_type = cleanText(data.registration_type);
 
         // Validate required fields
         if (!name || !email || !phone || !company) {

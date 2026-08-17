@@ -15,9 +15,9 @@ export default function TicketsPage() {
             <BackgroundWrapper />
             <Navbar onRegisterClick={() => setIsRegisterModalOpen(true)} />
             <main className="flex-grow relative z-10">
-                <Tickets onRegisterClick={() => setIsRegisterModalOpen(true)} />
+                <Tickets />
             </main>
-            <Footer onRegisterClick={() => setIsRegisterModalOpen(true)} />
+            <Footer />
             <RegisterModal
                 isOpen={isRegisterModalOpen}
                 onClose={() => setIsRegisterModalOpen(false)}
