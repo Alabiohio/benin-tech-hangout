@@ -330,22 +330,24 @@ export default function ExhibitionPage() {
                 </div>
               </div>
 
-              <button
-                type="submit"
-                disabled={isLoading}
-                aria-busy={isLoading}
-                aria-live="polite"
-                className="bg-[var(--color-blue,#1570ef)] cursor-pointer col-1 content-stretch flex gap-[8px] items-center justify-center justify-self-stretch px-[var(--button-x-pad,24px)] py-[var(--button-y-pad-sm,16px)] relative rounded-[1000px] row-2 self-start shrink-0 text-[color:var(--color-neutral,white)] font-['Bricolage_Grotesque:Medium'] font-medium text-[length:var(--button-label-sm,20px)] uppercase tracking-[-0.4px] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
-                data-node-id="215:16972"
-                data-name="submit"
-              >
-                {isLoading ? (
-                    <>
-                        <span className="sr-only">Submitting...</span>
-                        <Spinner size="24" color="white" />
-                    </>
-                ) : 'SUBMIT'}
-              </button>
+              <div className="col-span-1 w-full">
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  aria-busy={isLoading}
+                  aria-live="polite"
+                  className="bg-[var(--color-blue,#1570ef)] cursor-pointer w-full content-stretch flex gap-[8px] items-center justify-center px-[var(--button-x-pad,24px)] py-[var(--button-y-pad-sm,16px)] relative rounded-[1000px] text-[color:var(--color-neutral,white)] font-['Bricolage_Grotesque:Medium'] font-medium text-[length:var(--button-label-sm,20px)] uppercase tracking-[-0.4px] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  data-node-id="215:16972"
+                  data-name="submit"
+                >
+                  {isLoading ? (
+                      <>
+                          <span className="sr-only">Submitting...</span>
+                          <Spinner size="24" color="white" />
+                      </>
+                  ) : 'SUBMIT'}
+                </button>
+              </div>
             </form>
           </div>
         </section>

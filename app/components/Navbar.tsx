@@ -111,10 +111,14 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                         <Link href="https://forms.gle/kkEu2pQNmznFTDpw8" className={`text-2xl font-black font-cabinet-grotesk uppercase tracking-tight text-colors-inverted hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '350ms' }} onClick={handleLinkClick}>Volunteer</Link>
 
                         <div className={`mt-4 pt-8 transition-all duration-500 transform ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`} style={{ transitionDelay: '450ms' }}>
-                            <Button onClick={() => { handleRegisterClick(); handleLinkClick(); }} className="w-full flex items-center justify-center py-4 bg-biro-blue text-white text-center font-black font-cabinet-grotesk uppercase tracking-widest text-lg hover:bg-biro-blue-dark transition-all active:scale-95">
+                            <Link
+                                href="/register"
+                                className="px-6 py-2.5 text-lg font-black rounded-full uppercase tracking-widest text-[11px] transition-all duration-300 active:scale-95 bg-biro-blue text-white hover:bg-transparent hover:border-3 hover:border-biro-blue hover:text-biro-blue"
+                            >
                                 Register Now
-                            </Button>
+                            </Link>
                         </div>
+
                     </div>
 
                     <div className="mt-auto p-8 bg-background">
