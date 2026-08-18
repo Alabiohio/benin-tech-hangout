@@ -93,39 +93,32 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                 </div>
             </div>
 
-            <div className={`fixed inset-0 bg-slate-900/60 lg:hidden transition-all duration-500 ease-in-out z-[200] ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} onClick={() => setIsMenuOpen(false)}>
-                <div className={`absolute top-0 right-0 h-screen w-full max-w-sm bg-background transition-transform duration-500 flex flex-col ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`} onClick={(e) => e.stopPropagation()}>
-                    <div className="flex items-center justify-between p-6 border-b border-foreground/20">
-                        <Image src={mounted && resolvedTheme === 'dark' ? '/logo/logo_light.png' : '/logo/logo.png'} alt="Logo" width={96} height={42} className="w-auto h-9 object-contain" />
-                        <button onClick={() => setIsMenuOpen(false)} className="p-2 rounded-full bg-slate-100 text-background hover:text-biro-blue transition-colors">
-                            <FiX size={28} strokeWidth={2.5} />
-                        </button>
-                    </div>
+            <div className={`fixed inset-0 bg-background lg:hidden transition-all duration-300 ease-in-out z-[200] flex flex-col ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+                <div className="flex items-center justify-between px-6 py-3">
+                    <Image src={mounted && resolvedTheme === 'dark' ? '/logo/logo_light.png' : '/logo/logo.png'} alt="Logo" width={96} height={42} className="w-auto h-9 object-contain" />
+                    <button onClick={() => setIsMenuOpen(false)} className="p-2 text-foreground hover:text-biro-blue transition-colors">
+                        <FiX size={36} strokeWidth={3} />
+                    </button>
+                </div>
 
-                    <div className="flex flex-col p-8 gap-5 overflow-y-auto">
-                        <Link href="/#about" className={`text-2xl font-black font-cabinet-grotesk uppercase tracking-tight text-colors-inverted hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '100ms' }} onClick={handleLinkClick}>About</Link>
-                        <Link href="/#pitch" className={`text-2xl font-black font-cabinet-grotesk uppercase tracking-tight text-colors-inverted hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '150ms' }} onClick={handleLinkClick}>Pitch</Link>
-                        <Link href="/schedule" className={`text-2xl font-black font-cabinet-grotesk uppercase tracking-tight text-colors-inverted hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '200ms' }} onClick={handleLinkClick}>Schedule</Link>
-                        <Link href="/#sponsor" className={`text-2xl font-black font-cabinet-grotesk uppercase tracking-tight text-colors-inverted hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '250ms' }} onClick={handleLinkClick}>Sponsor</Link>
-                        <Link href="/exhibition" className={`text-2xl font-black font-cabinet-grotesk uppercase tracking-tight text-colors-inverted hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '300ms' }} onClick={handleLinkClick}>Exhibition</Link>
-                        <Link href="https://forms.gle/kkEu2pQNmznFTDpw8" className={`text-2xl font-black font-cabinet-grotesk uppercase tracking-tight text-colors-inverted hover:text-biro-blue transition-all duration-300 transform ${isMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`} style={{ transitionDelay: '350ms' }} onClick={handleLinkClick}>Volunteer</Link>
+                <div className="flex flex-col -mt-5 items-center justify-center flex-1 gap-1 overflow-y-auto">
+                    <Link href="/#about" className="text-[44px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>About</Link>
+                    <Link href="/#pitch" className="text-[44px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Pitch</Link>
+                    <Link href="/tickets" className="text-[43px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Tickets</Link>
+                    <Link href="/schedule" className="text-[43px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Schedule</Link>
+                    <Link href="/#sponsor" className="text-[43px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Sponsor</Link>
+                    <Link href="/exhibition" className="text-[43px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Exhibition</Link>
+                    <Link href="https://forms.gle/kkEu2pQNmznFTDpw8" className="text-[45px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Volunteer</Link>
+                </div>
 
-                        <div className={`mt-4 pt-8 transition-all duration-500 transform ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`} style={{ transitionDelay: '450ms' }}>
-                            <Link
-                                href="/register"
-                                className="px-6 py-2.5 text-lg font-black rounded-full uppercase tracking-widest text-[11px] transition-all duration-300 active:scale-95 bg-biro-blue text-white hover:bg-transparent hover:border-3 hover:border-biro-blue hover:text-biro-blue"
-                            >
-                                Register Now
-                            </Link>
-                        </div>
-
-                    </div>
-
-                    <div className="mt-auto p-8 bg-background">
-                        <p className="text-slate-400 text-xs text-center font-black uppercase tracking-widest">
-                            © 2026 BENIN TECH Fest
-                        </p>
-                    </div>
+                <div className="px-6 pb-12 w-full mt-auto">
+                    <Link
+                        href="/register"
+                        className="flex items-center justify-center w-full py-3 text-[20px] font-bold rounded-[2.5rem] uppercase tracking-wide bg-[#1a73e8] text-white hover:bg-blue-700 transition-colors"
+                        onClick={handleLinkClick}
+                    >
+                        REGISTER NOW
+                    </Link>
                 </div>
             </div>
             <RegisterModal
