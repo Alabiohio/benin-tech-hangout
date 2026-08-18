@@ -13,7 +13,7 @@ const oswald = Oswald({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://benintechfest.com.ng'),
-  title: "Benin Tech Fest 2.0 | Strengthening Benin City's Tech Ecosystem",
+  title: "Benin Tech Fest 2.0 | A Convergence Of EDO Tech Professionals",
   description: "Join 3000+ innovators at the flagship tech event of Benin City. A curated space for the ecosystem to connect, learn, and scale. Connect with leaders, founders, and talents.",
   keywords: ["Benin Tech Fest", "Benin City Tech", "Tech Event Nigeria", "Edo State Tech", "Networking", "Innovation"],
   authors: [{ name: "Benin Tech Fest" }],
@@ -26,13 +26,13 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Benin Tech Fest 2.0 | Building a Collaborative Ecosystem",
+    title: "Benin Tech Fest 2.0 | A Convergence Of EDO Tech Professionals",
     description: "The flagship tech event of Benin City returns. Join the most impactful gathering of tech talents, founders, and organizations.",
     url: "https://benintechfest.com.ng",
     siteName: "Benin Tech Fest",
     images: [
       {
-        url: "/logo/logo.png",
+        url: "/assets/banner.png",
         width: 1200,
         height: 630,
         alt: "Benin Tech Fest 2.0 Hero Image",
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Benin Tech Fest 2.0",
     description: "Uniting Benin City's Tech Community. Join 3000+ innovators this year.",
-    images: ["/logo/logo.png"],
+    images: ["/assets/banner.png"],
   },
   icons: {
     icon: "/logo/logo.png",
