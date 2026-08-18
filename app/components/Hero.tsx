@@ -185,9 +185,8 @@ export const Hero = (): React.JSX.Element => {
 
       {/* Pattern Strip Section */}
       <div
-        className="w-full -mt-64 overflow-hidden md:overflow-x-hidden flex items-center justify-center"
+        className="w-full overflow-hidden md:overflow-x-hidden h-20 lg:h-40 flex items-center justify-center"
         style={{
-          height: "160px",
           gap: "0",
           margin: "0",
         }}
@@ -196,14 +195,14 @@ export const Hero = (): React.JSX.Element => {
       >
         {/* Pattern tiles - scaled to fit and overlap */}
         <div
-          className="flex items-center h-full w-max min-w-[150%] -ml-[18%] md:min-w-0 md:ml-0 md:justify-center md:h-full [@media(max-width:767px)]:min-w-[150%] [@media(max-width:767px)]:-ml-[18%] [@media(max-width:767px)]:gap-[14px] [@media(max-width:767px)]:h-[120px]"
+          className="flex items-center h-full w-max min-w-[150%] -ml-[18%] md:min-w-0 md:ml-0 md:justify-center md:h-full [@media(max-width:767px)]:min-w-[150%] [@media(max-width:767px)]:-ml-[18%] [@media(max-width:767px)]:gap-[14px] [@media(max-width:767px)]:h-[80px]"
           style={{ gap: "24px" }}
         >
           {/* Tile 1: Pattern Shape */}
           <img
             src={patternShapeSvg}
             alt=""
-            className="h-full object-contain flex-shrink-0 md:h-full [@media(max-width:767px)]:h-[100px]"
+            className="h-full object-contain flex-shrink-0 md:h-full [@media(max-width:767px)]:h-[80px]"
             style={{ marginRight: "-24px" }}
             data-aos="fade-up"
             data-aos-delay="300"
@@ -214,7 +213,7 @@ export const Hero = (): React.JSX.Element => {
           <img
             src={subtractSvg}
             alt=""
-            className="h-full object-contain flex-shrink-0 md:h-full [@media(max-width:767px)]:h-[100px]"
+            className="h-full object-contain flex-shrink-0 md:h-full [@media(max-width:767px)]:h-[80px]"
             style={{ marginRight: "-24px" }}
             data-aos="fade-up"
             data-aos-delay="200"
@@ -225,7 +224,7 @@ export const Hero = (): React.JSX.Element => {
           <img
             src={subtract1Svg}
             alt=""
-            className="h-full object-contain flex-shrink-0 md:h-full [@media(max-width:767px)]:h-[100px]"
+            className="h-full object-contain flex-shrink-0 md:h-full [@media(max-width:767px)]:h-[80px]"
             style={{ marginRight: "-24px" }}
             data-aos="fade-up"
             data-aos-duration="600"
@@ -234,7 +233,7 @@ export const Hero = (): React.JSX.Element => {
 
           {/* Tile 4: Image with green background */}
           <div
-            className="h-full aspect-square bg-[var(--color-green-inverted)] rounded-none flex items-center justify-center overflow-hidden flex-shrink-0 [@media(max-width:767px)]:h-[120px]"
+            className="h-full aspect-square bg-[var(--color-green-inverted)] rounded-none flex items-center justify-center overflow-hidden flex-shrink-0 [@media(max-width:767px)]:h-[80px]"
             style={{ marginRight: "-24px" }}
             data-aos="fade-up"
             data-aos-duration="500"
@@ -250,7 +249,7 @@ export const Hero = (): React.JSX.Element => {
           <img
             src={organicFillSvg}
             alt=""
-            className="h-full object-contain flex-shrink-0 md:h-full [@media(max-width:767px)]:h-[100px]"
+            className="h-full object-contain flex-shrink-0 md:h-full [@media(max-width:767px)]:h-[80px]"
             style={{ marginRight: "-24px" }}
             data-aos="fade-up"
             data-aos-duration="600"
@@ -261,7 +260,7 @@ export const Hero = (): React.JSX.Element => {
           <img
             src={patternEdoSvg}
             alt=""
-            className="h-full object-contain flex-shrink-0 md:h-full [@media(max-width:767px)]:h-[100px]"
+            className="h-full object-contain flex-shrink-0 md:h-full [@media(max-width:767px)]:h-[80px]"
             style={{ marginRight: "-24px" }}
             data-aos="fade-up"
             data-aos-delay="200"
@@ -273,7 +272,7 @@ export const Hero = (): React.JSX.Element => {
             data-aos="fade-up"
             data-aos-delay="300"
             data-aos-duration="800"
-            className="h-full aspect-square bg-[var(--color-blue-inverted)] rounded-full flex items-center justify-center overflow-hidden flex-shrink-0 [@media(max-width:767px)]:h-[100px]"
+            className="h-full aspect-square bg-[var(--color-blue-inverted)] rounded-full flex items-center justify-center overflow-hidden flex-shrink-0 [@media(max-width:767px)]:h-[80px]"
           >
             <img
               src={heroImageBlue}

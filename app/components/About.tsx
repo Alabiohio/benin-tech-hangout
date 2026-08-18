@@ -31,11 +31,13 @@ const statisticRows = [
       value: "3,000+",
       label: "Attendees",
       className: "bg-green-inverted rounded-[1000px_0px_0px_1000px]",
+      anime: "fade-right",
     },
     {
       value: "100+",
       label: "Communities",
       className: "bg-purple-inverted rounded-[0px_1000px_1000px_0px]",
+      anime: "fade-left",
     },
   ],
   [
@@ -43,11 +45,13 @@ const statisticRows = [
       value: "20+",
       label: "Speakers",
       className: "bg-brown-inverted rounded-[0px_1000px_1000px_0px]",
+      anime: "fade-left",
     },
     {
       value: "3-day",
       label: "Convergence",
       className: "bg-blue-inverted rounded-[1000px_0px_0px_1000px]",
+      anime: "fade-right",
     },
   ],
 ];
@@ -157,6 +161,7 @@ export default function About() {
               }`}
             >
               <div
+              data-aos={row[0].anime}
                 className={`relative flex flex-1 grow flex-col items-center justify-center px-0 py-5 md:py-10 ${row[0].className}`}
               >
                 <div className="relative mt-[-1.00px] w-fit whitespace-nowrap text-[1.5rem] md:text-5xl font-extrabold leading-[var(--display-display-bold-line-height)] tracking-[-2px] text-inverted">
@@ -166,15 +171,27 @@ export default function About() {
                   {row[0].label}
                 </div>
               </div>
-              <Image
+              <motion.div
                 className="relative self-stretch aspect-[1] h-24 w-24 md:h-34 md:w-34"
-                width={140}
-                height={140}
-                alt=""
-                aria-hidden="true"
-                src={rowIndex === 0 ? patternShape.src : image.src}
-              />
+                initial={{ rotate: 0 }}
+                whileInView={{ rotate: 180 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{
+                  duration: 1.2,
+                  ease: "easeInOut",
+                }}
+              >
+                <Image
+                  className="h-full w-full"
+                  width={140}
+                  height={140}
+                  alt=""
+                  aria-hidden="true"
+                  src={rowIndex === 0 ? patternShape.src : image.src}
+                />
+              </motion.div>
               <div
+                data-aos={row[1].anime}
                 className={`relative flex flex-1 grow flex-col items-center justify-center px-0 py-5 md:py-10 ${row[1].className}`}
               >
                 <div className="relative mt-[-1.00px] w-fit whitespace-nowrap text-[1.5rem] md:text-5xl font-extrabold leading-[var(--display-display-bold-line-height)] tracking-[-2px] text-inverted">

@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import Button from "./Button";
 import RegisterModal from "./RegisterModal";
 import ThemeToggle from "./ThemeToggle";
 import { FiMenu, FiX } from "react-icons/fi";
@@ -50,13 +49,18 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
             <div className="container mx-auto px-4 md:px-8 h-12 md:h-14 flex items-center relative z-[101]">
                 <Link href="/" className="flex items-center gap-2 group relative mr-auto" onClick={handleLinkClick}>
                     <Image
-                        src={mounted && resolvedTheme === 'dark' ? '/logo/logo_light.png' : '/logo/logo.png'}
+                        src={mounted && resolvedTheme === 'dark' ? '/logo/logo-icon.png' : '/logo/logo-icon.png'}
                         alt="Logo"
                         width={100}
                         height={100}
-                        className="w-auto h-13 md:h-14 object-contain"
+                        className="w-auto h-13 md:h-15 object-contain"
                         priority
                     />
+                    <span className="font-cabinet-grotesk text-2xl font-extrabold flex flex-col leading-[0.85] text-colors-inverted">  
+                        <span>Benin</span>
+                        <span>Tech</span>
+                        <span>Fest</span>
+                    </span>
                 </Link>
 
                 <nav className="hidden lg:flex items-center gap-8 text-[13px] font-black uppercase tracking-widest transition-colors duration-300 text-colors-inverted mr-8">
