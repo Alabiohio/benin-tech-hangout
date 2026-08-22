@@ -72,7 +72,7 @@ export default function TicketPage() {
 
       <main className="pt-34 pb-8 md:pb-14">
         <Tickets />
-        <div className="mx-auto w-full max-w-[1440px] px-4 md:px-8 lg:px-8 mb-12 md:mb-16 mt-14" id='communities'>
+        {/* <div className="mx-auto w-full max-w-[1440px] px-4 md:px-8 lg:px-8 mb-12 md:mb-16 mt-14" id='communities'>
           <h2 className="text-[40px] md:text-[60px] lg:text-[80px] font-bold leading-[0.8] tracking-[-0.04em] text-colors-inverted">
             Communities
             <span className="block font-light text-colors-inverted">We partner with</span>
@@ -116,7 +116,7 @@ export default function TicketPage() {
               </article>
             ))}
           </div>
-        </div>
+        </div> */}
       </main>
 
       <Footer />
