@@ -53,10 +53,10 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                         alt="Logo"
                         width={100}
                         height={100}
-                        className="w-auto h-15 md:h-15 object-contain"
+                        className="w-auto h-12 md:h-14 object-contain"
                         priority
                     />
-                    <span className="font-cabinet-grotesk text-[1.4rem] font-extrabold flex flex-col leading-[0.80] text-colors-inverted">  
+                    <span className="font-cabinet-grotesk text-[1.1rem] md:text-[1.4rem] font-extrabold flex flex-col leading-[0.80] text-colors-inverted">  
                         <span>Benin</span>
                         <span>Tech</span>
                         <span>Fest</span>
@@ -99,7 +99,21 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
 
             <div className={`fixed inset-0 bg-background lg:hidden transition-all duration-300 ease-in-out z-[200] flex flex-col ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
                 <div className="flex items-center justify-between px-6 py-3">
-                    <Image src={mounted && resolvedTheme === 'dark' ? '/logo/logo_light.png' : '/logo/logo.png'} alt="Logo" width={96} height={42} className="w-auto h-9 object-contain" />
+                    <Link href="/" className="flex items-center gap-2" onClick={handleLinkClick}>
+                        <Image
+                            src={mounted && resolvedTheme === 'dark' ? '/logo/logo-icon.png' : '/logo/logo-icon.png'}
+                            alt="Logo"
+                            width={100}
+                            height={100}
+                            className="w-auto h-12 md:h-12 object-contain"
+                            priority
+                        />
+                        <span className="font-cabinet-grotesk text-[1.1rem] font-extrabold flex flex-col leading-[0.80] text-colors-inverted">  
+                            <span>Benin</span>
+                            <span>Tech</span>
+                            <span>Fest</span>
+                        </span>
+                    </Link>
                     <button onClick={() => setIsMenuOpen(false)} className="p-2 text-foreground hover:text-biro-blue transition-colors">
                         <FiX size={36} strokeWidth={3} />
                     </button>
