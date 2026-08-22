@@ -73,9 +73,9 @@ export default function Footer() {
   };
 
   return (
-    <div className="w-full bg-[var(--color-blue-inverted)] flex flex-col gap-10 items-start justify-center p-5 md:p-10">
+    <div className="w-full bg-[#83b7ff] flex flex-col gap-10 items-start justify-center p-5 md:p-10">
       {/* Footer Box */}
-      <div className="w-full bg-[var(--color-static-black)] flex flex-col items-start justify-end overflow-hidden rounded-[40px] md:rounded-[80px]">
+      <div className="w-full bg-[var(--color-static-black)] flex flex-col items-start justify-end overflow-hidden rounded-[30px] md:rounded-[30px]">
         {/* Footer Banner */}
         <div className="w-full aspect-[2720/448] relative overflow-hidden">
           <Image
@@ -117,7 +117,7 @@ export default function Footer() {
               <button
                 onClick={handleSubscribe}
                 disabled={status === 'loading'}
-                className="px-6 py-4 bg-[var(--color-static-blue)] text-[var(--color-static-white)] rounded-lg sm:rounded-full font-['Bricolage_Grotesque'] font-medium text-[20px] leading-[1] uppercase tracking-[-0.4px] hover:opacity-90 transition whitespace-nowrap text-center disabled:opacity-70"
+                className="px-6 py-4 bg-[var(--color-static-blue)] text-[var(--color-static-white)] rounded-full font-['Bricolage_Grotesque'] font-medium text-[20px] leading-[1] uppercase tracking-[-0.4px] hover:opacity-90 transition whitespace-nowrap text-center disabled:opacity-70"
               >
                 {status === 'loading' ? 'SUBSCRIBING...' : status === 'success' ? 'SUBSCRIBED!' : 'SUBSCRIBE'}
               </button>

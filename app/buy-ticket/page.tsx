@@ -211,7 +211,7 @@ function BuyTicketContent() {
                         <div className="w-full max-w-[1080px] grid grid-cols-1 gap-[24px] md:grid-cols-2">
                             {/* Email */}
                             <div className="flex flex-col w-full md:col-span-2">
-                                <label className="text-sm text-colours-inverted mb-2 font-bold ml-1">Email Address *</label>
+                                <label className="text-sm text-inverted mb-2 font-bold ml-1">Email Address *</label>
                                 <div className="relative w-full">
                                     <input 
                                         name="email" 
@@ -240,7 +240,7 @@ function BuyTicketContent() {
 
                             {/* Name */}
                             <div className="flex flex-col w-full">
-                                <label className="text-sm text-colours-inverted mb-2 font-bold ml-1">Full Name *</label>
+                                <label className="text-sm text-inverted mb-2 font-bold ml-1">Full Name *</label>
                                 <input 
                                     name="name" 
                                     type="text" 
@@ -255,7 +255,7 @@ function BuyTicketContent() {
 
                             {/* Quantity */}
                             <div className="flex flex-col w-full">
-                                <label className="text-sm text-colours-inverted mb-2 font-bold ml-1">Number of Tickets *</label>
+                                <label className="text-sm text-inverted mb-2 font-bold ml-1">Number of Tickets *</label>
                                 <div className="flex items-center gap-4 h-[56px]">
                                     <button
                                         type="button"
@@ -284,7 +284,7 @@ function BuyTicketContent() {
 
                             {/* Coupon Code */}
                             <div className="flex flex-col w-full md:col-span-2 mt-4">
-                                <label className="text-sm text-colours-inverted mb-2 font-bold ml-1">Discount Coupon (Optional)</label>
+                                <label className="text-sm text-inverted mb-2 font-bold ml-1">Discount Coupon (Optional)</label>
                                 <div className="flex gap-4">
                                     <input
                                         type="text"

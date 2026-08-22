@@ -4,7 +4,6 @@ import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
-import Tickets from "./components/Tickets";
 import Sponsors from "./components/Sponsor";
 import Pitch from "./components/Pitch";
 import Volunteer from "./components/Volunteer";
@@ -21,8 +20,7 @@ export default function Home() {
             <Navbar onRegisterClick={() => setIsRegisterModalOpen(true)} />
             <main className="flex-grow relative z-10">
                 <Hero />
-                <About />
-                <Tickets />                
+                <About />               
                 <Speaker />
                 <Sponsors />
                 <Pitch />

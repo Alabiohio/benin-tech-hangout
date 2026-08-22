@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { motion } from "framer-motion";
 import handshake from "@/assets/images/sponsor/handshake.png";
+import organicFill from "@/assets/images/sponsor/organicFill.png";
 
 const ArrowRightIcon = () => (
   <svg
@@ -116,28 +118,55 @@ export default function Sponsor() {
         {/* 2x2 Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
           {/* Who can Exhibit? */}
-          <div data-aos="fade-up-right" className="bg-background rounded-lg px-4 py-10 flex flex-col gap-6 relative overflow-hidden">
-            <h2 className="text-[40px] font-semibold font-cabinet-grotesk leading-[1] text-colors-inverted tracking-[-1.6px]">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.55, ease: "easeOut" }}
+            className="bg-white rounded-[30px] rounded-bl-[0px] px-6 py-10 md:px-10 md:py-12 flex flex-col gap-6 relative overflow-hidden z-10"
+          >
+            {/* Background Pattern */}
+            <div className="absolute -bottom-24 -right-24 w-80 h-80 -z-10 pointer-events-none">
+              <img
+                src={organicFill.src}
+                alt=""
+                className="w-full h-full object-contain"
+              />
+            </div>
+            
+            <h2 className="text-[40px] font-semibold font-cabinet-grotesk leading-[1] text-black tracking-[-1.6px]">
               Who can Exhibit?
             </h2>
-            <ul className="text-[18px] leading-[1.4] text-colors-inverted space-y-2 list-disc list-outside font-semibold pl-5">
+            <ul className="text-[18px] leading-[1.4] text-[#1A1A1A] space-y-4 list-disc list-outside font-medium pl-5 pr-2">
               <li>Business and brands seeking to connect with ideal clients and customers.</li>
               <li>Startups and founders who want to showcase their latest product, technology and matchmake with potential investors.</li>
               <li>Artists, painters, sculptors and bronze-smiths who passionate about Edo's rich and creative history, art and cultural heritage.</li>
             </ul>
-          </div>
+          </motion.div>
 
           {/* Sponsor Image */}
-          <div data-aos="fade-up-left" className="bg-[var(--color-brown-inverted)] rounded-lg overflow-hidden h-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.05 }}
+            className="bg-[var(--color-brown-inverted)] rounded-[30px] rounded-bl-[0px] overflow-hidden h-auto"
+          >
             <img
               src={handshake.src}
               alt="Sponsor"
               className="w-full h-full object-cover"
             />
-          </div>
+          </motion.div>
 
           {/* Exhibit CTA */}
-          <div data-aos="fade-up-right" className="bg-[var(--color-green)] rounded-lg px-5 py-10 flex flex-col gap-6">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.55, ease: "easeOut", delay: 0.1 }}
+            className="bg-[#029B4A] rounded-[30px] rounded-bl-[0px] px-5 py-10 flex flex-col gap-6"
+          >
             <h3 className="text-3xl md:text-[40px] font-semibold font-cabinet-grotesk leading-[1] text-[var(--color-static-white)] tracking-[-1.6px]">
               Exhibit your brand at BTF
             </h3>
@@ -147,21 +176,27 @@ export default function Sponsor() {
             <Link href="/exhibition" className="w-fit px-6 py-4 bg-[var(--color-static-black)] text-[var(--color-static-white)] rounded-full font-cabinet-grotesk font-medium text-[20px] leading-[1] uppercase tracking-[-0.4px] hover:opacity-90 transition inline-block">
               BE AN EXHIBITOR
             </Link>
-          </div>
+          </motion.div>
 
           {/* Sponsor CTA */}
-          <div data-aos="fade-up-left" className="bg-foreground rounded-lg px-5 py-10 flex flex-col gap-6">
-            <h3 className="text-3xl md:text-[40px] font-semibold font-cabinet-grotesk leading-[1] text-background tracking-[-1.6px]">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.55, ease: "easeOut", delay: 0.15 }}
+            className="bg-black rounded-[30px] rounded-bl-[0px] px-5 py-10 flex flex-col gap-6"
+          >
+            <h3 className="text-3xl md:text-[40px] font-semibold font-cabinet-grotesk leading-[1] text-white tracking-[-1.6px]">
               Want to sponsor BTF 2.0?
             </h3>
-            <p className="text-[18px] font-normal font-['Inter'] leading-[1.4] text-background tracking-[-0.36px]">
+            <p className="text-[18px] font-normal font-['Inter'] leading-[1.4] text-white tracking-[-0.36px]">
               Be part of the future of tech in Edo State. For sponsorship and enquires, contact us:
             </p>
-            <div className="text-[20px] font-bold font-cabinet-grotesk leading-[1.2] text-background tracking-[-0.8px]">
+            <div className="text-[20px] font-bold font-cabinet-grotesk leading-[1.2] text-white tracking-[-0.8px]">
               <p>+234-8142289951,+234-8145658605</p>
               <p>partnership@benintechfest.com.ng</p>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 

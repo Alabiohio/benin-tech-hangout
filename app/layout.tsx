@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Oswald } from "next/font/google"; // Import next/font/google
+import { Oswald, Inter } from "next/font/google"; // Import next/font/google
 import "./globals.css";
 import "aos/dist/aos.css";
 
@@ -8,6 +8,13 @@ const oswald = Oswald({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-oswald-google",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter-google",
   display: "swap",
 });
 
@@ -64,7 +71,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${oswald.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${oswald.variable} ${inter.variable}`} suppressHydrationWarning>
       <body className="antialiased font-cabinet-grotesk overflow-x-hidden">
         <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
           <AosInit />

@@ -20,7 +20,6 @@ type FormState = {
     interests: string[];
     heardFrom: string;
     eventPass: string;
-    agreedToTerms: boolean;
 };
 
 const initialForm: FormState = {
@@ -34,7 +33,6 @@ const initialForm: FormState = {
     interests: [],
     heardFrom: '',
     eventPass: '',
-    agreedToTerms: false,
 };
 
 export default function RegisterPage() {
@@ -64,7 +62,7 @@ export default function RegisterPage() {
         setSubmitError('');
 
         const form = event.currentTarget;
-        if (!form.checkValidity() || formData.interests.length === 0 || !formData.agreedToTerms) {
+        if (!form.checkValidity() || formData.interests.length === 0) {
             return;
         }
 
@@ -77,7 +75,7 @@ export default function RegisterPage() {
                     name: `${formData.firstName} ${formData.lastName}`.trim(),
                     email: formData.email,
                     primaryInterest: formData.interests.join(', '),
-                    agreedToTerms: formData.agreedToTerms,
+                    agreedToTerms: true,
                 }),
             });
 
@@ -190,26 +188,9 @@ export default function RegisterPage() {
                             {renderError("role", "Please select a role")}
                         </div>
 
-                        <div className="relative flex flex-col w-full">
-                                <select
-                                    name="location"
-                                    required
-                                    value={formData.location}
-                                    onChange={handleChange}
-                                    className={`${getFieldClass("location")} ${inputTextClass} appearance-none cursor-pointer pr-[52px]`}
-                                    aria-label="Where are you located at *"
-                                >
-                                    <option value="" disabled hidden>
-                                        Where are you located at? *
-                                    </option>
-                                    <option value="Benin City, Edo">Benin City, Edo</option>
-                                    <option value="Lagos">Lagos</option>
-                                    <option value="Abuja">Abuja</option>
-                                    <option value="Port Harcourt">Port Harcourt</option>
-                                    <option value="Outside Nigeria">Outside Nigeria</option>
-                                </select>
-                                <DropdownIcon className="pointer-events-none absolute right-[24px] top-[20px] h-[17px] w-[10px] text-[color:var(--color-inverted,white)]" />
-                            {renderError("location", "Please select your location")}
+                        <div className="flex flex-col w-full">
+                            <input name="location" type="text" required value={formData.location} onChange={handleChange} placeholder="Where are you located at? (e.g. Benin/Edo) *" className={`${getFieldClass("location")} ${inputTextClass}`} />
+                            {renderError("location", "Location is required")}
                         </div>
 
                         <div className="flex flex-col w-full">
@@ -275,22 +256,20 @@ export default function RegisterPage() {
                             </div>
                         )}
 
-                        <label className="md:col-span-2 flex items-start gap-3 rounded-[8px] bg-[var(--color-trans-10-inverted,rgba(255,255,255,0.1))] px-[var(--button-x-pad,24px)] py-[var(--button-y-pad-sm,16px)] text-sm text-[color:var(--color-inverted,white)]">
-                            <input
-                                type="checkbox"
-                                name="agreedToTerms"
-                                checked={formData.agreedToTerms}
-                                onChange={handleChange}
-                                className="mt-1 h-4 w-4 rounded border-white/40 bg-transparent text-[#1570EF] focus:ring-[#1570EF]"
-                            />
+                        <div className="md:col-span-2 flex items-start gap-2 py-2 text-[16px] text-[color:var(--color-inverted,white)] opacity-90">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0 text-[#F59E0B] mt-[2px]">
+                                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M12 16V12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M12 8H12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
                             <span>
-                                I agree to receive event updates and understand that my registration details may be reviewed by the organizing team.
+                                Registration is free but you'll need a pass to access the venue and participate in the event. <a href="/ticket" className="text-[#1570EF] underline hover:no-underline">Get a ticket.</a>
                             </span>
-                        </label>
+                        </div>
 
                         <button
                             type="submit"
-                            disabled={!formData.agreedToTerms || isSubmitting}
+                            disabled={isSubmitting}
                             aria-busy={isSubmitting}
                             aria-live="polite"
                             className="bg-[var(--static-blue,#1570ef)] cursor-pointer content-stretch flex gap-[8px] items-center justify-center justify-self-stretch px-[var(--button-x-pad,24px)] py-[var(--button-y-pad-sm,16px)] relative rounded-[1000px] self-start shrink-0 text-[color:var(--static-white,white)] font-['Bricolage_Grotesque:Medium'] font-medium text-[length:var(--button-label-sm,20px)] uppercase tracking-[-0.4px] hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
@@ -341,7 +320,7 @@ export default function RegisterPage() {
                         <button
                             type="button"
                             onClick={() => setIsModalOpen(false)}
-                            className="mt-6 w-full bg-[#1570EF] text-white py-3 rounded-[8px] font-medium hover:opacity-90 transition"
+                            className="mt-6 w-full bg-[#1570EF] text-white py-3 rounded-full font-medium hover:opacity-90 transition"
                         >
                             Done
                         </button>

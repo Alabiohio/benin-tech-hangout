@@ -67,21 +67,31 @@ export default function About() {
           id="about-heading"
           className="relative mt-[-2.00px] w-full lg:flex-1 text-left lg:text-right text-[38px] sm:text-[48px] md:text-[60px] lg:text-[80px] leading-[1.1] lg:leading-[64.0px] tracking-tight lg:tracking-[-6.40px] text-[var(--color-inverted)] z-10"
         >
-          <span className="text-white font-light inline-block" data-aos="fade-up" data-aos-duration="700">
-            Connecting
-            <br />
-            Edo to the
-            <br />
-          </span>
-          <strong data-aos="fade-up" data-aos-duration="900" className="inline-block font-display-display-bold !font-bold text-white lg:whitespace-pre-wrap leading-[var(--display-display-bold-line-height)] tracking-[var(--display-display-bold-letter-spacing)]">
+          <motion.span
+            className="text-white font-light flex flex-col leading-[0.9] tracking-[-1.4px]"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
+            <span>Connecting</span>
+            <span>Edo to the</span>
+          </motion.span>
+          <motion.strong
+            className="inline-block font-display-display-bold !font-bold text-white lg:whitespace-pre-wrap leading-[var(--display-display-bold-line-height)] tracking-[var(--display-display-bold-letter-spacing)]"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.9, ease: "easeOut" }}
+          >
             Future of <br className="hidden lg:block" />
             Tech
-          </strong>
+          </motion.strong>
         </h1> 
         <motion.div
           className="absolute right-[13px] top-[40px] md:right-10 lg:relative lg:right-auto lg:top-auto h-[85px] w-[85px] md:h-[150px] md:w-[150px] lg:h-[200px] lg:w-[200px] aspect-[1]"
-          initial={{ opacity: 0, y: 50, rotate: -180 }}
-          whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.5 }}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
         >
@@ -95,27 +105,41 @@ export default function About() {
           />
         </motion.div>
         <div className="relative flex w-full lg:flex-1 flex-col items-start lg:items-center justify-center gap-6 lg:gap-4 z-10">
-          <p data-aos="fade-up" data-aos-duration="900" className="relative mt-[-1.00px] self-stretch font-body-paragraph text-[length:var(--body-paragraph-font-size)] font-light leading-[var(--body-paragraph-line-height)] tracking-[var(--body-paragraph-letter-spacing)] text-white">
+          <motion.p
+            className="relative mt-[-1.00px] self-stretch font-body-paragraph text-[length:var(--body-paragraph-font-size)] font-light leading-[var(--body-paragraph-line-height)] tracking-[var(--body-paragraph-letter-spacing)] text-white"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.9, ease: "easeOut" }}
+          >
             Benin Tech Fest is a community-driven technology and innovation
             convergence designed to strengthen Edo State&apos;s growing tech
             ecosystem through talent and skill development, startup mentorship
             and innovation support, community collaboration and access to talent
             and business opportunities.
-          </p>
-          <p data-aos="fade-up" data-aos-duration="900" className="relative self-stretch font-body-title text-[length:var(--body-title-font-size)] font-extrabold leading-[var(--body-title-line-height)] tracking-[var(--body-title-letter-spacing)] text-white">
+          </motion.p>
+          <motion.p
+            className="relative self-stretch font-body-title text-[length:var(--body-title-font-size)] font-extrabold leading-[var(--body-title-line-height)] tracking-[var(--body-title-letter-spacing)] text-white"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.9, ease: "easeOut" }}
+          >
             JOIN US ON 5TH - 7TH NOV. | 2026
             <br />
             AT VICTOR UWAIFO CREATIVE HUB,
             <br />
             BENIN CITY, EDO STATE
-          </p>
+          </motion.p>
         </div>
-        <img
+        <motion.img
           className="hidden lg:block absolute bottom-0 left-0 h-80 w-[280px] aspect-[1] object-cover"
           alt="Edo Tech Fest attendee"
           src={edoMan.src}
-          data-aos="fade-up-left"
-          data-aos-duration="900" 
+          initial={{ opacity: 0, x: -30, y: 30 }}
+          whileInView={{ opacity: 1, x: 0, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.9, ease: "easeOut" }}
         />
       </section>
       <section
@@ -134,9 +158,15 @@ export default function About() {
               key={benefit.title}
               className="relative flex w-full flex-col items-start gap-4"
             >
-              <h3 data-aos="fade-up" data-aos-duration="500" data-aos-delay="200" className="relative mt-[-1.00px] self-stretch font-heading-head-lg text-4xl leading-[var(--heading-head-lg-line-height)] tracking-[var(--heading-head-lg-letter-spacing)] text-inverted font-bold">
+              <motion.h3
+                className="relative mt-[-1.00px] self-stretch font-heading-head-lg text-3xl md:text-4xl leading-[0.9] tracking-[-1.4px] text-inverted font-bold"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+              >
                 {benefit.title}
-              </h3>
+              </motion.h3>
               <p className="relative self-stretch font-body-paragraph text-[length:var(--body-paragraph-font-size)] font-[number:var(--body-paragraph-font-weight)] leading-[var(--body-paragraph-line-height)] tracking-[var(--body-paragraph-letter-spacing)] text-gray-inverted [font-style:var(--body-paragraph-font-style)]">
                 {benefit.description}
               </p>
@@ -160,25 +190,28 @@ export default function About() {
                 rowIndex === 0 ? "items-center" : "items-start"
               }`}
             >
-              <div
-              data-aos={row[0].anime}
-                className={`relative flex flex-1 grow flex-col items-center justify-center px-0 py-5 md:py-10 ${row[0].className}`}
+              <motion.div
+                initial={{ opacity: 0, x: row[0].anime === "fade-left" ? 30 : -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.9, ease: "easeOut" }}
+                className={`relative flex flex-1 grow flex-col items-center justify-center px-0 py-4 md:py-10 ${row[0].className}`}
               >
                 <div className="relative mt-[-1.00px] w-fit whitespace-nowrap text-[1.5rem] md:text-5xl font-extrabold leading-[var(--display-display-bold-line-height)] tracking-[-2px] text-inverted">
                   {row[0].value}
                 </div>
-                <div className="relative w-fit whitespace-nowrap font-heading-head-lg -mt-2 font-bold leading-[var(--heading-head-lg-line-height)] tracking-[var(--heading-head-lg-letter-spacing)] text-inverted">
+                <div className="relative w-fit whitespace-nowrap font-heading-head-lg -mt-2 font-bold leading-[var(--heading-head-lg-line-height)] tracking-[var(--heading-head-lg-letter-spacing)] text-inverted px-1">
                   {row[0].label}
                 </div>
-              </div>
+              </motion.div>
               <motion.div
-                className="relative self-stretch aspect-[1] h-24 w-24 md:h-34 md:w-34"
-                initial={{ rotate: 0 }}
-                whileInView={{ rotate: 180 }}
+                className="relative self-stretch aspect-[1] h-20 w-20 md:h-34 md:w-34"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.5 }}
                 transition={{
-                  duration: 1.2,
-                  ease: "easeInOut",
+                  duration: 0.8,
+                  ease: "easeOut",
                 }}
               >
                 <Image
@@ -190,17 +223,20 @@ export default function About() {
                   src={rowIndex === 0 ? patternShape.src : image.src}
                 />
               </motion.div>
-              <div
-                data-aos={row[1].anime}
-                className={`relative flex flex-1 grow flex-col items-center justify-center px-0 py-5 md:py-10 ${row[1].className}`}
+              <motion.div
+                initial={{ opacity: 0, x: row[1].anime === "fade-left" ? 30 : -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.9, ease: "easeOut" }}
+                className={`relative flex flex-1 grow flex-col items-center justify-center px-0 py-4 md:py-10 ${row[1].className}`}
               >
                 <div className="relative mt-[-1.00px] w-fit whitespace-nowrap text-[1.5rem] md:text-5xl font-extrabold leading-[var(--display-display-bold-line-height)] tracking-[-2px] text-inverted">
                   {row[1].value}
                 </div>
-                <div className="relative w-fit whitespace-nowrap font-heading-head-lg -mt-2 font-bold leading-[var(--heading-head-lg-line-height)] tracking-[var(--heading-head-lg-letter-spacing)] text-inverted">
+                <div className="relative w-fit whitespace-nowrap font-heading-head-lg -mt-2 font-bold leading-[var(--heading-head-lg-line-height)] tracking-[var(--heading-head-lg-letter-spacing)] text-inverted px-1">
                   {row[1].label}
                 </div>
-              </div>
+              </motion.div>
             </div>
           ))}
         </div>

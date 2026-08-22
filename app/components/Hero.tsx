@@ -13,6 +13,8 @@ import imageFill from "@/assets/images/imgfill.png";
 import organicFill from "@/assets/images/organicfill.png";
 import patternEdo from "@/assets/images/patternedo.png";
 import imageFill2 from "@/assets/images/imgfill2.png";
+import heroDark from "@/assets/images/hero/heroDark.png";
+import heroLight from "@/assets/images/hero/heroLight.png";
 
 const patternShapeSvg = patternShape.src;
 const subtractSvg = subtract.src;
@@ -25,6 +27,7 @@ const heroImageBlue = imageFill2.src;
 export const Hero = (): React.JSX.Element => {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [heroAnimationComplete, setHeroAnimationComplete] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
   const isDark = mounted && resolvedTheme === "dark";
@@ -42,8 +45,11 @@ export const Hero = (): React.JSX.Element => {
 
   return (
     <section
-      className="flex flex-col items-center justify-end gap-[var(--space-gap)] relative bg-background w-full py-0 overflow-hidden"
-      style={{ minHeight: "720px" }}
+      className="flex flex-col items-center justify-end gap-[var(--space-gap)] relative bg-background w-full py-0 overflow-hidden bg-cover bg-center bg-no-repeat"
+      style={{ 
+        minHeight: "720px",
+        backgroundImage: `url(${isDark ? heroDark.src : heroLight.src})`
+      }}
       data-node-id="248:4402"
     >
       {/* Hero Text Section */}
@@ -52,9 +58,14 @@ export const Hero = (): React.JSX.Element => {
         data-node-id="248:4403"
       >
         {/* Date */}
-        <p data-aos="zoom-out" className="mt-10 -mb-10 lg:mt-24 lg:mb-0 text-center text-[var(--text-title)] font-medium text-[var(--color-gray-inverted)] tracking-tight">
+        <motion.p
+          className="mt-10 -mb-10 lg:mt-24 lg:mb-0 text-center text-[var(--text-title)] font-medium text-[var(--color-gray-inverted)] tracking-tight"
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           5TH - 7TH, NOVEMBER | 2026
-        </p>
+        </motion.p>
 
         {/* Main Title */}
         <h1
@@ -165,6 +176,7 @@ export const Hero = (): React.JSX.Element => {
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
+          onAnimationComplete={() => setHeroAnimationComplete(true)}
           transition={{
             type: "spring",
             stiffness: 260,
@@ -175,7 +187,7 @@ export const Hero = (): React.JSX.Element => {
           <Button
             variant="primary"
             onClick={handleRegistration}
-            className="!py-3 bg-[var(--color-static-blue)] text-white font-semibold text-[var(--text-btn-sm)] rounded-full hover:opacity-90 transition-opacity focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-static-blue)]"
+            className="!py-3 bg-[var(--color-static-blue)] text-white font-semibold text-[var(--text-btn-sm)] !font-cabinet-grotesk rounded-full hover:opacity-90 transition-opacity focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-static-blue)]"
             aria-label="Register for Benin Tech Fest 2026"
           >
             REGISTER NOW
@@ -185,7 +197,7 @@ export const Hero = (): React.JSX.Element => {
 
       {/* Pattern Strip Section */}
       <div
-        className="w-full overflow-hidden md:overflow-x-hidden h-20 lg:h-40 flex items-center justify-center"
+        className="w-full overflow-hidden md:overflow-x-hidden h-20 md:h-25 lg:h-40 flex items-center justify-center"
         style={{
           gap: "0",
           margin: "0",
@@ -195,91 +207,85 @@ export const Hero = (): React.JSX.Element => {
       >
         {/* Pattern tiles - scaled to fit and overlap */}
         <div
-          className="flex items-center h-full w-max min-w-[150%] -ml-[18%] md:min-w-0 md:ml-0 md:justify-center md:h-full [@media(max-width:767px)]:min-w-[150%] [@media(max-width:767px)]:-ml-[18%] [@media(max-width:767px)]:gap-[14px] [@media(max-width:767px)]:h-[80px]"
-          style={{ gap: "24px" }}
+          className="flex items-center h-full w-full min-w-0 ml-0 justify-between gap-0"
         >
           {/* Tile 1: Pattern Shape */}
-          <img
+          <motion.img
             src={patternShapeSvg}
             alt=""
             className="h-full object-contain flex-shrink-0 md:h-full [@media(max-width:767px)]:h-[80px]"
-            style={{ marginRight: "-24px" }}
-            data-aos="fade-up"
-            data-aos-delay="300"
-            data-aos-duration="800"
+            initial={{ opacity: 0, y: 30 }}
+            animate={heroAnimationComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
           />
 
           {/* Tile 2: Subtract */}
-          <img
+          <motion.img
             src={subtractSvg}
             alt=""
             className="h-full object-contain flex-shrink-0 md:h-full [@media(max-width:767px)]:h-[80px]"
-            style={{ marginRight: "-24px" }}
-            data-aos="fade-up"
-            data-aos-delay="200"
-            data-aos-duration="700"
+            initial={{ opacity: 0, y: 30 }}
+            animate={heroAnimationComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           />
 
           {/* Tile 3: Subtract 2 */}
-          <img
+          <motion.img
             src={subtract1Svg}
             alt=""
             className="h-full object-contain flex-shrink-0 md:h-full [@media(max-width:767px)]:h-[80px]"
-            style={{ marginRight: "-24px" }}
-            data-aos="fade-up"
-            data-aos-duration="600"
-            data-aos-delay="100"
+            initial={{ opacity: 0, y: 30 }}
+            animate={heroAnimationComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
           />
 
           {/* Tile 4: Image with green background */}
-          <div
+          <motion.div
             className="h-full aspect-square bg-[var(--color-green-inverted)] rounded-none flex items-center justify-center overflow-hidden flex-shrink-0 [@media(max-width:767px)]:h-[80px]"
-            style={{ marginRight: "-24px" }}
-            data-aos="fade-up"
-            data-aos-duration="500"
+            initial={{ opacity: 0, y: 30 }}
+            animate={heroAnimationComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
           >
             <img
               src={heroImageGreen}
               alt="Festival attendee"
               className="w-full h-full object-cover"
             />
-          </div>
+          </motion.div>
 
           {/* Tile 5: Organic Fill */}
-          <img
+          <motion.img
             src={organicFillSvg}
             alt=""
             className="h-full object-contain flex-shrink-0 md:h-full [@media(max-width:767px)]:h-[80px]"
-            style={{ marginRight: "-24px" }}
-            data-aos="fade-up"
-            data-aos-duration="600"
-            data-aos-delay="100"
+            initial={{ opacity: 0, y: 30 }}
+            animate={heroAnimationComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
           />
 
           {/* Tile 6: Pattern Edo */}
-          <img
+          <motion.img
             src={patternEdoSvg}
             alt=""
             className="h-full object-contain flex-shrink-0 md:h-full [@media(max-width:767px)]:h-[80px]"
-            style={{ marginRight: "-24px" }}
-            data-aos="fade-up"
-            data-aos-delay="200"
-            data-aos-duration="700"
+            initial={{ opacity: 0, y: 30 }}
+            animate={heroAnimationComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
           />
 
           {/* Tile 7: Image with blue background (rounded) */}
-          <div
-            data-aos="fade-up"
-            data-aos-delay="300"
-            data-aos-duration="800"
+          <motion.div
             className="h-full aspect-square bg-[var(--color-blue-inverted)] rounded-full flex items-center justify-center overflow-hidden flex-shrink-0 [@media(max-width:767px)]:h-[80px]"
+            initial={{ opacity: 0, y: 30 }}
+            animate={heroAnimationComplete ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
           >
             <img
               src={heroImageBlue}
               alt="Festival attendee"
               className="w-full h-full object-cover"              
             />
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

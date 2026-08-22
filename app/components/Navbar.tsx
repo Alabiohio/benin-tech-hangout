@@ -53,10 +53,10 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                         alt="Logo"
                         width={100}
                         height={100}
-                        className="w-auto h-13 md:h-15 object-contain"
+                        className="w-auto h-15 md:h-15 object-contain"
                         priority
                     />
-                    <span className="font-cabinet-grotesk text-2xl font-extrabold flex flex-col leading-[0.85] text-colors-inverted">  
+                    <span className="font-cabinet-grotesk text-[1.4rem] font-extrabold flex flex-col leading-[0.80] text-colors-inverted">  
                         <span>Benin</span>
                         <span>Tech</span>
                         <span>Fest</span>
@@ -108,7 +108,7 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                 <div className="flex flex-col -mt-5 items-center justify-center flex-1 gap-1 overflow-y-auto">
                     <Link href="/#about" className="text-[44px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>About</Link>
                     <Link href="/#pitch" className="text-[44px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Pitch</Link>
-                    <Link href="/tickets" className="text-[43px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Tickets</Link>
+                    <Link href="/ticket" className="text-[43px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Tickets</Link>
                     <Link href="/schedule" className="text-[43px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Schedule</Link>
                     <Link href="/#sponsor" className="text-[43px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Sponsor</Link>
                     <Link href="/exhibition" className="text-[43px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Exhibition</Link>

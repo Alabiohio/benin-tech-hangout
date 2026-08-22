@@ -64,6 +64,7 @@
   --font-cabinet-grotesk: 'Cabinet Grotesk Variable', 'Cabinet Grotesk', sans-serif;
   --font-display: var(--font-cabinet-grotesk);
   --font-body: var(--font-cabinet-grotesk);
+  --font-inter: var(--font-inter-google);
 
   /* ── Fluid type scale (mobile → desktop) ── */
   --text-hero: clamp(3.25rem, 2.2rem + 5vw, 7.5rem);
@@ -110,7 +111,7 @@
     --color-inverted: #ffffff;
     --color-gray-neutral: #303030;
     --color-gray-inverted: #a1a1a1;
-    --color-blue: #83B7FF;
+    --color-blue: #83b7ff;
     --color-blue-inverted: #1570ef;
     --color-green: #13E1A1;
     --color-green-inverted: #14AE5C;
@@ -182,6 +183,8 @@
   --color-brand-gold: var(--brand-gold);
   --color-brand-brown: var(--brand-brown);
   --color-brand-purple: var(--brand-purple);
+  --color-neutral: var(--color-neutral);
+  --color-inverted: var(--color-inverted);
   --color-gray-neutral: var(--color-gray-neutral);
   --color-gray-inverted: var(--color-gray-inverted);
   --color-blue: var(--color-blue);
@@ -262,6 +265,11 @@ body {
     color var(--duration-base) var(--ease-standard);
 }
 
+option {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
 .font-cabinet-grotesk {
   font-family: var(--font-cabinet-grotesk) !important;
 }
@@ -275,9 +283,12 @@ body {
 }
 
 p {
-  font-family: var(--font-cabinet-grotesk);
+  font-family: var(--font-inter) !important;
 }
 
+button {
+  pointer-events: auto;
+}
 
 
 [class*="drop-shadow"] {
