@@ -127,8 +127,6 @@ export default function About() {
           >
             JOIN US ON 5TH - 7TH NOV. | 2026
             <br />
-            AT VICTOR UWAIFO CREATIVE HUB,
-            <br />
             BENIN CITY, EDO STATE
           </motion.p>
         </div>

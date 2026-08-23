@@ -250,7 +250,6 @@ function BuyTicketContent() {
 
                                 <div className="flex flex-col font-cabinet-grotesk justify-end leading-[1.4] text-colors-inverted shrink-0 mb-1">
                                     <p className="font-bold text-[16px]">5TH - 7TH NOV. | 2026</p>
-                                    <p className="font-bold text-[16px]">VICTOR UWAIFO CREATIVE HUB,</p>
                                     <p className="font-bold text-[16px]">BENIN CITY, EDO STATE</p>
                                 </div>
                             </div>                              
