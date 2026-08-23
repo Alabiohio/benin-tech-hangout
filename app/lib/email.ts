@@ -150,7 +150,15 @@ export async function sendFormNotificationEmail(
 
 const SPEAKERS_BRIEF_URL = 'https://drive.google.com/file/d/1M9jEcDne1e6J0C8b5wZxvblZyA9auEFB/view?usp=drivesdk';
 
-export async function sendSpeakerBriefEmail({ name, email }: Pick<EmailData, 'name' | 'email'>): Promise<boolean> {
+const EMAIL_BASE_URL = 'https://benintechhangoutpreview.vercel.app/assets/email';
+const FOOTER_LOGO_URL = `${EMAIL_BASE_URL}/footerLogo.png`;
+
+export interface SpeakerEmailData extends Pick<EmailData, 'name' | 'email'> {
+  speakingCategory?: string;
+  areaOfInterest?: string;
+}
+
+export async function sendSpeakerBriefEmail({ name, email, speakingCategory, areaOfInterest }: SpeakerEmailData): Promise<boolean> {
   try {
     if (!process.env.RESEND_API_KEY || !email) {
       console.warn('RESEND_API_KEY or recipient email is missing. Speaker brief email not sent.');
@@ -158,46 +166,83 @@ export async function sendSpeakerBriefEmail({ name, email }: Pick<EmailData, 'na
     }
 
     const recipientName = name?.trim() || 'there';
+    const submissionDate = new Date().toLocaleDateString('en-NG', { dateStyle: 'long' });
     const subject = 'Your speaker application has been received — Benin Tech Fest 2.0';
     const text = [
       `Hi ${recipientName},`,
       '',
-      'Thank you for applying to speak at Benin Tech Fest 2.0. We have received your application.',
-      'Please take a moment to read the Speakers Brief for important event and speaker information:',
+      "Thanks for putting yourself forward to speak at Benin Tech Fest 2.0! We've received your application successfully and our programs team will review it shortly.",
+      '',
+      'Application details:',
+      `  Speaking category: ${speakingCategory || 'N/A'}`,
+      `  Area of interest: ${areaOfInterest || 'N/A'}`,
+      `  Submission date: ${submissionDate}`,
+      '',
+      'While you await our response, go through the Speakers Brief:',
       SPEAKERS_BRIEF_URL,
       '',
-      'We will be in touch with next steps.',
-      '',
-      'Benin Tech Fest 2.0',
+      'Best regards,',
+      'BTF 2.0 Team',
     ].join('\n');
-    const html = `
-      <!DOCTYPE html>
-      <html lang="en">
-        <body style="margin:0;padding:10px;background:#f8fbff;font-family:Arial,sans-serif;color:#0f172a;">
-          <main style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;">
-            <img src="https://pub-eeb28071668c42f88a2072344768bdf9.r2.dev/formBanner.png" style="width:100%;height:auto;display:block;" alt="Benin Tech Fest 2.0 Banner" />
-            <div style="padding:32px;">            
-              <p style="line-height:1.6;">Hi <strong>${escapeHtml(recipientName)}</strong>,</p>
-              <p style="line-height:1.6;">Thank you for applying to speak at Benin Tech Fest 2.0. We have received your application.</p>
-              <p style="line-height:1.6;">Please take a moment to read the Speakers Brief for important event and speaker information.</p>
-              <p style="margin:28px 0;">
-                <a href="${SPEAKERS_BRIEF_URL}" style="display:inline-block;border-radius:8px;background:#1570ef;padding:12px 20px;color:#ffffff;text-decoration:none;font-weight:700;">Read the Speakers Brief</a>
-              </p>
-              <p style="line-height:1.6;">We will be in touch with next steps.</p>
-            </div>
-            <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
-              <tr>
-                <td style="padding: 24px 32px; background-color: #f8fbff; text-align: center;">
-                  <p style="margin: 0 0 4px; color: #64748b; font-size: 12px;">Submitted on ${new Date().toLocaleString()}</p>
-                  <p style="margin: 0 0 8px; color: #94a3b8; font-size: 12px;">You received this email because you submitted a form on <a href="https://benintechfest.com.ng" style="color: #94a3b8;">benintechfest.com.ng</a>.</p>
-                  <p style="margin: 0 0 8px; color: #94a3b8; font-size: 12px;">If you did not make this submission, please ignore this email.</p>
-                  <p style="margin: 0; color: #cbd5e1; font-size: 11px;">Benin Tech Fest 2.0 &bull; Benin City, Edo State, Nigeria &bull; <a href="https://benintechfest.com.ng" style="color: #cbd5e1;">benintechfest.com.ng</a></p>
-                </td>
-              </tr>
-            </table>
-          </main>
-        </body>
-      </html>`;
+
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Benin Tech Fest 2.0 - Speaking Application Received</title><style>@media only screen and (max-width:480px){.btf-footer-row{display:block!important;}.btf-footer-logo{display:block!important;text-align:center!important;padding:0 0 10px 0!important;width:100%!important;}.btf-footer-logo img{margin:0 auto!important;}.btf-footer-copy{display:block!important;text-align:center!important;width:100%!important;}}</style></head>
+<body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #111111; line-height: 1.5;">
+  <div style="max-width: 650px; margin: 20px auto; background-color: #ffffff; border: 1px solid #e0e0e0; box-sizing: border-box;">
+    <div style="width: 100%; background-color: #e5e5e5; text-align: center;">
+      <img src="${EMAIL_BASE_URL}/speaker.png" alt="Benin Tech Fest 2.0 Speaking" style="width: 100%; height: auto; display: block;" />
+    </div>
+    <div style="padding: 30px 40px;">
+      <h1 style="font-size: 28px; font-weight: 700; margin-top: 0; margin-bottom: 20px; color: #111111;">Your speaking application is in!</h1>
+      <p style="margin-bottom: 20px;">Hi ${escapeHtml(recipientName)}</p>
+      <p style="margin-bottom: 20px;">Thanks for putting yourself forward to speak at Benin Tech Fest 2.0! We&rsquo;ve received your application successfully and our programs team will review it shortly.</p>
+      <p style="margin-bottom: 5px; font-weight: 700;">Application details</p>
+      <ul style="list-style-type: disc; padding-left: 20px; margin: 0 0 20px 0;">
+        <li style="margin-bottom: 5px;">Speaking category: ${escapeHtml(speakingCategory || 'N/A')}</li>
+        <li style="margin-bottom: 5px;">Area of interest: ${escapeHtml(areaOfInterest || 'N/A')}</li>
+        <li style="margin-bottom: 5px;">Submission date: ${escapeHtml(submissionDate)}</li>
+      </ul>
+      <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 30px 0;" />
+      <h2 style="font-size: 22px; font-weight: 700; margin-top: 0; margin-bottom: 20px; color: #111111;">What next?</h2>
+      <ul style="list-style-type: disc; padding-left: 20px; margin: 0 0 30px 0;">
+        <li style="margin-bottom: 18px;">
+          <strong>We&rsquo;ll review your application</strong><br>
+          Our programs team will review your submission and get in touch with you to discuss your exhibition plans and next steps.
+        </li>
+        <li style="margin-bottom: 18px;">
+          <strong>Go through the speakers&rsquo; brief</strong><br>
+          While you await our response, go through the speakers&rsquo; brief to get more details on the event theme and speakers&rsquo; expectations<br>
+          <a href="${SPEAKERS_BRIEF_URL}" style="color: #0066ff; text-decoration: underline; font-weight: 600;">View speakers&rsquo; brief</a>
+        </li>
+        <li style="margin-bottom: 18px;">
+          <strong>Session schedule</strong><br>
+          Once your application is approved and finalised, we&rsquo;ll schedule your speaking session, guidelines, and other information you&rsquo;ll need to prepare for the event.
+        </li>
+      </ul>
+      <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 30px 0;" />
+      <p style="margin-bottom: 25px;">We appreciate your interest in sharing your insights at Benin Tech Fest 2.0. We&rsquo;re looking forward to having you be part of the experience.</p>
+      <p style="margin: 0;">Best regards,<br>BTF 2.0 Team</p>
+    </div>
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color: #e5e5e5;">
+      <tr>
+        <td style="padding: 20px 40px;">
+          <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+            <tr class="btf-footer-row">
+              <td class="btf-footer-logo" style="vertical-align: middle; text-align: left;">
+                <img src="${FOOTER_LOGO_URL}" alt="Benin Tech Fest Logo" style="height: 30px; width: auto; display: block;" />
+              </td>
+              <td class="btf-footer-copy" style="vertical-align: middle; text-align: right; font-size: 13px; color: #333333;">
+                &copy; 2026 Benin Tech Fest
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>`;
 
     const { error } = await resend.emails.send({
       from: FROM_EMAIL,
@@ -222,7 +267,12 @@ export async function sendSpeakerBriefEmail({ name, email }: Pick<EmailData, 'na
 
 const EXHIBITORS_BRIEF_URL = 'https://drive.google.com/file/d/1XNQbEX-FfHrOG2fwfZCTXRjig5OP1I1z/view?usp=drivesdk';
 
-export async function sendExhibitorBriefEmail({ name, email }: Pick<EmailData, 'name' | 'email'>): Promise<boolean> {
+export interface ExhibitorEmailData extends Pick<EmailData, 'name' | 'email'> {
+  companyName?: string;
+  exhibitionPackage?: string;
+}
+
+export async function sendExhibitorBriefEmail({ name, email, companyName, exhibitionPackage }: ExhibitorEmailData): Promise<boolean> {
   try {
     if (!process.env.RESEND_API_KEY || !email) {
       console.warn('RESEND_API_KEY or recipient email is missing. Exhibitor brief email not sent.');
@@ -230,46 +280,84 @@ export async function sendExhibitorBriefEmail({ name, email }: Pick<EmailData, '
     }
 
     const recipientName = name?.trim() || 'there';
-    const subject = 'Your exhibitor application has been received — Benin Tech Fest 2.0';
+    const company = companyName?.trim() || 'your organisation';
+    const submissionDate = new Date().toLocaleDateString('en-NG', { dateStyle: 'long' });
+    const subject = 'Your exhibition application has been received — Benin Tech Fest 2.0';
     const text = [
       `Hi ${recipientName},`,
       '',
-      'Thank you for applying to exhibit at Benin Tech Fest 2.0. We have received your application.',
-      'Please take a moment to read the Exhibitors Brief for important event and exhibitor information:',
+      `Thank you for applying to exhibit at Benin Tech Fest 2.0 on behalf of ${company}. We've received your application successfully and our exhibition team will review it shortly.`,
+      '',
+      'Application details:',
+      `  Company/organisation: ${company}`,
+      `  Booth category: ${exhibitionPackage || 'N/A'}`,
+      `  Submission date: ${submissionDate}`,
+      '',
+      'Explore the exhibition packages:',
       EXHIBITORS_BRIEF_URL,
       '',
-      'We will be in touch with next steps.',
-      '',
-      'Benin Tech Fest 2.0',
+      'Best regards,',
+      'BTF 2.0 Team',
     ].join('\n');
-    const html = `
-      <!DOCTYPE html>
-      <html lang="en">
-        <body style="margin:0;padding:10px;background:#f8fbff;font-family:Arial,sans-serif;color:#0f172a;">
-          <main style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;">
-            <img src="https://pub-eeb28071668c42f88a2072344768bdf9.r2.dev/formBanner.png" style="width:100%;height:auto;display:block;" alt="Benin Tech Fest 2.0 Banner" />
-            <div style="padding:32px;">            
-              <p style="line-height:1.6;">Hi <strong>${escapeHtml(recipientName)}</strong>,</p>
-              <p style="line-height:1.6;">Thank you for applying to exhibit at Benin Tech Fest 2.0. We have received your application.</p>
-              <p style="line-height:1.6;">Please take a moment to read the Exhibitors Brief for important event and exhibitor information.</p>
-              <p style="margin:28px 0;">
-                <a href="${EXHIBITORS_BRIEF_URL}" style="display:inline-block;border-radius:8px;background:#1570ef;padding:12px 20px;color:#ffffff;text-decoration:none;font-weight:700;">Read the Exhibitors Brief</a>
-              </p>
-              <p style="line-height:1.6;">We will be in touch with next steps.</p>
-            </div>
-            <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
-              <tr>
-                <td style="padding: 24px 32px; background-color: #f8fbff; text-align: center;">
-                  <p style="margin: 0 0 4px; color: #64748b; font-size: 12px;">Submitted on ${new Date().toLocaleString()}</p>
-                  <p style="margin: 0 0 8px; color: #94a3b8; font-size: 12px;">You received this email because you submitted a form on <a href="https://benintechfest.com.ng" style="color: #94a3b8;">benintechfest.com.ng</a>.</p>
-                  <p style="margin: 0 0 8px; color: #94a3b8; font-size: 12px;">If you did not make this submission, please ignore this email.</p>
-                  <p style="margin: 0; color: #cbd5e1; font-size: 11px;">Benin Tech Fest 2.0 &bull; Benin City, Edo State, Nigeria &bull; <a href="https://benintechfest.com.ng" style="color: #cbd5e1;">benintechfest.com.ng</a></p>
-                </td>
-              </tr>
-            </table>
-          </main>
-        </body>
-      </html>`;
+
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Benin Tech Fest 2.0 - Exhibition Application Received</title><style>@media only screen and (max-width:480px){.btf-footer-row{display:block!important;}.btf-footer-logo{display:block!important;text-align:center!important;padding:0 0 10px 0!important;width:100%!important;}.btf-footer-logo img{margin:0 auto!important;}.btf-footer-copy{display:block!important;text-align:center!important;width:100%!important;}}</style></head>
+<body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #111111; line-height: 1.5;">
+  <div style="max-width: 650px; margin: 20px auto; background-color: #ffffff; border: 1px solid #e0e0e0; box-sizing: border-box;">
+    <div style="width: 100%; background-color: #00d287; text-align: center;">
+      <img src="${EMAIL_BASE_URL}/exhibition.png" alt="Benin Tech Fest 2.0 Exhibition" style="width: 100%; height: auto; display: block;" />
+    </div>
+    <div style="padding: 30px 40px;">
+      <h1 style="font-size: 28px; font-weight: 700; margin-top: 0; margin-bottom: 20px; color: #111111;">Your exhibition application is in!</h1>
+      <p style="margin-bottom: 20px;">Hi ${escapeHtml(recipientName)}</p>
+      <p style="margin-bottom: 20px;">Thank you for applying to exhibit at Benin Tech Fest 2.0 on behalf of ${escapeHtml(company)}. We&rsquo;ve received your application successfully and our exhibition team will review it shortly.</p>
+      <p style="margin-bottom: 5px; font-weight: 700;">Application details</p>
+      <ul style="list-style-type: disc; padding-left: 20px; margin: 0 0 20px 0;">
+        <li style="margin-bottom: 5px;">Company/organisation: ${escapeHtml(company)}</li>
+        <li style="margin-bottom: 5px;">Booth category: ${escapeHtml(exhibitionPackage || 'N/A')}</li>
+        <li style="margin-bottom: 5px;">Submission date: ${escapeHtml(submissionDate)}</li>
+      </ul>
+      <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 30px 0;" />
+      <h2 style="font-size: 22px; font-weight: 700; margin-top: 0; margin-bottom: 20px; color: #111111;">What next?</h2>
+      <ul style="list-style-type: disc; padding-left: 20px; margin: 0 0 30px 0;">
+        <li style="margin-bottom: 18px;">
+          <strong>We&rsquo;ll review your application</strong><br>
+          Our exhibition team will review your submission and get in touch with you to discuss your exhibition plans and next steps.
+        </li>
+        <li style="margin-bottom: 18px;">
+          <strong>Explore the exhibition packages</strong><br>
+          While you await our response, take a look at our exhibition packages and see what&rsquo;s included with each option.<br>
+          <a href="${EXHIBITORS_BRIEF_URL}" style="color: #0066ff; text-decoration: underline; font-weight: 600;">View exhibition packages</a>
+        </li>
+        <li style="margin-bottom: 18px;">
+          <strong>Booth allocation</strong><br>
+          Once your application is approved and finalised, we&rsquo;ll share your booth allocation, setup guidelines, and other information you&rsquo;ll need to prepare for the event.
+        </li>
+      </ul>
+      <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 30px 0;" />
+      <p style="margin-bottom: 25px;">We appreciate your interest in showcasing your brand at Benin Tech Fest 2.0. We&rsquo;re looking forward to having you be part of the experience.</p>
+      <p style="margin: 0;">Best regards,<br>BTF 2.0 Team</p>
+    </div>
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color: #e5e5e5;">
+      <tr>
+        <td style="padding: 20px 40px;">
+          <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+            <tr class="btf-footer-row">
+              <td class="btf-footer-logo" style="vertical-align: middle; text-align: left;">
+                <img src="${FOOTER_LOGO_URL}" alt="Benin Tech Fest Logo" style="height: 30px; width: auto; display: block;" />
+              </td>
+              <td class="btf-footer-copy" style="vertical-align: middle; text-align: right; font-size: 13px; color: #333333;">
+                &copy; 2026 Benin Tech Fest
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>`;
 
     const { error } = await resend.emails.send({
       from: FROM_EMAIL,
@@ -300,46 +388,92 @@ export async function sendRegistrationEmail({ name, email }: Pick<EmailData, 'na
     }
 
     const recipientName = name?.trim() || 'there';
+    const regDate = new Date().toLocaleDateString('en-NG', { dateStyle: 'long' });
     const subject = 'Your registration has been received — Benin Tech Fest 2.0';
     const text = [
-      `Hi ${recipientName},`,
+      `Dear ${recipientName},`,
       '',
-      'Thank you for registering to attend Benin Tech Fest 2.0. We have received your details.',
-      'To complete your registration, please make sure to secure your ticket:',
-      'https://benintechfest.com.ng/ticket',
+      'You are officially registered for Benin Tech Fest 2.0 happening 5th - 7th November, 2026 in Benin City, Edo State.',
+      'Your spot is confirmed and we\'re excited to have you join us as we connect Edo to the future of tech.',
       '',
-      'We look forward to seeing you there.',
+      `Registration date: ${regDate}`,
       '',
-      'Benin Tech Fest 2.0',
+      'Details on the event venue and other important updates will be communicated with you as they become available.',
+      '',
+      'Get your event pass: https://benintechfest.com.ng/ticket',
+      'Join WhatsApp community: https://whatsapp.com/channel/0029VbCyw0P9mrGciiEpD71G',
+      '',
+      'Best regards,',
+      'BTF 2.0 Team',
     ].join('\n');
-    const html = `
-      <!DOCTYPE html>
-      <html lang="en">
-        <body style="margin:0;padding:10px;background:#f8fbff;font-family:Arial,sans-serif;color:#0f172a;">
-          <main style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;">
-            <img src="https://pub-eeb28071668c42f88a2072344768bdf9.r2.dev/formBanner.png" style="width:100%;height:auto;display:block;" alt="Benin Tech Fest 2.0 Banner" />
-            <div style="padding:32px;">             
-              <p style="line-height:1.6;">Hi <strong>${escapeHtml(recipientName)}</strong>,</p>
-              <p style="line-height:1.6;">Thank you for registering to attend Benin Tech Fest 2.0. We have received your details.</p>
-              <p style="line-height:1.6;">To complete your registration and secure your spot, please make sure to purchase your ticket.</p>
-              <p style="margin:28px 0;">
-                <a href="https://benintechfest.com.ng/ticket" style="display:inline-block;border-radius:8px;background:#1570ef;padding:12px 20px;color:#ffffff;text-decoration:none;font-weight:700;">Get Your Ticket</a>
-              </p>
-              <p style="line-height:1.6;">We look forward to seeing you there.</p>
-            </div>
-            <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
-              <tr>
-                <td style="padding: 24px 32px; background-color: #f8fbff; text-align: center;">
-                  <p style="margin: 0 0 4px; color: #64748b; font-size: 12px;">Submitted on ${new Date().toLocaleString()}</p>
-                  <p style="margin: 0 0 8px; color: #94a3b8; font-size: 12px;">You received this email because you submitted a form on <a href="https://benintechfest.com.ng" style="color: #94a3b8;">benintechfest.com.ng</a>.</p>
-                  <p style="margin: 0 0 8px; color: #94a3b8; font-size: 12px;">If you did not make this submission, please ignore this email.</p>
-                  <p style="margin: 0; color: #cbd5e1; font-size: 11px;">Benin Tech Fest 2.0 &bull; Benin City, Edo State, Nigeria &bull; <a href="https://benintechfest.com.ng" style="color: #cbd5e1;">benintechfest.com.ng</a></p>
-                </td>
-              </tr>
-            </table>
-          </main>
-        </body>
-      </html>`;
+
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Benin Tech Fest 2.0 - Registration Confirmation</title><style>@media only screen and (max-width:480px){.btf-footer-row{display:block!important;}.btf-footer-logo{display:block!important;text-align:center!important;padding:0 0 10px 0!important;width:100%!important;}.btf-footer-logo img{margin:0 auto!important;}.btf-footer-copy{display:block!important;text-align:center!important;width:100%!important;}}</style></head>
+<body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #111111; line-height: 1.5;">
+  <div style="max-width: 650px; margin: 20px auto; background-color: #ffffff; border: 1px solid #e0e0e0; box-sizing: border-box;">
+    <div style="width: 100%; background-color: #111111; text-align: center;">
+      <img src="${EMAIL_BASE_URL}/register.png" alt="Benin Tech Fest 2.0" style="width: 100%; height: auto; display: block;" />
+    </div>
+    <div style="padding: 30px 40px;">
+      <h1 style="font-size: 28px; font-weight: 700; margin-top: 0; margin-bottom: 20px; color: #111111;">Thanks for registering!</h1>
+      <p style="margin-bottom: 20px;">Dear ${escapeHtml(recipientName)},</p>
+      <p style="margin-bottom: 20px;">You are officially registered for Benin Tech Fest 2.0 happening <strong>5th - 7th November, 2026</strong> in Benin City, Edo State.</p>
+      <p style="margin-bottom: 20px;">Your spot is confirmed and we&rsquo;re excited to have you join us as we connect Edo to the future of tech.</p>
+      <p style="margin-bottom: 20px;">Registration date: ${escapeHtml(regDate)}</p>
+      <p style="margin-bottom: 30px;">Details on the event venue and other important updates will be communicated with you as they become available.</p>
+      <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 30px 0;" />
+      <h2 style="font-size: 22px; font-weight: 700; margin-top: 0; margin-bottom: 20px; color: #111111;">What next?</h2>
+      <ul style="list-style-type: disc; padding-left: 20px; margin: 0 0 30px 0;">
+        <li style="margin-bottom: 18px;">
+          <strong>Save the date</strong><br>
+          Add BTF 2.0 to your calendar so you don&rsquo;t miss it.
+        </li>
+        <li style="margin-bottom: 18px;">
+          <strong>Join the attendee community</strong><br>
+          Connect with other attendees, get important updates, and stay in the loop.<br>
+          <a href="https://whatsapp.com/channel/0029VbCyw0P9mrGciiEpD71G" style="color: #0066ff; text-decoration: underline; font-weight: 600;">Join the WhatsApp community</a>
+        </li>
+        <li style="margin-bottom: 18px;">
+          <strong>Choose your event experience</strong><br>
+          Your registration reserves your spot at BTF 2.0. To access the venue, event sessions and enjoy various attendee perks, you&rsquo;ll need to select and purchase an event pass.<br>
+          <a href="https://benintechfest.com.ng/ticket" style="color: #0066ff; text-decoration: underline; font-weight: 600;">Get event pass</a>
+        </li>
+        <li style="margin-bottom: 18px;">
+          <strong>Stay in the loop</strong><br>
+          Connect with other attendees, follow BTF on social media and get important event updates and announcements
+          <div style="margin-top: 8px;">
+            <a href="https://whatsapp.com/channel/0029VbCyw0P9mrGciiEpD71G" style="color: #0066ff; text-decoration: underline; font-weight: 600; display: block; margin-bottom: 4px;">Join WhatsApp community</a>
+            <a href="https://www.instagram.com/benintechfest/" style="color: #0066ff; text-decoration: underline; font-weight: 600; display: block; margin-bottom: 4px;">BTF on Instagram</a>
+            <a href="https://www.linkedin.com/company/benin-tech-fest-page/" style="color: #0066ff; text-decoration: underline; font-weight: 600; display: block; margin-bottom: 4px;">BTF on LinkedIn</a>
+            <a href="https://www.tiktok.com/@benintechfest" style="color: #0066ff; text-decoration: underline; font-weight: 600; display: block; margin-bottom: 4px;">BTF on TikTok</a>
+            <a href="https://x.com/Benintechfest" style="color: #0066ff; text-decoration: underline; font-weight: 600; display: block;">BTF on X</a>
+          </div>
+        </li>
+      </ul>
+      <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 30px 0;" />
+      <p style="margin-bottom: 25px;">We can&rsquo;t wait to see you at Benin Tech Fest 2.0!</p>
+      <p style="margin: 0;">Best regards,<br>BTF 2.0 Team</p>
+    </div>
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color: #e5e5e5;">
+      <tr>
+        <td style="padding: 20px 40px;">
+          <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+            <tr class="btf-footer-row">
+              <td class="btf-footer-logo" style="vertical-align: middle; text-align: left;">
+                <img src="${FOOTER_LOGO_URL}" alt="Benin Tech Fest Logo" style="height: 30px; width: auto; display: block;" />
+              </td>
+              <td class="btf-footer-copy" style="vertical-align: middle; text-align: right; font-size: 13px; color: #333333;">
+                &copy; 2026 Benin Tech Fest
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>`;
 
     const { error } = await resend.emails.send({
       from: FROM_EMAIL,
@@ -370,6 +504,8 @@ export interface TicketConfirmationData {
   ticketLabel: string;
   paymentReference: string;
   quantity?: number;
+  registrationId?: string | number;
+  totalPaid?: number;
 }
 
 export async function sendTicketConfirmationEmail(data: TicketConfirmationData): Promise<boolean> {
@@ -381,6 +517,11 @@ export async function sendTicketConfirmationEmail(data: TicketConfirmationData):
 
     const recipientName = `${data.firstName} ${data.lastName}`.trim() || 'there';
     const quantity = Number.isFinite(data.quantity) && data.quantity! > 0 ? data.quantity! : 1;
+    const registrationId = data.registrationId ?? 'N/A';
+    const totalPaid = Number.isFinite(data.totalPaid) ? data.totalPaid! : undefined;
+    const formattedTotalPaid = totalPaid === undefined
+      ? 'N/A'
+      : new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(totalPaid / 100);
     const subject = `🎟️ Your ticket is confirmed — Benin Tech Fest 2.0`;
 
     const text = [
@@ -390,6 +531,8 @@ export async function sendTicketConfirmationEmail(data: TicketConfirmationData):
       '',
       `Ticket Type:        ${data.ticketLabel}`,
       `Tickets Bought:     ${quantity}`,
+      `Registration ID:    ${registrationId}`,
+      `Total Paid:         ${formattedTotalPaid}`,
       `Name:               ${recipientName}`,
       `Email:              ${data.email}`,
       `Payment Reference:  ${data.paymentReference}`,
@@ -403,92 +546,76 @@ export async function sendTicketConfirmationEmail(data: TicketConfirmationData):
       'benintechfest.com.ng',
     ].join('\n');
 
-    const html = `
-      <!DOCTYPE html>
-      <html lang="en">
-        <body style="margin:0;padding:10px;background:#f8fbff;font-family:Arial,sans-serif;color:#0f172a;">
-          <main style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 15px 35px rgba(15,23,42,0.08);">
-            <img src="https://pub-eeb28071668c42f88a2072344768bdf9.r2.dev/formBanner.png" style="width:100%;height:auto;display:block;" alt="Benin Tech Fest 2.0 Banner" />
+    const purchaseDate = new Date().toLocaleDateString('en-NG', { dateStyle: 'long' });
 
-            <div style="padding:32px 32px 20px; text-align:center;">
-              <p style="margin:0 0 12px;color:#1570ef;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Payment confirmed</p>
-              <h1 style="margin:0;color:#0f172a;font-size:28px;line-height:1.2;font-weight:800;">Your ticket is secured.</h1>
-            </div>
-
-            <div style="padding:0 32px;">
-              <p style="margin:0;line-height:1.7;color:#334155;font-size:16px;">Hi <strong style="color:#0f172a;">${escapeHtml(recipientName)}</strong>,</p>
-              <p style="margin:12px 0 0;line-height:1.7;color:#475569;font-size:14px;">
-                Thank you for purchasing your ticket. Your payment has been verified, and your spot at Benin Tech Fest 2.0 is officially confirmed. We can't wait to see you there.
-              </p>
-            </div>
-
-            <div style="padding:28px 32px 8px;">
-              <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background:#f8fbff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;">
-                <tr>
-                  <td style="background:linear-gradient(90deg,#1570ef,#0ea5e9);padding:14px 20px;">
-                    <p style="margin:0;color:#ffffff;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">🎟️ Your Ticket</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:20px;">
-                    <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
-                      <tr>
-                        <td style="padding:8px 0;border-bottom:1px solid #e2e8f0;">
-                          <span style="color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Ticket Type</span><br>
-                          <span style="color:#0f172a;font-size:18px;font-weight:800;margin-top:4px;display:block;">${escapeHtml(data.ticketLabel)}</span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style="padding:8px 0;border-bottom:1px solid #e2e8f0;">
-                          <span style="color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Attendee</span><br>
-                          <span style="color:#334155;font-size:15px;margin-top:4px;display:block;">${escapeHtml(recipientName)}</span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style="padding:8px 0;border-bottom:1px solid #e2e8f0;">
-                          <span style="color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Email</span><br>
-                          <span style="color:#334155;font-size:15px;margin-top:4px;display:block;">${escapeHtml(data.email)}</span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style="padding:8px 0;border-bottom:1px solid #e2e8f0;">
-                          <span style="color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Tickets Bought</span><br>
-                          <span style="color:#334155;font-size:15px;margin-top:4px;display:block;">${quantity}</span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style="padding:8px 0;">
-                          <span style="color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Payment Reference</span><br>
-                          <span style="color:#1570ef;font-size:13px;font-family:monospace;margin-top:4px;display:block;">${escapeHtml(data.paymentReference)}</span>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </div>
-
-            <div style="padding:20px 32px 32px;text-align:center;">
-              <p style="margin:0 0 20px;color:#64748b;font-size:13px;line-height:1.6;">
-                Keep this email safe &mdash; it serves as your registration proof. Further event details will be sent closer to the date.
-              </p>
-              <a href="https://benintechfest.com.ng" style="display:inline-block;border-radius:10px;background:#1570ef;padding:14px 32px;color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;">Visit Our Website</a>
-            </div>
-
-            <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
-              <tr>
-                <td style="padding:24px 32px;background-color:#f8fbff;text-align:center;">
-                  <p style="margin:0 0 4px;color:#64748b;font-size:12px;">Paid on ${new Date().toLocaleString('en-NG', { dateStyle: 'long', timeStyle: 'short' })}</p>
-                  <p style="margin:0 0 8px;color:#94a3b8;font-size:12px;">
-                    You received this because you purchased a ticket on <a href="https://benintechfest.com.ng" style="color:#94a3b8;">benintechfest.com.ng</a>.
-                  </p>
-                  <p style="margin:0;color:#cbd5e1;font-size:11px;">Benin Tech Fest 2.0 &bull; Benin City, Edo State, Nigeria &bull; <a href="https://benintechfest.com.ng" style="color:#cbd5e1;">benintechfest.com.ng</a></p>
-                </td>
-              </tr>
-            </table>
-          </main>
-        </body>
-      </html>`;
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Benin Tech Fest 2.0 - Ticket Confirmation</title><style>@media only screen and (max-width:480px){.btf-footer-row{display:block!important;}.btf-footer-logo{display:block!important;text-align:center!important;padding:0 0 10px 0!important;width:100%!important;}.btf-footer-logo img{margin:0 auto!important;}.btf-footer-copy{display:block!important;text-align:center!important;width:100%!important;}}</style></head>
+<body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #111111; line-height: 1.5;">
+  <div style="max-width: 650px; margin: 20px auto; background-color: #ffffff; border: 1px solid #e0e0e0; box-sizing: border-box;">
+    <div style="width: 100%; background-color: #111111; text-align: center;">
+      <img src="${EMAIL_BASE_URL}/ticket.png" alt="Benin Tech Fest 2.0" style="width: 100%; height: auto; display: block;" />
+    </div>
+    <div style="padding: 30px 40px;">
+      <h1 style="font-size: 28px; font-weight: 700; margin-top: 0; margin-bottom: 20px; color: #111111;">Your ticket is confirmed!</h1>
+      <p style="margin-bottom: 20px;">You are officially going to Benin Tech Fest 2.0!</p>
+      <p style="margin-bottom: 20px;">Thanks for getting your event pass. Your payment was successful, and your ticket is now confirmed.</p>
+      <p style="margin-bottom: 30px;">Please keep this email safe. You&rsquo;ll need to present your ticket details at check-in when you arrive at the venue to access the event.</p>
+      <div style="background-color: #e5e5e5; border: 1.5px dashed #a0a0a0; border-radius: 12px; padding: 24px; margin-bottom: 30px;">
+        <h2 style="font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px; color: #111111;">Ticket detail</h2>
+        <table style="width: 100%; border-collapse: collapse; font-size: 14px; color: #111111;">
+          <tr>
+            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; color: #333333;">Registration ID:</td>
+            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; text-align: right; font-weight: 700;">${escapeHtml(String(registrationId))}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; color: #333333;">Email:</td>
+            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; text-align: right; font-weight: 700;">${escapeHtml(data.email)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; color: #333333;">Ticket type:</td>
+            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; text-align: right; font-weight: 700;">${escapeHtml(data.ticketLabel)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; color: #333333;">Quantity:</td>
+            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; text-align: right; font-weight: 700;">${quantity}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; color: #333333;">Total paid:</td>
+            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; text-align: right; font-weight: 700;">${escapeHtml(formattedTotalPaid)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; color: #333333;">Purchase date:</td>
+            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; text-align: right; font-weight: 700;">${escapeHtml(purchaseDate)}</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px 0 0 0; color: #333333;">Order ID:</td>
+            <td style="padding: 10px 0 0 0; text-align: right; font-weight: 700;">${escapeHtml(data.paymentReference)}</td>
+          </tr>
+        </table>
+      </div>
+      <p style="margin-bottom: 25px;">We can&rsquo;t wait to see you at Benin Tech Fest 2.0!</p>
+      <p style="margin: 0;">Best regards,<br>BTF 2.0 Team</p>
+    </div>
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color: #e5e5e5;">
+      <tr>
+        <td style="padding: 20px 40px;">
+          <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+            <tr class="btf-footer-row">
+              <td class="btf-footer-logo" style="vertical-align: middle; text-align: left;">
+                <img src="${FOOTER_LOGO_URL}" alt="Benin Tech Fest Logo" style="height: 30px; width: auto; display: block;" />
+              </td>
+              <td class="btf-footer-copy" style="vertical-align: middle; text-align: right; font-size: 13px; color: #333333;">
+                &copy; 2026 Benin Tech Fest
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>`;
 
     const { error } = await resend.emails.send({
       from: FROM_EMAIL,

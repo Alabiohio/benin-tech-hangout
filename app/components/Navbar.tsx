@@ -67,7 +67,7 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                     <Link href="/#about" className="hover:text-biro-blue-dark transition-colors">About</Link>
                     <Link href="/#pitch" className="hover:text-biro-blue-dark transition-colors">Pitch</Link>
                     <Link href="/ticket" className="hover:text-biro-blue-dark transition-colors">Tickets</Link>
-                    <Link href="#" className="hover:text-biro-blue-dark transition-colors">Schedule</Link>
+                    {/* <Link href="/schedule" className="hover:text-biro-blue-dark transition-colors">Schedule</Link> */}
                     <Link href="/#sponsor" className="hover:text-biro-blue-dark transition-colors">Sponsor</Link>
                     <Link href="/exhibition" className="hover:text-biro-blue-dark transition-colors">Exhibition</Link>
                     <Link href="https://forms.gle/kkEu2pQNmznFTDpw8" className="hover:text-biro-blue-dark transition-colors">Volunteer</Link>
@@ -124,7 +124,7 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                     <Link href="/#about" className="text-[44px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>About</Link>
                     <Link href="/#pitch" className="text-[44px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Pitch</Link>
                     <Link href="/ticket" className="text-[43px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Tickets</Link>
-                    <Link href="#" className="text-[43px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Schedule</Link>
+                    {/* <Link href="/schedule" className="text-[43px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Schedule</Link> */}
                     <Link href="/#sponsor" className="text-[43px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Sponsor</Link>
                     <Link href="/exhibition" className="text-[43px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Exhibition</Link>
                     <Link href="https://forms.gle/kkEu2pQNmznFTDpw8" className="text-[45px] sm:text-[35px] md:text-[40px] font-bold tracking-tight text-foreground" onClick={handleLinkClick}>Volunteer</Link>

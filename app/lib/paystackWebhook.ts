@@ -188,10 +188,11 @@ export async function processPaystackWebhook(body: string, signature: string | n
         return { status: 200, message: 'Webhook already processed' };
       }
 
-      await client.query(
+      const registration = await client.query(
         `INSERT INTO "btf-registration"
          (ticket_type, first_name, last_name, email, phone, country, nationality, community, payment_reference, name, primary_interest, agreed_to_terms)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+         RETURNING id`,
         [
           ticketType,
           firstName,
@@ -217,6 +218,8 @@ export async function processPaystackWebhook(body: string, signature: string | n
         ticketLabel,
         paymentReference,
         quantity,
+        registrationId: registration.rows[0]?.id,
+        totalPaid: expectedAmount,
       }).catch((err) => console.error('Failed to send ticket confirmation email from webhook:', err));
 
       console.log(`Paystack webhook confirmed and ticket saved for ${emailAddress} (${paymentReference})`);

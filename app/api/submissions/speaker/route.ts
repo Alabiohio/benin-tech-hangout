@@ -123,6 +123,8 @@ export async function POST(request: NextRequest) {
         await sendSpeakerBriefEmail({
             name: `${normalizedFirstName} ${normalizedLastName}`.trim(),
             email: normalizedEmail,
+            speakingCategory: normalizedSpeakingCategory,
+            areaOfInterest: normalizedAreaOfInterest,
         });
 
         return NextResponse.json(

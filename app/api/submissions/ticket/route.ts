@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
 import { NextRequest, NextResponse } from 'next/server';
 import { getClientIp, checkRateLimit } from '@/app/lib/rateLimit';
-import { sendFormNotificationEmail, sendTicketConfirmationEmail } from '@/app/lib/email';
+import { sendTicketConfirmationEmail } from '@/app/lib/email';
 import { cleanText, email, invalidFormResponse, phone, readFormBody, rejectOversizedBody, requiredText } from '@/app/lib/formSecurity';
 
 const pool = new Pool({
@@ -178,11 +178,17 @@ export async function POST(request: NextRequest) {
 
         if (paymentReference) {
             const existingPayment = await client.query(
-                'SELECT 1 FROM "btf-registration" WHERE payment_reference = $1 LIMIT 1',
+                'SELECT id FROM "btf-registration" WHERE payment_reference = $1 LIMIT 1',
                 [paymentReference]
             );
-            if (existingPayment.rowCount) {
-                return NextResponse.json({ error: 'This payment has already been used.' }, { status: 409 });
+            if (existingPayment.rowCount && existingPayment.rows[0]) {
+                // Return 200 instead of 409 so the frontend doesn't throw an error. 
+                // The webhook or a previous request already handled it.
+                return NextResponse.json({ 
+                    success: true, 
+                    message: 'Ticket already registered (processed via webhook).',
+                    id: existingPayment.rows[0].id
+                }, { status: 200 });
             }
         }
 
@@ -204,6 +210,8 @@ export async function POST(request: NextRequest) {
             ticketLabel: TIER_LABELS[ticket_type] || ticket_type,
             paymentReference: paymentReference || 'N/A',
             quantity,
+            registrationId: result.rows[0].id,
+            totalPaid: expectedAmount,
         }).catch((err) => console.error('Failed to send ticket confirmation email:', err));
 
 

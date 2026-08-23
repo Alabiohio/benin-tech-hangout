@@ -153,6 +153,8 @@ export async function POST(request: NextRequest) {
         await sendExhibitorBriefEmail({
                     name: `${firstName} ${lastName}`,
                     email,
+                    companyName,
+                    exhibitionPackage,
                 });
         return NextResponse.json(
             {
