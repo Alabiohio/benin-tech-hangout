@@ -222,7 +222,7 @@ export async function processPaystackWebhook(body: string, signature: string | n
       );
 
       const ticketLabel = TIER_LABELS[ticketType] || ticketType;
-      await sendTicketConfirmationEmail({
+      const emailSent = await sendTicketConfirmationEmail({
         firstName,
         lastName,
         email: emailAddress,
@@ -232,7 +232,11 @@ export async function processPaystackWebhook(body: string, signature: string | n
         quantity,
         registrationId: registration.rows[0]?.registration_id || registration.rows[0]?.id,
         totalPaid: expectedAmount,
-      }).catch((err) => console.error('Failed to send ticket confirmation email from webhook:', err));
+      });
+
+      if (!emailSent) {
+        console.warn(`Webhook ticket saved for ${emailAddress} (${paymentReference}), but the confirmation email failed to send.`);
+      }
 
       console.log(`Paystack webhook confirmed and ticket saved for ${emailAddress} (${paymentReference})`);
       return { status: 200, message: 'Payment confirmed and ticket issued' };

@@ -240,7 +240,7 @@ export async function POST(request: NextRequest) {
         );
 
         // Send a branded payment confirmation email to the purchaser
-        sendTicketConfirmationEmail({
+        const emailSent = await sendTicketConfirmationEmail({
             firstName,
             lastName,
             email: emailAddress,
@@ -250,7 +250,11 @@ export async function POST(request: NextRequest) {
             quantity,
             registrationId: result.rows[0].registration_id || result.rows[0].id,
             totalPaid: expectedAmount,
-        }).catch((err) => console.error('Failed to send ticket confirmation email:', err));
+        });
+
+        if (!emailSent) {
+            console.warn(`Ticket registration saved for ${emailAddress}, but the confirmation email failed to send.`);
+        }
 
 
         return NextResponse.json(
@@ -258,7 +262,8 @@ export async function POST(request: NextRequest) {
                 success: true,
                 message: 'Ticket registration submitted successfully',
                 id: result.rows[0].id,
-                registrationId: result.rows[0].registration_id || result.rows[0].id
+                registrationId: result.rows[0].registration_id || result.rows[0].id,
+                emailSent,
             },
             { status: 201 }
         );
