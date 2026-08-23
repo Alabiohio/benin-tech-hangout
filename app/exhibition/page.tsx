@@ -270,9 +270,9 @@ export default function ExhibitionPage() {
                     <option value="" disabled hidden>
                       Choose exhibition package
                     </option>
-                    <option value="Premium booth (4x space)">Premium booth (4x space)</option>
-                    <option value="Standard booth (2x space)">Standard booth (2x space)</option>
-                    <option value="Regular booth (1x space)">Regular booth (1x space)</option>
+                    <option value="Premium booth (4x space) ₦700,000">Premium booth (4x space) ₦700,000</option>
+                    <option value="Standard booth (2x space) ₦500,000">Standard booth (2x space) ₦500,000</option>
+                    <option value="Regular booth (1x space) ₦250,000">Regular booth (1x space) ₦250,000</option>
                   </select>
                   <DropdownIcon className="pointer-events-none absolute right-[24px] top-[20px] h-[17px] w-[10px] text-[color:var(--color-inverted,white)]" />
                 </div>

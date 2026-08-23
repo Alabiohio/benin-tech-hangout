@@ -3,11 +3,10 @@ import { checkRateLimit, getClientIp } from '@/app/lib/rateLimit';
 import { email, invalidFormResponse, readFormBody, rejectOversizedBody, requiredText } from '@/app/lib/formSecurity';
 
 const TIER_AMOUNTS: Record<string, number> = {
-  explorer: 350000,
-  builders: 1000000,
-  founders: 2000000,
-  vip: 5000000,
-  investors: 20000000,
+  regular: 350000,
+  standard: 1000000,
+  business: 3500000,
+  vip: 8500000,
 };
 
 export async function POST(request: NextRequest) {
@@ -26,6 +25,8 @@ export async function POST(request: NextRequest) {
   const emailAddress = email(data.email);
   const firstName = requiredText(data.firstName);
   const lastName = requiredText(data.lastName);
+  const totalPrice = data.total_price;
+  
   if (!ticketType || !emailAddress || !firstName || !lastName || !TIER_AMOUNTS[ticketType]) return invalidFormResponse();
 
   const secret = process.env.PAYSTACK_SECRET_KEY;
@@ -34,13 +35,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Payment is temporarily unavailable.' }, { status: 503 });
   }
 
+  const amountInKobo = typeof totalPrice === 'number' ? totalPrice * 100 : TIER_AMOUNTS[ticketType];
+
   try {
     const response = await fetch('https://api.paystack.co/transaction/initialize', {
       method: 'POST',
       headers: { Authorization: `Bearer ${secret}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email: emailAddress,
-        amount: TIER_AMOUNTS[ticketType],
+        amount: amountInKobo,
         currency: 'NGN',
         metadata: { ticket_type: ticketType, first_name: firstName, last_name: lastName },
       }),
