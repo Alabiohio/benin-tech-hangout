@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
 import { NextRequest, NextResponse } from 'next/server';
 import { getClientIp, checkRateLimit } from '@/app/lib/rateLimit';
-import { sendFormNotificationEmail } from '@/app/lib/email';
+import { sendFormNotificationEmail, sendTicketConfirmationEmail } from '@/app/lib/email';
 import { cleanText, email, invalidFormResponse, phone, readFormBody, rejectOversizedBody, requiredText } from '@/app/lib/formSecurity';
 
 const pool = new Pool({
@@ -175,6 +175,18 @@ export async function POST(request: NextRequest) {
             [ticket_type, firstName, lastName, emailAddress, phoneNumber || null, country, nationality, community || null, paymentReference || null]
         );
 
+        // Send a branded payment confirmation email to the purchaser
+        sendTicketConfirmationEmail({
+            firstName,
+            lastName,
+            email: emailAddress,
+            ticketType: ticket_type,
+            ticketLabel: TIER_LABELS[ticket_type] || ticket_type,
+            paymentReference: paymentReference || 'N/A',
+            country,
+        }).catch((err) => console.error('Failed to send ticket confirmation email:', err));
+
+        // Also notify the team via the internal form notification
         sendFormNotificationEmail('Ticket Registration', body, [
             { label: 'Ticket Type', value: TIER_LABELS[ticket_type] || ticket_type },
             { label: 'First Name', value: firstName },
@@ -185,7 +197,7 @@ export async function POST(request: NextRequest) {
             { label: 'Nationality', value: nationality },
             { label: 'Community', value: community || 'Not provided' },
             { label: 'Payment Reference', value: paymentReference || 'Free/None' },
-        ]).catch((err) => console.error('Failed to send ticket registration email:', err));
+        ]).catch((err) => console.error('Failed to send team notification email:', err));
 
         return NextResponse.json(
             {

@@ -365,3 +365,186 @@ export async function sendRegistrationEmail({ name, email }: Pick<EmailData, 'na
   }
 }
 
+export interface TicketConfirmationData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  ticketType: string;
+  ticketLabel: string;
+  paymentReference: string;
+  country: string;
+}
+
+export async function sendTicketConfirmationEmail(data: TicketConfirmationData): Promise<boolean> {
+  try {
+    if (!process.env.RESEND_API_KEY || !data.email) {
+      console.warn('RESEND_API_KEY or recipient email is missing. Ticket confirmation email not sent.');
+      return false;
+    }
+
+    const recipientName = `${data.firstName} ${data.lastName}`.trim() || 'there';
+    const subject = `🎟️ Your ticket is confirmed — Benin Tech Fest 2.0`;
+
+    const text = [
+      `Hi ${recipientName},`,
+      '',
+      'Your payment was successful and your ticket to Benin Tech Fest 2.0 is confirmed!',
+      '',
+      `Ticket Type:        ${data.ticketLabel}`,
+      `Name:               ${recipientName}`,
+      `Email:              ${data.email}`,
+      `Country:            ${data.country}`,
+      `Payment Reference:  ${data.paymentReference}`,
+      '',
+      'Please keep this email as proof of your registration.',
+      'We will send further event details closer to the date.',
+      '',
+      'See you at Benin Tech Fest 2.0!',
+      '',
+      'Benin Tech Fest 2.0 | Benin City, Edo State, Nigeria',
+      'benintechfest.com.ng',
+    ].join('\n');
+
+    const html = `
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>Ticket Confirmed – Benin Tech Fest 2.0</title>
+        </head>
+        <body style="margin:0;padding:0;background-color:#0a0f1e;font-family:system-ui,-apple-system,sans-serif;">
+          <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="background-color:#0a0f1e;padding:40px 20px;">
+            <tr>
+              <td align="center">
+                <table role="presentation" cellpadding="0" cellspacing="0" width="600" style="background-color:#111827;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+
+                  <!-- Banner image -->
+                  <tr>
+                    <td style="padding:0;">
+                      <img src="https://pub-eeb28071668c42f88a2072344768bdf9.r2.dev/formBanner.png" alt="Benin Tech Fest 2.0" style="width:100%;height:auto;display:block;" />
+                    </td>
+                  </tr>
+
+                  <!-- Success badge -->
+                  <tr>
+                    <td style="padding:32px 32px 0;text-align:center;">
+                      <h1 style="margin:20px 0 8px;color:#ffffff;font-size:26px;font-weight:800;letter-spacing:-0.5px;">&#10003; Payment Confirmed!</h1>
+                      <p style="margin:0;color:#94a3b8;font-size:15px;">Your ticket to Benin Tech Fest 2.0 is secured.</p>
+                    </td>
+                  </tr>
+
+                  <!-- Greeting -->
+                  <tr>
+                    <td style="padding:28px 32px 0;">
+                      <p style="margin:0;color:#e2e8f0;font-size:16px;line-height:1.7;">Hi <strong style="color:#ffffff;">${escapeHtml(recipientName)}</strong>,</p>
+                      <p style="margin:12px 0 0;color:#94a3b8;font-size:14px;line-height:1.7;">
+                        Thank you for purchasing your ticket. Your payment has been verified and your spot at Benin Tech Fest 2.0 is officially confirmed. We cannot wait to see you there!
+                      </p>
+                    </td>
+                  </tr>
+
+                  <!-- Ticket card -->
+                  <tr>
+                    <td style="padding:28px 32px;">
+                      <table role="presentation" cellpadding="0" cellspacing="0" width="100%"
+                        style="background:#1e293b;border:1px solid #1d4ed844;border-radius:16px;overflow:hidden;">
+                        <tr>
+                          <td style="background:linear-gradient(90deg,#1570ef,#0ea5e9);padding:14px 20px;">
+                            <p style="margin:0;color:#ffffff;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;">🎟️ Your Ticket</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding:24px 20px;">
+                            <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+                              <tr>
+                                <td style="padding:8px 0;border-bottom:1px solid #334155;">
+                                  <span style="color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Ticket Type</span><br>
+                                  <span style="color:#ffffff;font-size:18px;font-weight:800;margin-top:4px;display:block;">${escapeHtml(data.ticketLabel)}</span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding:8px 0;border-bottom:1px solid #334155;">
+                                  <span style="color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Attendee</span><br>
+                                  <span style="color:#e2e8f0;font-size:15px;margin-top:4px;display:block;">${escapeHtml(recipientName)}</span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding:8px 0;border-bottom:1px solid #334155;">
+                                  <span style="color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Email</span><br>
+                                  <span style="color:#e2e8f0;font-size:15px;margin-top:4px;display:block;">${escapeHtml(data.email)}</span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding:8px 0;border-bottom:1px solid #334155;">
+                                  <span style="color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Country</span><br>
+                                  <span style="color:#e2e8f0;font-size:15px;margin-top:4px;display:block;">${escapeHtml(data.country)}</span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td style="padding:8px 0;">
+                                  <span style="color:#64748b;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;">Payment Reference</span><br>
+                                  <span style="color:#0ea5e9;font-size:13px;font-family:monospace;margin-top:4px;display:block;">${escapeHtml(data.paymentReference)}</span>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <!-- CTA -->
+                  <tr>
+                    <td style="padding:0 32px 32px;text-align:center;">
+                      <p style="margin:0 0 20px;color:#94a3b8;font-size:13px;line-height:1.6;">
+                        Keep this email safe &mdash; it serves as your registration proof. Further event details will be sent closer to the date.
+                      </p>
+                      <a href="https://benintechfest.com.ng" style="display:inline-block;border-radius:10px;background:linear-gradient(135deg,#1570ef,#0ea5e9);padding:14px 32px;color:#ffffff;text-decoration:none;font-weight:700;font-size:15px;">
+                        Visit Our Website
+                      </a>
+                    </td>
+                  </tr>
+
+                  <!-- Footer -->
+                  <tr>
+                    <td style="padding:24px 32px;background-color:#0a0f1e;text-align:center;border-top:1px solid #1e293b;">
+                      <p style="margin:0 0 4px;color:#475569;font-size:12px;">Paid on ${new Date().toLocaleString('en-NG', { dateStyle: 'long', timeStyle: 'short' })}</p>
+                      <p style="margin:0 0 8px;color:#334155;font-size:12px;">
+                        You received this because you purchased a ticket on <a href="https://benintechfest.com.ng" style="color:#334155;">benintechfest.com.ng</a>.
+                      </p>
+                      <p style="margin:0;color:#1e293b;font-size:11px;">Benin Tech Fest 2.0 &bull; Benin City, Edo State, Nigeria &bull; <a href="https://benintechfest.com.ng" style="color:#1e293b;">benintechfest.com.ng</a></p>
+                    </td>
+                  </tr>
+
+                </table>
+              </td>
+            </tr>
+          </table>
+        </body>
+      </html>`;
+
+    const { error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: [data.email],
+      replyTo: FROM_EMAIL,
+      subject,
+      html,
+      text,
+      headers: {
+        'X-Entity-Ref-ID': `btf-ticket-${data.paymentReference}-${Date.now()}`,
+      },
+    });
+
+    if (error) {
+      console.error('Failed to send ticket confirmation email via Resend:', error);
+      return false;
+    }
+
+    console.log(`Ticket confirmation email sent to ${data.email} for ref ${data.paymentReference}`);
+    return true;
+  } catch (error) {
+    console.error('Error sending ticket confirmation email:', error);
+    return false;
+  }
+}
