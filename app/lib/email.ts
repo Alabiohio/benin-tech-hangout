@@ -550,7 +550,7 @@ export async function sendTicketConfirmationEmail(data: TicketConfirmationData):
 
     const html = `<!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Benin Tech Fest 2.0 - Ticket Confirmation</title><style>@media only screen and (max-width:480px){.btf-footer-row{display:block!important;}.btf-footer-logo{display:block!important;text-align:center!important;padding:0 0 10px 0!important;width:100%!important;}.btf-footer-logo img{margin:0 auto!important;}.btf-footer-copy{display:block!important;text-align:center!important;width:100%!important;}}</style></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Benin Tech Fest 2.0 - Ticket Confirmation</title><style>@media only screen and (max-width:480px){.btf-footer-row{display:block!important;}.btf-footer-logo{display:block!important;text-align:center!important;padding:0 0 10px 0!important;width:100%!important;}.btf-footer-logo img{margin:0 auto!important;}.btf-footer-copy{display:block!important;text-align:center!important;width:100%!important;}.ticket-row{display:block!important;border-bottom:1px solid #d0d0d0!important;padding:10px 0!important;}.ticket-row:last-child{border-bottom:none!important;}.ticket-label{display:block!important;border:none!important;padding:0 0 4px 0!important;}.ticket-value{display:block!important;border:none!important;padding:0!important;text-align:left!important;word-break:break-all!important;}}</style></head>
 <body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #111111; line-height: 1.5;">
   <div style="max-width: 650px; margin: 20px auto; background-color: #ffffff; border: 1px solid #e0e0e0; box-sizing: border-box;">
     <div style="width: 100%; background-color: #111111; text-align: center;">
@@ -564,33 +564,33 @@ export async function sendTicketConfirmationEmail(data: TicketConfirmationData):
       <div style="background-color: #e5e5e5; border: 1.5px dashed #a0a0a0; border-radius: 12px; padding: 24px; margin-bottom: 30px;">
         <h2 style="font-size: 20px; font-weight: 700; margin-top: 0; margin-bottom: 16px; color: #111111;">Ticket detail</h2>
         <table style="width: 100%; border-collapse: collapse; font-size: 14px; color: #111111;">
-          <tr>
-            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; color: #333333;">Registration ID:</td>
-            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; text-align: right; font-weight: 700;">${escapeHtml(String(registrationId))}</td>
+          <tr class="ticket-row">
+            <td class="ticket-label" style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; color: #333333;">Registration ID:</td>
+            <td class="ticket-value" style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; text-align: right; font-weight: 700;">${escapeHtml(String(registrationId))}</td>
           </tr>
-          <tr>
-            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; color: #333333;">Email:</td>
-            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; text-align: right; font-weight: 700;">${escapeHtml(data.email)}</td>
+          <tr class="ticket-row">
+            <td class="ticket-label" style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; color: #333333;">Email:</td>
+            <td class="ticket-value" style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; text-align: right; font-weight: 700;">${escapeHtml(data.email)}</td>
           </tr>
-          <tr>
-            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; color: #333333;">Ticket type:</td>
-            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; text-align: right; font-weight: 700;">${escapeHtml(data.ticketLabel)}</td>
+          <tr class="ticket-row">
+            <td class="ticket-label" style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; color: #333333;">Ticket type:</td>
+            <td class="ticket-value" style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; text-align: right; font-weight: 700;">${escapeHtml(data.ticketLabel)}</td>
           </tr>
-          <tr>
-            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; color: #333333;">Quantity:</td>
-            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; text-align: right; font-weight: 700;">${quantity}</td>
+          <tr class="ticket-row">
+            <td class="ticket-label" style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; color: #333333;">Quantity:</td>
+            <td class="ticket-value" style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; text-align: right; font-weight: 700;">${quantity}</td>
           </tr>
-          <tr>
-            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; color: #333333;">Total paid:</td>
-            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; text-align: right; font-weight: 700;">${escapeHtml(formattedTotalPaid)}</td>
+          <tr class="ticket-row">
+            <td class="ticket-label" style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; color: #333333;">Total paid:</td>
+            <td class="ticket-value" style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; text-align: right; font-weight: 700;">${escapeHtml(formattedTotalPaid)}</td>
           </tr>
-          <tr>
-            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; color: #333333;">Purchase date:</td>
-            <td style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; text-align: right; font-weight: 700;">${escapeHtml(purchaseDate)}</td>
+          <tr class="ticket-row">
+            <td class="ticket-label" style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; color: #333333;">Purchase date:</td>
+            <td class="ticket-value" style="padding: 10px 0; border-bottom: 1px solid #d0d0d0; text-align: right; font-weight: 700;">${escapeHtml(purchaseDate)}</td>
           </tr>
-          <tr>
-            <td style="padding: 10px 0 0 0; color: #333333;">Order ID:</td>
-            <td style="padding: 10px 0 0 0; text-align: right; font-weight: 700;">${escapeHtml(data.paymentReference)}</td>
+          <tr class="ticket-row">
+            <td class="ticket-label" style="padding: 10px 0 0 0; color: #333333;">Order ID:</td>
+            <td class="ticket-value" style="padding: 10px 0 0 0; text-align: right; font-weight: 700;">${escapeHtml(data.paymentReference)}</td>
           </tr>
         </table>
       </div>
