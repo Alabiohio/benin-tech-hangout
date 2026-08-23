@@ -221,12 +221,44 @@ export async function POST(request: NextRequest) {
         );
 
         if (existingEmailRegistration.rowCount && existingEmailRegistration.rows[0]) {
-            const existingRegistrationId = existingEmailRegistration.rows[0].registration_id || existingEmailRegistration.rows[0].id;
+            const existingRegistration = existingEmailRegistration.rows[0];
+            const updateResult = await client.query(
+                `UPDATE "btf-registration"
+                 SET ticket_type = $1, first_name = $2, last_name = $3, phone = $4,
+                     country = $5, nationality = $6, community = $7, payment_reference = $8
+                 WHERE id = $9
+                 RETURNING id, registration_id, created_at;`,
+                [
+                    ticket_type,
+                    firstName,
+                    lastName,
+                    phoneNumber || null,
+                    country,
+                    nationality,
+                    community || null,
+                    paymentReference,
+                    existingRegistration.id,
+                ]
+            );
+            const ticketRegistration = updateResult.rows[0];
+            const emailSent = await sendTicketConfirmationEmail({
+                firstName,
+                lastName,
+                email: emailAddress,
+                ticketType: ticket_type,
+                ticketLabel: TIER_LABELS[ticket_type] || ticket_type,
+                paymentReference: paymentReference || 'N/A',
+                quantity,
+                registrationId: ticketRegistration.registration_id || ticketRegistration.id,
+                totalPaid: expectedAmount,
+            });
+
             return NextResponse.json({
                 success: true,
-                message: 'This email is already registered.',
-                id: existingEmailRegistration.rows[0].id,
-                registrationId: existingRegistrationId,
+                message: 'Ticket registration submitted successfully',
+                id: ticketRegistration.id,
+                registrationId: ticketRegistration.registration_id || ticketRegistration.id,
+                emailSent,
             }, { status: 200 });
         }
 

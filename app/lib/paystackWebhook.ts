@@ -199,27 +199,54 @@ export async function processPaystackWebhook(body: string, signature: string | n
 
       const registrationId = existingRegistrationId || generateRegistrationId();
 
-      const registration = await client.query(
-        `INSERT INTO "btf-registration"
-         (ticket_type, first_name, last_name, email, phone, country, nationality, community, payment_reference, name, primary_interest, agreed_to_terms, registration_id)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-         RETURNING id, registration_id`,
-        [
-          ticketType,
-          firstName,
-          lastName,
-          emailAddress,
-          phoneNumber || null,
-          country || 'Nigeria',
-          nationality || 'Nigerian',
-          community || null,
-          paymentReference,
-          `${firstName} ${lastName}`.trim() || null,
-          null,
-          false,
-          registrationId,
-        ]
+      const existingEmailRegistration = await client.query(
+        `SELECT id FROM "btf-registration" WHERE LOWER(email) = LOWER($1) LIMIT 1`,
+        [emailAddress]
       );
+
+      const registration = existingEmailRegistration.rowCount && existingEmailRegistration.rows[0]
+        ? await client.query(
+            `UPDATE "btf-registration"
+             SET ticket_type = $1, first_name = $2, last_name = $3, phone = $4,
+                 country = $5, nationality = $6, community = $7, payment_reference = $8,
+                 name = $9, registration_id = COALESCE(registration_id, $10)
+             WHERE id = $11
+             RETURNING id, registration_id`,
+            [
+              ticketType,
+              firstName,
+              lastName,
+              phoneNumber || null,
+              country || 'Nigeria',
+              nationality || 'Nigerian',
+              community || null,
+              paymentReference,
+              `${firstName} ${lastName}`.trim() || null,
+              registrationId,
+              existingEmailRegistration.rows[0].id,
+            ]
+          )
+        : await client.query(
+            `INSERT INTO "btf-registration"
+             (ticket_type, first_name, last_name, email, phone, country, nationality, community, payment_reference, name, primary_interest, agreed_to_terms, registration_id)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+             RETURNING id, registration_id`,
+            [
+              ticketType,
+              firstName,
+              lastName,
+              emailAddress,
+              phoneNumber || null,
+              country || 'Nigeria',
+              nationality || 'Nigerian',
+              community || null,
+              paymentReference,
+              `${firstName} ${lastName}`.trim() || null,
+              null,
+              false,
+              registrationId,
+            ]
+          );
 
       const ticketLabel = TIER_LABELS[ticketType] || ticketType;
       const emailSent = await sendTicketConfirmationEmail({
