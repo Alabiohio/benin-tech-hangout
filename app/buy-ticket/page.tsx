@@ -141,7 +141,8 @@ function BuyTicketContent() {
 
             const ticketId = `TKT_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
 
-            PaystackPop.resumeTransaction(accessCode, {
+            const paystack = new PaystackPop();
+            paystack.resumeTransaction(accessCode, {
                 onClose: () => {
                     console.log("Payment window closed");
                 },
@@ -180,7 +181,7 @@ function BuyTicketContent() {
 
     return (
         <div className="min-h-screen bg-[var(--background,#ffffff)] text-[var(--foreground,#000000)]">
-            <Script src="https://js.paystack.co/v1/inline.js" strategy="afterInteractive" />
+            <Script src="https://js.paystack.co/v2/inline.js" strategy="afterInteractive" />
             <Navbar />
 
             <main className="relative z-10 pt-28 pb-16 md:pt-32 md:pb-20">
