@@ -140,7 +140,7 @@ function EventPassPricingSection() {
           <header
             className={`${pass.colorClass} flex flex-col items-start pl-6 pr-0 py-6 relative self-stretch w-full flex-[0_0_auto]`}
           >
-            <div className="relative self-stretch mt-[-1.00px] opacity-60 font-heading-head-sm font-[number:var(--heading-head-sm-font-weight)] text-background text-[length:var(--heading-head-sm-font-size)] tracking-[var(--heading-head-sm-letter-spacing)] leading-[var(--heading-head-sm-line-height)] [font-style:var(--heading-head-sm-font-style)]">
+            <div className="relative self-stretch mt-[-1.00px] opacity-60 text-3xl text-background tracking-[var(--heading-head-sm-letter-spacing)] leading-[var(--heading-head-sm-line-height)]">
               {pass.price}
             </div>
             <h3
@@ -149,7 +149,7 @@ function EventPassPricingSection() {
             >
               {pass.name}
             </h3>
-            <div className="relative flex items-center self-stretch opacity-50 font-body-caption font-[number:var(--body-caption-font-weight)] text-colours-neutral text-[length:var(--body-caption-font-size)] tracking-[var(--body-caption-letter-spacing)] leading-[var(--body-caption-line-height)] [font-style:var(--body-caption-font-style)]">
+            <div className="relative flex items-center self-stretch opacity-50 font-body-caption font-[number:var(--body-caption-font-weight)] text-background text-[length:var(--body-caption-font-size)] tracking-[var(--body-caption-letter-spacing)] leading-[var(--body-caption-line-height)] [font-style:var(--body-caption-font-style)]">
               {pass.audience}
             </div>
             <Image
