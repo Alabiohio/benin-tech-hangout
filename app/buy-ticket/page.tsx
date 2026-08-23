@@ -159,6 +159,30 @@ function BuyTicketContent() {
                             finalPrice
                         );
                     }
+
+                    // Save ticket registration and send confirmation email
+                    try {
+                        const firstName = name.trim().split(' ')[0];
+                        const lastName = name.trim().split(' ').slice(1).join(' ') || '-';
+                        await fetch('/api/submissions/ticket', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                ticket_type: passName.toLowerCase(),
+                                firstName,
+                                lastName,
+                                email: email.trim(),
+                                phone: '',
+                                country: '',
+                                nationality: '',
+                                community: '',
+                                paymentReference: transaction.reference,
+                            }),
+                        });
+                    } catch (err) {
+                        console.error('Failed to submit ticket registration after payment:', err);
+                    }
+
                     setIsSuccessModalOpen(true);
                 },
             });

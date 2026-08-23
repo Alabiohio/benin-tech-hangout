@@ -45,12 +45,12 @@ export async function POST(request: NextRequest) {
         const lastName = requiredText(body.lastName);
         const emailAddress = email(body.email);
         const phoneNumber = phone(body.phone, false);
-        const country = requiredText(body.country);
-        const nationality = requiredText(body.nationality);
+        const country = cleanText(body.country, 255) ?? '';
+        const nationality = cleanText(body.nationality, 255) ?? '';
         const community = cleanText(body.community, 255);
         const paymentReference = cleanText(body.paymentReference, 255);
 
-        if (!ticket_type || !TIER_LABELS[ticket_type] || !firstName || !lastName || !emailAddress || phoneNumber === null || !country || !nationality || community === null || paymentReference === null) return invalidFormResponse();
+        if (!ticket_type || !TIER_LABELS[ticket_type] || !firstName || !lastName || !emailAddress || phoneNumber === null || community === null || paymentReference === null) return invalidFormResponse();
 
         if (TIER_AMOUNTS[ticket_type] > 0 && (!paymentReference || !process.env.PAYSTACK_SECRET_KEY)) {
             return NextResponse.json({ error: 'A verified payment is required for this ticket.' }, { status: 400 });
