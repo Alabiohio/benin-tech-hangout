@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Script from 'next/script';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import formBanner from "@/assets/images/formBanner.png";
@@ -179,6 +180,7 @@ function BuyTicketContent() {
 
     return (
         <div className="min-h-screen bg-[var(--background,#ffffff)] text-[var(--foreground,#000000)]">
+            <Script src="https://js.paystack.co/v1/inline.js" strategy="afterInteractive" />
             <Navbar />
 
             <main className="relative z-10 pt-28 pb-16 md:pt-32 md:pb-20">
