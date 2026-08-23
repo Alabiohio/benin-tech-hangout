@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import { Pool } from 'pg';
 import { sendTicketConfirmationEmail } from '@/app/lib/email';
+import { generateRegistrationId } from '@/app/lib/registration';
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -98,6 +99,7 @@ export async function processPaystackWebhook(body: string, signature: string | n
     const country = toSafeString(metadata.country || data.customer?.country || 'Nigeria');
     const nationality = toSafeString(metadata.nationality || 'Nigerian');
     const community = toSafeString(metadata.community || '');
+    const existingRegistrationId = toSafeString(metadata.registration_id || metadata.registrationId || '');
 
     const expectedAmount = (TIER_AMOUNTS[ticketType] || 0) * quantity;
 
@@ -121,6 +123,7 @@ export async function processPaystackWebhook(body: string, signature: string | n
       await client.query(`
         CREATE TABLE IF NOT EXISTS "btf-registration" (
           id SERIAL PRIMARY KEY,
+          registration_id VARCHAR(100) UNIQUE,
           ticket_type VARCHAR(100),
           first_name VARCHAR(255),
           last_name VARCHAR(255),
@@ -140,6 +143,9 @@ export async function processPaystackWebhook(body: string, signature: string | n
       await client.query(`
         DO $$
         BEGIN
+          IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'registration_id') THEN
+            ALTER TABLE "btf-registration" ADD COLUMN registration_id VARCHAR(100);
+          END IF;
           IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'ticket_type') THEN
             ALTER TABLE "btf-registration" ADD COLUMN ticket_type VARCHAR(100);
           END IF;
@@ -176,11 +182,14 @@ export async function processPaystackWebhook(body: string, signature: string | n
           IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'agreed_to_terms') THEN
             ALTER TABLE "btf-registration" ADD COLUMN agreed_to_terms BOOLEAN DEFAULT FALSE;
           END IF;
+          IF NOT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_name = 'btf-registration' AND constraint_type = 'UNIQUE' AND constraint_name = 'btf_registration_registration_id_key') THEN
+            ALTER TABLE "btf-registration" ADD CONSTRAINT "btf_registration_registration_id_key" UNIQUE (registration_id);
+          END IF;
         END $$;
       `);
 
       const existingRegistration = await client.query(
-        'SELECT id FROM "btf-registration" WHERE payment_reference = $1 LIMIT 1',
+        'SELECT id, registration_id FROM "btf-registration" WHERE payment_reference = $1 LIMIT 1',
         [paymentReference]
       );
 
@@ -188,11 +197,13 @@ export async function processPaystackWebhook(body: string, signature: string | n
         return { status: 200, message: 'Webhook already processed' };
       }
 
+      const registrationId = existingRegistrationId || generateRegistrationId();
+
       const registration = await client.query(
         `INSERT INTO "btf-registration"
-         (ticket_type, first_name, last_name, email, phone, country, nationality, community, payment_reference, name, primary_interest, agreed_to_terms)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
-         RETURNING id`,
+         (ticket_type, first_name, last_name, email, phone, country, nationality, community, payment_reference, name, primary_interest, agreed_to_terms, registration_id)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+         RETURNING id, registration_id`,
         [
           ticketType,
           firstName,
@@ -206,6 +217,7 @@ export async function processPaystackWebhook(body: string, signature: string | n
           `${firstName} ${lastName}`.trim() || null,
           null,
           false,
+          registrationId,
         ]
       );
 
@@ -218,7 +230,7 @@ export async function processPaystackWebhook(body: string, signature: string | n
         ticketLabel,
         paymentReference,
         quantity,
-        registrationId: registration.rows[0]?.id,
+        registrationId: registration.rows[0]?.registration_id || registration.rows[0]?.id,
         totalPaid: expectedAmount,
       }).catch((err) => console.error('Failed to send ticket confirmation email from webhook:', err));
 

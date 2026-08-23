@@ -2,6 +2,7 @@ import { Pool } from 'pg';
 import { NextRequest, NextResponse } from 'next/server';
 import { getClientIp, checkRateLimit } from '@/app/lib/rateLimit';
 import { sendTicketConfirmationEmail } from '@/app/lib/email';
+import { generateRegistrationId } from '@/app/lib/registration';
 import { cleanText, email, invalidFormResponse, phone, readFormBody, rejectOversizedBody, requiredText } from '@/app/lib/formSecurity';
 
 const pool = new Pool({
@@ -59,6 +60,7 @@ export async function POST(request: NextRequest) {
         const nationality = cleanText(body.nationality, 255) ?? '';
         const community = cleanText(body.community, 255);
         const paymentReference = cleanText(body.paymentReference, 255);
+        const registrationId = cleanText(body.registrationId, 100) || generateRegistrationId();
         
         const parsedQuantity = parseInt(String(body.quantity || '1'), 10) || 1;
         if (isNaN(parsedQuantity) || !Number.isInteger(parsedQuantity) || parsedQuantity <= 0 || parsedQuantity > 100) return invalidFormResponse();
@@ -94,6 +96,7 @@ export async function POST(request: NextRequest) {
         await client.query(`
             CREATE TABLE IF NOT EXISTS "btf-registration" (
                 id SERIAL PRIMARY KEY,
+                registration_id VARCHAR(100) UNIQUE,
                 ticket_type VARCHAR(100),
                 first_name VARCHAR(255),
                 last_name VARCHAR(255),
@@ -113,6 +116,10 @@ export async function POST(request: NextRequest) {
         await client.query(`
             DO $$
             BEGIN
+                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'registration_id') THEN
+                    ALTER TABLE "btf-registration" ADD COLUMN registration_id VARCHAR(100);
+                END IF;
+
                 IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'ticket_type') THEN
                     ALTER TABLE "btf-registration" ADD COLUMN ticket_type VARCHAR(100);
                 END IF;
@@ -161,6 +168,10 @@ export async function POST(request: NextRequest) {
                     ALTER TABLE "btf-registration" ADD COLUMN agreed_to_terms BOOLEAN DEFAULT FALSE;
                 END IF;
 
+                IF NOT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_name = 'btf-registration' AND constraint_type = 'UNIQUE' AND constraint_name = 'btf_registration_registration_id_key') THEN
+                    ALTER TABLE "btf-registration" ADD CONSTRAINT "btf_registration_registration_id_key" UNIQUE (registration_id);
+                END IF;
+
                 IF NOT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_name = 'btf-registration' AND constraint_type = 'UNIQUE' AND constraint_name = 'btf_registration_payment_reference_key') THEN
                     ALTER TABLE "btf-registration" ADD CONSTRAINT "btf_registration_payment_reference_key" UNIQUE (payment_reference);
                 END IF;
@@ -178,27 +189,27 @@ export async function POST(request: NextRequest) {
 
         if (paymentReference) {
             const existingPayment = await client.query(
-                'SELECT id FROM "btf-registration" WHERE payment_reference = $1 LIMIT 1',
+                'SELECT id, registration_id FROM "btf-registration" WHERE payment_reference = $1 LIMIT 1',
                 [paymentReference]
             );
             if (existingPayment.rowCount && existingPayment.rows[0]) {
-                // Return 200 instead of 409 so the frontend doesn't throw an error. 
-                // The webhook or a previous request already handled it.
+                const existingRegistrationId = existingPayment.rows[0].registration_id || existingPayment.rows[0].id;
                 return NextResponse.json({ 
                     success: true, 
                     message: 'Ticket already registered (processed via webhook).',
-                    id: existingPayment.rows[0].id
+                    id: existingPayment.rows[0].id,
+                    registrationId: existingRegistrationId
                 }, { status: 200 });
             }
         }
 
         const result = await client.query(
             `INSERT INTO "btf-registration"
-            (ticket_type, first_name, last_name, email, phone, country, nationality, community, payment_reference)
+            (ticket_type, first_name, last_name, email, phone, country, nationality, community, payment_reference, registration_id)
             VALUES
-            ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-            RETURNING id, created_at;`,
-            [ticket_type, firstName, lastName, emailAddress, phoneNumber || null, country, nationality, community || null, paymentReference || null]
+            ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+            RETURNING id, registration_id, created_at;`,
+            [ticket_type, firstName, lastName, emailAddress, phoneNumber || null, country, nationality, community || null, paymentReference || null, registrationId]
         );
 
         // Send a branded payment confirmation email to the purchaser
@@ -210,7 +221,7 @@ export async function POST(request: NextRequest) {
             ticketLabel: TIER_LABELS[ticket_type] || ticket_type,
             paymentReference: paymentReference || 'N/A',
             quantity,
-            registrationId: result.rows[0].id,
+            registrationId: result.rows[0].registration_id || result.rows[0].id,
             totalPaid: expectedAmount,
         }).catch((err) => console.error('Failed to send ticket confirmation email:', err));
 
@@ -219,7 +230,8 @@ export async function POST(request: NextRequest) {
             {
                 success: true,
                 message: 'Ticket registration submitted successfully',
-                id: result.rows[0].id
+                id: result.rows[0].id,
+                registrationId: result.rows[0].registration_id || result.rows[0].id
             },
             { status: 201 }
         );

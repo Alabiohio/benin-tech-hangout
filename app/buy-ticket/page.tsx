@@ -11,6 +11,7 @@ import ConfirmationModal from '../components/ConfirmationModal';
 import Spinner from '../components/Spinner';
 import { validateCoupon, checkRegistration, redeemCoupon, formatPrice } from "@/app/lib/coupons";
 import type { CouponValidationResult } from "@/app/lib/coupons";
+import { generateRegistrationId } from "@/app/lib/registration";
 
 const TIER_PRICES: Record<string, number> = {
     regular: 3500,
@@ -151,7 +152,7 @@ function BuyTicketContent() {
                 throw new Error("Paystack not loaded");
             }
 
-            const ticketId = `TKT_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
+            const registrationId = generateRegistrationId();
 
             const paystack = new PaystackPop();
             paystack.resumeTransaction(accessCode, {
@@ -163,7 +164,7 @@ function BuyTicketContent() {
                         await redeemCoupon(
                             couponCode.trim(),
                             email,
-                            ticketId,
+                            registrationId,
                             passName,
                             quantity,
                             couponValidation.discount_amount,
@@ -189,6 +190,7 @@ function BuyTicketContent() {
                                 nationality: '',
                                 community: '',
                                 paymentReference: transaction.reference,
+                                registrationId,
                                 quantity,
                             }),
                         });
