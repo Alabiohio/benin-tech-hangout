@@ -120,7 +120,7 @@ function EventPassPricingSection() {
 
   return (
     <section
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-start gap-4 relative self-stretch w-full flex-[0_0_auto] px-4 pb-8"
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-start gap-4 relative self-stretch w-full flex-[0_0_auto] px-5 pb-8"
       aria-label="Event pass pricing"
     >
       {passes.map((pass, index) => (
