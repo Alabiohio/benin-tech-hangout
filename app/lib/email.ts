@@ -380,7 +380,11 @@ export async function sendExhibitorBriefEmail({ name, email, companyName, exhibi
   }
 }
 
-export async function sendRegistrationEmail({ name, email }: Pick<EmailData, 'name' | 'email'>): Promise<boolean> {
+export async function sendRegistrationEmail({
+  name,
+  email,
+  registrationId,
+}: Pick<EmailData, 'name' | 'email'> & { registrationId?: string | number }): Promise<boolean> {
   try {
     if (!process.env.RESEND_API_KEY || !email) {
       console.warn('RESEND_API_KEY or recipient email is missing. Registration email not sent.');
@@ -389,6 +393,7 @@ export async function sendRegistrationEmail({ name, email }: Pick<EmailData, 'na
 
     const recipientName = name?.trim() || 'there';
     const regDate = new Date().toLocaleDateString('en-NG', { dateStyle: 'long' });
+    const registrationCode = registrationId ?? 'N/A';
     const subject = 'Your registration has been received — Benin Tech Fest 2.0';
     const text = [
       `Dear ${recipientName},`,
@@ -396,6 +401,7 @@ export async function sendRegistrationEmail({ name, email }: Pick<EmailData, 'na
       'You are officially registered for Benin Tech Fest 2.0 happening 5th - 7th November, 2026 in Benin City, Edo State.',
       'Your spot is confirmed and we\'re excited to have you join us as we connect Edo to the future of tech.',
       '',
+      `Registration ID: ${registrationCode}`,
       `Registration date: ${regDate}`,
       '',
       'Details on the event venue and other important updates will be communicated with you as they become available.',
@@ -420,6 +426,7 @@ export async function sendRegistrationEmail({ name, email }: Pick<EmailData, 'na
       <p style="margin-bottom: 20px;">Dear ${escapeHtml(recipientName)},</p>
       <p style="margin-bottom: 20px;">You are officially registered for Benin Tech Fest 2.0 happening <strong>5th - 7th November, 2026</strong> in Benin City, Edo State.</p>
       <p style="margin-bottom: 20px;">Your spot is confirmed and we&rsquo;re excited to have you join us as we connect Edo to the future of tech.</p>
+      <p style="margin-bottom: 20px;">Registration ID: <strong>${escapeHtml(String(registrationCode))}</strong></p>
       <p style="margin-bottom: 20px;">Registration date: ${escapeHtml(regDate)}</p>
       <p style="margin-bottom: 30px;">Details on the event venue and other important updates will be communicated with you as they become available.</p>
       <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 30px 0;" />

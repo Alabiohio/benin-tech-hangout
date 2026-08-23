@@ -172,6 +172,16 @@ export async function POST(request: NextRequest) {
                     ALTER TABLE "btf-registration" ADD CONSTRAINT "btf_registration_registration_id_key" UNIQUE (registration_id);
                 END IF;
 
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM pg_indexes
+                    WHERE schemaname = current_schema()
+                    AND indexname = 'btf_registration_email_unique_idx'
+                ) THEN
+                    CREATE UNIQUE INDEX "btf_registration_email_unique_idx"
+                    ON "btf-registration" (LOWER(email));
+                END IF;
+
                 ALTER TABLE "btf-registration" ALTER COLUMN name DROP NOT NULL;
                 ALTER TABLE "btf-registration" ALTER COLUMN email DROP NOT NULL;
                 ALTER TABLE "btf-registration" ALTER COLUMN primary_interest DROP NOT NULL;
@@ -182,6 +192,22 @@ export async function POST(request: NextRequest) {
                 ALTER TABLE "btf-registration" ALTER COLUMN nationality DROP NOT NULL;
             END $$;
         `);
+
+        const existingRegistration = await client.query(
+            `SELECT id, registration_id FROM "btf-registration"
+             WHERE LOWER(email) = LOWER($1)
+             LIMIT 1;`,
+            [emailAddress]
+        );
+
+        if (existingRegistration.rowCount && existingRegistration.rows[0]) {
+            return NextResponse.json({
+                success: true,
+                message: 'This email is already registered.',
+                id: existingRegistration.rows[0].id,
+                registrationId: existingRegistration.rows[0].registration_id || existingRegistration.rows[0].id,
+            }, { status: 200 });
+        }
 
         const result = await client.query(
             `INSERT INTO "btf-registration"
@@ -195,6 +221,7 @@ export async function POST(request: NextRequest) {
         await sendRegistrationEmail({
             name,
             email: emailAddress,
+            registrationId: result.rows[0].registration_id || result.rows[0].id,
         });
 
         return NextResponse.json(

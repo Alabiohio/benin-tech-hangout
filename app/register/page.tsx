@@ -85,6 +85,15 @@ export default function RegisterPage() {
                 throw new Error(data?.error || 'Registration failed. Please try again.');
             }
 
+            const isAlreadyRegistered = typeof data?.message === 'string'
+                && data.message.toLowerCase().includes('already registered');
+
+            if (isAlreadyRegistered) {
+                const registrationId = data?.registrationId ? ` Your registration ID is ${data.registrationId}.` : '';
+                setSubmitError(`This email is already registered.${registrationId} Please use a different email to register again.`);
+                return;
+            }
+
             setFormData(initialForm);
             setIsSuccessModalOpen(true);
         } catch (error) {

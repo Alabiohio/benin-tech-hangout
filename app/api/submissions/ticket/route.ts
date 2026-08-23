@@ -176,6 +176,16 @@ export async function POST(request: NextRequest) {
                     ALTER TABLE "btf-registration" ADD CONSTRAINT "btf_registration_payment_reference_key" UNIQUE (payment_reference);
                 END IF;
 
+                IF NOT EXISTS (
+                    SELECT 1
+                    FROM pg_indexes
+                    WHERE schemaname = current_schema()
+                    AND indexname = 'btf_registration_email_unique_idx'
+                ) THEN
+                    CREATE UNIQUE INDEX "btf_registration_email_unique_idx"
+                    ON "btf-registration" (LOWER(email));
+                END IF;
+
                 ALTER TABLE "btf-registration" ALTER COLUMN name DROP NOT NULL;
                 ALTER TABLE "btf-registration" ALTER COLUMN email DROP NOT NULL;
                 ALTER TABLE "btf-registration" ALTER COLUMN primary_interest DROP NOT NULL;
@@ -201,6 +211,23 @@ export async function POST(request: NextRequest) {
                     registrationId: existingRegistrationId
                 }, { status: 200 });
             }
+        }
+
+        const existingEmailRegistration = await client.query(
+            `SELECT id, registration_id FROM "btf-registration"
+             WHERE LOWER(email) = LOWER($1)
+             LIMIT 1;`,
+            [emailAddress]
+        );
+
+        if (existingEmailRegistration.rowCount && existingEmailRegistration.rows[0]) {
+            const existingRegistrationId = existingEmailRegistration.rows[0].registration_id || existingEmailRegistration.rows[0].id;
+            return NextResponse.json({
+                success: true,
+                message: 'This email is already registered.',
+                id: existingEmailRegistration.rows[0].id,
+                registrationId: existingRegistrationId,
+            }, { status: 200 });
         }
 
         const result = await client.query(
