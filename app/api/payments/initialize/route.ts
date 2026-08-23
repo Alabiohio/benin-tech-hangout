@@ -25,17 +25,47 @@ export async function POST(request: NextRequest) {
   const emailAddress = email(data.email);
   const firstName = requiredText(data.firstName);
   const lastName = requiredText(data.lastName);
-  const totalPrice = data.total_price;
+  const parsedQuantity = typeof data.quantity === 'number' ? data.quantity : parseInt(String(data.quantity || '1'), 10);
+  if (isNaN(parsedQuantity) || !Number.isInteger(parsedQuantity) || parsedQuantity <= 0 || parsedQuantity > 100) return invalidFormResponse();
+  const quantity = parsedQuantity;
   
-  if (!ticketType || !emailAddress || !firstName || !lastName || !TIER_AMOUNTS[ticketType]) return invalidFormResponse();
+  const couponCode = typeof data.coupon_code === 'string' ? data.coupon_code.trim().toUpperCase() : null;
+  const basePriceInKobo = ticketType ? TIER_AMOUNTS[ticketType] : undefined;
+  
+  if (!ticketType || !emailAddress || !firstName || !lastName || !basePriceInKobo) return invalidFormResponse();
+
+  let amountInKobo = basePriceInKobo * quantity;
+
+  if (couponCode) {
+      try {
+          const origin = request.nextUrl.origin;
+          const validateRes = await fetch(`${origin}/api/coupons/validate`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                  code: couponCode,
+                  email: emailAddress,
+                  quantity,
+                  original_price: basePriceInKobo / 100
+              })
+          });
+          const validateData = await validateRes.json();
+          if (validateRes.ok && validateData.valid) {
+              amountInKobo = validateData.final_price_total * 100;
+          } else {
+              return NextResponse.json({ error: validateData.message || 'Invalid coupon code' }, { status: 400 });
+          }
+      } catch (err) {
+          console.error('Coupon validation failed:', err);
+          return NextResponse.json({ error: 'Failed to validate coupon' }, { status: 500 });
+      }
+  }
 
   const secret = process.env.PAYSTACK_SECRET_KEY;
   if (!secret) {
     console.error('PAYSTACK_SECRET_KEY is not configured');
     return NextResponse.json({ error: 'Payment is temporarily unavailable.' }, { status: 503 });
   }
-
-  const amountInKobo = typeof totalPrice === 'number' ? totalPrice * 100 : TIER_AMOUNTS[ticketType];
 
   try {
     const response = await fetch('https://api.paystack.co/transaction/initialize', {
@@ -45,7 +75,13 @@ export async function POST(request: NextRequest) {
         email: emailAddress,
         amount: amountInKobo,
         currency: 'NGN',
-        metadata: { ticket_type: ticketType, first_name: firstName, last_name: lastName },
+        metadata: {
+          ticket_type: ticketType,
+          first_name: firstName,
+          last_name: lastName,
+          email: emailAddress,
+          quantity,
+        },
       }),
     });
     const result: unknown = await response.json();

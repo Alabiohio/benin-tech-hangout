@@ -9,19 +9,29 @@ const pool = new Pool({
 });
 
 const TIER_LABELS: Record<string, string> = {
+    // registration/summary flow
     explorer: 'Explorer Pass',
     builders: 'Builders Pass',
     founders: 'Founders Pass',
     vip: 'VIP Pass',
     investors: 'Investors Pass',
+    // buy-ticket flow aliases
+    regular: 'Regular Pass',
+    standard: 'Standard Pass',
+    business: 'Business Pass',
 };
 
 const TIER_AMOUNTS: Record<string, number> = {
+    // registration/summary flow
     explorer: 350000,
     builders: 1000000,
     founders: 2000000,
     vip: 5000000,
     investors: 20000000,
+    // buy-ticket flow aliases — must match payments/initialize amounts
+    regular: 350000,
+    standard: 1000000,
+    business: 3500000,
 };
 
 export async function POST(request: NextRequest) {
@@ -49,14 +59,20 @@ export async function POST(request: NextRequest) {
         const nationality = cleanText(body.nationality, 255) ?? '';
         const community = cleanText(body.community, 255);
         const paymentReference = cleanText(body.paymentReference, 255);
+        
+        const parsedQuantity = parseInt(String(body.quantity || '1'), 10) || 1;
+        if (isNaN(parsedQuantity) || !Number.isInteger(parsedQuantity) || parsedQuantity <= 0 || parsedQuantity > 100) return invalidFormResponse();
+        const quantity = parsedQuantity;
+        
+        const expectedAmount = ticket_type ? TIER_AMOUNTS[ticket_type] * quantity : 0;
 
         if (!ticket_type || !TIER_LABELS[ticket_type] || !firstName || !lastName || !emailAddress || phoneNumber === null || community === null || paymentReference === null) return invalidFormResponse();
 
-        if (TIER_AMOUNTS[ticket_type] > 0 && (!paymentReference || !process.env.PAYSTACK_SECRET_KEY)) {
+        if (expectedAmount > 0 && (!paymentReference || !process.env.PAYSTACK_SECRET_KEY)) {
             return NextResponse.json({ error: 'A verified payment is required for this ticket.' }, { status: 400 });
         }
 
-        if (TIER_AMOUNTS[ticket_type] > 0 && paymentReference && process.env.PAYSTACK_SECRET_KEY) {
+        if (expectedAmount > 0 && paymentReference && process.env.PAYSTACK_SECRET_KEY) {
             try {
                 const paystackRes = await fetch(`https://api.paystack.co/transaction/verify/${paymentReference}`, {
                     headers: {
@@ -64,7 +80,7 @@ export async function POST(request: NextRequest) {
                     }
                 });
                 const paystackData = await paystackRes.json();
-                if (!paystackRes.ok || !paystackData.status || paystackData.data.status !== 'success' || paystackData.data.reference !== paymentReference || paystackData.data.customer?.email?.toLowerCase() !== emailAddress || paystackData.data.amount !== TIER_AMOUNTS[ticket_type]) {
+                if (!paystackRes.ok || !paystackData.status || paystackData.data.status !== 'success' || paystackData.data.reference !== paymentReference || paystackData.data.customer?.email?.toLowerCase() !== emailAddress || paystackData.data.amount !== expectedAmount) {
                     return NextResponse.json({ error: 'Payment verification failed' }, { status: 400 });
                 }
             } catch (err) {
@@ -145,6 +161,10 @@ export async function POST(request: NextRequest) {
                     ALTER TABLE "btf-registration" ADD COLUMN agreed_to_terms BOOLEAN DEFAULT FALSE;
                 END IF;
 
+                IF NOT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_name = 'btf-registration' AND constraint_type = 'UNIQUE' AND constraint_name = 'btf_registration_payment_reference_key') THEN
+                    ALTER TABLE "btf-registration" ADD CONSTRAINT "btf_registration_payment_reference_key" UNIQUE (payment_reference);
+                END IF;
+
                 ALTER TABLE "btf-registration" ALTER COLUMN name DROP NOT NULL;
                 ALTER TABLE "btf-registration" ALTER COLUMN email DROP NOT NULL;
                 ALTER TABLE "btf-registration" ALTER COLUMN primary_interest DROP NOT NULL;
@@ -183,21 +203,9 @@ export async function POST(request: NextRequest) {
             ticketType: ticket_type,
             ticketLabel: TIER_LABELS[ticket_type] || ticket_type,
             paymentReference: paymentReference || 'N/A',
-            country,
+            quantity,
         }).catch((err) => console.error('Failed to send ticket confirmation email:', err));
 
-        // Also notify the team via the internal form notification
-        sendFormNotificationEmail('Ticket Registration', body, [
-            { label: 'Ticket Type', value: TIER_LABELS[ticket_type] || ticket_type },
-            { label: 'First Name', value: firstName },
-            { label: 'Last Name', value: lastName },
-            { label: 'Email Address', value: emailAddress },
-            { label: 'Phone Number', value: phoneNumber || 'Not provided' },
-            { label: 'Country', value: country },
-            { label: 'Nationality', value: nationality },
-            { label: 'Community', value: community || 'Not provided' },
-            { label: 'Payment Reference', value: paymentReference || 'Free/None' },
-        ]).catch((err) => console.error('Failed to send team notification email:', err));
 
         return NextResponse.json(
             {

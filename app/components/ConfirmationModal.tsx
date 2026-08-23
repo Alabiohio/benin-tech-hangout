@@ -7,9 +7,6 @@ interface ConfirmationModalProps {
   onClose: () => void;
 }
 
-const desktopLogo = 'https://www.figma.com/api/mcp/asset/958a0f76-bf91-4e7f-bab0-84fa6742f916.png';
-const mobileLogo = 'https://www.figma.com/api/mcp/asset/88a71185-e11f-4ce0-9ed9-ba9507005b54.png';
-
 export default function ConfirmationModal({ isOpen, onClose }: ConfirmationModalProps) {
   useEffect(() => {
     if (!isOpen) return;
@@ -39,12 +36,12 @@ export default function ConfirmationModal({ isOpen, onClose }: ConfirmationModal
         <div className="flex flex-col items-center justify-center px-4 pb-6 pt-16 text-center md:px-0 md:pb-0 md:pt-0">
           <div className="mb-4 flex items-center justify-center md:mb-8">
             <img
-              src={mobileLogo}
+              src="/logo/logo-icon.png"
               alt="BTF logo"
               className="h-[120px] w-[108px] object-contain md:hidden"
             />
             <img
-              src={desktopLogo}
+              src="/logo/logo-icon.png"
               alt="BTF logo"
               className="hidden h-[240px] w-[216px] object-contain md:block"
             />

@@ -12,12 +12,24 @@ import Spinner from '../components/Spinner';
 import { validateCoupon, checkRegistration, redeemCoupon, formatPrice } from "@/app/lib/coupons";
 import type { CouponValidationResult } from "@/app/lib/coupons";
 
+const TIER_PRICES: Record<string, number> = {
+    regular: 3500,
+    standard: 10000,
+    business: 35000,
+    vip: 85000,
+};
+
 function BuyTicketContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
     
-    const passName = searchParams.get('pass') || 'Regular';
-    const passPrice = parseInt(searchParams.get('price') || '3500', 10);
+    const passNameRaw = searchParams.get('pass') || 'Regular';
+    // Normalize to handle case insensitivity and find the price
+    const passKey = passNameRaw.toLowerCase();
+    const passName = passKey.charAt(0).toUpperCase() + passKey.slice(1);
+    
+    // Look up the price or fallback to regular if unknown
+    const passPrice = TIER_PRICES[passKey] || TIER_PRICES['regular'];
 
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
@@ -164,7 +176,7 @@ function BuyTicketContent() {
                     try {
                         const firstName = name.trim().split(' ')[0];
                         const lastName = name.trim().split(' ').slice(1).join(' ') || '-';
-                        await fetch('/api/submissions/ticket', {
+                        const ticketRes = await fetch('/api/submissions/ticket', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({
@@ -177,8 +189,15 @@ function BuyTicketContent() {
                                 nationality: '',
                                 community: '',
                                 paymentReference: transaction.reference,
+                                quantity,
                             }),
                         });
+                        const ticketData = await ticketRes.json();
+                        if (!ticketRes.ok) {
+                            console.error('Ticket submission failed:', ticketRes.status, ticketData);
+                        } else {
+                            console.log('Ticket registered, confirmation email sent:', ticketData);
+                        }
                     } catch (err) {
                         console.error('Failed to submit ticket registration after payment:', err);
                     }

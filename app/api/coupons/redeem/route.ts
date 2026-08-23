@@ -59,20 +59,33 @@ export async function POST(request: NextRequest): Promise<NextResponse<Redemptio
 
         const client = await pool.connect();
         try {
-            // Fetch coupon
+            await client.query('BEGIN');
+            
+            // Fetch coupon and lock the row to prevent race conditions
             const couponResult = await client.query(
-                `SELECT id FROM coupons WHERE code = $1 AND is_active = true`,
+                `SELECT id, max_total_redemptions, current_redemptions FROM coupons WHERE code = $1 AND is_active = true FOR UPDATE`,
                 [couponCode]
             );
 
             if (couponResult.rows.length === 0) {
+                await client.query('ROLLBACK');
                 return NextResponse.json(
                     { success: false, message: 'Coupon not found', error: 'Invalid coupon code' },
                     { status: 400 }
                 );
             }
 
-            const couponId = couponResult.rows[0].id;
+            const coupon = couponResult.rows[0];
+            const couponId = coupon.id;
+
+            // Strictly enforce total redemption limit inside the lock
+            if (coupon.max_total_redemptions && coupon.current_redemptions >= coupon.max_total_redemptions) {
+                await client.query('ROLLBACK');
+                return NextResponse.json(
+                    { success: false, message: 'Coupon redemption limit reached', error: 'Max redemptions reached' },
+                    { status: 400 }
+                );
+            }
 
             // Check if redemption already exists
             const existingRedemption = await client.query(
@@ -81,6 +94,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<Redemptio
             );
 
             if (existingRedemption.rows.length > 0) {
+                await client.query('ROLLBACK');
                 return NextResponse.json(
                     { success: false, message: 'This coupon has already been used for this ticket', error: 'Duplicate redemption' },
                     { status: 409 }
@@ -103,11 +117,16 @@ export async function POST(request: NextRequest): Promise<NextResponse<Redemptio
                 [couponId]
             );
 
+            await client.query('COMMIT');
+
             return NextResponse.json({
                 success: true,
                 message: 'Coupon successfully redeemed',
                 redemption_id: redemptionId
             });
+        } catch (err) {
+            await client.query('ROLLBACK');
+            throw err;
         } finally {
             client.release();
         }
