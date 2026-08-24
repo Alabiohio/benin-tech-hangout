@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
@@ -66,7 +67,7 @@ function BuyTicketContent() {
                 setErrors((prev) => ({ ...prev, email: "" }));
             } else {
                 setIsRegistered(false);
-                setRegistrationError("Please register at /register first to use our ticketing system");
+                setRegistrationError("Please register first to use our ticketing system");
                 setErrors((prev) => ({ ...prev, email: "Not registered" }));
             }
         } catch (error) {
@@ -277,7 +278,9 @@ function BuyTicketContent() {
                                     )}
                                 </div>
                                 {isRegistered === false && !isValidatingEmail && (
-                                    <span className="text-[#FF8484] text-sm mt-1 ml-1 block">{registrationError}</span>
+                                    <span className="text-[#FF8484] text-sm mt-1 ml-1 block">
+                                        Please <Link href="/register" className="underline hover:text-[#ffd1d1]">register</Link> first to use our ticketing system
+                                    </span>
                                 )}
                                 {isRegistered === true && (
                                     <span className="text-[#32D583] text-sm mt-1 ml-1 block">✓ Email is registered</span>
