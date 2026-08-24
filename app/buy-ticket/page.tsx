@@ -88,8 +88,17 @@ function BuyTicketContent() {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            if (email.trim()) {
-                validateEmail(email.trim());
+            const trimmedEmail = email.trim();
+            if (trimmedEmail) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (emailRegex.test(trimmedEmail)) {
+                    validateEmail(trimmedEmail);
+                } else {
+                    setIsRegistered(null);
+                    setRegistrationError("");
+                    // Optionally alert them that the format is invalid
+                    setErrors((prev) => ({ ...prev, email: "" }));
+                }
             } else {
                 setIsRegistered(null);
                 setRegistrationError("");
