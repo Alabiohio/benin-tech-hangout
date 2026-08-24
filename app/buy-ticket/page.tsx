@@ -21,6 +21,13 @@ const TIER_PRICES: Record<string, number> = {
     vip: 85000,
 };
 
+const LOADING_PHRASES = [
+    "Looking up your email...",
+    "Checking registration status...",
+    "Validating details...",
+    "Almost there..."
+];
+
 function BuyTicketContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
@@ -46,6 +53,7 @@ function BuyTicketContent() {
     const [isProcessing, setIsProcessing] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+    const [loadingPhraseIndex, setLoadingPhraseIndex] = useState(0);
 
     const totalPrice = passPrice * quantity;
     const finalPrice = couponValidation?.final_price_total ?? totalPrice;
@@ -78,9 +86,35 @@ function BuyTicketContent() {
         }
     };
 
-    const handleEmailBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-        validateEmail(e.target.value.trim());
-    };
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (email.trim()) {
+                validateEmail(email.trim());
+            } else {
+                setIsRegistered(null);
+                setRegistrationError("");
+                setErrors((prev) => ({ ...prev, email: "" }));
+            }
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [email]);
+
+    useEffect(() => {
+        let timer: NodeJS.Timeout;
+        if (isValidatingEmail) {
+            const isLastPhrase = loadingPhraseIndex === LOADING_PHRASES.length - 1;
+            const delay = isLastPhrase ? 3000 : 1200;
+            
+            timer = setTimeout(() => {
+                setLoadingPhraseIndex((prev) => (prev + 1) % LOADING_PHRASES.length);
+            }, delay);
+        } else {
+            setLoadingPhraseIndex(0); // Reset when done
+        }
+        return () => {
+            if (timer) clearTimeout(timer);
+        };
+    }, [isValidatingEmail, loadingPhraseIndex]);
 
     const applyCoupon = async () => {
         if (!couponCode.trim()) {
@@ -267,15 +301,9 @@ function BuyTicketContent() {
                                         required 
                                         value={email} 
                                         onChange={(e) => setEmail(e.target.value)} 
-                                        onBlur={handleEmailBlur}
                                         placeholder="your@email.com" 
                                         className={`${getFieldClass(!!errors.email || (isRegistered === false && !isValidatingEmail), isRegistered === true)} ${inputTextClass} pr-12`} 
                                     />
-                                    {isValidatingEmail && (
-                                        <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center justify-center">
-                                            <Spinner size="20" color="var(--color-gray-inverted,#a1a1a1)" />
-                                        </div>
-                                    )}
                                 </div>
                                 {isRegistered === false && !isValidatingEmail && (
                                     <span className="text-[#FF8484] text-sm mt-1 ml-1 block">
@@ -417,6 +445,18 @@ function BuyTicketContent() {
                 setIsSuccessModalOpen(false);
                 router.push('/');
             }} />
+            
+            {isValidatingEmail && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-all duration-300">
+                    <div className="flex flex-col items-center gap-4 p-8 bg-[#0a0a0a] rounded-2xl border border-white/10 shadow-2xl max-w-sm w-full mx-4 text-center">
+                        <Spinner size="48" color="white" />
+                        <p className="text-lg font-medium text-white animate-pulse min-h-[28px] transition-opacity duration-300">
+                           {LOADING_PHRASES[loadingPhraseIndex]}
+                        </p>
+                    </div>
+                </div>
+            )}
+            
             <Footer />
         </div>
     );
