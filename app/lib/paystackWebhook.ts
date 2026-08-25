@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import { Pool } from 'pg';
 import { sendTicketConfirmationEmail } from '@/app/lib/email';
 import { generateRegistrationId } from '@/app/lib/registration';
+import { ensureTicketTable, insertTickets } from '@/app/lib/tickets';
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -22,7 +23,7 @@ const TIER_AMOUNTS: Record<string, number> = {
   explorer: 350000,
   builders: 1000000,
   founders: 2000000,
-  vip: 5000000,
+  vip: 8500000,
   investors: 20000000,
   regular: 350000,
   standard: 1000000,
@@ -95,10 +96,6 @@ export async function processPaystackWebhook(body: string, signature: string | n
     const firstName = toSafeString(metadata.first_name || data.customer?.first_name);
     const lastName = toSafeString(metadata.last_name || data.customer?.last_name);
     const emailAddress = toSafeString(metadata.email || data.customer?.email);
-    const phoneNumber = toSafeString(metadata.phone || data.customer?.phone_number || data.customer?.phone);
-    const country = toSafeString(metadata.country || data.customer?.country || 'Nigeria');
-    const nationality = toSafeString(metadata.nationality || 'Nigerian');
-    const community = toSafeString(metadata.community || '');
     const existingRegistrationId = toSafeString(metadata.registration_id || metadata.registrationId || '');
 
     const expectedAmount = (TIER_AMOUNTS[ticketType] || 0) * quantity;
@@ -120,133 +117,33 @@ export async function processPaystackWebhook(body: string, signature: string | n
 
     const client = await pool.connect();
     try {
-      await client.query(`
-        CREATE TABLE IF NOT EXISTS "btf-registration" (
-          id SERIAL PRIMARY KEY,
-          registration_id VARCHAR(100) UNIQUE,
-          ticket_type VARCHAR(100),
-          first_name VARCHAR(255),
-          last_name VARCHAR(255),
-          email VARCHAR(255),
-          phone VARCHAR(30),
-          country VARCHAR(255),
-          nationality VARCHAR(255),
-          community VARCHAR(255),
-          payment_reference VARCHAR(255),
-          name VARCHAR(255),
-          primary_interest VARCHAR(255),
-          agreed_to_terms BOOLEAN DEFAULT FALSE,
-          created_at TIMESTAMPTZ DEFAULT NOW()
-        );
-      `);
+      await ensureTicketTable(client);
 
-      await client.query(`
-        DO $$
-        BEGIN
-          IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'registration_id') THEN
-            ALTER TABLE "btf-registration" ADD COLUMN registration_id VARCHAR(100);
-          END IF;
-          IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'ticket_type') THEN
-            ALTER TABLE "btf-registration" ADD COLUMN ticket_type VARCHAR(100);
-          END IF;
-          IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'first_name') THEN
-            ALTER TABLE "btf-registration" ADD COLUMN first_name VARCHAR(255);
-          END IF;
-          IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'last_name') THEN
-            ALTER TABLE "btf-registration" ADD COLUMN last_name VARCHAR(255);
-          END IF;
-          IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'email') THEN
-            ALTER TABLE "btf-registration" ADD COLUMN email VARCHAR(255);
-          END IF;
-          IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'phone') THEN
-            ALTER TABLE "btf-registration" ADD COLUMN phone VARCHAR(30);
-          END IF;
-          IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'country') THEN
-            ALTER TABLE "btf-registration" ADD COLUMN country VARCHAR(255);
-          END IF;
-          IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'nationality') THEN
-            ALTER TABLE "btf-registration" ADD COLUMN nationality VARCHAR(255);
-          END IF;
-          IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'community') THEN
-            ALTER TABLE "btf-registration" ADD COLUMN community VARCHAR(255);
-          END IF;
-          IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'payment_reference') THEN
-            ALTER TABLE "btf-registration" ADD COLUMN payment_reference VARCHAR(255);
-          END IF;
-          IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'name') THEN
-            ALTER TABLE "btf-registration" ADD COLUMN name VARCHAR(255);
-          END IF;
-          IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'primary_interest') THEN
-            ALTER TABLE "btf-registration" ADD COLUMN primary_interest VARCHAR(255);
-          END IF;
-          IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'agreed_to_terms') THEN
-            ALTER TABLE "btf-registration" ADD COLUMN agreed_to_terms BOOLEAN DEFAULT FALSE;
-          END IF;
-          IF NOT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_name = 'btf-registration' AND constraint_type = 'UNIQUE' AND constraint_name = 'btf_registration_registration_id_key') THEN
-            ALTER TABLE "btf-registration" ADD CONSTRAINT "btf_registration_registration_id_key" UNIQUE (registration_id);
-          END IF;
-        END $$;
-      `);
+      await client.query('BEGIN');
+      await client.query('SELECT pg_advisory_xact_lock(hashtext($1))', [paymentReference]);
 
       const existingRegistration = await client.query(
-        'SELECT id, registration_id FROM "btf-registration" WHERE payment_reference = $1 LIMIT 1',
+        'SELECT id, ticket_id, registration_id FROM ticket_registrations WHERE payment_reference = $1 ORDER BY id LIMIT 1',
         [paymentReference]
       );
 
       if (existingRegistration.rowCount && existingRegistration.rows[0]) {
+        await client.query('ROLLBACK');
         return { status: 200, message: 'Webhook already processed' };
       }
 
       const registrationId = existingRegistrationId || generateRegistrationId();
 
-      const existingEmailRegistration = await client.query(
-        `SELECT id FROM "btf-registration" WHERE LOWER(email) = LOWER($1) LIMIT 1`,
-        [emailAddress]
-      );
-
-      const registration = existingEmailRegistration.rowCount && existingEmailRegistration.rows[0]
-        ? await client.query(
-            `UPDATE "btf-registration"
-             SET ticket_type = $1, first_name = $2, last_name = $3, phone = $4,
-                 country = $5, nationality = $6, community = $7, payment_reference = $8,
-                 name = $9, registration_id = COALESCE(registration_id, $10)
-             WHERE id = $11
-             RETURNING id, registration_id`,
-            [
-              ticketType,
-              firstName,
-              lastName,
-              phoneNumber || null,
-              country || 'Nigeria',
-              nationality || 'Nigerian',
-              community || null,
-              paymentReference,
-              `${firstName} ${lastName}`.trim() || null,
-              registrationId,
-              existingEmailRegistration.rows[0].id,
-            ]
-          )
-        : await client.query(
-            `INSERT INTO "btf-registration"
-             (ticket_type, first_name, last_name, email, phone, country, nationality, community, payment_reference, name, primary_interest, agreed_to_terms, registration_id)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-             RETURNING id, registration_id`,
-            [
-              ticketType,
-              firstName,
-              lastName,
-              emailAddress,
-              phoneNumber || null,
-              country || 'Nigeria',
-              nationality || 'Nigerian',
-              community || null,
-              paymentReference,
-              `${firstName} ${lastName}`.trim() || null,
-              null,
-              false,
-              registrationId,
-            ]
-          );
+      const tickets = await insertTickets(client, {
+        registrationId,
+        ticketType,
+        firstName,
+        lastName,
+        email: emailAddress,
+        paymentReference,
+        quantity,
+      });
+      await client.query('COMMIT');
 
       const ticketLabel = TIER_LABELS[ticketType] || ticketType;
       const emailSent = await sendTicketConfirmationEmail({
@@ -257,7 +154,7 @@ export async function processPaystackWebhook(body: string, signature: string | n
         ticketLabel,
         paymentReference,
         quantity,
-        registrationId: registration.rows[0]?.registration_id || registration.rows[0]?.id,
+        registrationId: tickets[0]?.ticket_id,
         totalPaid: expectedAmount,
       });
 
@@ -265,9 +162,10 @@ export async function processPaystackWebhook(body: string, signature: string | n
         console.warn(`Webhook ticket saved for ${emailAddress} (${paymentReference}), but the confirmation email failed to send.`);
       }
 
-      console.log(`Paystack webhook confirmed and ticket saved for ${emailAddress} (${paymentReference})`);
+      console.log(`Paystack webhook confirmed and ${tickets.length} ticket(s) saved for ${emailAddress} (${paymentReference})`);
       return { status: 200, message: 'Payment confirmed and ticket issued' };
     } finally {
+      try { await client.query('ROLLBACK'); } catch {}
       client.release();
     }
   } catch (error) {

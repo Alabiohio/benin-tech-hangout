@@ -407,7 +407,7 @@ export async function sendRegistrationEmail({
       'Details on the event venue and other important updates will be communicated with you as they become available.',
       '',
       'Get your event pass: https://benintechfest.com.ng/ticket',
-      'Join WhatsApp community: https://whatsapp.com/channel/0029VbCyw0P9mrGciiEpD71G',
+      'Join WhatsApp community: https://chat.whatsapp.com/J8KczV8DmAZ5ixIbkFT3EU',
       '',
       'Best regards,',
       'BTF 2.0 Team',
@@ -439,7 +439,7 @@ export async function sendRegistrationEmail({
         <li style="margin-bottom: 18px;">
           <strong>Join the attendee community</strong><br>
           Connect with other attendees, get important updates, and stay in the loop.<br>
-          <a href="https://whatsapp.com/channel/0029VbCyw0P9mrGciiEpD71G" style="color: #0066ff; text-decoration: underline; font-weight: 600;">Join the WhatsApp community</a>
+          <a href="https://chat.whatsapp.com/J8KczV8DmAZ5ixIbkFT3EU" style="color: #0066ff; text-decoration: underline; font-weight: 600;">Join the WhatsApp community</a>
         </li>
         <li style="margin-bottom: 18px;">
           <strong>Choose your event experience</strong><br>
@@ -450,7 +450,7 @@ export async function sendRegistrationEmail({
           <strong>Stay in the loop</strong><br>
           Connect with other attendees, follow BTF on social media and get important event updates and announcements
           <div style="margin-top: 8px;">
-            <a href="https://whatsapp.com/channel/0029VbCyw0P9mrGciiEpD71G" style="color: #0066ff; text-decoration: underline; font-weight: 600; display: block; margin-bottom: 4px;">Join WhatsApp community</a>
+            <a href="https://chat.whatsapp.com/J8KczV8DmAZ5ixIbkFT3EU" style="color: #0066ff; text-decoration: underline; font-weight: 600; display: block; margin-bottom: 4px;">Join WhatsApp community</a>
             <a href="https://www.instagram.com/benintechfest/" style="color: #0066ff; text-decoration: underline; font-weight: 600; display: block; margin-bottom: 4px;">BTF on Instagram</a>
             <a href="https://www.linkedin.com/company/benin-tech-fest-page/" style="color: #0066ff; text-decoration: underline; font-weight: 600; display: block; margin-bottom: 4px;">BTF on LinkedIn</a>
             <a href="https://www.tiktok.com/@benintechfest" style="color: #0066ff; text-decoration: underline; font-weight: 600; display: block; margin-bottom: 4px;">BTF on TikTok</a>

@@ -10,7 +10,8 @@ import Button from '../../components/Button';
 
 interface BadgeMatch {
     source: 'ticket' | 'free-pass' | 'registration';
-    id: number;
+    id: number | string;
+    ticketId?: string;
     fullName: string;
     ticketType: string;
     email: string;
@@ -142,6 +143,7 @@ export default function RegistrationBadgePage() {
                                                         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                                                             <div>                                                                                                            <h2 className="text-2xl font-black text-slate-900 mb-2">{match.fullName}</h2>
                                                                 <p className="text-sm text-slate-600 mb-1"><strong>Badge Type:</strong> {match.ticketType}</p>
+                                                                {match.ticketId && <p className="text-sm text-slate-600 mb-1"><strong>Ticket ID:</strong> {match.ticketId}</p>}
                                                                 <p className="text-sm text-slate-600"><strong>Registered Email:</strong> {match.email}</p>
                                                             </div>
                                                             <div className="flex flex-col gap-3 sm:items-end">

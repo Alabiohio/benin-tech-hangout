@@ -220,7 +220,7 @@ export default function SpeakerRegistrationPage() {
                                                             {message.startsWith('✓') && (
                                                                 <div className="flex justify-center mt-4">
                                                                     <a
-                                                                        href="https://whatsapp.com/channel/0029VbCyw0P9mrGciiEpD71G"
+                                                                        href="https://chat.whatsapp.com/J8KczV8DmAZ5ixIbkFT3EU"
                                                                         target="_blank"
                                                                         rel="noopener noreferrer"
                                                                         className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#25D366] text-white font-bold text-sm hover:bg-[#1da851] transition-colors"

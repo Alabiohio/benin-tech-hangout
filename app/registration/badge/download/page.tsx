@@ -12,7 +12,8 @@ interface BadgePayload {
     badgeFound: boolean;
     badge?: {
         source: 'ticket' | 'free-pass' | 'registration';
-        id: number;
+        id: number | string;
+        ticketId?: string;
         fullName: string;
         ticketType: string;
         email: string;

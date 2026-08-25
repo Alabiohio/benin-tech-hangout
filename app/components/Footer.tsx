@@ -24,7 +24,7 @@ const FOOTER_LINKS_COL1: FooterLink[] = [
   { label: 'Get tickets', href: '/ticket' },
   { label: 'Apply to pitch', href: 'https://forms.gle/uGBYW1cQ7ShDAjh38' },
   { label: 'Event schedule', href: '/schedule' },
-  { label: 'Join our community', href: 'https://whatsapp.com/channel/0029VbCyw0P9mrGciiEpD71G' },
+  { label: 'Join our community', href: 'https://chat.whatsapp.com/J8KczV8DmAZ5ixIbkFT3EU' },
 ];
 
 const FOOTER_LINKS_COL2: FooterLink[] = [

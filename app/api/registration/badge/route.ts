@@ -7,6 +7,9 @@ const pool = new Pool({
 });
 
 const TIER_LABELS: Record<string, string> = {
+    regular: 'Regular Pass',
+    standard: 'Standard Pass',
+    business: 'Business Pass',
     explorer: 'Explorer Pass',
     builders: 'Builders Pass',
     founders: 'Founders Pass',
@@ -23,7 +26,8 @@ function toBadgeItem(row: any, source: string) {
 
     return {
         source,
-        id: row.id,
+        id: source === 'ticket' ? row.ticket_id : row.id,
+        ticketId: source === 'ticket' ? row.ticket_id : undefined,
         fullName: fullName || row.email || 'Attendee',
         ticketType: source === 'ticket'
             ? (TIER_LABELS[row.ticket_type] || row.ticket_type || 'Ticket Registration')
@@ -47,7 +51,7 @@ export async function POST(request: NextRequest) {
 
         const normalizedEmail = emailAddress.trim().toLowerCase();
         const source = typeof data.source === 'string' ? data.source.trim() : '';
-        const id = data.id ? Number(data.id) : undefined;
+        const id = data.id ? String(data.id) : undefined;
 
         const client = await pool.connect();
         try {
@@ -75,7 +79,7 @@ export async function POST(request: NextRequest) {
                 let row = null;
                 if (source === 'ticket' && hasTicketTable) {
                     row = (await client.query(
-                        `SELECT id, first_name, last_name, ticket_type, email, created_at FROM ticket_registrations WHERE id = $1 AND LOWER(email) = LOWER($2) LIMIT 1;`,
+                        `SELECT id, ticket_id, first_name, last_name, ticket_type, email, created_at FROM ticket_registrations WHERE ticket_id = $1 AND LOWER(email) = LOWER($2) LIMIT 1;`,
                         [id, normalizedEmail]
                     )).rows[0];
                 } else if (source === 'free-pass' && hasFreePassTable) {
@@ -105,7 +109,7 @@ export async function POST(request: NextRequest) {
                 : 'id, first_name, last_name, email, created_at';
 
             const ticketRows = hasTicketTable
-                ? await client.query(`SELECT id, first_name, last_name, ticket_type, email, created_at FROM ticket_registrations WHERE LOWER(email) = LOWER($1) ORDER BY created_at DESC;`, [normalizedEmail])
+                ? await client.query(`SELECT id, ticket_id, first_name, last_name, ticket_type, email, created_at FROM ticket_registrations WHERE LOWER(email) = LOWER($1) ORDER BY created_at DESC;`, [normalizedEmail])
                 : { rows: [] };
             const freePassRows = hasFreePassTable
                 ? await client.query(`SELECT ${freePassSelect} FROM free_pass_registrations WHERE LOWER(email) = LOWER($1) ORDER BY created_at DESC;`, [normalizedEmail])

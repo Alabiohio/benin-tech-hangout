@@ -48,7 +48,7 @@ export default function ConfirmationModal({ isOpen, onClose }: ConfirmationModal
           </div>
 
           <h2
-            className="font-cabinet-grotesk font-black leading-[0.8] tracking-[-0.08em] text-[#111111] text-[2.5rem] md:text-[80px]"
+            className="font-cabinet-grotesk font-extrabold leading-[0.8] tracking-[-0.08em] text-[#111111] text-[2.5rem] md:text-[80px]"
             style={{ fontVariationSettings: '"opsz" 14, "wdth" 100' }}
           >
             You’re all set!

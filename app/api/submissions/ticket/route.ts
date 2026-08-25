@@ -3,7 +3,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getClientIp, checkRateLimit } from '@/app/lib/rateLimit';
 import { sendTicketConfirmationEmail } from '@/app/lib/email';
 import { generateRegistrationId } from '@/app/lib/registration';
-import { cleanText, email, invalidFormResponse, phone, readFormBody, rejectOversizedBody, requiredText } from '@/app/lib/formSecurity';
+import { ensureTicketTable, insertTickets } from '@/app/lib/tickets';
+import { cleanText, email, invalidFormResponse, readFormBody, rejectOversizedBody, requiredText } from '@/app/lib/formSecurity';
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -27,7 +28,7 @@ const TIER_AMOUNTS: Record<string, number> = {
     explorer: 350000,
     builders: 1000000,
     founders: 2000000,
-    vip: 5000000,
+    vip: 8500000,
     investors: 20000000,
     // buy-ticket flow aliases — must match payments/initialize amounts
     regular: 350000,
@@ -55,10 +56,6 @@ export async function POST(request: NextRequest) {
         const firstName = requiredText(body.firstName);
         const lastName = requiredText(body.lastName);
         const emailAddress = email(body.email);
-        const phoneNumber = phone(body.phone, false);
-        const country = cleanText(body.country, 255) ?? '';
-        const nationality = cleanText(body.nationality, 255) ?? '';
-        const community = cleanText(body.community, 255);
         const paymentReference = cleanText(body.paymentReference, 255);
         const registrationId = cleanText(body.registrationId, 100) || generateRegistrationId();
         
@@ -68,7 +65,7 @@ export async function POST(request: NextRequest) {
         
         const expectedAmount = ticket_type ? TIER_AMOUNTS[ticket_type] * quantity : 0;
 
-        if (!ticket_type || !TIER_LABELS[ticket_type] || !firstName || !lastName || !emailAddress || phoneNumber === null || community === null || paymentReference === null) return invalidFormResponse();
+        if (!ticket_type || !TIER_LABELS[ticket_type] || !firstName || !lastName || !emailAddress || paymentReference === null) return invalidFormResponse();
 
         if (expectedAmount > 0 && (!paymentReference || !process.env.PAYSTACK_SECRET_KEY)) {
             return NextResponse.json({ error: 'A verified payment is required for this ticket.' }, { status: 400 });
@@ -93,183 +90,39 @@ export async function POST(request: NextRequest) {
         const client = await pool.connect();
         try {
 
-        await client.query(`
-            CREATE TABLE IF NOT EXISTS "btf-registration" (
-                id SERIAL PRIMARY KEY,
-                registration_id VARCHAR(100) UNIQUE,
-                ticket_type VARCHAR(100),
-                first_name VARCHAR(255),
-                last_name VARCHAR(255),
-                email VARCHAR(255),
-                phone VARCHAR(30),
-                country VARCHAR(255),
-                nationality VARCHAR(255),
-                community VARCHAR(255),
-                payment_reference VARCHAR(255),
-                name VARCHAR(255),
-                primary_interest VARCHAR(255),
-                agreed_to_terms BOOLEAN DEFAULT FALSE,
-                created_at TIMESTAMPTZ DEFAULT NOW()
-            );
-        `);
-
-        await client.query(`
-            DO $$
-            BEGIN
-                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'registration_id') THEN
-                    ALTER TABLE "btf-registration" ADD COLUMN registration_id VARCHAR(100);
-                END IF;
-
-                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'ticket_type') THEN
-                    ALTER TABLE "btf-registration" ADD COLUMN ticket_type VARCHAR(100);
-                END IF;
-
-                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'first_name') THEN
-                    ALTER TABLE "btf-registration" ADD COLUMN first_name VARCHAR(255);
-                END IF;
-
-                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'last_name') THEN
-                    ALTER TABLE "btf-registration" ADD COLUMN last_name VARCHAR(255);
-                END IF;
-
-                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'email') THEN
-                    ALTER TABLE "btf-registration" ADD COLUMN email VARCHAR(255);
-                END IF;
-
-                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'phone') THEN
-                    ALTER TABLE "btf-registration" ADD COLUMN phone VARCHAR(30);
-                END IF;
-
-                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'country') THEN
-                    ALTER TABLE "btf-registration" ADD COLUMN country VARCHAR(255);
-                END IF;
-
-                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'nationality') THEN
-                    ALTER TABLE "btf-registration" ADD COLUMN nationality VARCHAR(255);
-                END IF;
-
-                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'community') THEN
-                    ALTER TABLE "btf-registration" ADD COLUMN community VARCHAR(255);
-                END IF;
-
-                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'payment_reference') THEN
-                    ALTER TABLE "btf-registration" ADD COLUMN payment_reference VARCHAR(255);
-                END IF;
-
-                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'name') THEN
-                    ALTER TABLE "btf-registration" ADD COLUMN name VARCHAR(255);
-                END IF;
-
-                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'primary_interest') THEN
-                    ALTER TABLE "btf-registration" ADD COLUMN primary_interest VARCHAR(255);
-                END IF;
-
-                IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'btf-registration' AND column_name = 'agreed_to_terms') THEN
-                    ALTER TABLE "btf-registration" ADD COLUMN agreed_to_terms BOOLEAN DEFAULT FALSE;
-                END IF;
-
-                IF NOT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_name = 'btf-registration' AND constraint_type = 'UNIQUE' AND constraint_name = 'btf_registration_registration_id_key') THEN
-                    ALTER TABLE "btf-registration" ADD CONSTRAINT "btf_registration_registration_id_key" UNIQUE (registration_id);
-                END IF;
-
-                IF NOT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE table_name = 'btf-registration' AND constraint_type = 'UNIQUE' AND constraint_name = 'btf_registration_payment_reference_key') THEN
-                    ALTER TABLE "btf-registration" ADD CONSTRAINT "btf_registration_payment_reference_key" UNIQUE (payment_reference);
-                END IF;
-
-                IF NOT EXISTS (
-                    SELECT 1
-                    FROM pg_indexes
-                    WHERE schemaname = current_schema()
-                    AND indexname = 'btf_registration_email_unique_idx'
-                ) THEN
-                    CREATE UNIQUE INDEX "btf_registration_email_unique_idx"
-                    ON "btf-registration" (LOWER(email));
-                END IF;
-
-                ALTER TABLE "btf-registration" ALTER COLUMN name DROP NOT NULL;
-                ALTER TABLE "btf-registration" ALTER COLUMN email DROP NOT NULL;
-                ALTER TABLE "btf-registration" ALTER COLUMN primary_interest DROP NOT NULL;
-                ALTER TABLE "btf-registration" ALTER COLUMN ticket_type DROP NOT NULL;
-                ALTER TABLE "btf-registration" ALTER COLUMN first_name DROP NOT NULL;
-                ALTER TABLE "btf-registration" ALTER COLUMN last_name DROP NOT NULL;
-                ALTER TABLE "btf-registration" ALTER COLUMN country DROP NOT NULL;
-                ALTER TABLE "btf-registration" ALTER COLUMN nationality DROP NOT NULL;
-            END $$;
-        `);
+        await ensureTicketTable(client);
+        await client.query('BEGIN');
+        await client.query('SELECT pg_advisory_xact_lock(hashtext($1))', [paymentReference || `browser-${registrationId}`]);
 
         if (paymentReference) {
             const existingPayment = await client.query(
-                'SELECT id, registration_id FROM "btf-registration" WHERE payment_reference = $1 LIMIT 1',
+                'SELECT id, ticket_id, registration_id FROM ticket_registrations WHERE payment_reference = $1 ORDER BY id LIMIT 1',
                 [paymentReference]
             );
             if (existingPayment.rowCount && existingPayment.rows[0]) {
                 const existingRegistrationId = existingPayment.rows[0].registration_id || existingPayment.rows[0].id;
+                const ticketIds = (await client.query('SELECT ticket_id FROM ticket_registrations WHERE payment_reference = $1 ORDER BY id', [paymentReference])).rows.map((row) => row.ticket_id);
+                await client.query('ROLLBACK');
                 return NextResponse.json({ 
                     success: true, 
                     message: 'Ticket already registered (processed via webhook).',
                     id: existingPayment.rows[0].id,
-                    registrationId: existingRegistrationId
+                    registrationId: existingRegistrationId,
+                    ticketIds,
                 }, { status: 200 });
             }
         }
 
-        const existingEmailRegistration = await client.query(
-            `SELECT id, registration_id FROM "btf-registration"
-             WHERE LOWER(email) = LOWER($1)
-             LIMIT 1;`,
-            [emailAddress]
-        );
-
-        if (existingEmailRegistration.rowCount && existingEmailRegistration.rows[0]) {
-            const existingRegistration = existingEmailRegistration.rows[0];
-            const updateResult = await client.query(
-                `UPDATE "btf-registration"
-                 SET ticket_type = $1, first_name = $2, last_name = $3, phone = $4,
-                     country = $5, nationality = $6, community = $7, payment_reference = $8
-                 WHERE id = $9
-                 RETURNING id, registration_id, created_at;`,
-                [
-                    ticket_type,
-                    firstName,
-                    lastName,
-                    phoneNumber || null,
-                    country,
-                    nationality,
-                    community || null,
-                    paymentReference,
-                    existingRegistration.id,
-                ]
-            );
-            const ticketRegistration = updateResult.rows[0];
-            const emailSent = await sendTicketConfirmationEmail({
-                firstName,
-                lastName,
-                email: emailAddress,
-                ticketType: ticket_type,
-                ticketLabel: TIER_LABELS[ticket_type] || ticket_type,
-                paymentReference: paymentReference || 'N/A',
-                quantity,
-                registrationId: ticketRegistration.registration_id || ticketRegistration.id,
-                totalPaid: expectedAmount,
-            });
-
-            return NextResponse.json({
-                success: true,
-                message: 'Ticket registration submitted successfully',
-                id: ticketRegistration.id,
-                registrationId: ticketRegistration.registration_id || ticketRegistration.id,
-                emailSent,
-            }, { status: 200 });
-        }
-
-        const result = await client.query(
-            `INSERT INTO "btf-registration"
-            (ticket_type, first_name, last_name, email, phone, country, nationality, community, payment_reference, registration_id)
-            VALUES
-            ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-            RETURNING id, registration_id, created_at;`,
-            [ticket_type, firstName, lastName, emailAddress, phoneNumber || null, country, nationality, community || null, paymentReference || null, registrationId]
-        );
+        const ticketRegistrations = await insertTickets(client, {
+            registrationId,
+            ticketType: ticket_type,
+            firstName,
+            lastName,
+            email: emailAddress,
+            paymentReference: paymentReference || `browser-${registrationId}`,
+            quantity,
+        });
+        await client.query('COMMIT');
 
         // Send a branded payment confirmation email to the purchaser
         const emailSent = await sendTicketConfirmationEmail({
@@ -280,7 +133,7 @@ export async function POST(request: NextRequest) {
             ticketLabel: TIER_LABELS[ticket_type] || ticket_type,
             paymentReference: paymentReference || 'N/A',
             quantity,
-            registrationId: result.rows[0].registration_id || result.rows[0].id,
+            registrationId: ticketRegistrations[0].ticket_id,
             totalPaid: expectedAmount,
         });
 
@@ -293,13 +146,17 @@ export async function POST(request: NextRequest) {
             {
                 success: true,
                 message: 'Ticket registration submitted successfully',
-                id: result.rows[0].id,
-                registrationId: result.rows[0].registration_id || result.rows[0].id,
+                id: ticketRegistrations[0].id,
+                registrationId,
+                ticketIds: ticketRegistrations.map((ticket) => ticket.ticket_id),
                 emailSent,
             },
             { status: 201 }
         );
-        } finally { client.release(); }
+        } finally {
+            try { await client.query('ROLLBACK'); } catch {}
+            client.release();
+        }
     } catch (error) {
         console.error('Error submitting ticket registration:', error);
         return NextResponse.json(

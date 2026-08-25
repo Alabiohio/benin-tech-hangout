@@ -51,6 +51,7 @@ function BuyTicketContent() {
     const [isValidatingEmail, setIsValidatingEmail] = useState(false);
     const [isValidatingCoupon, setIsValidatingCoupon] = useState(false);
     const [isProcessing, setIsProcessing] = useState(false);
+    const [isVerifyingPayment, setIsVerifyingPayment] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
     const [loadingPhraseIndex, setLoadingPhraseIndex] = useState(0);
@@ -204,6 +205,7 @@ function BuyTicketContent() {
                     console.log("Payment window closed");
                 },
                 onSuccess: async (transaction: any) => {
+                    setIsVerifyingPayment(true);
                     if (couponCode.trim() && couponValidation?.valid) {
                         await redeemCoupon(
                             couponCode.trim(),
@@ -248,6 +250,7 @@ function BuyTicketContent() {
                         console.error('Failed to submit ticket registration after payment:', err);
                     }
 
+                    setIsVerifyingPayment(false);
                     setIsSuccessModalOpen(true);
                 },
             });
@@ -461,6 +464,17 @@ function BuyTicketContent() {
                         <Spinner size="48" color="white" />
                         <p className="text-lg font-medium text-white animate-pulse min-h-[28px] transition-opacity duration-300">
                            {LOADING_PHRASES[loadingPhraseIndex]}
+                        </p>
+                    </div>
+                </div>
+            )}
+
+            {isVerifyingPayment && (
+                <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-all duration-300">
+                    <div className="flex w-full max-w-sm flex-col items-center gap-4 rounded-2xl border border-white/10 bg-[#0a0a0a] p-8 mx-4 text-center shadow-2xl">
+                        <Spinner size="48" color="white" />
+                        <p className="min-h-[28px] text-lg font-medium text-white animate-pulse">
+                            Verifying payment...
                         </p>
                     </div>
                 </div>

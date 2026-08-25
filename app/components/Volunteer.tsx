@@ -40,7 +40,7 @@ export default function Volunteer() {
           <p className="text-[18px] font-normal font-['Inter'] leading-[1.4] text-[var(--color-neutral)] tracking-[-0.36px]">
             Join our large and growing community on WhatsApp and don't miss out on updates, sessions, trainings, webinars and giveaway contests and lots more.
           </p>
-          <Link href="https://whatsapp.com/channel/0029VbCyw0P9mrGciiEpD71G" className="w-fit px-6 py-4 bg-[var(--color-static-black)] text-[var(--color-static-white)] rounded-full font-['Bricolage_Grotesque'] font-medium text-[20px] leading-[1] uppercase tracking-[-0.4px] hover:opacity-90 transition">
+          <Link href="https://chat.whatsapp.com/J8KczV8DmAZ5ixIbkFT3EU" className="w-fit px-6 py-4 bg-[var(--color-static-black)] text-[var(--color-static-white)] rounded-full font-['Bricolage_Grotesque'] font-medium text-[20px] leading-[1] uppercase tracking-[-0.4px] hover:opacity-90 transition">
             JOIN COMMUNITY
           </Link>
         </div>

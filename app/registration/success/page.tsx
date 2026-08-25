@@ -68,7 +68,7 @@ function SuccessContent() {
                         </div>
                         <div className="flex flex-col gap-3 w-full">
                             <a
-                                href="https://whatsapp.com/channel/0029VbCyw0P9mrGciiEpD71G"
+                                href="https://chat.whatsapp.com/J8KczV8DmAZ5ixIbkFT3EU"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105 text-center shadow-lg hover:shadow-xl"

@@ -72,9 +72,18 @@ export default function RegisterPage() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
                     name: `${formData.firstName} ${formData.lastName}`.trim(),
                     email: formData.email,
+                    whatsapp: formData.whatsapp,
+                    company: formData.company,
+                    role: formData.role,
+                    location: formData.location,
+                    interests: formData.interests,
                     primaryInterest: formData.interests.join(', '),
+                    heardFrom: formData.heardFrom,
+                    eventPass: formData.eventPass,
                     agreedToTerms: true,
                 }),
             });
@@ -271,7 +280,7 @@ export default function RegisterPage() {
                                 <path d="M12 8H12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
                             <span>
-                                Registration is free but you'll need a pass to access the venue and participate in the event. <a href="/ticket" className="text-[#1570EF] underline hover:no-underline">Get a ticket.</a>
+                                Registration is free but you'll need a pass to access the venue and participate in the event. <a href="/ticket" className="text-blue underline hover:no-underline">Get a ticket.</a>
                             </span>
                         </div>
 

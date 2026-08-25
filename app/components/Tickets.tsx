@@ -34,7 +34,7 @@ const passes = [
     features: [
       "Everything in Regular PLUS",
       "Priority seating",
-      "Premium merch (hoodie + cap & more)",
+      "Premium merch (t-shirt + cap & more)",
       "Refreshments (day 1 & 2)",
       "Digital certificate of participation",
       "Event program booklet & notepad",
