@@ -169,7 +169,7 @@ export const Hero = (): React.JSX.Element => {
             delay: 0.5,
           }}
         >
-          A CONVERGENCE OF EDO TECH PROFESSIONALS
+          A CONVERGENCE OF EDO'S TECH ECOSYSTEM
         </motion.p>
 
         {/* CTA Button */}

@@ -20,7 +20,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://benintechfest.com.ng'),
-  title: "Benin Tech Fest 2.0 | A Convergence Of EDO Tech Professionals",
+  title: "Benin Tech Fest 2.0 | A CONVERGENCE Of EDO'S TECH ECOSYSTEM",
   description: "Join 3000+ innovators at the flagship tech event of Benin City. A curated space for the ecosystem to connect, learn, and scale. Connect with leaders, founders, and talents.",
   keywords: ["Benin Tech Fest", "Benin City Tech", "Tech Event Nigeria", "Edo State Tech", "Networking", "Innovation"],
   authors: [{ name: "Benin Tech Fest" }],
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Benin Tech Fest 2.0 | A Convergence Of EDO Tech Professionals",
+    title: "Benin Tech Fest 2.0 | A CONVERGENCE OF EDO'S TECH ECOSYSTEM",
     description: "The flagship tech event of Benin City returns. Join the most impactful gathering of tech talents, founders, and organizations.",
     url: "https://benintechfest.com.ng",
     siteName: "Benin Tech Fest",

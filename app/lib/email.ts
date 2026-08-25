@@ -2,7 +2,7 @@ import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Benin Tech Fest <noreply@info.oheo.site>';
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Benin Tech Fest <info@email.benintechfest.com.ng>';
 
 export interface EmailData {
   name?: string;
@@ -130,7 +130,7 @@ export async function sendFormNotificationEmail(
       headers: {
         // Signals to inbox providers this is a transactional one-time mail
         'X-Entity-Ref-ID': `benintechfest-${Date.now()}`,
-        'List-Unsubscribe': '<mailto:noreply@info.oheo.site?subject=unsubscribe>',
+        'List-Unsubscribe': '<mailto:info@email.benintechfest.com.ng?subject=unsubscribe>',
         'Precedence': 'bulk',
       },
     });
