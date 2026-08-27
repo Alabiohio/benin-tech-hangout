@@ -63,7 +63,8 @@ export async function validateCoupon(
     code: string,
     email: string,
     quantity: number = 1,
-    originalPrice: number
+    originalPrice: number,
+    ticketType: string
 ): Promise<CouponValidationResult> {
     try {
         const response = await fetch('/api/coupons/validate', {
@@ -76,6 +77,7 @@ export async function validateCoupon(
                 email,
                 quantity,
                 original_price: originalPrice,
+                ticket_type: ticketType
             }),
         });
 

@@ -12,6 +12,7 @@ interface CouponValidationRequest {
     email: string;
     quantity: number;
     original_price: number;
+    ticket_type?: string;
 }
 
 interface CouponValidationResponse {
@@ -49,6 +50,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<CouponVal
         const userEmail = email(data.email);
         const quantity = typeof data.quantity === 'number' ? data.quantity : 1;
         const originalPrice = typeof data.original_price === 'number' ? data.original_price : 0;
+        const ticketType = typeof data.ticket_type === 'string' ? data.ticket_type.trim().toLowerCase() : null;
 
         if (!code || !userEmail || !originalPrice || quantity <= 0) {
             return NextResponse.json(
@@ -137,6 +139,20 @@ export async function POST(request: NextRequest): Promise<NextResponse<CouponVal
                     message: 'Coupon has expired',
                     error: 'This coupon is no longer valid'
                 }, { status: 400 });
+            }
+
+            // Validate ticket type restriction
+            if (coupon.allowed_ticket_types && Array.isArray(coupon.allowed_ticket_types) && coupon.allowed_ticket_types.length > 0) {
+                if (!ticketType || !coupon.allowed_ticket_types.includes(ticketType)) {
+                    return NextResponse.json({
+                        valid: false,
+                        discount_amount: 0,
+                        final_price: originalPrice,
+                        final_price_total: originalPrice * quantity,
+                        message: 'This coupon is not valid for the selected ticket type.',
+                        error: 'Ticket type restricted'
+                    }, { status: 400 });
+                }
             }
 
             // Check total redemption limit

@@ -14,12 +14,13 @@ import { validateCoupon, checkRegistration, redeemCoupon, formatPrice } from "@/
 import type { CouponValidationResult } from "@/app/lib/coupons";
 import { generateRegistrationId } from "@/app/lib/registration";
 
-const TIER_PRICES: Record<string, number> = {
-    regular: 3500,
-    standard: 10000,
-    business: 35000,
-    vip: 85000,
-};
+interface Ticket {
+    id: number;
+    name: string;
+    price: string;
+    description: string;
+    is_active: boolean;
+}
 
 const LOADING_PHRASES = [
     "Looking up your email...",
@@ -36,9 +37,12 @@ function BuyTicketContent() {
     // Normalize to handle case insensitivity and find the price
     const passKey = passNameRaw.toLowerCase();
     const passName = passKey.charAt(0).toUpperCase() + passKey.slice(1);
-    
-    // Look up the price or fallback to regular if unknown
-    const passPrice = TIER_PRICES[passKey] || TIER_PRICES['regular'];
+    const [tickets, setTickets] = useState<Ticket[]>([]);
+    const [loadingTickets, setLoadingTickets] = useState(true);
+
+    // Look up the price from the fetched tickets
+    const selectedTicket = tickets.find(t => t.name.toLowerCase() === passKey);
+    const passPrice = selectedTicket ? parseFloat(selectedTicket.price) : 0;
 
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
@@ -59,6 +63,23 @@ function BuyTicketContent() {
     const totalPrice = passPrice * quantity;
     const finalPrice = couponValidation?.final_price_total ?? totalPrice;
     const savings = totalPrice - finalPrice;
+
+    useEffect(() => {
+        async function fetchTickets() {
+            try {
+                const res = await fetch('/api/tickets');
+                const data = await res.json();
+                if (data.success) {
+                    setTickets(data.tickets);
+                }
+            } catch (err) {
+                console.error("Failed to fetch tickets:", err);
+            } finally {
+                setLoadingTickets(false);
+            }
+        }
+        fetchTickets();
+    }, []);
 
     const validateEmail = async (emailValue: string) => {
         if (!emailValue) {
@@ -141,7 +162,7 @@ function BuyTicketContent() {
         setErrors((prev) => ({ ...prev, coupon: "" }));
 
         try {
-            const result = await validateCoupon(couponCode.trim(), email, quantity, passPrice);
+            const result = await validateCoupon(couponCode.trim(), email, quantity, passPrice, passKey);
             setCouponValidation(result);
 
             if (!result.valid) {
@@ -206,18 +227,9 @@ function BuyTicketContent() {
                 },
                 onSuccess: async (transaction: any) => {
                     setIsVerifyingPayment(true);
-                    if (couponCode.trim() && couponValidation?.valid) {
-                        await redeemCoupon(
-                            couponCode.trim(),
-                            email,
-                            registrationId,
-                            passName,
-                            quantity,
-                            couponValidation.discount_amount,
-                            totalPrice,
-                            finalPrice
-                        );
-                    }
+                    // We will redeem the coupon AFTER saving the ticket registration so we can use the real ticket ID.
+                    
+                    let realTicketId = registrationId;
 
                     // Save ticket registration and send confirmation email
                     try {
@@ -238,6 +250,7 @@ function BuyTicketContent() {
                                 paymentReference: transaction.reference,
                                 registrationId,
                                 quantity,
+                                couponCode: couponCode.trim() || undefined,
                             }),
                         });
                         const ticketData = await ticketRes.json();
@@ -245,9 +258,25 @@ function BuyTicketContent() {
                             console.error('Ticket submission failed:', ticketRes.status, ticketData);
                         } else {
                             console.log('Ticket registered, confirmation email sent:', ticketData);
+                            if (ticketData.ticketIds && ticketData.ticketIds.length > 0) {
+                                realTicketId = ticketData.ticketIds[0];
+                            }
                         }
                     } catch (err) {
                         console.error('Failed to submit ticket registration after payment:', err);
+                    }
+
+                    if (couponCode.trim() && couponValidation?.valid) {
+                        await redeemCoupon(
+                            couponCode.trim(),
+                            email,
+                            realTicketId,
+                            passName,
+                            quantity,
+                            couponValidation.discount_amount,
+                            totalPrice,
+                            finalPrice
+                        );
                     }
 
                     setIsVerifyingPayment(false);

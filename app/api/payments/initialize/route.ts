@@ -1,13 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkRateLimit, getClientIp } from '@/app/lib/rateLimit';
 import { email, invalidFormResponse, readFormBody, rejectOversizedBody, requiredText } from '@/app/lib/formSecurity';
+import { Pool } from 'pg';
 
-const TIER_AMOUNTS: Record<string, number> = {
-  regular: 350000,
-  standard: 1000000,
-  business: 3500000,
-  vip: 8500000,
-};
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 
 export async function POST(request: NextRequest) {
   const oversized = rejectOversizedBody(request);
@@ -30,9 +28,25 @@ export async function POST(request: NextRequest) {
   const quantity = parsedQuantity;
   
   const couponCode = typeof data.coupon_code === 'string' ? data.coupon_code.trim().toUpperCase() : null;
-  const basePriceInKobo = ticketType ? TIER_AMOUNTS[ticketType] : undefined;
-  
-  if (!ticketType || !emailAddress || !firstName || !lastName || !basePriceInKobo) return invalidFormResponse();
+
+  if (!ticketType || !emailAddress || !firstName || !lastName) return invalidFormResponse();
+
+  let basePriceInKobo = 0;
+  try {
+    const client = await pool.connect();
+    try {
+      const res = await client.query('SELECT price FROM ticketting WHERE name = $1 AND is_active = true', [ticketType]);
+      if (res.rows.length === 0) {
+        return NextResponse.json({ error: 'Invalid or inactive ticket type' }, { status: 400 });
+      }
+      basePriceInKobo = Math.round(parseFloat(res.rows[0].price) * 100); // Assuming DB stores Naira
+    } finally {
+      client.release();
+    }
+  } catch (error) {
+    console.error('Failed to fetch ticket price:', error);
+    return NextResponse.json({ error: 'Failed to initialize payment' }, { status: 500 });
+  }
 
   let amountInKobo = basePriceInKobo * quantity;
 
@@ -46,7 +60,8 @@ export async function POST(request: NextRequest) {
                   code: couponCode,
                   email: emailAddress,
                   quantity,
-                  original_price: basePriceInKobo / 100
+                  original_price: basePriceInKobo / 100,
+                  ticket_type: ticketType
               })
           });
           const validateData = await validateRes.json();

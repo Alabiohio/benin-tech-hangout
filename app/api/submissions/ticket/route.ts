@@ -23,18 +23,6 @@ const TIER_LABELS: Record<string, string> = {
     business: 'Business Pass',
 };
 
-const TIER_AMOUNTS: Record<string, number> = {
-    // registration/summary flow
-    explorer: 350000,
-    builders: 1000000,
-    founders: 2000000,
-    vip: 8500000,
-    investors: 20000000,
-    // buy-ticket flow aliases — must match payments/initialize amounts
-    regular: 350000,
-    standard: 1000000,
-    business: 3500000,
-};
 
 export async function POST(request: NextRequest) {
     const oversized = rejectOversizedBody(request);
@@ -63,7 +51,53 @@ export async function POST(request: NextRequest) {
         if (isNaN(parsedQuantity) || !Number.isInteger(parsedQuantity) || parsedQuantity <= 0 || parsedQuantity > 100) return invalidFormResponse();
         const quantity = parsedQuantity;
         
-        const expectedAmount = ticket_type ? TIER_AMOUNTS[ticket_type] * quantity : 0;
+        let baseAmount = 0;
+        try {
+            const client = await pool.connect();
+            try {
+                const res = await client.query('SELECT price FROM ticketting WHERE name = $1 AND is_active = true', [ticket_type]);
+                if (res.rows.length === 0 && TIER_LABELS[ticket_type]) {
+                    // Fallback or error if not found? Let's just return an error if it's not a dynamic ticket
+                }
+                if (res.rows.length > 0) {
+                    baseAmount = Math.round(parseFloat(res.rows[0].price) * 100);
+                }
+            } finally {
+                client.release();
+            }
+        } catch (error) {
+            console.error('Failed to fetch ticket price:', error);
+            return NextResponse.json({ error: 'Failed to verify ticket details' }, { status: 500 });
+        }
+        
+        let expectedAmount = baseAmount * quantity;
+        const couponCode = typeof body.couponCode === 'string' ? body.couponCode.trim() : null;
+
+        if (couponCode && expectedAmount > 0) {
+            try {
+                const origin = request.nextUrl.origin;
+                const validateRes = await fetch(`${origin}/api/coupons/validate`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        code: couponCode,
+                        email: emailAddress,
+                        quantity,
+                        original_price: baseAmount / 100,
+                        ticket_type: ticket_type
+                    })
+                });
+                const validateData = await validateRes.json();
+                if (validateRes.ok && validateData.valid) {
+                    expectedAmount = validateData.final_price_total * 100;
+                } else {
+                    return NextResponse.json({ error: validateData.message || 'Invalid coupon code' }, { status: 400 });
+                }
+            } catch (err) {
+                console.error('Coupon validation failed during ticket submission:', err);
+                return NextResponse.json({ error: 'Failed to validate coupon' }, { status: 500 });
+            }
+        }
 
         if (!ticket_type || !TIER_LABELS[ticket_type] || !firstName || !lastName || !emailAddress || paymentReference === null) return invalidFormResponse();
 
