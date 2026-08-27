@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
             const client = await pool.connect();
             try {
                 const res = await client.query('SELECT price FROM ticketting WHERE name = $1 AND is_active = true', [ticket_type]);
-                if (res.rows.length === 0 && TIER_LABELS[ticket_type]) {
+                if (res.rows.length === 0 && ticket_type && TIER_LABELS[ticket_type]) {
                     // Fallback or error if not found? Let's just return an error if it's not a dynamic ticket
                 }
                 if (res.rows.length > 0) {
