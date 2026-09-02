@@ -14,6 +14,7 @@ const tagHexColor: Record<TagColor, string> = {
   amber:   "var(--color-amber, #FFA500)",
   red:     "var(--color-red, #F62511)",
   green:   "var(--color-green, #14AE5C)",
+  brown:   "var(--color-brown, #8B5122)",
 };
 
 // ─── Inline filler SVGs (coloured by tag) ─────────────────────────────────────
@@ -71,6 +72,7 @@ const cardTagBg: Record<TagColor, string> = {
   amber:   "bg-[var(--color-amber,#FFA500)]",
   red:     "bg-[var(--color-red,#F62511)]",
   green:   "bg-[var(--color-green,#14AE5C)]",
+  brown:   "bg-[var(--color-brown,#8B5122)]",
 };
 const cardTagText: Record<TagColor, string> = {
   default: "text-[color:var(--color-gray-inverted,#303030)]",
@@ -78,6 +80,7 @@ const cardTagText: Record<TagColor, string> = {
   amber:   "text-[color:var(--color-static-black,black)]",
   red:     "text-[color:var(--color-neutral,white)]",
   green:   "text-[color:var(--color-neutral,white)]",
+  brown:   "text-[color:var(--color-neutral,white)]",
 };
 
 // ─── Arrow SVG refs ────────────────────────────────────────────────────────────
@@ -283,6 +286,7 @@ const tagBgClass: Record<TagColor, string> = {
   amber:   "bg-[var(--color-amber,#FFA500)]",
   red:     "bg-[var(--color-red,#F62511)]",
   green:   "bg-[var(--color-green,#14AE5C)]",
+  brown:   "bg-[var(--color-brown,#8B5122)]",
 };
 
 const tagTextClass: Record<TagColor, string> = {
@@ -291,6 +295,7 @@ const tagTextClass: Record<TagColor, string> = {
   amber:   "text-[color:var(--color-static-black,black)]",
   red:     "text-[color:var(--color-neutral,white)]",
   green:   "text-[color:var(--color-neutral,white)]",
+  brown:   "text-[color:var(--color-neutral,white)]",
 };
 
 const slideVariants = {

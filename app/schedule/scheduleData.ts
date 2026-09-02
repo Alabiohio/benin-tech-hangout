@@ -5,7 +5,8 @@ export type TagColor =
   | "blue"      // #1570ef
   | "amber"     // orange
   | "red"       // #c3262d
-  | "green";    // #029b4a
+  | "green"    // #029b4a
+  | "brown";    // #8B5122
 
 export interface ScheduleItem {
   time: string;
@@ -189,20 +190,60 @@ export const scheduleDays: ScheduleDay[] = [
     ],
   },
 
-  // ── DAY 2 ──────────────────────────────────────────────────────────────────
+// ── DAY 2 ──────────────────────────────────────────────────────────────────
   {
     date: "DAY 2: Nov 6th",
     title: "Startup Weekend",
     items: [
-      // TODO: Add Day 2 schedule items here
-      // Each item follows the ScheduleItem shape:
-      // {
-      //   time: "9:00 AM",
-      //   title: "...",
-      //   description: "...",
-      //   tag: { label: "...", color: "blue" | "amber" | "red" | "green" | "default" },
-      //   highlighted: false, // optional
-      // },
+      {
+        time: "9:00 AM",
+        title: "keynote: startup policies & msme support for tech entrepreneurship",
+        description:
+          "Mr. XYZ lectures on government intervention for startups and tech entrepreneurs",
+        tag: { label: "KEYNOTE", color: "red" },
+      },
+      {
+        time: "10:00 aM",
+        title: "PANEL: TECHNOLOGY INNOVATION, LEADERSHIP & CONTINUITY",
+        description:
+          "Executives and founders from XYZ companies",
+        tag: { label: "panel", color: "blue" },
+      },
+      {
+        time: "11:00 am",
+        title: "startup showcase & pitch competition",
+        description:
+          "Selected Edo-based startups pitch live to investors, VCs, and corporate partners.",
+        tag: { label: "pitch", color: "default" },
+      },
+      {
+        time: "12:00 pm",
+        title: "lunch break & exhibitions",
+        description:
+          "Business and technology showcase, activation and exhibition walkthroughs.",
+        tag: { label: "exhibition", color: "default" },
+      },
+      {
+        time: "1:45 pm",
+        title: "fireside chat: ecosystem growth and impact",
+        description:
+          "Top leaders and senior professionals from XYZ companies",
+        tag: { label: "fireside", color: "amber" },
+      },
+      {
+        time: "1:15 pM",
+        title: "investor round table",
+        description:
+          "Strategic investor matchmaking, deal rooms and partnership meetups",
+        tag: { label: "networking", color: "default" },
+      },
+      {
+        time: "1:45 pM",
+        title: "Workshop block b — 3 Parallel Tracks",
+        description:
+          "Tracks: data & AI track, creative track, and web3 track.",
+        tag: { label: "workshop", color: "green" },
+      },
     ],
   },
 
@@ -211,7 +252,55 @@ export const scheduleDays: ScheduleDay[] = [
     date: "DAY 3: Nov 7th",
     title: "Awards & Recognition",
     items: [
-      // TODO: Add Day 3 schedule items here
+      {
+        time: "9:00 AM",
+        title: "fireside chat: ecosystem growth and impact",
+        description:
+          "Top leaders and senior professionals from XYZ companies",
+        tag: { label: "fireside", color: "amber" },
+      },
+      {
+        time: "9:45 AM",
+        title: "arts & SPECIAL PERFORMANCE",
+        description:
+          "Edo arts and cultural display, artist performances, and speed networking.",
+        tag: { label: "ENTERTAINMENT", color: "default" },
+      },
+      {
+        time: "10:15 aM",
+        title: "STARTUP PITCH AWARDS",
+        description:
+          "Announcement of pitch competition winners and prize giving.",
+        tag: { label: "AWARDS", color: "brown" },
+      },
+      {
+        time: "11:00 am",
+        title: "community & brand awardS",
+        description:
+          "Awards and recognition of brands, sponsors, partners, communities and institutions.",
+        tag: { label: "AWARDS", color: "brown" },
+      },
+      {
+        time: "12:00 pm",
+        title: "LUNCH BREAK & NETWORKING",
+        description:
+          "Strategic investor matchmaking, startup and partnership meetups",
+        tag: { label: "networking", color: "default" },
+      },
+      {
+        time: "12:30 pm",
+        title: "PERSONALITY & IMPACT awardS",
+        description:
+          "Awards and recognition of individuals, talents, personality and figures making significant impacts.",
+        tag: { label: "AWARDS", color: "brown" },
+      },
+      {
+        time: "1:30 pm",
+        title: "closing ceremony & KEYNOTE",
+        description:
+          "Official closing address, partnership announcement, event review and BTF 3.0 teaser",
+        tag: { label: "KEYNOTE", color: "red" },
+      },
     ],
   },
 ];
