@@ -1,8 +1,51 @@
-import { Resend } from 'resend';
+const SURESEND_API_URL = 'https://api.suresendapi.com/developer/emails/send';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const FROM_EMAIL = process.env.SURESEND_FROM_EMAIL || 'Benin Tech Fest <info@email.benintechfest.com.ng>';
 
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Benin Tech Fest <info@email.benintechfest.com.ng>';
+async function sendSuresendEmail(toEmail: string, subject: string, html: string, text: string): Promise<boolean> {
+  try {
+    if (!process.env.SURESEND_API_KEY) {
+      console.warn('SURESEND_API_KEY not configured. Email not sent.');
+      return false;
+    }
+
+    const response = await fetch(SURESEND_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.SURESEND_API_KEY}`,
+      },
+      body: JSON.stringify({
+        to_email: toEmail,
+        subject,
+        htmlbody: html,
+        textbody: text,
+      }),
+    });
+
+    const payload = await response.text();
+    let data: Record<string, unknown> | null = null;
+
+    try {
+      data = payload ? JSON.parse(payload) as Record<string, unknown> : null;
+    } catch {
+      data = null;
+    }
+
+    if (!response.ok) {
+      const message = typeof data?.message === 'string' ? data.message : `Suresend request failed with status ${response.status}`;
+      const errors = data && typeof data.errors === 'object' ? data.errors : {};
+      console.error('Failed to send email via Suresend:', message, errors);
+      return false;
+    }
+
+    console.log(`Email sent successfully via Suresend to ${toEmail}`);
+    return true;
+  } catch (error) {
+    console.error('Error sending email via Suresend:', error);
+    return false;
+  }
+}
 
 export interface EmailData {
   name?: string;
@@ -111,8 +154,8 @@ export async function sendFormNotificationEmail(
   fields: { label: string; value: string }[]
 ): Promise<boolean> {
   try {
-    if (!process.env.RESEND_API_KEY) {
-      console.warn('RESEND_API_KEY not configured. Email not sent.');
+    if (!process.env.SURESEND_API_KEY) {
+      console.warn('SURESEND_API_KEY not configured. Email not sent.');
       return false;
     }
 
@@ -120,23 +163,9 @@ export async function sendFormNotificationEmail(
     const html = renderEmailTemplate(formType, data, fields);
     const text = renderPlainTextEmail(formType, data, fields);
 
-    const { error } = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: [data.email!],
-      replyTo: FROM_EMAIL,
-      subject,
-      html,
-      text,
-      headers: {
-        // Signals to inbox providers this is a transactional one-time mail
-        'X-Entity-Ref-ID': `benintechfest-${Date.now()}`,
-        'List-Unsubscribe': '<mailto:info@email.benintechfest.com.ng?subject=unsubscribe>',
-        'Precedence': 'bulk',
-      },
-    });
+    const sent = await sendSuresendEmail(data.email!, subject, html, text);
 
-    if (error) {
-      console.error('Failed to send email via Resend:', error);
+    if (!sent) {
       return false;
     }
 
@@ -160,8 +189,8 @@ export interface SpeakerEmailData extends Pick<EmailData, 'name' | 'email'> {
 
 export async function sendSpeakerBriefEmail({ name, email, speakingCategory, areaOfInterest }: SpeakerEmailData): Promise<boolean> {
   try {
-    if (!process.env.RESEND_API_KEY || !email) {
-      console.warn('RESEND_API_KEY or recipient email is missing. Speaker brief email not sent.');
+    if (!process.env.SURESEND_API_KEY || !email) {
+      console.warn('SURESEND_API_KEY or recipient email is missing. Speaker brief email not sent.');
       return false;
     }
 
@@ -244,17 +273,9 @@ export async function sendSpeakerBriefEmail({ name, email, speakingCategory, are
 </body>
 </html>`;
 
-    const { error } = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: [email],
-      replyTo: FROM_EMAIL,
-      subject,
-      html,
-      text,
-    });
+    const sent = await sendSuresendEmail(email, subject, html, text);
 
-    if (error) {
-      console.error('Failed to send speaker brief email via Resend:', error);
+    if (!sent) {
       return false;
     }
 
@@ -274,8 +295,8 @@ export interface ExhibitorEmailData extends Pick<EmailData, 'name' | 'email'> {
 
 export async function sendExhibitorBriefEmail({ name, email, companyName, exhibitionPackage }: ExhibitorEmailData): Promise<boolean> {
   try {
-    if (!process.env.RESEND_API_KEY || !email) {
-      console.warn('RESEND_API_KEY or recipient email is missing. Exhibitor brief email not sent.');
+    if (!process.env.SURESEND_API_KEY || !email) {
+      console.warn('SURESEND_API_KEY or recipient email is missing. Exhibitor brief email not sent.');
       return false;
     }
 
@@ -359,17 +380,9 @@ export async function sendExhibitorBriefEmail({ name, email, companyName, exhibi
 </body>
 </html>`;
 
-    const { error } = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: [email],
-      replyTo: FROM_EMAIL,
-      subject,
-      html,
-      text,
-    });
+    const sent = await sendSuresendEmail(email, subject, html, text);
 
-    if (error) {
-      console.error('Failed to send exhibitor brief email via Resend:', error);
+    if (!sent) {
       return false;
     }
 
@@ -386,8 +399,8 @@ export async function sendRegistrationEmail({
   registrationId,
 }: Pick<EmailData, 'name' | 'email'> & { registrationId?: string | number }): Promise<boolean> {
   try {
-    if (!process.env.RESEND_API_KEY || !email) {
-      console.warn('RESEND_API_KEY or recipient email is missing. Registration email not sent.');
+    if (!process.env.SURESEND_API_KEY || !email) {
+      console.warn('SURESEND_API_KEY or recipient email is missing. Registration email not sent.');
       return false;
     }
 
@@ -482,17 +495,9 @@ export async function sendRegistrationEmail({
 </body>
 </html>`;
 
-    const { error } = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: [email],
-      replyTo: FROM_EMAIL,
-      subject,
-      html,
-      text,
-    });
+    const sent = await sendSuresendEmail(email, subject, html, text);
 
-    if (error) {
-      console.error('Failed to send registration email via Resend:', error);
+    if (!sent) {
       return false;
     }
 
@@ -517,8 +522,8 @@ export interface TicketConfirmationData {
 
 export async function sendTicketConfirmationEmail(data: TicketConfirmationData): Promise<boolean> {
   try {
-    if (!process.env.RESEND_API_KEY || !data.email) {
-      console.warn('RESEND_API_KEY or recipient email is missing. Ticket confirmation email not sent.');
+    if (!process.env.SURESEND_API_KEY || !data.email) {
+      console.warn('SURESEND_API_KEY or recipient email is missing. Ticket confirmation email not sent.');
       return false;
     }
 
@@ -624,20 +629,9 @@ export async function sendTicketConfirmationEmail(data: TicketConfirmationData):
 </body>
 </html>`;
 
-    const { error } = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: [data.email],
-      replyTo: FROM_EMAIL,
-      subject,
-      html,
-      text,
-      headers: {
-        'X-Entity-Ref-ID': `btf-ticket-${data.paymentReference}-${Date.now()}`,
-      },
-    });
+    const sent = await sendSuresendEmail(data.email, subject, html, text);
 
-    if (error) {
-      console.error('Failed to send ticket confirmation email via Resend:', error);
+    if (!sent) {
       return false;
     }
 

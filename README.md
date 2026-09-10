@@ -185,7 +185,7 @@ This project is built with modern web tooling and a small server-side layer.
 ### Backend
 - Next.js API routes
 - PostgreSQL via the pg package
-- Resend for email delivery
+- SureSendAPI for email delivery
 
 ---
 
@@ -197,14 +197,14 @@ Create a .env.local file with values similar to the following:
 
 ```env
 DATABASE_URL=postgres://your-user:your-password@localhost:5432/your-database
-RESEND_API_KEY=your_resend_api_key
-RESEND_FROM_EMAIL=Benin Tech Fest <noreply@yourdomain.com>
+SURESEND_API_KEY=your_suresend_api_key
+SURESEND_FROM_EMAIL=Benin Tech Fest <noreply@yourdomain.com>
 ```
 
 ### Required variables
 - DATABASE_URL — PostgreSQL connection string used by the submission APIs
-- RESEND_API_KEY — API key for Resend
-- RESEND_FROM_EMAIL — sender identity used in outgoing emails
+- SURESEND_API_KEY — API key for SureSendAPI
+- SURESEND_FROM_EMAIL — sender identity used in outgoing emails
 
 > The project uses these values at runtime, so they must be available before you run the app or deploy it.
 
@@ -217,7 +217,7 @@ RESEND_FROM_EMAIL=Benin Tech Fest <noreply@yourdomain.com>
 - Node.js 18 or newer
 - npm
 - PostgreSQL database access
-- Resend account for email sending
+- SureSendAPI account for email sending
 
 ### Installation
 
@@ -276,8 +276,8 @@ Recommended deployment steps:
 
 ### Production environment checklist
 - Database connection is available
-- Resend API key is configured
-- The sender email domain is valid and approved in Resend
+- SureSendAPI key is configured
+- The sender email domain is valid and approved in SureSendAPI
 - Images and metadata assets are available in the public folder
 
 ---
@@ -334,9 +334,9 @@ Check that:
 
 ### Emails are not sending
 Check that:
-- RESEND_API_KEY is configured
-- RESEND_FROM_EMAIL is set correctly
-- the Resend account has permission to send mail from the chosen sender
+- SURESEND_API_KEY is configured
+- SURESEND_FROM_EMAIL is set correctly
+- the SureSendAPI account has permission to send mail from the chosen sender
 
 ---
 
