@@ -148,7 +148,9 @@ function BuyTicketContent() {
     }, [isValidatingEmail, loadingPhraseIndex]);
 
     const applyCoupon = async () => {
-        if (!couponCode.trim()) {
+        const normalizedCoupon = couponCode.trim();
+
+        if (!normalizedCoupon) {
             setCouponValidation(null);
             return;
         }
@@ -162,12 +164,15 @@ function BuyTicketContent() {
         setErrors((prev) => ({ ...prev, coupon: "" }));
 
         try {
-            const result = await validateCoupon(couponCode.trim(), email, quantity, passPrice, passKey);
-            setCouponValidation(result);
+            const result = await validateCoupon(normalizedCoupon, email, quantity, passPrice, passKey);
 
             if (!result.valid) {
+                setCouponValidation(null);
                 setErrors((prev) => ({ ...prev, coupon: result.message }));
+                return;
             }
+
+            setCouponValidation(result);
         } finally {
             setIsValidatingCoupon(false);
         }
@@ -189,6 +194,10 @@ function BuyTicketContent() {
         setIsProcessing(true);
 
         try {
+            const normalizedCouponCode = couponCode.trim().toUpperCase();
+            const validAppliedCoupon = couponValidation?.valid && normalizedCouponCode && couponValidation.coupon?.code && normalizedCouponCode === couponValidation.coupon.code.toUpperCase();
+            const paymentCouponCode = validAppliedCoupon ? normalizedCouponCode : null;
+
             const paymentResponse = await fetch("/api/payments/initialize", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -197,7 +206,7 @@ function BuyTicketContent() {
                     email: email.trim(),
                     firstName: name.trim().split(" ")[0],
                     lastName: name.trim().split(" ").slice(1).join(" ") || "-",
-                    coupon_code: couponCode.trim() || null,
+                    coupon_code: paymentCouponCode,
                     quantity,
                     total_price: finalPrice,
                 }),
@@ -235,6 +244,10 @@ function BuyTicketContent() {
                     try {
                         const firstName = name.trim().split(' ')[0];
                         const lastName = name.trim().split(' ').slice(1).join(' ') || '-';
+                        const validTicketCouponCode = couponValidation?.valid && couponCode.trim().toUpperCase() === couponValidation.coupon?.code?.toUpperCase()
+                            ? couponCode.trim().toUpperCase()
+                            : undefined;
+
                         const ticketRes = await fetch('/api/submissions/ticket', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
@@ -250,7 +263,7 @@ function BuyTicketContent() {
                                 paymentReference: transaction.reference,
                                 registrationId,
                                 quantity,
-                                couponCode: couponCode.trim() || undefined,
+                                couponCode: validTicketCouponCode,
                             }),
                         });
                         const ticketData = await ticketRes.json();
@@ -266,9 +279,13 @@ function BuyTicketContent() {
                         console.error('Failed to submit ticket registration after payment:', err);
                     }
 
-                    if (couponCode.trim() && couponValidation?.valid) {
+                    const successfulCouponCode = couponValidation?.valid && couponCode.trim().toUpperCase() === couponValidation.coupon?.code?.toUpperCase()
+                        ? couponCode.trim().toUpperCase()
+                        : null;
+
+                    if (successfulCouponCode) {
                         await redeemCoupon(
-                            couponCode.trim(),
+                            successfulCouponCode,
                             email,
                             realTicketId,
                             passName,
@@ -408,7 +425,18 @@ function BuyTicketContent() {
                                     <input
                                         type="text"
                                         value={couponCode}
-                                        onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                                        onChange={(e) => {
+                                            const nextValue = e.target.value.toUpperCase();
+                                            setCouponCode(nextValue);
+
+                                            if (couponValidation && (!nextValue || nextValue !== couponValidation.coupon?.code?.toUpperCase())) {
+                                                setCouponValidation(null);
+                                            }
+
+                                            if (errors.coupon) {
+                                                setErrors((prev) => ({ ...prev, coupon: "" }));
+                                            }
+                                        }}
                                         placeholder="Enter coupon code"
                                         disabled={!isRegistered}
                                         className={`flex-1 ${getFieldClass(!!errors.coupon, couponValidation?.valid)} ${inputTextClass} ${!isRegistered ? 'opacity-50 cursor-not-allowed' : ''}`}
