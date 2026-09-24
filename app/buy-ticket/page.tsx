@@ -226,7 +226,16 @@ function BuyTicketContent() {
 
                 if (paymentCouponCode) {
                     try {
-                        await redeemCoupon(paymentCouponCode, email.trim(), registrationId);
+                        await redeemCoupon(
+                            paymentCouponCode,
+                            email.trim(),
+                            registrationId,
+                            passName,
+                            quantity,
+                            couponValidation?.discount_amount ?? 0,
+                            totalPrice,
+                            finalPrice
+                        );
                     } catch (redeemErr) {
                         console.error("Failed to redeem coupon:", redeemErr);
                     }
