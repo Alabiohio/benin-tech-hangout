@@ -243,7 +243,11 @@ function BuyTicketContent() {
 
                 setIsProcessing(false);
                 setIsVerifyingPayment(false);
-                setIsSuccessModalOpen(true);
+                if (typeof window !== 'undefined') {
+                    sessionStorage.setItem('btf_success_timestamp', Date.now().toString());
+                    sessionStorage.setItem('btf_success_type', 'ticket');
+                }
+                router.push('/register/success?type=ticket');
                 return;
             }
 
