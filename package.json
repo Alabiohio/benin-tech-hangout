@@ -15,6 +15,7 @@
     "@react-three/fiber": "^9.5.0",
     "@types/three": "^0.182.0",
     "aos": "^2.3.4",
+    "cloudflared": "^0.7.3",
     "framer-motion": "^12.38.0",
     "ldrs": "^1.1.9",
     "next": "16.2.3",

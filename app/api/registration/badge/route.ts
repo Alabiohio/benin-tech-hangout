@@ -15,6 +15,9 @@ const TIER_LABELS: Record<string, string> = {
     founders: 'Founders Pass',
     vip: 'VIP Pass',
     investors: 'Investors Pass',
+    free: 'Free Pass',
+    'free tickets': 'Free Tickets',
+    'free pass': 'Free Pass',
 };
 
 function toBadgeItem(row: any, source: string) {

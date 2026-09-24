@@ -21,6 +21,9 @@ const TIER_LABELS: Record<string, string> = {
     regular: 'Regular Pass',
     standard: 'Standard Pass',
     business: 'Business Pass',
+    free: 'Free Pass',
+    'free tickets': 'Free Tickets',
+    'free pass': 'Free Pass',
 };
 
 
@@ -55,11 +58,12 @@ export async function POST(request: NextRequest) {
         try {
             const client = await pool.connect();
             try {
-                const res = await client.query('SELECT price FROM ticketting WHERE name = $1 AND is_active = true', [ticket_type]);
-                if (res.rows.length === 0 && ticket_type && TIER_LABELS[ticket_type]) {
-                    // Fallback or error if not found? Let's just return an error if it's not a dynamic ticket
-                }
-                if (res.rows.length > 0) {
+                const res = await client.query('SELECT price FROM ticketting WHERE LOWER(name) = LOWER($1) AND is_active = true', [ticket_type]);
+                if (res.rows.length === 0) {
+                    if (ticket_type === 'free' || ticket_type === 'free tickets' || ticket_type === 'free pass') {
+                        baseAmount = 0;
+                    }
+                } else {
                     baseAmount = Math.round(parseFloat(res.rows[0].price) * 100);
                 }
             } finally {

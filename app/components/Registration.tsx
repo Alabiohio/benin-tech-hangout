@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 type FormData = {
     name: string;
@@ -11,6 +12,7 @@ type FormData = {
 type FormErrors = Partial<Record<keyof FormData, string>>;
 
 export default function Registration() {
+    const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [formData, setFormData] = useState<FormData>({
@@ -112,6 +114,11 @@ export default function Registration() {
                 setMessage('✓ Registration successful! Check your email for confirmation.');
                 setFormData({ name: '', email: '', primaryInterest: '' });
                 setErrors({});
+                if (typeof window !== 'undefined') {
+                    sessionStorage.setItem('btf_success_timestamp', Date.now().toString());
+                    sessionStorage.setItem('btf_success_type', 'register');
+                }
+                router.push('/register/success?type=register');
             } else {
                 setMessage(`✗ Error: ${data.error || 'Failed to submit'}`);
             }

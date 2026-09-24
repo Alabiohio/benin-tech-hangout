@@ -10,6 +10,21 @@ import passBadge3 from "@/assets/images/ticket/pattern1.png";
 
 const passes = [
   {
+    name: "Free Tickets",
+    price: "Free",
+    audience: "STUDENTS & PARTNERS",
+    badge: passBadge,
+    colorClass: "bg-red",
+    textColorClass: "text-red",
+    features: [
+      "For Students",
+      "Community Partners",
+      "2days event access",
+      "Access to exhibition floor + all public sessions",
+      "Access to job fair and recruiting companies",
+    ],
+  },
+  {
     name: "Regular",
     price: "₦3,500",
     audience: "EVERYBODY ACCESS",
@@ -60,7 +75,7 @@ const passes = [
   },
   {
     name: "VIP",
-    price: "₦85,000",
+    price: "₦45,000",
     audience: "EXCLUSIVE EXPERIENCE",
     badge: passBadge3,
     colorClass: "bg-purple",
@@ -114,20 +129,22 @@ function EventExperienceIntroSection() {
 function EventPassPricingSection() {
   const router = useRouter();
 
-  const handlePassSelection = (passName: string, passPrice: number) => {
+  const handlePassSelection = (passName: string, rawPrice: string) => {
+    const parsedPrice = parseInt(rawPrice.replace(/[^0-9]/g, ''), 10);
+    const passPrice = isNaN(parsedPrice) ? 0 : parsedPrice;
     router.push(`/buy-ticket?pass=${encodeURIComponent(passName)}&price=${passPrice}`);
   };
 
   return (
     <section
-      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-start gap-4 relative self-stretch w-full flex-[0_0_auto] px-5 pb-8"
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 items-start gap-4 relative self-stretch w-full flex-[0_0_auto] px-5 pb-8"
       aria-label="Event pass pricing"
     >
       {passes.map((pass, index) => (
         <motion.article
           key={pass.name}
           className="flex flex-col h-[560px] items-start relative flex-1 grow bg-colours-neutral"
-          aria-labelledby={`${pass.name.toLowerCase()}-pass-title`}
+          aria-labelledby={`${pass.name.toLowerCase().replace(/\s+/g, '-')}-pass-title`}
           initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
@@ -144,7 +161,7 @@ function EventPassPricingSection() {
               {pass.price}
             </div>
             <h3
-              id={`${pass.name.toLowerCase()}-pass-title`}
+              id={`${pass.name.toLowerCase().replace(/\s+/g, '-')}-pass-title`}
               className="relative self-stretch font-heading-head-lg font-bold text-3xl text-background tracking-[var(--heading-head-lg-letter-spacing)] leading-[var(--heading-head-lg-line-height)]"
             >
               {pass.name}
@@ -174,7 +191,7 @@ function EventPassPricingSection() {
               type="button"
               className={`${pass.colorClass} all-unset box-border flex items-center justify-center gap-2 py-3 px-10 relative self-stretch w-full flex-[0_0_auto] rounded-[1000px] cursor-pointer hover:opacity-90 transition-opacity`}
               aria-label={`Get ${pass.name} pass for ${pass.price}`}
-              onClick={() => handlePassSelection(pass.name, parseInt(pass.price.replace(/[₦,]/g, '')))}
+              onClick={() => handlePassSelection(pass.name, pass.price)}
             >
               <span className="relative flex items-center justify-center w-fit mt-[-1.00px] font-label-sm font-[number:var(--label-sm-font-weight)] text-background text-[length:var(--label-sm-font-size)] text-center tracking-[var(--label-sm-letter-spacing)] leading-[var(--label-sm-line-height)] whitespace-nowrap [font-style:var(--label-sm-font-style)]">
                 GET PASS

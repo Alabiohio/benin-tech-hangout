@@ -59,7 +59,7 @@ npm run seed:coupons
 This will create 4 test coupons:
 - **EARLYBIRD50** - ₦5,000 off (Fixed)
 - **TECH20** - 20% off (Percentage)
-- **SPONSOR10** - ₦85,000 off (Free VIP ticket)
+- **SPONSOR10** - ₦45,000 off (Free VIP ticket)
 - **FRIEND15** - 15% off (Percentage)
 
 ### Step 3: Test the Flow
@@ -247,7 +247,7 @@ AND coupon_id = (SELECT id FROM coupons WHERE code = 'TECH20');
 
 ---
 
-## 🎉 You're All Set!
+##  You're All Set!
 
 The coupon system is fully implemented and ready to use. Start by testing with the seed coupons!
 

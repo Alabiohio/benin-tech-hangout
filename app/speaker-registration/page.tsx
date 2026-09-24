@@ -1,6 +1,7 @@
 'use client';
 
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -44,6 +45,7 @@ const initialForm: FormState = {
 };
 
 export default function RegisterPage() {
+    const router = useRouter();
     const [formData, setFormData] = useState<FormState>(initialForm);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
@@ -168,7 +170,11 @@ export default function RegisterPage() {
 
             setFormData(initialForm);
             setSubmitted(false);
-            setIsSuccessModalOpen(true);
+            if (typeof window !== 'undefined') {
+                sessionStorage.setItem('btf_success_timestamp', Date.now().toString());
+                sessionStorage.setItem('btf_success_type', 'speaker');
+            }
+            router.push('/register/success?type=speaker');
         } catch (error) {
             console.error('Speaker submission error:', error);
             setSubmitError(error instanceof Error ? error.message : 'An unexpected error occurred. Please try again.');
@@ -410,7 +416,6 @@ export default function RegisterPage() {
                 </section>
             </main>
 
-            <ConfirmationModal isOpen={isSuccessModalOpen} onClose={() => setIsSuccessModalOpen(false)} />
             <Footer />
         </div>
     );

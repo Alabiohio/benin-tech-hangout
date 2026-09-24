@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Image from 'next/image';
@@ -9,6 +10,7 @@ import formBanner from "@/assets/images/formBanner.png";
 import DropdownIcon from "../components/DropdownIcon";
 import Spinner from '../components/Spinner';
 import ConfirmationModal from '../components/ConfirmationModal';
+
 const imgVector1 = 'https://www.figma.com/api/mcp/asset/c718115e-08bd-4291-a1f2-818463646722.svg';
 const imgVector2 = 'https://www.figma.com/api/mcp/asset/23f25dc7-e463-4b43-806a-32a4e82381fc.svg';
 
@@ -36,6 +38,7 @@ function InputField({ placeholder = 'First name', value, onChange, name, type = 
 }
 
 export default function ExhibitionPage() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -117,7 +120,11 @@ export default function ExhibitionPage() {
 
       const result = await response.json();
       setSubmitStatus('success');
-      setIsSuccessModalOpen(true);
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('btf_success_timestamp', Date.now().toString());
+        sessionStorage.setItem('btf_success_type', 'exhibition');
+      }
+      router.push('/register/success?type=exhibition');
       
       // Reset form
       setFormData({
@@ -352,7 +359,6 @@ export default function ExhibitionPage() {
         </section>
       </main>
 
-      <ConfirmationModal isOpen={isSuccessModalOpen} onClose={() => setIsSuccessModalOpen(false)} />
       <Footer />
     </div>
   );

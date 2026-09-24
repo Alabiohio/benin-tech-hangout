@@ -40,7 +40,7 @@ const testCoupons = [
         code: 'SPONSOR10',
         description: 'Free tickets for sponsors',
         discount_type: 'FIXED_AMOUNT',
-        discount_value: 85000, // VIP ticket price
+        discount_value: 45000, // VIP ticket price
         valid_until: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000), // 90 days from now
         max_total_redemptions: 10,
         max_redemptions_per_user: 1,

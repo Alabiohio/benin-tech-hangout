@@ -231,7 +231,7 @@ Or add this script to your `package.json`:
 |------|----------|------|----------|----------|---------|
 | `EARLYBIRD50` | ₦5,000 off | Fixed | 100 | 1 | 30 days |
 | `TECH20` | 20% off | Percentage | 500 | 3 | 60 days |
-| `SPONSOR10` | ₦85,000 off (VIP free) | Fixed | 10 | 1 | 90 days |
+| `SPONSOR10` | ₦45,000 off (VIP free) | Fixed | 10 | 1 | 90 days |
 | `FRIEND15` | 15% off | Percentage | 300 | 2 | 45 days |
 
 ### Step 3: Manual Testing Flow

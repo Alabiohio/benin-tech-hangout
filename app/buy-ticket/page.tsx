@@ -197,6 +197,46 @@ function BuyTicketContent() {
             const normalizedCouponCode = couponCode.trim().toUpperCase();
             const validAppliedCoupon = couponValidation?.valid && normalizedCouponCode && couponValidation.coupon?.code && normalizedCouponCode === couponValidation.coupon.code.toUpperCase();
             const paymentCouponCode = validAppliedCoupon ? normalizedCouponCode : null;
+            const registrationId = generateRegistrationId();
+            const firstName = name.trim().split(" ")[0];
+            const lastName = name.trim().split(" ").slice(1).join(" ") || "-";
+
+            // If final price is 0 (Free Ticket or 100% discount), register directly without Paystack
+            if (finalPrice === 0) {
+                setIsVerifyingPayment(true);
+                const submitResponse = await fetch("/api/submissions/ticket", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        ticket_type: passName.toLowerCase(),
+                        firstName,
+                        lastName,
+                        email: email.trim(),
+                        paymentReference: `free-${registrationId}`,
+                        registrationId,
+                        quantity,
+                        couponCode: paymentCouponCode,
+                    }),
+                });
+
+                if (!submitResponse.ok) {
+                    const errorData = await submitResponse.json().catch(() => ({}));
+                    throw new Error(errorData.error || "Failed to register ticket");
+                }
+
+                if (paymentCouponCode) {
+                    try {
+                        await redeemCoupon(paymentCouponCode, email.trim(), registrationId);
+                    } catch (redeemErr) {
+                        console.error("Failed to redeem coupon:", redeemErr);
+                    }
+                }
+
+                setIsProcessing(false);
+                setIsVerifyingPayment(false);
+                setIsSuccessModalOpen(true);
+                return;
+            }
 
             const paymentResponse = await fetch("/api/payments/initialize", {
                 method: "POST",
@@ -204,8 +244,8 @@ function BuyTicketContent() {
                 body: JSON.stringify({
                     ticket_type: passName.toLowerCase(),
                     email: email.trim(),
-                    firstName: name.trim().split(" ")[0],
-                    lastName: name.trim().split(" ").slice(1).join(" ") || "-",
+                    firstName,
+                    lastName,
                     coupon_code: paymentCouponCode,
                     quantity,
                     total_price: finalPrice,
@@ -213,7 +253,8 @@ function BuyTicketContent() {
             });
 
             if (!paymentResponse.ok) {
-                throw new Error("Failed to initialize payment");
+                const errorData = await paymentResponse.json().catch(() => ({}));
+                throw new Error(errorData.error || "Failed to initialize payment");
             }
 
             const { accessCode } = await paymentResponse.json();
@@ -227,12 +268,11 @@ function BuyTicketContent() {
                 throw new Error("Paystack not loaded");
             }
 
-            const registrationId = generateRegistrationId();
-
             const paystack = new PaystackPop();
             paystack.resumeTransaction(accessCode, {
                 onClose: () => {
                     console.log("Payment window closed");
+                    setIsProcessing(false);
                 },
                 onSuccess: async (transaction: any) => {
                     setIsVerifyingPayment(true);
@@ -290,14 +330,27 @@ function BuyTicketContent() {
                             realTicketId,
                             passName,
                             quantity,
-                            couponValidation.discount_amount,
+                            couponValidation?.discount_amount ?? 0,
                             totalPrice,
                             finalPrice
                         );
                     }
 
                     setIsVerifyingPayment(false);
-                    setIsSuccessModalOpen(true);
+                    if (typeof window !== 'undefined') {
+                        sessionStorage.setItem('btf_success_timestamp', Date.now().toString());
+                        sessionStorage.setItem('btf_success_type', 'ticket');
+                    }
+                    router.push('/register/success?type=ticket');
+                },
+                onError: (error: any) => {
+                    console.error('Paystack payment error:', error);
+                    setIsProcessing(false);
+                    if (typeof window !== 'undefined') {
+                        sessionStorage.setItem('btf_success_timestamp', Date.now().toString());
+                        sessionStorage.setItem('btf_success_type', 'payment_failed');
+                    }
+                    router.push('/register/success?type=payment_failed');
                 },
             });
         } catch (error) {
@@ -509,11 +562,6 @@ function BuyTicketContent() {
                     </div>
                 </section>
             </main>
-
-            <ConfirmationModal isOpen={isSuccessModalOpen} onClose={() => {
-                setIsSuccessModalOpen(false);
-                router.push('/');
-            }} />
             
             {isValidatingEmail && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-all duration-300">

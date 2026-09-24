@@ -17,13 +17,16 @@ const TIER_LABELS: Record<string, string> = {
   regular: 'Regular Pass',
   standard: 'Standard Pass',
   business: 'Business Pass',
+  free: 'Free Pass',
+  'free tickets': 'Free Tickets',
+  'free pass': 'Free Pass',
 };
 
 const TIER_AMOUNTS: Record<string, number> = {
   explorer: 350000,
   builders: 1000000,
   founders: 2000000,
-  vip: 8500000,
+  vip: 4500000,
   investors: 20000000,
   regular: 350000,
   standard: 1000000,
@@ -165,7 +168,7 @@ export async function processPaystackWebhook(body: string, signature: string | n
       console.log(`Paystack webhook confirmed and ${tickets.length} ticket(s) saved for ${emailAddress} (${paymentReference})`);
       return { status: 200, message: 'Payment confirmed and ticket issued' };
     } finally {
-      try { await client.query('ROLLBACK'); } catch {}
+      try { await client.query('ROLLBACK'); } catch { }
       client.release();
     }
   } catch (error) {

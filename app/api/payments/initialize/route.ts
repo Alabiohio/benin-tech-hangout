@@ -35,11 +35,16 @@ export async function POST(request: NextRequest) {
   try {
     const client = await pool.connect();
     try {
-      const res = await client.query('SELECT price FROM ticketting WHERE name = $1 AND is_active = true', [ticketType]);
+      const res = await client.query('SELECT price FROM ticketting WHERE LOWER(name) = LOWER($1) AND is_active = true', [ticketType]);
       if (res.rows.length === 0) {
-        return NextResponse.json({ error: 'Invalid or inactive ticket type' }, { status: 400 });
+        if (ticketType === 'free' || ticketType === 'free tickets' || ticketType === 'free pass') {
+          basePriceInKobo = 0;
+        } else {
+          return NextResponse.json({ error: 'Invalid or inactive ticket type' }, { status: 400 });
+        }
+      } else {
+        basePriceInKobo = Math.round(parseFloat(res.rows[0].price) * 100); // Assuming DB stores Naira
       }
-      basePriceInKobo = Math.round(parseFloat(res.rows[0].price) * 100); // Assuming DB stores Naira
     } finally {
       client.release();
     }
