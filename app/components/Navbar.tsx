@@ -63,7 +63,7 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                     </span>
                 </Link>
 
-                <nav className="hidden lg:flex items-center gap-8 text-[13px] font-bold uppercase tracking-widest transition-colors duration-300 text-colors-inverted mr-8">
+                <nav className="hidden xl:flex items-center gap-8 text-[13px] font-bold uppercase tracking-widest transition-colors duration-300 text-colors-inverted mr-8">
                     <Link href="/#about" className="hover:text-biro-blue-dark transition-colors">About</Link>
                     <Link href="/#pitch" className="hover:text-biro-blue-dark transition-colors">Pitch</Link>
                     <Link href="/ticket" className="hover:text-biro-blue-dark transition-colors">Tickets</Link>
@@ -76,7 +76,7 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
 
                 <div className="flex items-center gap-4 min-w-0">
                     <ThemeToggle />
-                    <div className="hidden lg:block">
+                    <div className="hidden xl:block">
                         <Link
                             href="/register"
                             className="px-6 py-2.5 text-lg font-black rounded-full uppercase tracking-widest text-[11px] transition-all duration-300 active:scale-95 bg-biro-blue text-white hover:bg-transparent hover:border-3 hover:border-biro-blue hover:text-biro-blue"
@@ -87,7 +87,7 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
 
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        className="lg:hidden shrink-0 p-2 cursor-pointer transition-colors duration-300 text-foreground"
+                        className="xl:hidden shrink-0 p-2 cursor-pointer transition-colors duration-300 text-foreground"
                         aria-label="Toggle Menu"
                     >
                         {isMenuOpen ? (
@@ -99,7 +99,7 @@ export default function Navbar({ onRegisterClick }: { onRegisterClick?: () => vo
                 </div>
             </div>
 
-            <div className={`fixed inset-0 bg-background lg:hidden transition-all duration-300 ease-in-out z-[200] flex flex-col ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+            <div className={`fixed inset-0 bg-background xl:hidden transition-all duration-300 ease-in-out z-[200] flex flex-col ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
                 <div className="flex items-center justify-between px-6 py-3">
                     <Link href="/" className="flex items-center gap-2" onClick={handleLinkClick}>
                         <Image

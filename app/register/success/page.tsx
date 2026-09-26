@@ -32,8 +32,8 @@ const TYPE_CONFIGS: Record<string, Config> = {
     title: "Ticket Confirmed!",
     message: "Thank you for purchasing your BTF 2.0 ticket! Check your email for your event pass and details.",
     shareText: "I just got my ticket for Benin Tech Fest 2.0 (BTF 2.0)! 🎫 Join me in Benin City from Nov 5-7, 2026.",
-    primaryCtaText: "Event Schedule",
-    primaryCtaHref: "/schedule",
+    primaryCtaText: "Home",
+    primaryCtaHref: "/",
     secondaryCtaText: "Home",
     secondaryCtaHref: "/",
   },
@@ -388,14 +388,6 @@ function SuccessContent() {
                   }`}
                 >
                   {primaryCtaText}
-                </Link>
-              )}
-              {secondaryCtaText && (
-                <Link
-                  href={secondaryCtaHref}
-                  className="flex h-[52px] md:h-[60px] px-8 items-center justify-center rounded-full bg-gray-200 text-[1.05rem] md:text-[1.2rem] font-medium uppercase tracking-[-0.02em] text-[#111111] transition-colors duration-200 hover:bg-gray-300"
-                >
-                  {secondaryCtaText}
                 </Link>
               )}
             </div>
