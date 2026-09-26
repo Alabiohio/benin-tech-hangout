@@ -203,42 +203,42 @@ export const scheduleDays: ScheduleDay[] = [
         tag: { label: "KEYNOTE", color: "red" },
       },
       {
-        time: "10:00 aM",
+        time: "10:00 AM",
         title: "PANEL: TECHNOLOGY INNOVATION, LEADERSHIP & CONTINUITY",
         description:
           "Executives and founders from XYZ companies",
         tag: { label: "panel", color: "blue" },
       },
       {
-        time: "11:00 am",
+        time: "11:00 AM",
         title: "startup showcase & pitch competition",
         description:
           "Selected Edo-based startups pitch live to investors, VCs, and corporate partners.",
         tag: { label: "pitch", color: "default" },
       },
       {
-        time: "12:00 pm",
+        time: "12:00 PM",
         title: "lunch break & exhibitions",
         description:
           "Business and technology showcase, activation and exhibition walkthroughs.",
         tag: { label: "exhibition", color: "default" },
       },
       {
-        time: "1:45 pm",
+        time: "1:45 PM",
         title: "fireside chat: ecosystem growth and impact",
         description:
           "Top leaders and senior professionals from XYZ companies",
         tag: { label: "fireside", color: "amber" },
       },
       {
-        time: "1:15 pM",
+        time: "1:15 PM",
         title: "investor round table",
         description:
           "Strategic investor matchmaking, deal rooms and partnership meetups",
         tag: { label: "networking", color: "default" },
       },
       {
-        time: "1:45 pM",
+        time: "1:45 PM",
         title: "Workshop block b — 3 Parallel Tracks",
         description:
           "Tracks: data & AI track, creative track, and web3 track.",
@@ -267,35 +267,35 @@ export const scheduleDays: ScheduleDay[] = [
         tag: { label: "ENTERTAINMENT", color: "default" },
       },
       {
-        time: "10:15 aM",
+        time: "10:15 AM",
         title: "STARTUP PITCH AWARDS",
         description:
           "Announcement of pitch competition winners and prize giving.",
         tag: { label: "AWARDS", color: "brown" },
       },
       {
-        time: "11:00 am",
+        time: "11:00 AM",
         title: "community & brand awardS",
         description:
           "Awards and recognition of brands, sponsors, partners, communities and institutions.",
         tag: { label: "AWARDS", color: "brown" },
       },
       {
-        time: "12:00 pm",
+        time: "12:00 PM",
         title: "LUNCH BREAK & NETWORKING",
         description:
           "Strategic investor matchmaking, startup and partnership meetups",
         tag: { label: "networking", color: "default" },
       },
       {
-        time: "12:30 pm",
+        time: "12:30 PM",
         title: "PERSONALITY & IMPACT awardS",
         description:
           "Awards and recognition of individuals, talents, personality and figures making significant impacts.",
         tag: { label: "AWARDS", color: "brown" },
       },
       {
-        time: "1:30 pm",
+        time: "1:30 PM",
         title: "closing ceremony & KEYNOTE",
         description:
           "Official closing address, partnership announcement, event review and BTF 3.0 teaser",

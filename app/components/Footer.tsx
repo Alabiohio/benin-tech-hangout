@@ -88,9 +88,9 @@ export default function Footer() {
         </div>
 
         {/* Newsletter Section */}
-        <div className="w-full border-t-2 border-b-2 border-[var(--color-gray-inverted)] flex flex-col md:flex-row gap-6 items-start md:items-center justify-between px-6 py-6 md:px-10">
+        <div className="w-full border-t-2 border-b-2 border-[var(--color-gray-inverted)] flex flex-col lg:flex-row gap-6 items-start lg:items-center justify-between px-6 py-6 md:px-10">
           {/* Left: Socials & Copyright */}
-          <div className="flex flex-col gap-4 items-center">
+          <div className="flex w-full flex-col gap-4 items-center lg:w-auto">
             <div className="flex gap-2 items-center">
               <SocialIcon icon={imgInstagram} alt="Instagram" href="https://www.instagram.com/benintechfest/" />
               <SocialIcon icon={imgLinkedin} alt="LinkedIn" href="https://www.linkedin.com/company/benin-tech-fest-page/" />
@@ -103,9 +103,9 @@ export default function Footer() {
           </div>
 
           {/* Right: Newsletter Subscription */}
-          <div className="flex flex-col gap-2 w-full md:w-auto mt-4 md:mt-0">
-            <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center">
-              <div className="bg-[rgba(255,255,255,0.1)] border border-[rgba(255,255,255,0.15)] flex gap-1 items-center px-6 py-4 rounded-lg w-full md:w-[400px]">
+          <div className="mt-4 flex w-full flex-col gap-2 lg:mt-0 lg:max-w-[600px]">
+            <div className="flex w-full flex-col gap-2 items-stretch sm:flex-row sm:items-center">
+              <div className="bg-[rgba(255,255,255,0.1)] border border-[rgba(255,255,255,0.15)] flex min-w-0 flex-1 gap-1 items-center px-6 py-4 rounded-lg">
                 <input
                   type="email"
                   placeholder="Enter your email"
@@ -117,7 +117,7 @@ export default function Footer() {
               <button
                 onClick={handleSubscribe}
                 disabled={status === 'loading'}
-                className="px-6 py-4 bg-[var(--color-static-blue)] text-[var(--color-static-white)] rounded-full font-['Bricolage_Grotesque'] font-medium text-[20px] leading-[1] uppercase tracking-[-0.4px] hover:opacity-90 transition whitespace-nowrap text-center disabled:opacity-70"
+                className="w-full shrink-0 px-6 py-4 bg-[var(--color-static-blue)] text-[var(--color-static-white)] rounded-full font-['Bricolage_Grotesque'] font-medium text-[20px] leading-[1] uppercase tracking-[-0.4px] hover:opacity-90 transition whitespace-nowrap text-center disabled:opacity-70 sm:w-auto"
               >
                 {status === 'loading' ? 'SUBSCRIBING...' : status === 'success' ? 'SUBSCRIBED!' : 'SUBSCRIBE'}
               </button>
