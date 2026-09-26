@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import EventSchedule from "./components/EventSchedule";
 import About from "./components/About";
 import Sponsors from "./components/Sponsor";
 import Pitch from "./components/Pitch";
@@ -20,6 +21,7 @@ export default function Home() {
             <Navbar onRegisterClick={() => setIsRegisterModalOpen(true)} />
             <main className="flex-grow relative z-10">
                 <Hero />
+                <EventSchedule />
                 <About />               
                 <Speaker />
                 <Sponsors />
