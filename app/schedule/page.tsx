@@ -191,44 +191,47 @@ function FeaturedSchedule() {
   return (
     <div className="content-stretch flex flex-col gap-8 md:gap-[var(--device-gap,40px)] items-center justify-center pt-34 md:pt-36 px-4 md:px-[var(--device-gap,40px)] relative size-full" data-node-id="215:10925" data-name="featured-schedule">
       {/* Heading row */}
-      <div className="content-stretch flex flex-col items-start justify-end relative shrink-0 w-full">
+      <div className="content-stretch flex flex-col items-start justify-end relative shrink-0 w-full mb-24">
         <div className="[word-break:break-word] font-cabinet-grotesk font-bold leading-[0] relative shrink-0 text-[0px] text-[color:var(--color-inverted,white)] tracking-[-0.4px] w-full" style={{ fontVariationSettings: '"opsz" 14, "wdth" 100' }}>
           <p className="font-cabinet-grotesk font-light leading-[1] md:leading-[0.8] mb-0 text-[40px] md:text-[80px]">Explore BTF 2.0</p>
           <p className="leading-[1] md:leading-[0.8] text-[40px] md:text-[80px]">Unique schedule</p>
         </div>
+        {/* Commented out Featured Sessions carousel section
         <div className="content-stretch flex flex-col md:flex-row items-start md:items-end justify-between gap-4 md:gap-0 relative shrink-0 w-full">
           <p className="[word-break:break-word] font-cabinet-grotesk font-bold leading-[1.2] relative shrink-0 text-[color:var(--color-inverted,white)] text-[16px] md:text-[length:var(--type-title,20px)] tracking-[-0.8px] whitespace-nowrap" style={{ fontVariationSettings: '"opsz" 14, "wdth" 100' }}>
             FEATURED SESSIONS
           </p>
-          {/* Prev / Next arrows */}
           <div className="content-stretch flex gap-[16px] items-center ml-auto relative rounded-[1000px] shrink-0">
             <button
               onClick={prev}
               disabled={activeCard === 0}
               className={`bg-[var(--color-trans-10-inverted,rgba(0,0,0,0.1))] content-stretch flex items-center justify-center p-[12px] relative rounded-[1000px] shrink-0 transition-opacity ${activeCard === 0 ? "opacity-30 cursor-not-allowed" : "opacity-100 cursor-pointer"}`}
+              aria-label="Previous card"
             >
-              <div className="relative shrink-0 size-[26.667px]">
-                <div className="absolute inset-[14.06%_32.81%_14.05%_26.55%]">
-                  <img alt="prev" className="absolute block inset-0 max-w-none size-full" src={imgVector} />
-                </div>
+              <div className="relative shrink-0 size-[26.667px] flex items-center justify-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-[color:var(--color-inverted,white)]">
+                  <path d="m15 18-6-6 6-6" />
+                </svg>
               </div>
             </button>
             <button
               onClick={next}
               disabled={activeCard === allCards.length - 1}
               className={`bg-[var(--color-trans-10-inverted,rgba(0,0,0,0.1))] content-stretch flex items-center justify-center p-[12px] relative rounded-[1000px] shrink-0 transition-opacity ${activeCard === allCards.length - 1 ? "opacity-30 cursor-not-allowed" : "opacity-100 cursor-pointer"}`}
+              aria-label="Next card"
             >
-              <div className="relative shrink-0 size-[26.667px]">
-                <div className="absolute inset-[14.05%_26.55%_14.06%_32.8%]">
-                  <img alt="next" className="absolute block inset-0 max-w-none size-full" src={imgVector1} />
-                </div>
+              <div className="relative shrink-0 size-[26.667px] flex items-center justify-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-[color:var(--color-inverted,white)]">
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
               </div>
             </button>
           </div>
         </div>
+        */}
       </div>
 
-      {/* Cards slideshow */}
+      {/* Commented out Cards slideshow & dot indicators
       <div className="relative overflow-hidden w-full shrink-0">
         <AnimatePresence mode="wait" custom={cardDirection.current}>
           <motion.div
@@ -241,7 +244,6 @@ function FeaturedSchedule() {
             transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
             className="content-stretch flex gap-[var(--button-y-pad-sm,16px)] items-start w-full"
           >
-            {/* Show up to 3 cards at a time centred on activeCard */}
             {allCards.slice(activeCard, activeCard + 3).map((card, i) => (
               <ScheduleCard key={i} card={card} />
             ))}
@@ -249,7 +251,6 @@ function FeaturedSchedule() {
         </AnimatePresence>
       </div>
 
-      {/* Dot indicators */}
       <div className="content-stretch flex gap-[16px] items-center justify-center relative shrink-0 w-full">
         <div className="content-stretch flex gap-[16px] items-center relative rounded-[1000px] shrink-0">
           {allCards.map((_, i) => (
@@ -261,6 +262,7 @@ function FeaturedSchedule() {
           ))}
         </div>
       </div>
+      */}
     </div>
   );
 }
@@ -304,6 +306,18 @@ const slideVariants = {
   exit: (dir: number) => ({ x: dir > 0 ? "-60%" : "60%", opacity: 0 }),
 };
 
+// Parse time strings like "11:15 AM", "8:00 AM WAT", "1:00 PM" into minutes since midnight
+function parseTimeToMinutes(timeStr: string): number | null {
+  const match = timeStr.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+  if (!match) return null;
+  let hours = parseInt(match[1], 10);
+  const minutes = parseInt(match[2], 10);
+  const period = match[3].toUpperCase();
+  if (period === 'PM' && hours < 12) hours += 12;
+  if (period === 'AM' && hours === 12) hours = 0;
+  return hours * 60 + minutes;
+}
+
 function ScheduleAgenda({ className }: { className?: string }) {
   const [activeDay, setActiveDay] = useState(0);
   const direction = useRef(0);
@@ -313,6 +327,46 @@ function ScheduleAgenda({ className }: { className?: string }) {
     direction.current = i > activeDay ? 1 : -1;
     setActiveDay(i);
   }
+
+  // Target dates for the event (Nov 5, 6, 7, 2026)
+  const eventDates = [
+    { year: 2026, month: 10, day: 5 }, // Nov 5 (month index 10)
+    { year: 2026, month: 10, day: 6 }, // Nov 6
+    { year: 2026, month: 10, day: 7 }, // Nov 7
+  ];
+
+  // Determine current active/highlighted session item
+  function getActiveItemIndex(): number {
+    const now = new Date();
+    const targetDate = eventDates[activeDay];
+
+    // Check if TODAY is the exact event date for the active tab
+    const isTodayEventDay =
+      targetDate &&
+      now.getFullYear() === targetDate.year &&
+      now.getMonth() === targetDate.month &&
+      now.getDate() === targetDate.day;
+
+    // If today is NOT the event day for this tab, show no highlight (-1)
+    if (!isTodayEventDay) {
+      return -1;
+    }
+
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+    let activeIdx = -1;
+    for (let i = 0; i < day.items.length; i++) {
+      const itemTime = parseTimeToMinutes(day.items[i].time);
+      if (itemTime !== null && itemTime <= currentMinutes) {
+        activeIdx = i;
+      }
+    }
+
+    // If on event day but outside schedule times (e.g. early morning before event starts), return -1
+    return activeIdx;
+  }
+
+  const activeItemIndex = getActiveItemIndex();
 
   return (
     <div
@@ -375,14 +429,16 @@ function ScheduleAgenda({ className }: { className?: string }) {
                     Schedule coming soon…
                   </p>
                 )}
-                {day.items.map((item, i) => (
-                  <div
-                    key={i}
-                    className={`border-[var(--color-gray-neutral,#a1a1a1)] border-b border-solid content-stretch flex flex-col md:flex-row gap-[24px] items-start pb-[25px] pt-[24px] px-[24px] relative shrink-0 w-full ${
-                      item.highlighted ? "bg-[var(--color-trans-10-inverted,rgba(0,0,0,0.1))]" : ""
-                    }`}
-                    data-name="SCHEDULE-ITEM"
-                  >
+                {day.items.map((item, i) => {
+                  const isHighlighted = i === activeItemIndex;
+                  return (
+                    <div
+                      key={i}
+                      className={`border-[var(--color-gray-neutral,#a1a1a1)] border-b border-solid content-stretch flex flex-col md:flex-row gap-[24px] items-start pb-[25px] pt-[24px] px-[24px] relative shrink-0 w-full transition-colors duration-300 ${
+                        isHighlighted ? "bg-[var(--color-trans-10-inverted,rgba(0,0,0,0.1))]" : ""
+                      }`}
+                      data-name="SCHEDULE-ITEM"
+                    >
                     {/* Timestamp */}
                     <div className="relative shrink-0" data-name="timestamp">
                       <div className="bg-clip-padding border-0 border-[transparent] border-solid content-stretch flex items-center pt-[6px] relative size-full">
@@ -416,8 +472,9 @@ function ScheduleAgenda({ className }: { className?: string }) {
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                    </div>
+                  );
+                })}
               </motion.div>
             </AnimatePresence>
           </div>

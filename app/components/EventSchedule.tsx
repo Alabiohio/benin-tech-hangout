@@ -1,25 +1,26 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 
 const schedule = [
     {
         day: "DAY 1",
         title: "Talent & Emerging Technology",
-        description: "Discover talent, skills and the technologies shaping Edo's next chapter.",
-        accent: "border-[var(--color-green)] text-[var(--color-green)]",
+        color: "#22C55E",
+        bgBadge: "bg-[#22C55E]/10 text-[#22C55E]",
     },
     {
         day: "DAY 2",
         title: "Startups, Business & Ecosystem Leadership",
-        description: "Connect founders, businesses and ecosystem leaders to build what comes next.",
-        accent: "border-[var(--color-amber)] text-[var(--color-amber)]",
+        color: "#F59E0B",
+        bgBadge: "bg-[#F59E0B]/10 text-[#F59E0B]",
     },
     {
         day: "DAY 3",
         title: "Community & Connection",
-        description: "A BTF Community Meetup for the people and communities moving the ecosystem forward.",
-        accent: "border-[var(--color-blue)] text-[var(--color-blue)]",
+        color: "#3B82F6",
+        bgBadge: "bg-[#3B82F6]/10 text-[#3B82F6]",
     },
 ];
 
@@ -30,46 +31,60 @@ export default function EventSchedule() {
             className="w-full border-y border-[var(--color-trans-10-inverted)] bg-background px-6 py-16 text-foreground md:px-10 md:py-24"
             aria-labelledby="schedule-heading"
         >
-            <div className="mx-auto max-w-7xl">
+            <div className="mx-auto max-w-5xl">
                 <motion.div
-                    className="mb-10 flex flex-col gap-4 md:mb-14 md:flex-row md:items-end md:justify-between"
+                    className="mb-10 md:mb-14 text-center flex flex-col items-center"
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.35 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                    <div>
-                        <p className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-brand-blue">
-                            November 5-7, 2026
-                        </p>
-                        <h2 id="schedule-heading" className="max-w-2xl text-4xl font-extrabold leading-[0.95] tracking-tight md:text-6xl">
-                            Three days, one ecosystem.
-                        </h2>
-                    </div>
-                    <p className="max-w-sm text-base leading-relaxed text-[var(--color-gray-inverted)] md:text-right">
-                        A focused program for talent, business, innovation and the communities connecting them.
+                    <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-brand-blue">
+                        November 5-7, 2026
                     </p>
+                    <h2 id="schedule-heading" className="text-4xl font-black leading-[0.95] tracking-tight md:text-6xl font-cabinet-grotesk">
+                        Three days, one ecosystem.
+                    </h2>
                 </motion.div>
 
-                <div className="grid gap-4 lg:grid-cols-3">
-                    {schedule.map((item, index) => (
-                        <motion.article
-                            key={item.day}
-                            className={`flex min-h-64 flex-col justify-between border-t-8 bg-[var(--color-neutral)] p-6 shadow-[0_12px_0_var(--color-trans-10-inverted)] md:p-8 ${item.accent}`}
-                            initial={{ opacity: 0, y: 28 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.25 }}
-                            transition={{ duration: 0.55, delay: index * 0.1, ease: "easeOut" }}
-                        >
-                            <div className="flex items-start justify-between gap-4">
-                                <span className="text-sm font-extrabold uppercase tracking-[0.18em]">{item.day}</span>
-                            </div>
-                            <div>
-                                <h3 className="max-w-md text-2xl font-extrabold leading-tight text-foreground md:text-3xl">{item.title}</h3>
-                                <p className="mt-4 max-w-md text-sm font-medium leading-relaxed text-[var(--color-gray-inverted)] md:text-base">{item.description}</p>
-                            </div>
-                        </motion.article>
-                    ))}
+                {/* Single Unified Timeline Block */}
+                <motion.div
+                    className="overflow-hidden rounded-[28px] border border-[var(--color-trans-10-inverted)] bg-[var(--color-neutral)] shadow-lg"
+                    initial={{ opacity: 0, y: 28 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.25 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                >
+                    <div className="divide-y divide-[var(--color-trans-10-inverted)]">
+                        {schedule.map((item, index) => (
+                            <motion.div
+                                key={item.day}
+                                className="group relative flex flex-col gap-3 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8 transition-colors duration-200 hover:bg-[var(--color-trans-5-inverted,rgba(0,0,0,0.02))]"
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.4, delay: index * 0.1 }}
+                            >
+                                <div className="flex items-center gap-4 sm:gap-6">
+                                    <span className={`inline-flex shrink-0 items-center justify-center rounded-full px-4 py-1.5 text-xs font-black tracking-widest ${item.bgBadge}`}>
+                                        {item.day}
+                                    </span>
+                                    <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight text-foreground">
+                                        {item.title}
+                                    </h3>
+                                </div>
+                            </motion.div>
+                        ))}
+                    </div>
+                </motion.div>
+
+                <div className="mt-8 text-center">
+                    <Link
+                        href="/schedule"
+                        className="inline-flex items-center justify-center rounded-full bg-brand-blue px-8 py-3.5 text-sm font-bold text-white shadow-md transition-transform hover:scale-105 active:scale-95"
+                    >
+                        EXPLORE FULL AGENDA & SCHEDULE
+                    </Link>
                 </div>
             </div>
         </section>
