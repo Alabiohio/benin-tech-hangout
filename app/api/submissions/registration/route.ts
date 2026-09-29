@@ -4,6 +4,7 @@ import { sendFormNotificationEmail, sendRegistrationEmail } from '@/app/lib/emai
 import { generateRegistrationId } from '@/app/lib/registration';
 import { checkRateLimit, getClientIp } from '@/app/lib/rateLimit';
 import { email, invalidFormResponse, readFormBody, rejectOversizedBody, requiredText } from '@/app/lib/formSecurity';
+import { triggerSuresendWebhook } from '@/app/lib/suresend';
 
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -164,6 +165,20 @@ export async function POST(request: NextRequest) {
             name,
             email: emailAddress,
             registrationId: result.rows[0].registration_id || result.rows[0].id,
+        });
+
+        // Trigger Suresend automation webhook
+        await triggerSuresendWebhook({
+            email: emailAddress,
+            first_name: firstName || name.split(' ')[0] || '',
+            last_name: lastName || name.split(' ').slice(1).join(' ') || '',
+            phone: whatsapp,
+            company: company,
+        }, {
+            external_user_id: String(result.rows[0].registration_id || result.rows[0].id),
+            role,
+            location,
+            event_pass: eventPass
         });
 
         return NextResponse.json(

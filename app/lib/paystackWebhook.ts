@@ -165,6 +165,8 @@ export async function processPaystackWebhook(body: string, signature: string | n
         console.warn(`Webhook ticket saved for ${emailAddress} (${paymentReference}), but the confirmation email failed to send.`);
       }
 
+
+
       console.log(`Paystack webhook confirmed and ${tickets.length} ticket(s) saved for ${emailAddress} (${paymentReference})`);
       return { status: 200, message: 'Payment confirmed and ticket issued' };
     } finally {

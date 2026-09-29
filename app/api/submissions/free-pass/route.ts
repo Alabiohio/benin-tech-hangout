@@ -173,6 +173,8 @@ export async function POST(request: NextRequest) {
             { label: 'Community', value: community || 'Not provided' },
         ]).catch((err) => console.error('Failed to send community pass email:', err));
 
+
+
         return NextResponse.json(
             {
                 success: true,

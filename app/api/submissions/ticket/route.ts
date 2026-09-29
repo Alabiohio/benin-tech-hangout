@@ -179,41 +179,7 @@ export async function POST(request: NextRequest) {
             console.warn(`Ticket registration saved for ${emailAddress}, but the confirmation email failed to send.`);
         }
 
-        // Trigger Suresend automation webhook
-        try {
-            const webhookUrl = 'https://api.suresendapi.com/developer/automations/webhook/wh_d7e50f07f287c5b69cfb86b4656fe3c8a3f6';
-            if (process.env.SURESEND_API_KEY) {
-                const phone = cleanText(body.phone, 50) || '';
-                const community = cleanText(body.community, 255) || '';
-                
-                await fetch(webhookUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${process.env.SURESEND_API_KEY}`
-                    },
-                    body: JSON.stringify({
-                        event: "user.registered",
-                        contact: {
-                            email: emailAddress,
-                            first_name: firstName,
-                            last_name: lastName,
-                            phone: phone,
-                            company: community
-                        },
-                        metadata: {
-                            source: "benin-tech-fest-website",
-                            external_user_id: registrationId,
-                            ticket_type: ticket_type
-                        }
-                    })
-                });
-            } else {
-                console.warn("SURESEND_API_KEY is not defined in environment variables. Webhook skipped.");
-            }
-        } catch (webhookErr) {
-            console.error('Failed to trigger Suresend webhook:', webhookErr);
-        }
+
 
         return NextResponse.json(
             {
