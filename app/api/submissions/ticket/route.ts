@@ -151,6 +151,10 @@ export async function POST(request: NextRequest) {
             }
         }
 
+        const institution = cleanText(body.institution ?? '', 255);
+        const department = cleanText(body.department ?? '', 255);
+        const level = cleanText(body.level ?? '', 100);
+
         const ticketRegistrations = await insertTickets(client, {
             registrationId,
             ticketType: ticket_type,
@@ -159,6 +163,9 @@ export async function POST(request: NextRequest) {
             email: emailAddress,
             paymentReference: paymentReference || `browser-${registrationId}`,
             quantity,
+            institution: institution || undefined,
+            department: department || undefined,
+            level: level || undefined,
         });
         await client.query('COMMIT');
 

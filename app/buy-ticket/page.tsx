@@ -8,7 +8,6 @@ import Script from 'next/script';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import formBanner from "@/assets/images/formBanner.png";
-import ConfirmationModal from '../components/ConfirmationModal';
 import Spinner from '../components/Spinner';
 import { validateCoupon, checkRegistration, redeemCoupon, formatPrice } from "@/app/lib/coupons";
 import type { CouponValidationResult } from "@/app/lib/coupons";
@@ -46,6 +45,9 @@ function BuyTicketContent() {
 
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
+    const [institution, setInstitution] = useState("");
+    const [department, setDepartment] = useState("");
+    const [level, setLevel] = useState("");
     const [quantity, setQuantity] = useState(1);
     const [couponCode, setCouponCode] = useState("");
     
@@ -59,6 +61,8 @@ function BuyTicketContent() {
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
     const [loadingPhraseIndex, setLoadingPhraseIndex] = useState(0);
+
+    const isFreePass = passKey === 'free' || passKey === 'free tickets' || passKey === 'free pass';
 
     const totalPrice = passPrice * quantity;
     const finalPrice = couponValidation?.final_price_total ?? totalPrice;
@@ -216,6 +220,9 @@ function BuyTicketContent() {
                         registrationId,
                         quantity,
                         couponCode: paymentCouponCode,
+                        institution: isFreePass ? institution.trim() : undefined,
+                        department: isFreePass ? department.trim() : undefined,
+                        level: isFreePass ? level.trim() : undefined,
                     }),
                 });
 
@@ -455,8 +462,52 @@ function BuyTicketContent() {
                                 {errors.name && <span className="text-[#FF8484] text-sm mt-1 ml-1 block">{errors.name}</span>}
                             </div>
 
+                            {/* Extra fields for Free Pass */}
+                            {isFreePass && (
+                                <>
+                                    {/* Institution */}
+                                    <div className="flex flex-col w-full md:col-span-2">
+                                        <label className="text-sm text-inverted mb-2 font-bold ml-1">School / Institution (Optional)</label>
+                                        <input 
+                                            name="institution" 
+                                            type="text" 
+                                            value={institution} 
+                                            onChange={(e) => setInstitution(e.target.value)} 
+                                            placeholder="e.g. University of Benin" 
+                                            className={`${getFieldClass(false)} ${inputTextClass}`} 
+                                        />
+                                    </div>
+
+                                    {/* Department */}
+                                    <div className="flex flex-col w-full">
+                                        <label className="text-sm text-inverted mb-2 font-bold ml-1">Department (Optional)</label>
+                                        <input 
+                                            name="department" 
+                                            type="text" 
+                                            value={department} 
+                                            onChange={(e) => setDepartment(e.target.value)} 
+                                            placeholder="e.g. Computer Science" 
+                                            className={`${getFieldClass(false)} ${inputTextClass}`} 
+                                        />
+                                    </div>
+
+                                    {/* Level */}
+                                    <div className="flex flex-col w-full">
+                                        <label className="text-sm text-inverted mb-2 font-bold ml-1">Level (Optional)</label>
+                                        <input 
+                                            name="level" 
+                                            type="text" 
+                                            value={level} 
+                                            onChange={(e) => setLevel(e.target.value)} 
+                                            placeholder="e.g. 300 Level / Post-graduate" 
+                                            className={`${getFieldClass(false)} ${inputTextClass}`} 
+                                        />
+                                    </div>
+                                </>
+                            )}
+
                             {/* Quantity */}
-                            <div className="flex flex-col w-full">
+                            <div className="flex flex-col w-full md:col-span-2">
                                 <label className="text-sm text-inverted mb-2 font-bold ml-1">Number of Tickets *</label>
                                 <div className="flex items-center gap-4 h-[56px]">
                                     <button

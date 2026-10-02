@@ -19,9 +19,7 @@ const passes = [
     features: [
       "For Students",
       "Community Partners",
-      "2days event access",
-      "Access to exhibition floor + all public sessions",
-      "Access to job fair and recruiting companies",
+      "1 day event access",
     ],
   },
   {
@@ -49,8 +47,7 @@ const passes = [
     features: [
       "Everything in Regular PLUS",
       "Priority seating",
-      "Premium merch (t-shirt + cap & more)",
-      "Refreshments (day 1 & 2)",
+      "Merch T-shirt/cap",
       "Digital certificate of participation",
       "Event program booklet & notepad",
       "Access to lounge area",

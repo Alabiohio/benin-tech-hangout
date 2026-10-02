@@ -9,6 +9,9 @@ export interface TicketInsertInput {
   email: string;
   paymentReference: string;
   quantity: number;
+  institution?: string;
+  department?: string;
+  level?: string;
 }
 
 export async function ensureTicketTable(client: PoolClient) {
@@ -22,6 +25,9 @@ export async function ensureTicketTable(client: PoolClient) {
       last_name VARCHAR(255) NOT NULL,
       email VARCHAR(255) NOT NULL,
       payment_reference VARCHAR(255) NOT NULL,
+      institution VARCHAR(255),
+      department VARCHAR(255),
+      level VARCHAR(100),
       created_at TIMESTAMPTZ DEFAULT NOW()
     );
     ALTER TABLE ticket_registrations
@@ -32,6 +38,9 @@ export async function ensureTicketTable(client: PoolClient) {
       ADD COLUMN IF NOT EXISTS last_name VARCHAR(255),
       ADD COLUMN IF NOT EXISTS email VARCHAR(255),
       ADD COLUMN IF NOT EXISTS payment_reference VARCHAR(255),
+      ADD COLUMN IF NOT EXISTS institution VARCHAR(255),
+      ADD COLUMN IF NOT EXISTS department VARCHAR(255),
+      ADD COLUMN IF NOT EXISTS level VARCHAR(100),
       ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ DEFAULT NOW();
     ALTER TABLE ticket_registrations
       DROP COLUMN IF EXISTS phone,
@@ -55,7 +64,7 @@ export async function insertTickets(client: PoolClient, input: TicketInsertInput
   const ticketIds = Array.from({ length: input.quantity }, generateTicketId);
   const values: unknown[] = [];
   const rows = ticketIds.map((ticketId, index) => {
-    const offset = index * 7;
+    const offset = index * 10;
     values.push(
       ticketId,
       input.registrationId,
@@ -64,13 +73,16 @@ export async function insertTickets(client: PoolClient, input: TicketInsertInput
       input.lastName,
       input.email,
       input.paymentReference,
+      input.institution || null,
+      input.department || null,
+      input.level || null,
     );
-    return `($${offset + 1}, $${offset + 2}, $${offset + 3}, $${offset + 4}, $${offset + 5}, $${offset + 6}, $${offset + 7})`;
+    return `($${offset + 1}, $${offset + 2}, $${offset + 3}, $${offset + 4}, $${offset + 5}, $${offset + 6}, $${offset + 7}, $${offset + 8}, $${offset + 9}, $${offset + 10})`;
   });
 
   const result = await client.query(
     `INSERT INTO ticket_registrations
-      (ticket_id, registration_id, ticket_type, first_name, last_name, email, payment_reference)
+      (ticket_id, registration_id, ticket_type, first_name, last_name, email, payment_reference, institution, department, level)
      VALUES ${rows.join(', ')}
      RETURNING id, ticket_id, registration_id, created_at;`,
     values,
