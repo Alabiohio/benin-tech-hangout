@@ -328,11 +328,11 @@ function ScheduleAgenda({ className }: { className?: string }) {
     setActiveDay(i);
   }
 
-  // Target dates for the event (Nov 5, 6, 7, 2026)
+  // Target date for the event (Nov 26, 2026)
   const eventDates = [
-    { year: 2026, month: 10, day: 5 }, // Nov 5 (month index 10)
-    { year: 2026, month: 10, day: 6 }, // Nov 6
-    { year: 2026, month: 10, day: 7 }, // Nov 7
+    { year: 2026, month: 10, day: 26 }, // Nov 26 (month index 10)
+    { year: 2026, month: 10, day: 26 },
+    { year: 2026, month: 10, day: 26 },
   ];
 
   // Determine current active/highlighted session item

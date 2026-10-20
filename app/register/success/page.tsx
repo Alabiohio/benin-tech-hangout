@@ -22,7 +22,7 @@ const TYPE_CONFIGS: Record<string, Config> = {
   register: {
     title: "You’re all set!",
     message: "You’ll receive a confirmation email shortly on your registration. See you at BTF.",
-    shareText: "I just registered for Benin Tech Fest 2.0 (BTF 2.0)! 🚀 Join me in Benin City from Nov 5-7, 2026.",
+    shareText: "I just registered for Benin Tech Fest 2.0 (BTF 2.0)! 🚀 Join me in Benin City from Nov 26, 2026.",
     primaryCtaText: "Get a ticket",
     primaryCtaHref: "/ticket",
     secondaryCtaText: "Home",
@@ -31,7 +31,7 @@ const TYPE_CONFIGS: Record<string, Config> = {
   ticket: {
     title: "Ticket Confirmed!",
     message: "Thank you for purchasing your BTF 2.0 ticket! Check your email for your event pass and details.",
-    shareText: "I just got my ticket for Benin Tech Fest 2.0 (BTF 2.0)! 🎫 Join me in Benin City from Nov 5-7, 2026.",
+    shareText: "I just got my ticket for Benin Tech Fest 2.0 (BTF 2.0)! 🎫 Join me in Benin City from Nov 26, 2026.",
     primaryCtaText: "Schedule",
     primaryCtaHref: "/schedule",
     secondaryCtaText: "Home",
@@ -40,7 +40,7 @@ const TYPE_CONFIGS: Record<string, Config> = {
   exhibition: {
     title: "Application Received!",
     message: "Thank you for applying to exhibit at BTF 2.0. Our team will review your application and get in touch shortly.",
-    shareText: "We're exhibiting at Benin Tech Fest 2.0 (BTF 2.0)! 🚀 Join us in Benin City from Nov 5-7, 2026.",
+    shareText: "We're exhibiting at Benin Tech Fest 2.0 (BTF 2.0)! 🚀 Join us in Benin City from Nov 26, 2026.",
     primaryCtaText: "Get Event Pass",
     primaryCtaHref: "/ticket",
     secondaryCtaText: "Home",
@@ -49,7 +49,7 @@ const TYPE_CONFIGS: Record<string, Config> = {
   speaker: {
     title: "Proposal Received!",
     message: "Thank you for applying to speak at BTF 2.0. Our committee will review your proposal and contact you soon.",
-    shareText: "I just applied to speak at Benin Tech Fest 2.0 (BTF 2.0)! 🎤 Join the conversation in Benin City from Nov 5-7, 2026.",
+    shareText: "I just applied to speak at Benin Tech Fest 2.0 (BTF 2.0)! 🎤 Join the conversation in Benin City from Nov 26, 2026.",
     primaryCtaText: "View Schedule",
     primaryCtaHref: "/schedule",
     secondaryCtaText: "Home",

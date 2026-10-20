@@ -30,7 +30,7 @@ const passes = [
     colorClass: "bg-blue",
     textColorClass: "text-blue",
     features: [
-      "Full 3-day event access",
+      "Full event access",
       "Access to exhibition floor + all public sessions",
       "Access to job fair and recruiting companies",
       "Digital certificate of participation",
@@ -65,7 +65,7 @@ const passes = [
       "VIP Lounge + front-row seating",
       "30 min investor meeting and networking",
       "Founders' roundtable & startup resources",
-      "Refreshments (all 3 days)",
+      "Refreshments",
       "Spotlight feature on BTF social media",
       "Lifetime recording access to sessions",
     ],

@@ -64,7 +64,7 @@ export const Hero = (): React.JSX.Element => {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          5TH - 7TH, NOVEMBER | 2026
+          26TH, NOVEMBER | 2026
         </motion.p>
 
         {/* Main Title */}

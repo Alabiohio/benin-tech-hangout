@@ -40,10 +40,10 @@ export default function EventSchedule() {
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
                     <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-brand-blue">
-                        November 5-7, 2026
+                        November 26, 2026
                     </p>
                     <h2 id="schedule-heading" className="text-4xl font-black leading-[0.95] tracking-tight md:text-6xl font-cabinet-grotesk">
-                        Three days, one ecosystem.
+                        One day, one ecosystem.
                     </h2>
                 </motion.div>
 

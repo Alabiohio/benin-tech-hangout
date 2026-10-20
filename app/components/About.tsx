@@ -48,7 +48,7 @@ const statisticRows = [
       anime: "fade-left",
     },
     {
-      value: "3-day",
+      value: "1-day",
       label: "Convergence",
       className: "bg-blue-inverted rounded-[1000px_0px_0px_1000px]",
       anime: "fade-right",
@@ -125,7 +125,7 @@ export default function About() {
             viewport={{ once: true, amount: 0.5 }}
             transition={{ duration: 0.9, ease: "easeOut" }}
           >
-            JOIN US ON 5TH - 7TH NOV. | 2026
+            JOIN US ON 26TH NOV. | 2026
             <br />
             BENIN CITY, EDO STATE
           </motion.p>

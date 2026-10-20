@@ -20,7 +20,7 @@ export default function ConfirmationModal({
   title = "You’re all set!",
   message = "You’ll receive a confirmation email shortly on your registration. See you at BTF.",
   shareUrl,
-  shareText = "I just registered for Benin Tech Fest 2.0 (BTF 2.0)! 🚀 Join me in Benin City from Nov 5-7, 2026.",
+  shareText = "I just registered for Benin Tech Fest 2.0 (BTF 2.0)! 🚀 Join me in Benin City from Nov 26, 2026.",
   showShareOptions = true,
   ctaText = "Alright, got it",
   onCtaClick,

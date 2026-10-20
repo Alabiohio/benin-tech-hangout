@@ -411,7 +411,7 @@ export async function sendRegistrationEmail({
     const text = [
       `Dear ${recipientName},`,
       '',
-      'You are officially registered for Benin Tech Fest 2.0 happening 5th - 7th November, 2026 in Benin City, Edo State.',
+      'You are officially registered for Benin Tech Fest 2.0 happening 26th November, 2026 in Benin City, Edo State.',
       'Your spot is confirmed and we\'re excited to have you join us as we connect Edo to the future of tech.',
       '',
       `Registration ID: ${registrationCode}`,
@@ -437,7 +437,7 @@ export async function sendRegistrationEmail({
     <div style="padding: 30px 40px;">
       <h1 style="font-size: 28px; font-weight: 700; margin-top: 0; margin-bottom: 20px; color: #111111;">Thanks for registering!</h1>
       <p style="margin-bottom: 20px;">Dear ${escapeHtml(recipientName)},</p>
-      <p style="margin-bottom: 20px;">You are officially registered for Benin Tech Fest 2.0 happening <strong>5th - 7th November, 2026</strong> in Benin City, Edo State.</p>
+      <p style="margin-bottom: 20px;">You are officially registered for Benin Tech Fest 2.0 happening <strong>26th November, 2026</strong> in Benin City, Edo State.</p>
       <p style="margin-bottom: 20px;">Your spot is confirmed and we&rsquo;re excited to have you join us as we connect Edo to the future of tech.</p>
       <p style="margin-bottom: 20px;">Registration ID: <strong>${escapeHtml(String(registrationCode))}</strong></p>
       <p style="margin-bottom: 20px;">Registration date: ${escapeHtml(regDate)}</p>

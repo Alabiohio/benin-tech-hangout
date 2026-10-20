@@ -21,7 +21,6 @@ export default function Home() {
             <Navbar onRegisterClick={() => setIsRegisterModalOpen(true)} />
             <main className="flex-grow relative z-10">
                 <Hero />
-                <EventSchedule />
                 <About />               
                 <Speaker />
                 <Sponsors />
