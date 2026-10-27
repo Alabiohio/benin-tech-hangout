@@ -14,7 +14,6 @@ const pastSpeakers = [
     { name: "Teddy Eragbai", role: "TVET Communication Advisor, ForbesBLK Member", image: "/past/speaker2.jpeg" },
     { name: "Omokaro Osayi", role: "Founder, Treskaro & Father Startups", image: "/past/speaker3.jpg" },
     { name: "Nwachukwu Justin Jr", role: "Lead, SuperteamNG Edo State; Founder, Breeeve & Ravolo", image: "/past/speaker5.jpeg" },
-    { name: "Past Speaker", role: "Tech Leader", image: "/past/speaker4.jpeg" },
 ];
 
 function ArrowIcon({ direction }: { direction: "left" | "right" }) {
