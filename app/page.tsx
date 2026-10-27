@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import EventSchedule from "./components/EventSchedule";
 import About from "./components/About";
+import Btfone from "./components/Btfone";
 import Sponsors from "./components/Sponsor";
 import Pitch from "./components/Pitch";
 import Volunteer from "./components/Volunteer";
@@ -22,6 +23,7 @@ export default function Home() {
             <main className="flex-grow relative z-10">
                 <Hero />
                 <About />               
+                <Btfone />
                 <Speaker />
                 <Sponsors />
                 <Pitch />

@@ -3,103 +3,36 @@ import { motion } from "framer-motion";
 import handshake from "@/assets/images/sponsor/handshake.png";
 import organicFill from "@/assets/images/sponsor/organicFill.png";
 
-const ArrowRightIcon = () => (
-  <svg
-    className="w-7 h-7"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-  >
-    <line x1="5" y1="12" x2="19" y2="12"></line>
-    <polyline points="12 5 19 12 12 19"></polyline>
-  </svg>
-);
-
-interface SponsorLogo {
-  id: string;
-  image: string;
-  objectFit?: 'cover' | 'contain' | 'bottom';
-  overlay?: boolean;
-}
-
-const SPONSOR_LOGOS: SponsorLogo[] = [
-  {
-    id: '1',
-    image: '/partners/Edo Innovates Logo  PNG.png',
-    objectFit: 'contain',
-  },
-  {
-    id: '2',
-    image: '/partners/Edo Innovates Logo  PNG.png',
-    objectFit: 'cover',
-  },
-  {
-    id: '3',
-    image: '/partners/Edo Innovates Logo  PNG.png',
-    objectFit: 'contain',
-  },
-  {
-    id: '4',
-    image: '/partners/Edo Innovates Logo  PNG.png',
-    objectFit: 'cover',
-  },
-  {
-    id: '5',
-    image: '/partners/Edo Innovates Logo  PNG.png',
-    objectFit: 'cover',
-  },
-  {
-    id: '6',
-    image: '/partners/Edo Innovates Logo  PNG.png',
-    objectFit: 'contain',
-  },
-  {
-    id: '7',
-    image: '/partners/Edo Innovates Logo  PNG.png',
-    objectFit: 'cover',
-    overlay: true,
-  },
-  {
-    id: '8',
-    image: '/partners/Edo Innovates Logo  PNG.png',
-    objectFit: 'contain',
-  },
-  {
-    id: '9',
-    image: '/partners/Edo Innovates Logo  PNG.png',
-    objectFit: 'cover',
-    overlay: true,
-  },
-  {
-    id: '10',
-    image: '/partners/Edo Innovates Logo  PNG.png',
-    objectFit: 'bottom',
-  },
-  {
-    id: '11',
-    image: '/partners/Edo Innovates Logo  PNG.png',
-    objectFit: 'cover',
-  },
-  {
-    id: '12',
-    image: '/partners/Edo Innovates Logo  PNG.png',
-    objectFit: 'cover',
-  },
+const partners = [
+  { name: "Edo State Government", image: "/partners/esg.JPG" },
+  { name: "Edo Education Technology Hub", image: "/partners/eeth.JPG" },
+  { name: "Edo Community", image: "/partners/Edo Community.png" },
+  { name: "Edo Innovates", image: "/partners/Edo Innovates Logo  PNG.png" },
+  { name: "Google Developer Student Clubs, University of Benin", image: "/partners/GDSC logo Leftsided.png" },
+  { name: "ACE", image: "/partners/images (3).png" },
+  { name: "DoLbaF Conference Benin 2023", image: "/partners/IMG-20230901-WA0047.jpg.jpeg" },
+  { name: "DES Events", image: "/partners/IMG-20241113-WA0008.jpg.jpeg" },
+  { name: "The Catalyst Initiative", image: "/partners/IMG-20250327-WA0006.jpg.jpeg" },
+  { name: "She Code Africa, Benin Chapter", image: "/partners/IMG-20250708-WA0039.jpg.jpeg" },
+  { name: "Superteam Edo", image: "/partners/Superteam edo.png" },
 ];
 
-function BrandLogoCard({ sponsor }: { sponsor: SponsorLogo }) {
+function PartnerLogo({ partner }: { partner: (typeof partners)[number] }) {
   return (
-    <div className="relative aspect-square bg-[var(--color-static-white)] rounded-lg flex items-center justify-center py-10 overflow-hidden">
+    <div
+      tabIndex={0}
+      role="group"
+      aria-label={partner.name}
+      className="group relative flex h-28 w-44 flex-none items-center justify-center overflow-hidden rounded-2xl bg-white p-5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-blue)] sm:h-32 sm:w-56 sm:p-7"
+    >
       <img
-        src={sponsor.image}
-        alt={`Sponsor ${sponsor.id}`}
-        className={`w-full h-full ${sponsor.objectFit === 'bottom' ? 'object-bottom' : `object-${sponsor.objectFit || 'contain'}`
-          }`}
+        src={partner.image}
+        alt={partner.name}
+        className="h-full w-full object-contain"
       />
-      {sponsor.overlay && (
-        <div className="absolute inset-0 z-10 bg-black/10 pointer-events-none" />
-      )}
+      <span className="absolute inset-x-0 bottom-0 translate-y-full bg-black/80 px-3 py-2 text-center text-sm font-semibold text-white opacity-0 transition duration-200 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100">
+        {partner.name}
+      </span>
     </div>
   );
 }
@@ -200,29 +133,31 @@ export default function Sponsor() {
         </div>
       </div>
 
-      {/* Section 2: Sponsors & Partners */}
-      {/* 
-      <div className="w-full flex flex-col gap-10 items-start">
-        // Heading with "See All Sponsors" button
-        <div className="w-full flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-          <h2 className="text-[2.7rem] md:text-[80px] font-light font-cabinet-grotesk leading-[0.8] text-[var(--color-inverted)] tracking-[-1.4px] flex-1">
-            Thank You to our BTF 2.0 <br />
-            <span className="font-bold"> Sponsors & partners</span>
-          </h2>
-          <button className="flex gap-2 items-center py-4 px-0 text-[var(--color-inverted)] font-cabinet-grotesk font-medium text-[20px] uppercase leading-[1] tracking-[-0.4px] underline hover:opacity-75 transition whitespace-nowrap">
-            <span>SEE ALL SPONSORS</span>
-            <ArrowRightIcon />
-          </button>
-        </div>
+      <div className="w-full space-y-8 pt-4">
+        <h2 className="text-4xl font-light leading-[0.95] tracking-[-1.4px] text-[var(--color-inverted)] sm:text-5xl md:text-6xl">
+          Thank you to our <span className="font-bold">partners</span>
+        </h2>
 
-        // 6x2 Grid of Sponsors
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6 w-full">
-          {SPONSOR_LOGOS.map((sponsor) => (
-            <BrandLogoCard key={sponsor.id} sponsor={sponsor} />
-          ))}
+        <div
+          className="partner-marquee relative overflow-hidden py-2"
+          role="region"
+          aria-label="Benin Tech Fest partners"
+        >
+          <div className="partner-marquee-track flex w-max">
+            {[0, 1].map((group) => (
+              <div
+                key={group}
+                className="flex flex-none gap-4 pr-4 sm:gap-6 sm:pr-6"
+                aria-hidden={group === 1}
+              >
+                {partners.map((partner, index) => (
+                  <PartnerLogo key={`${group}-${index}`} partner={partner} />
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-      */}
     </div>
   );
 }
