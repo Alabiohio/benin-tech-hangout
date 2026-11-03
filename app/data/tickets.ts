@@ -24,8 +24,7 @@ export const ticketTiersList: TicketTier[] = [
         price: "₦3,500",
         features: [
             "Everything in Community Pass + Event badge",
-            "Exhibitions booths",
-            "Access to remote jobs and mentorship",
+            "Exhibitions booths",z
             "Priority registration",
             "Digital certificate of attendance",
             "Limited seats",
@@ -43,7 +42,6 @@ export const ticketTiersList: TicketTier[] = [
             "Workshops",
             "Tech Skill Scholarship",
             "Access to Partners Merch",
-            "Access to remote jobs and mentorship",
             "Refreshments",
         ],
         aosAnime: "fade-up",
@@ -64,6 +62,23 @@ export const ticketTiersList: TicketTier[] = [
             "Event Branded merch",
             "Branded merch",
             "Refreshments"
+        ],
+        aosAnime: "fade-up",
+        highlight: false,
+    },
+    {
+        name: "VIP Pass",
+        price: "₦50,000",
+        features: [
+            "Priority Seat",
+            "Connect with investors",
+            "Access to speaker meet-and-greet",
+            "Refreshment & Gift Pack",
+            "Branded Merch",
+            "Access to After Party",
+            "Priority Media Coverage",
+            "With one free regular ticket",
+            "business networking",
         ],
         aosAnime: "fade-up",
         highlight: false,
