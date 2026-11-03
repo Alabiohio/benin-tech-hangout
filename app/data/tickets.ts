@@ -25,6 +25,7 @@ export const ticketTiersList: TicketTier[] = [
         features: [
             "Everything in Community Pass + Event badge",
             "Exhibitions booths",
+            "Access to remote jobs and mentorship",
             "Priority registration",
             "Digital certificate of attendance",
             "Limited seats",
@@ -42,6 +43,7 @@ export const ticketTiersList: TicketTier[] = [
             "Workshops",
             "Tech Skill Scholarship",
             "Access to Partners Merch",
+            "Access to remote jobs and mentorship",
             "Refreshments",
         ],
         aosAnime: "fade-up",
