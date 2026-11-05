@@ -104,7 +104,7 @@ function CaretRightIcon() {
 
 function InstagramIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-4 w-4 text-[var(--color-inverted)] sm:h-5 sm:w-5">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-8 w-8 text-[var(--color-inverted)] sm:h-5 sm:w-5">
       <rect x="3.5" y="3.5" width="17" height="17" rx="5" stroke="currentColor" strokeWidth="1.7" />
       <circle cx="12" cy="12" r="4.1" stroke="currentColor" strokeWidth="1.7" />
       <circle cx="17.2" cy="6.8" r="1.2" fill="currentColor" />
@@ -114,7 +114,7 @@ function InstagramIcon() {
 
 function LinkedInIcon() {
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-4 w-4 text-[var(--color-inverted)] sm:h-5 sm:w-5">
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-8 w-8 text-[var(--color-inverted)] sm:h-5 sm:w-5">
       <rect x="3.5" y="3.5" width="17" height="17" rx="2.5" stroke="currentColor" strokeWidth="1.7" />
       <path d="M8.3 10.3V16.5M8.3 7.9v.1M11.3 16.5v-4.3c0-1.4.6-2.2 1.8-2.2 1.2 0 1.8.7 1.8 2.1v4.4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
@@ -183,7 +183,7 @@ function SpeakerRow({ speaker, isOpen, onToggle }: { speaker: Speaker; isOpen: b
                       href={speaker.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--color-trans-10-inverted)] bg-[var(--color-neutral)] text-[var(--color-inverted)]"
+                      className="flex h-12 w-12 items-center justify-center rounded-full border border-[var(--color-trans-10-inverted)] bg-[var(--color-neutral)] text-[var(--color-inverted)]"
                     >
                       <InstagramIcon />
                     </a>
@@ -193,7 +193,7 @@ function SpeakerRow({ speaker, isOpen, onToggle }: { speaker: Speaker; isOpen: b
                       href={speaker.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--color-trans-10-inverted)] bg-[var(--color-neutral)] text-[var(--color-inverted)]"
+                      className="flex h-12 w-12 items-center justify-center rounded-full border border-[var(--color-trans-10-inverted)] bg-[var(--color-neutral)] text-[var(--color-inverted)]"
                     >
                       <LinkedInIcon />
                     </a>
