@@ -24,7 +24,7 @@ export const ticketTiersList: TicketTier[] = [
         price: "₦3,500",
         features: [
             "Everything in Community Pass + Event badge",
-            "Exhibitions booths",z
+            "Exhibitions booths",
             "Priority registration",
             "Digital certificate of attendance",
             "Limited seats",

@@ -1,9 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { div } from 'framer-motion/client';
 
 // Icon components
 const CaretLeftIcon = () => (
@@ -48,61 +47,85 @@ interface Speaker {
   name: string;
   title: string;
   category: string;
+  topic: string;
   image: string;
 }
 
 const SPEAKERS: Speaker[] = [
   {
     id: '1',
-    name: 'Omokaro Osayi',
-    title: 'Founder, Treskaro & Father Startups',
-    category: 'DIGITAL ECONOMY',
-    image: '/speakers/speaker1.png',
+    name: 'Precious Imuwahen',
+    title: 'Founder & Lead Strategy Skillz HQ',
+    category: '',
+    topic: 'The Human Advantage in an Al-Driven Economy',
+    image: '/speakers/precious.png',
   },
   {
     id: '2',
-    name: 'Omokaro Osayi',
-    title: 'Founder, Treskaro & Father Startups',
-    category: 'DIGITAL ECONOMY',
-    image: '/speakers/speaker1.png',
+    name: 'Andrew Igbineweka',
+    title: 'Ecosystem Enabler, Founder of The Networking Salon',
+    category: '',
+    topic: 'Networking Masterclass: Beyond Your Skills How to Sell Yourself, Build Valuable Connections, and Attract Opportunities.',
+    image: '/speakers/andrew.jpg',
   },
   {
     id: '3',
-    name: 'Omokaro Osayi',
-    title: 'Founder, Treskaro & Father Startups',
-    category: 'DIGITAL ECONOMY',
-    image: '/speakers/speaker1.png',
+    name: 'Tope Aladenusi',
+    title: 'Africa Cyber Leader Delliot',
+    category: '',
+    topic: 'Cybersecurity & the Future of Digital Trust',
+    image: '/speakers/tope.png',
   },
   {
     id: '4',
-    name: 'Omokaro Osayi',
-    title: 'Founder, Treskaro & Father Startups',
-    category: 'DIGITAL ECONOMY',
-    image: '/speakers/speaker1.png',
+    name: 'Munirat Antoinette Lecky',
+    title: 'Special Adviser to the Governor on Tourism and Creative Economy',
+    category: '',
+    topic: 'The Future of Work: Turning Skills, Creativity & Technology into Opportunities',
+    image: '/speakers/lecky.JPG',
   },
   {
     id: '5',
-    name: 'Omokaro Osayi',
-    title: 'Founder, Treskaro & Father Startups',
-    category: 'DIGITAL ECONOMY',
-    image: '/speakers/speaker1.png',
+    name: "Jah'swill Ojo-Obasuyi",
+    title: 'Founder & CEO of Quevora',
+    category: '',
+    topic: 'The Future of Work: Turning Skills, Creativity & Technology into Opportunities',
+    image: '/speakers/jahswill.JPEG',
+  },
+    {
+    id: '6',
+    name: "Abdulrazak Abdulrahman Abubakar",
+    title: 'Blockchain Specialist | Financial Engineer | PhD Candidate, University of Johannesburg Executive Commissioner, ESERC',
+    category: '',
+    topic: '',
+    image: '/speakers/abubakar.jpg',
+  },
+      {
+    id: '7',
+    name: "Jobina Arinze",
+    title: 'Head of Edo Innovate',
+    category: '',
+    topic: '',
+    image: '/speakers/jobina.png',
   },
 ];
 
 function SpeakerCard({ speaker }: { speaker: Speaker }) {
   return (
-    <div className="flex flex-col items-center gap-4 overflow-hidden w-80 flex-shrink-0">
-      <div className="w-full aspect-square relative overflow-hidden bg-[var(--color-neutral)] rounded-lg">
+    <div className="flex flex-col items-start gap-4 overflow-hidden w-80 flex-shrink-0 h-full">
+      <div className="w-full aspect-square relative overflow-hidden bg-[var(--color-neutral)] rounded-lg flex-shrink-0">
         <img
           src={speaker.image}
           alt={speaker.name}
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="w-full flex flex-col gap-1">
-        <p className="text-[10px] font-normal font-['Inter'] leading-[10px] text-[var(--color-inverted)] uppercase tracking-tight">
-          {speaker.category}
-        </p>
+      <div className="w-full flex flex-col gap-1 flex-1">
+        {speaker.category ? (
+          <p className="text-[10px] font-normal font-['Inter'] leading-[10px] text-[var(--color-inverted)] uppercase tracking-tight">
+            {speaker.category}
+          </p>
+        ) : null}
         <p className="text-lg font-bold font-['Inter'] leading-[1.4] text-[var(--color-inverted)]">
           {speaker.name}
         </p>
@@ -115,25 +138,58 @@ function SpeakerCard({ speaker }: { speaker: Speaker }) {
 }
 
 export default function Speaker() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
 
-  const visibleSpeakers = Array.from({ length: Math.min(3, SPEAKERS.length) }, (_, index) => {
-    return SPEAKERS[(currentSlide + index) % SPEAKERS.length];
-  });
+  const handleScroll = () => {
+    const element = scrollRef.current;
+    if (!element) return;
+    const card = element.querySelector<HTMLElement>('[data-speaker-card]');
+    const cardWidth = card ? card.offsetWidth : 320;
+    const gap = 40;
+    const index = Math.round(element.scrollLeft / (cardWidth + gap));
+    setActiveSlide(Math.min(Math.max(0, index), SPEAKERS.length - 1));
+  };
+
+  const scrollToSlide = (index: number) => {
+    const element = scrollRef.current;
+    if (!element) return;
+    const card = element.querySelector<HTMLElement>('[data-speaker-card]');
+    const scrollAmount = (card ? card.offsetWidth : 320) + 40;
+    element.scrollTo({ left: index * scrollAmount, behavior: 'smooth' });
+    setActiveSlide(index);
+  };
 
   const handlePrevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? SPEAKERS.length - 1 : prev - 1));
+    const element = scrollRef.current;
+    if (!element) return;
+    const card = element.querySelector<HTMLElement>('[data-speaker-card]');
+    const scrollAmount = (card ? card.offsetWidth : 320) + 40;
+    if (element.scrollLeft <= 10) {
+      element.scrollTo({ left: element.scrollWidth, behavior: 'smooth' });
+    } else {
+      element.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    }
   };
 
   const handleNextSlide = () => {
-    setCurrentSlide((prev) => (prev === SPEAKERS.length - 1 ? 0 : prev + 1));
+    const element = scrollRef.current;
+    if (!element) return;
+    const card = element.querySelector<HTMLElement>('[data-speaker-card]');
+    const scrollAmount = (card ? card.offsetWidth : 320) + 40;
+    const maxScroll = element.scrollWidth - element.clientWidth;
+    if (element.scrollLeft >= maxScroll - 10) {
+      element.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      element.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
   };
 
   return (
     <div className="w-full flex flex-col items-start">
-      {/* Hero Section */}
+      {/* Hero Section
       <div className="bg-[var(--color-blue,#1570ef)] gap-x-[40px] gap-y-[40px] grid grid-cols-1 md:grid-cols-[minmax(0,0.70fr)_minmax(0,1fr)] px-[var(--space-gap,40px)] py-[var(--space-padding,80px)] relative w-full overflow-hidden">
-        {/* Left side - Load animation placeholder */}
+        // Left side - Load animation placeholder
         <div className="justify-self-stretch relative self-stretch shrink-0 flex items-center justify-center">
           <svg
             className="w-full max-w-[544px] h-auto"
@@ -196,7 +252,7 @@ export default function Speaker() {
           </svg>
         </div>
 
-        {/* Right side - Content */}
+        // Right side - Content
         <div className="content-stretch flex flex-col gap-[16px] items-start justify-center justify-self-stretch relative self-start shrink-0">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -240,10 +296,11 @@ export default function Speaker() {
           </motion.div>
         </div>
       </div>
+      */}
 
-      {/* Speakers Section 
+      {/* Speakers Section */} 
       <div className="w-full flex flex-col gap-10 px-[var(--space-gap)] py-[var(--space-margin)] items-center justify-center">
-        // Header 
+        {/* Header */} 
         <div className="w-full flex flex-col gap-6 md:flex-row md:gap-10 md:items-end">
           <div className="flex-1 flex flex-col gap-4">
             <p className="text-[18px] md:text-[20px] font-normal font-cabinet-grotesk leading-[1.2] text-[var(--color-gray-inverted)] tracking-[-0.8px]">
@@ -261,7 +318,7 @@ export default function Speaker() {
             </p>
           </div>
 
-          // Navigation arrows - top 
+          {/* Navigation arrows - top */} 
           <div className="flex gap-4 rounded-full self-end md:self-end md:ml-auto">
             <button
               onClick={handlePrevSlide}
@@ -279,24 +336,31 @@ export default function Speaker() {
         </div>
 
         
-        // Speakers Carousel
+        {/* Speakers Carousel */}
         <div className="w-full flex flex-col gap-10 overflow-hidden">
-          // Slides
-          <div className="flex gap-10 overflow-x-auto scrollbar-hide">
-            {visibleSpeakers.map((speaker, index) => (
+          {/* Slides - Scrollable Container */}
+          <div
+            ref={scrollRef}
+            onScroll={handleScroll}
+            className="flex gap-10 overflow-x-auto overflow-y-hidden scroll-smooth no-scrollbar snap-x snap-mandatory items-stretch pb-4 w-full touch-pan-x"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {SPEAKERS.map((speaker, index) => (
               <motion.div
                 key={speaker.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                data-speaker-card
+                className="flex-shrink-0 snap-start h-full flex flex-col"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
+                transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.3) }}
               >
                 <SpeakerCard speaker={speaker} />
               </motion.div>
             ))}
           </div>
 
-          // Controls
+          {/* Controls */}
           <motion.div
             className="w-full flex flex-col gap-6 md:flex-row md:items-center md:justify-between"
             initial={{ opacity: 0, y: 20 }}
@@ -306,27 +370,34 @@ export default function Speaker() {
           >
             <div className="hidden md:block md:w-52" />
 
-            // Progress dots
-            <div className="flex justify-center gap-4 rounded-full">
-              {[0, 1, 2].map((dot) => (
-                <div
+            {/* Progress dots */}
+            <div className="flex justify-center gap-3 md:gap-4 rounded-full">
+              {SPEAKERS.map((_, dot) => (
+                <button
                   key={dot}
-                  className={`w-3 h-3 md:w-4 md:h-4 rounded-full transition ${dot === currentSlide % 3
-                      ? 'bg-[var(--color-gray-inverted)]'
-                      : 'bg-[var(--color-trans-10-inverted)]'
-                    }`}
+                  type="button"
+                  onClick={() => scrollToSlide(dot)}
+                  aria-label={`Go to slide ${dot + 1}`}
+                  className={`h-3 md:h-4 rounded-full transition-all duration-300 cursor-pointer ${
+                    dot === activeSlide
+                      ? 'w-8 md:w-10 bg-[var(--color-gray-inverted)]'
+                      : 'w-3 md:w-4 bg-[var(--color-trans-10-inverted)] hover:opacity-100'
+                  }`}
                 />
               ))}
             </div>
 
-            // See all speakers button
-            <button className="flex gap-2 items-center justify-center md:justify-end py-4 px-0 text-[var(--color-inverted)] font-cabinet-grotesk font-medium text-[16px] md:text-[20px] uppercase leading-[1] tracking-[-0.4px] underline hover:opacity-75 transition">
+            {/* See all speakers button */}
+            <Link
+              href="/speaker"
+              className="flex gap-2 items-center justify-center md:justify-end py-4 px-0 text-[var(--color-inverted)] font-cabinet-grotesk font-medium text-[16px] md:text-[20px] uppercase leading-[1] tracking-[-0.4px] underline hover:opacity-75 transition"
+            >
               <span>SEE ALL SPEAKERS</span>
               <ArrowRightIcon />
-            </button>
+            </Link>
           </motion.div>
         </div>
-        */}
+      </div>
       </div>
   );
 } 
